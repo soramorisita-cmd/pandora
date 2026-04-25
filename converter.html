@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Link Converter — PANDORA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080808;--s1:#101010;--s2:#181818;--s3:#202020;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.14);--text:#efefef;--muted:#555;--muted2:#888;--accent:#c8f03c;--accent2:#9fc02a;--qc:#38bdf8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0}
+nav{position:sticky;top:0;z-index:200;background:rgba(8,8,8,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;gap:24px}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--accent);text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;gap:8px}
+.nav-link{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);text-decoration:none;padding:6px 12px;border-radius:6px;border:1px solid transparent;transition:all .15s}
+.nav-link:hover{color:var(--text);border-color:var(--border)}
+.nav-link.active{color:var(--accent);border-color:rgba(200,240,60,.25);background:rgba(200,240,60,.07)}
+.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:64px 24px}
+.eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;text-align:center}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,10vw,88px);letter-spacing:4px;line-height:.92;text-align:center;margin-bottom:10px}
+h1 span{color:var(--accent)}
+.subtitle{font-size:14px;color:var(--muted2);text-align:center;margin-bottom:48px;line-height:1.6}
+.converter{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:16px}
+.input-row{display:flex;gap:10px;margin-bottom:8px}
+input[type="text"]{flex:1;background:var(--s2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Syne',sans-serif;font-size:14px;padding:13px 16px;outline:none;transition:border-color .2s;min-width:0}
+input[type="text"]:focus{border-color:var(--accent)}
+input[type="text"]::placeholder{color:var(--muted)}
+.btn-convert{background:var(--accent);border:none;border-radius:10px;color:#080808;cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;padding:13px 24px;white-space:nowrap;transition:background .15s}
+.btn-convert:hover{background:var(--accent2)}
+.error{font-size:12px;color:#f87171;min-height:18px;margin-bottom:4px}
+.aff-row{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.aff-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.aff-input{width:130px;font-size:13px;padding:7px 12px;border-radius:8px}
+.detected-bar{display:none;align-items:center;gap:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:16px 0 0;font-size:12px}
+.plat-badge{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:6px;white-space:nowrap}
+.badge-taobao{background:rgba(255,107,0,.15);color:#fb923c}
+.badge-weidian{background:rgba(96,165,250,.15);color:#60a5fa}
+.badge-1688{background:rgba(248,113,113,.15);color:#f87171}
+.badge-unknown{background:rgba(255,255,255,.06);color:var(--muted)}
+.det-url{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.agents{display:none;flex-direction:column;gap:8px;margin-top:16px}
+.agent-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px;transition:border-color .15s}
+.agent-card:hover{border-color:var(--border2)}
+.agent-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.agent-name{font-size:15px;font-weight:700;min-width:88px}
+.agent-url{flex:1;font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:monospace}
+.card-actions{display:flex;gap:8px;flex-shrink:0}
+.btn-sm{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;padding:6px 14px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-sm:hover{background:var(--s2);border-color:var(--border2)}
+.btn-sm.copied{border-color:var(--accent);color:var(--accent)}
+.platforms{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:32px 0 0}
+.plat-pill{font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.agent-card{animation:fadeUp .18s ease both}
+.agent-card:nth-child(1){animation-delay:0s}.agent-card:nth-child(2){animation-delay:.04s}.agent-card:nth-child(3){animation-delay:.08s}.agent-card:nth-child(4){animation-delay:.12s}
+footer{position:relative;z-index:1;text-align:center;padding:28px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
+footer a{color:var(--accent);text-decoration:none}
+@media(max-width:540px){.input-row{flex-direction:column}.agent-url{display:none}.agent-name{flex:1;min-width:unset}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">PANDORA</a>
+    <div class="nav-links">
+      <a class="nav-link" href="/">Catalog</a>
+      <a class="nav-link active" href="/converter.html">Converter</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <p class="eyebrow">Rep toolbox</p>
+  <h1>LINK<br><span>CONVERTER</span></h1>
+  <p class="subtitle">Paste any Taobao, Weidian, or 1688 link.<br>Get agent links instantly.</p>
+
+  <div class="converter">
+    <div class="input-row">
+      <input id="inp" type="text" placeholder="https://item.taobao.com/item.htm?id=...">
+      <button class="btn-convert" onclick="convert()">CONVERT</button>
+    </div>
+    <div class="error" id="err"></div>
+    <div class="detected-bar" id="detected-bar">
+      <span class="plat-badge" id="plat-badge"></span>
+      <span class="det-url" id="det-url"></span>
+    </div>
+    <div class="aff-row">
+      <span class="aff-label">Affcode</span>
+      <input id="aff" class="aff-input" type="text" value="a235412" placeholder="your affcode">
+    </div>
+  </div>
+
+  <div class="agents" id="agents"></div>
+
+  <div class="platforms">
+    <span class="plat-pill">Taobao</span>
+    <span class="plat-pill">Weidian</span>
+    <span class="plat-pill">1688</span>
+    <span class="plat-pill">Tmall</span>
+    <span class="plat-pill">Agent links</span>
+  </div>
+</div>
+
+<footer>PANDORA &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank">Kakobuy</a></footer>
+
+<script>
+const AGENTS=[
+  {name:"Kakobuy",color:"#4ade80",build:(url,aff)=>`https://www.kakobuy.com/item/details?url=${enc(url)}&affcode=${aff}`},
+  {name:"Superbuy",color:"#60a5fa",build:(url)=>`https://www.superbuy.com/en/page/buy/?url=${enc(url)}`},
+  {name:"Wegobuy",color:"#f472b6",build:(url)=>`https://www.wegobuy.com/en/page/buy/?url=${enc(url)}`},
+  {name:"Sugargoo",color:"#fb923c",build:(url)=>`https://www.sugargoo.com/#/home/productDetail?productLink=${enc(url)}`},
+];
+function enc(u){return encodeURIComponent(u)}
+function extractUrl(raw){
+  const r=raw.trim();
+  const tb=r.match(/https?:\/\/item\.taobao\.com\/item\.htm\?[^\s"'<>]*/);if(tb)return tb[0];
+  const tbId=r.match(/item\.taobao\.com\/item\.htm[^\s"'<>]*id=(\d+)/);if(tbId)return`https://item.taobao.com/item.htm?id=${tbId[1]}`;
+  const wd=r.match(/https?:\/\/shop\d+\.v\.weidian\.com\/item\.html\?[^\s"'<>]*/);if(wd)return wd[0].split("&wfr")[0];
+  const wd2=r.match(/https?:\/\/[^\s]*weidian\.com\/item\.html\?[^\s"'<>]*/);if(wd2)return wd2[0];
+  const ali=r.match(/https?:\/\/detail\.1688\.com\/offer\/\d+\.html/);if(ali)return ali[0];
+  const urlParam=r.match(/[?&]url=([^&\s]+)/);if(urlParam)return decodeURIComponent(urlParam[1]);
+  if(/^https?:\/\//.test(r))return r;
+  return null;
+}
+function platform(url){if(!url)return"unknown";if(url.includes("taobao.com"))return"taobao";if(url.includes("weidian.com"))return"weidian";if(url.includes("1688.com"))return"1688";if(url.includes("tmall.com"))return"tmall";return"unknown"}
+function badgeClass(p){return{taobao:"badge-taobao",weidian:"badge-weidian","1688":"badge-1688",tmall:"badge-taobao"}[p]||"badge-unknown"}
+async function copyText(text,btn){try{await navigator.clipboard.writeText(text);btn.textContent="Copied ✓";btn.classList.add("copied");setTimeout(()=>{btn.textContent="Copy";btn.classList.remove("copied")},1800)}catch{btn.textContent="Error"}}
+function convert(){
+  const raw=document.getElementById("inp").value;
+  const aff=document.getElementById("aff").value.trim()||"a235412";
+  const err=document.getElementById("err");
+  if(!raw.trim()){err.textContent="Please paste a URL first.";return}
+  err.textContent="";
+  const original=extractUrl(raw);
+  if(!original){err.textContent="Couldn't parse that URL.";return}
+  const plat=platform(original);
+  const db=document.getElementById("detected-bar");
+  document.getElementById("plat-badge").textContent=plat.toUpperCase();
+  document.getElementById("plat-badge").className="plat-badge "+badgeClass(plat);
+  document.getElementById("det-url").textContent=original;
+  db.style.display="flex";
+  const container=document.getElementById("agents");
+  container.innerHTML="";container.style.display="flex";
+  AGENTS.forEach(agent=>{
+    const link=agent.build(original,aff);
+    const card=document.createElement("div");card.className="agent-card";
+    card.innerHTML=`<div class="agent-dot" style="background:${agent.color}"></div><span class="agent-name">${agent.name}</span><span class="agent-url">${link}</span><div class="card-actions"><button class="btn-sm" onclick="window.open('${link}','_blank')">Open</button><button class="btn-sm" onclick="copyText('${link.replace(/'/g,"\\'")}',this)">Copy</button></div>`;
+    container.appendChild(card);
+  });
+}
+document.getElementById("inp").addEventListener("keydown",e=>{if(e.key==="Enter")convert()});
+document.getElementById("inp").addEventListener("paste",()=>{setTimeout(convert,50)});
+</script>
+</body>
+</html>
