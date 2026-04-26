@@ -66,16 +66,16 @@ footer a{color:var(--accent);text-decoration:none}
   <div class="nav-inner">
     <a class="nav-logo" href="/">PANDORA</a>
     <div class="nav-links">
-      <a class="nav-link" href="/">Catalog</a>
-      <a class="nav-link active" href="/converter.html">Converter</a>
+      <a class="nav-link" href="/">カタログ</a>
+      <a class="nav-link active" href="/converter.html">リンク変換</a>
     </div>
   </div>
 </nav>
 
 <div class="wrap">
-  <p class="eyebrow">Rep toolbox</p>
+  <p class="eyebrow">レップ ツールボックス</p>
   <h1>LINK<br><span>CONVERTER</span></h1>
-  <p class="subtitle">Paste any Taobao, Weidian, or 1688 link.<br>Get agent links instantly.</p>
+  <p class="subtitle">Taobao・Weidian・1688のリンクを貼り付けて<br>エージェントリンクを即座に生成</p>
 
   <div class="converter">
     <div class="input-row">
@@ -87,11 +87,7 @@ footer a{color:var(--accent);text-decoration:none}
       <span class="plat-badge" id="plat-badge"></span>
       <span class="det-url" id="det-url"></span>
     </div>
-    <div class="aff-row">
-      <span class="aff-label">Affcode</span>
-      <input id="aff" class="aff-input" type="text" value="a235412" placeholder="your affcode">
-    </div>
-  </div>
+</div>
 
   <div class="agents" id="agents"></div>
 
@@ -127,15 +123,15 @@ function extractUrl(raw){
 }
 function platform(url){if(!url)return"unknown";if(url.includes("taobao.com"))return"taobao";if(url.includes("weidian.com"))return"weidian";if(url.includes("1688.com"))return"1688";if(url.includes("tmall.com"))return"tmall";return"unknown"}
 function badgeClass(p){return{taobao:"badge-taobao",weidian:"badge-weidian","1688":"badge-1688",tmall:"badge-taobao"}[p]||"badge-unknown"}
-async function copyText(text,btn){try{await navigator.clipboard.writeText(text);btn.textContent="Copied ✓";btn.classList.add("copied");setTimeout(()=>{btn.textContent="Copy";btn.classList.remove("copied")},1800)}catch{btn.textContent="Error"}}
+async function copyText(text,btn){try{await navigator.clipboard.writeText(text);btn.textContent="コピー済 ✓";btn.classList.add("copied");setTimeout(()=>{btn.textContent="コピー";btn.classList.remove("copied")},1800)}catch{btn.textContent="Error"}}
 function convert(){
   const raw=document.getElementById("inp").value;
-  const aff=document.getElementById("aff").value.trim()||"a235412";
+  const aff="a235412";
   const err=document.getElementById("err");
-  if(!raw.trim()){err.textContent="Please paste a URL first.";return}
+  if(!raw.trim()){err.textContent="URLを入力してください";return}
   err.textContent="";
   const original=extractUrl(raw);
-  if(!original){err.textContent="Couldn't parse that URL.";return}
+  if(!original){err.textContent="URLを解析できませんでした";return}
   const plat=platform(original);
   const db=document.getElementById("detected-bar");
   document.getElementById("plat-badge").textContent=plat.toUpperCase();
@@ -147,7 +143,7 @@ function convert(){
   AGENTS.forEach(agent=>{
     const link=agent.build(original,aff);
     const card=document.createElement("div");card.className="agent-card";
-    card.innerHTML=`<div class="agent-dot" style="background:${agent.color}"></div><span class="agent-name">${agent.name}</span><span class="agent-url">${link}</span><div class="card-actions"><button class="btn-sm" onclick="window.open('${link}','_blank')">Open</button><button class="btn-sm" onclick="copyText('${link.replace(/'/g,"\\'")}',this)">Copy</button></div>`;
+    card.innerHTML=`<div class="agent-dot" style="background:${agent.color}"></div><span class="agent-name">${agent.name}</span><span class="agent-url">${link}</span><div class="card-actions"><button class="btn-sm" onclick="window.open('${link}','_blank')">開く</button><button class="btn-sm" onclick="copyText('${link.replace(/'/g,"\\'")}',this)">コピー</button></div>`;
     container.appendChild(card);
   });
 }
