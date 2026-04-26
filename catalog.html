@@ -170,7 +170,7 @@ function buildCatChips(cats){
 
 function buildBrandChips(cat){
   // そのカテゴリの商品からブランド一覧を取得
-  const brands=[...new Set(ALL.filter(p=>p.type===cat).map(p=>p.brand||p.seller).filter(Boolean))].sort();
+  const brands=[...new Set(ALL.filter(p=>p.type===cat).map(p=>p.brand).filter(Boolean))].sort();
   const el=document.getElementById('brand-chips');
   el.innerHTML='';
   if(!brands.length){hideBrands();return}
@@ -218,7 +218,7 @@ function applyFilters(){
   F.q=document.getElementById('search').value.toLowerCase();
   const items=ALL.filter(p=>{
     if(F.cat!=='all'&&p.type!==F.cat)return false;
-    const pb=p.brand||p.seller||'';
+    const pb=p.brand||'';
     if(F.brand!=='all'&&pb!==F.brand)return false;
     if(F.q&&!(p.title+' '+p.type+' '+(p.brand||'')+' '+(p.seller||'')).toLowerCase().includes(F.q))return false;
     return true;
@@ -235,7 +235,9 @@ async function init(){
     if(!res.ok)throw new Error();
     const data=await res.json();
     ALL=data.products||[];
-    const cats=[...new Set(ALL.map(p=>p.type).filter(Boolean))].sort();
+    const CAT_ORDER=["HOODIES", "T-SHIRTS", "SHORTS", "PANTS", "JACKETS", "SWEATERS", "TOPS", "SHIRTS", "BAGS", "ACCESSORIES"];
+    const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
+    const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
 
     buildNav(cats);
     buildCatChips(cats);
