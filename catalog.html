@@ -95,16 +95,16 @@ footer a{color:var(--accent);text-decoration:none}
   <div class="filter-wrap">
     <!-- Row 1: Category chips -->
     <div class="filter-row">
-      <span class="row-label">Category</span>
+      <span class="row-label">カテゴリ</span>
       <div id="cat-chips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
       <div class="search-wrap" style="margin-left:auto">
-        <input id="search" type="text" placeholder="Search..." oninput="applyFilters()">
+        <input id="search" type="text" placeholder="🔍 検索..." oninput="applyFilters()">
       </div>
       <span class="filter-count" id="count"></span>
     </div>
     <!-- Row 2: Brand chips (カテゴリ選択時のみ) -->
     <div class="filter-row" id="brand-row" style="display:none">
-      <span class="row-label">Brand</span>
+      <span class="row-label">ブランド</span>
       <div id="brand-chips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
     </div>
   </div>
@@ -148,7 +148,7 @@ function makeChip(label,active,onClick,isBrand=false){
 
 function buildCatChips(cats){
   const el=document.getElementById('cat-chips');
-  const allBtn=makeChip('All',F.cat==='all',()=>{
+  const allBtn=makeChip('すべて',F.cat==='all',()=>{
     F.cat='all';F.brand='all';
     el.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
     allBtn.classList.add('active');
@@ -174,7 +174,7 @@ function buildBrandChips(cat){
   const el=document.getElementById('brand-chips');
   el.innerHTML='';
   if(!brands.length){hideBrands();return}
-  const allBtn=makeChip('All brands',true,()=>{
+  const allBtn=makeChip('全ブランド',true,()=>{
     F.brand='all';
     el.querySelectorAll('.chip').forEach(b=>b.classList.remove('brand-active'));
     allBtn.classList.add('brand-active');applyFilters();
@@ -223,9 +223,9 @@ function applyFilters(){
     if(F.q&&!(p.title+' '+p.type+' '+(p.brand||'')+' '+(p.seller||'')).toLowerCase().includes(F.q))return false;
     return true;
   });
-  document.getElementById('count').textContent=items.length+' items';
+  document.getElementById('count').textContent=items.length+' 件';
   const grid=document.getElementById('grid');grid.innerHTML='';
-  if(!items.length){grid.innerHTML='<div class="empty">No products found.</div>';return}
+  if(!items.length){grid.innerHTML='<div class="empty">商品が見つかりませんでした</div>';return}
   items.forEach((p,i)=>grid.appendChild(makeCard(p,i)));
 }
 

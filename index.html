@@ -76,15 +76,15 @@ footer a{color:var(--accent);text-decoration:none}
 
 <div id="app" style="display:none">
   <div class="hero">
-    <p class="hero-eye">Rep Community Catalog</p>
-    <h1 class="hero-title">FIND YOUR<br><span>FITS</span></h1>
-    <p class="hero-sub">Vetted sellers &nbsp;·&nbsp; Kakobuy links &nbsp;·&nbsp; QC ready</p>
+    <p class="hero-eye">レプリカ コミュニティ カタログ</p>
+    <h1 class="hero-title">自分だけの<br><span>FITS</span></h1>
+    <p class="hero-sub">厳選セラー &nbsp;·&nbsp; Kakobuyリンク &nbsp;·&nbsp; QC対応</p>
   </div>
 
   <div class="section">
     <div class="section-hdr">
-      <span class="section-title">FEATURED</span>
-      <a class="section-more" href="/catalog.html">View all →</a>
+      <span class="section-title">人気商品</span>
+      <a class="section-more" href="/catalog.html">すべて見る →</a>
     </div>
     <div class="grid" id="featured-grid"></div>
   </div>
@@ -117,7 +117,9 @@ async function init(){
     if(!res.ok)throw new Error();
     const data=await res.json();
     const ALL=data.products||[];
-    const cats=[...new Set(ALL.map(p=>p.type).filter(Boolean))].sort();
+    const CAT_ORDER=["HOODIES", "T-SHIRTS", "SHORTS", "PANTS", "JACKETS", "SWEATERS", "TOPS", "SHIRTS", "BAGS", "ACCESSORIES"];
+    const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
+    const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
 
     // ナビ
     const nc=document.getElementById('nav-cats');
@@ -137,7 +139,7 @@ async function init(){
       const items=shuffle(ALL.filter(p=>p.type===cat)).slice(0,6);
       if(!items.length)return;
       const sec=document.createElement('div');sec.className='section';
-      sec.innerHTML=`<div class="section-hdr"><span class="section-title">${esc(cat.toUpperCase())}</span><a class="section-more" href="/catalog.html?cat=${encodeURIComponent(cat)}">View all →</a></div><div class="grid" id="cg-${esc(cat)}"></div>`;
+      sec.innerHTML=`<div class="section-hdr"><span class="section-title">${esc(cat.toUpperCase())}</span><a class="section-more" href="/catalog.html?cat=${encodeURIComponent(cat)}">すべて見る →</a></div><div class="grid" id="cg-${esc(cat)}"></div>`;
       cs.appendChild(sec);
       const g=sec.querySelector('.grid');
       items.forEach((p,i)=>g.appendChild(makeCard(p,i)));
