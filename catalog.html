@@ -81,7 +81,43 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,.97);backdrop-fil
 .card{animation:fadeIn .18s ease both}
 footer{text-align:center;padding:28px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
 footer a{color:var(--accent);text-decoration:none}
-@media(max-width:768px){.sidebar{display:none}.page{padding:12px}.grid{grid-template-columns:repeat(2,1fr);gap:8px}.nav-right{display:none}}
+@media(max-width:768px){
+  .sidebar{display:none}
+  .page{padding:10px;gap:0}
+  .grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .nav-right{display:none}
+  .mobile-filter-btn{display:flex}
+  .result-bar{flex-direction:column;gap:8px;align-items:flex-start}
+}
+@media(min-width:769px){
+  .mobile-filter-btn{display:none}
+  .drawer-overlay{display:none!important}
+  .drawer{display:none!important}
+}
+/* ── DRAWER（モバイル用） ── */
+.mobile-filter-btn{
+  width:100%;margin-bottom:12px;
+  background:var(--s1);border:1px solid var(--border);border-radius:9px;
+  color:var(--text);font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  padding:11px 16px;cursor:pointer;display:none;align-items:center;justify-content:space-between;
+  transition:border-color .15s;
+}
+.mobile-filter-btn:hover{border-color:var(--border2)}
+.drawer-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.drawer-overlay.open{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;left:0;top:0;bottom:0;width:280px;
+  background:#161616;z-index:301;overflow-y:auto;
+  transform:translateX(-100%);transition:transform .25s ease;
+  padding:20px 16px;display:flex;flex-direction:column;gap:4px;
+}
+.drawer.open{transform:translateX(0)}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.drawer-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--accent)}
+.drawer-close{background:none;border:none;color:var(--muted2);font-size:22px;cursor:pointer;padding:4px}
 </style>
 </head>
 <body>
@@ -99,6 +135,37 @@ footer a{color:var(--accent);text-decoration:none}
 <div id="loading"><div class="spinner"></div><p>読み込み中...</p></div>
 
 <div id="app" style="display:none">
+  <!-- モバイルフィルターボタン -->
+  <div style="max-width:1400px;margin:0 auto;padding:14px 14px 0">
+    <button class="mobile-filter-btn" onclick="openDrawer()">
+      <span>🔍 カテゴリ・ブランドで絞り込む</span>
+      <span style="color:var(--accent);font-size:11px" id="filter-badge"></span>
+    </button>
+  </div>
+
+  <!-- ドロワー -->
+  <div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <span class="drawer-title">絞り込み</span>
+      <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    </div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
+      <div class="sb-title">検索</div>
+      <input class="sb-search" id="search-mobile" type="text" placeholder="キーワード..." oninput="syncSearch(this)">
+    </div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
+      <div class="sb-title">カテゴリ</div>
+      <div class="filter-list" id="cat-list-mobile"></div>
+    </div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px">
+      <div class="sb-title">ブランド</div>
+      <div class="filter-list" id="brand-list-mobile"></div>
+    </div>
+    <button class="btn-reset" onclick="resetFilters()">リセット</button>
+    <button style="width:100%;background:var(--accent);border:none;border-radius:8px;color:#0a0a0a;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;padding:11px;cursor:pointer;margin-top:6px" onclick="closeDrawer()">結果を見る（<span id="drawer-count">0</span>件）</button>
+  </div>
+
   <div class="page">
     <aside class="sidebar">
       <div class="sidebar-block">
@@ -226,6 +293,50 @@ async function init(){
   }
 }
 init();
+
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  buildMobileLists();
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function syncSearch(el){
+  document.getElementById('search').value=el.value;
+  applyFilters();
+}
+function buildMobileLists(){
+  // カテゴリ
+  const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
+  const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
+  const cel=document.getElementById('cat-list-mobile');cel.innerHTML='';
+  cats.forEach(cat=>{
+    const cnt=ALL.filter(p=>p.type===cat).length;
+    const lbl=document.createElement('label');
+    lbl.className='f-item'+(selCats.has(cat)?' active':'');
+    lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selCats.has(cat)?'checked':''} onchange="toggleCat('${cat}',this);buildMobileLists()"><span class="f-label">${esc(cat)}</span><span class="f-count">${cnt}</span>`;
+    cel.appendChild(lbl);
+  });
+  // ブランド
+  const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
+  const brands=[...new Set(src.map(p=>p.brand).filter(Boolean))].sort();
+  const bel=document.getElementById('brand-list-mobile');bel.innerHTML='';
+  brands.forEach(brand=>{
+    const cnt=src.filter(p=>p.brand===brand).length;
+    const lbl=document.createElement('label');
+    lbl.className='f-item'+(selBrands.has(brand)?' active':'');
+    lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selBrands.has(brand)?'checked':''} onchange="toggleBrand('${brand}',this);buildMobileLists()"><span class="f-label">${esc(brand)}</span><span class="f-count">${cnt}</span>`;
+    bel.appendChild(lbl);
+  });
+  // 件数バッジ
+  const total=selCats.size+selBrands.size;
+  document.getElementById('filter-badge').textContent=total?`${total}件選択中`:'';
+  document.getElementById('drawer-count').textContent=getFiltered().length;
+}
 </script>
 </body>
 </html>
