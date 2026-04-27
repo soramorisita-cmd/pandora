@@ -542,8 +542,8 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
       <button class="view-tab active" id="tab-table" onclick="switchView('table')">📋 タイプ編集</button>
       <button class="view-tab" id="tab-kanban" onclick="switchView('kanban')">🗂 カテゴリ移動</button>
     </div>
-    <button class="btn btn-secondary" onclick="openFile()">
-      📂 JSONを開く
+    <button class="btn btn-secondary" onclick="openFolder()">
+      📂 dataフォルダを開く
     </button>
     <button class="btn btn-primary" id="save-btn" onclick="saveJSON()" disabled>
       💾 上書き保存
@@ -553,21 +553,20 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
 
 <main>
   <!-- ドロップゾーン -->
-  <div class="dropzone" id="dropzone" onclick="openFile()">
-    <div class="dropzone-icon">📦</div>
-    <div class="dropzone-title">products.json をドロップ</div>
-    <div class="dropzone-sub">またはクリックしてファイルを選択</div>
+  <div class="dropzone" id="dropzone" onclick="openFolder()">
+    <div class="dropzone-icon">📁</div>
+    <div class="dropzone-title">data フォルダを選択</div>
+    <div class="dropzone-sub">クリックして pandora/data フォルダを開く（Chrome/Edge）</div>
   </div>
 
-  <!-- 使い方 -->
   <div class="instruction" id="instruction">
     <h3>🔧 使い方</h3>
     <ol>
-      <li>上のエリアに <code>products.json</code> をドラッグ&amp;ドロップ</li>
-      <li>「タイプ編集」: ドロップダウンで正しいカテゴリを選択</li>
-      <li>「カテゴリ移動」: カードをドラッグして別のカテゴリ列にドロップ</li>
-      <li>「保存してダウンロード」→ ダウンロードされた <code>products.json</code> を pandora フォルダに上書き</li>
-      <li>ターミナルで <code>git add products.json &amp;&amp; git commit -m "fix types" &amp;&amp; git push</code></li>
+      <li>「dataフォルダを開く」をクリックし、<code>pandora/data</code> フォルダを選択</li>
+      <li>全ブランドのJSONが一括読み込みされます</li>
+      <li>ブランドフィルター・カテゴリフィルター・検索で絞り込んで編集</li>
+      <li>「💾 上書き保存」→ 変更があったブランドのJSONファイルのみ直接上書きされます</li>
+      <li>ターミナルで <code>git add data/ &amp;&amp; git commit -m "fix types" &amp;&amp; git push</code></li>
     </ol>
   </div>
 
@@ -589,6 +588,11 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
       <button class="chip" id="chip-changed" onclick="setFilter('changed', this)">変更済み</button>
       <input class="search-input" id="search" type="text" placeholder="🔍 検索..." oninput="renderTable()">
     </div>
+    <!-- ブランドフィルター -->
+    <div class="filter-bar" id="brand-filter-bar" style="display:none">
+      <span class="filter-label">ブランド</span>
+      <div id="brand-chips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+    </div>
 
     <!-- 一括操作バー -->
     <div class="bulk-bar" id="bulk-bar">
@@ -608,6 +612,7 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
           <tr>
             <th style="width:36px"><div class="cb-wrap"><input type="checkbox" class="row-cb" id="cb-all" onchange="toggleSelectAll(this)"></div></th>
             <th>商品名</th>
+            <th style="width:110px">ブランド</th>
             <th>現在のタイプ</th>
             <th>変更後</th>
             <th>リンク</th>
@@ -649,100 +654,121 @@ const TYPES = [
   "BAGS","ACCESSORIES","Other"
 ];
 
-let data     = null;
-let changes  = {};     // index → new type
-let filter   = 'other';
-let viewMode = 'table'; // 'table' | 'kanban'
-let selectedIndices = new Set(); // bulk select
+// ─── 状態 ───
+let fileHandles  = {};   // filename → FileSystemFileHandle
+let brandData    = {};   // filename → parsed JSON { products:[], updated, ... }
+let allProducts  = [];   // flat: { ...product, _i, _file, _localIdx }
+let changes      = {};   // _i → new type
+let filter       = 'other';
+let activeBrand  = null; // null=全て, or filename
+let viewMode     = 'table';
+let selectedIndices = new Set();
 
 // ─── ドラッグ状態 ───
-let dragIdx      = null;  // dragging product index
-let dragOverCol  = null;  // column type being dragged over
-let placeholder  = null;
+let dragIdx     = null;
+let placeholder = null;
 
-// ─── File System Access API ───
-let fileHandle = null;
+// ══════════════════════════════════════════════════
+//  FILE SYSTEM ACCESS API
+// ══════════════════════════════════════════════════
 
-async function openFile() {
+async function openFolder() {
+  if (!('showDirectoryPicker' in window)) {
+    toast('❌ Chrome/Edge が必要です'); return;
+  }
+  let dirHandle;
   try {
-    if ('showOpenFilePicker' in window) {
-      // File System Access API (Chrome/Edge) — 書き込み権限も取得
-      [fileHandle] = await window.showOpenFilePicker({
-        types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }],
-        multiple: false
-      });
-      const file = await fileHandle.getFile();
-      const text = await file.text();
-      parseAndInit(text);
-    } else {
-      // フォールバック: 旧来のファイル選択
-      const input = document.createElement('input');
-      input.type = 'file'; input.accept = '.json';
-      input.onchange = () => {
-        const reader = new FileReader();
-        reader.onload = e => parseAndInit(e.target.result);
-        reader.readAsText(input.files[0]);
-      };
-      input.click();
-    }
+    dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
   } catch(e) {
-    if (e.name !== 'AbortError') toast('❌ ファイルを開けませんでした');
+    if (e.name !== 'AbortError') toast('❌ フォルダを開けませんでした');
+    return;
   }
-}
 
-function parseAndInit(text) {
-  try {
-    data    = JSON.parse(text);
-    changes = {};
-    selectedIndices.clear();
-    initUI();
-    toast('✅ 読み込み完了: ' + (data.products?.length || 0) + '件', 'success');
-  } catch {
-    toast('❌ JSONの読み込みに失敗しました');
+  fileHandles = {};
+  brandData   = {};
+  allProducts = [];
+  changes     = {};
+  selectedIndices.clear();
+
+  // 全 .json ファイルを読み込む
+  const loadPromises = [];
+  for await (const [name, handle] of dirHandle.entries()) {
+    if (handle.kind === 'file' && name.endsWith('.json')) {
+      loadPromises.push((async () => {
+        const file = await handle.getFile();
+        const text = await file.text();
+        try {
+          const parsed = JSON.parse(text);
+          if (Array.isArray(parsed.products)) {
+            fileHandles[name] = handle;
+            brandData[name]   = parsed;
+          }
+        } catch { /* skip invalid JSON */ }
+      })());
+    }
   }
-}
+  await Promise.all(loadPromises);
 
-// ─── ドラッグ&ドロップ（ファイル読み込み用）───
-const dz = document.getElementById('dropzone');
-dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
-dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
-dz.addEventListener('drop', async e => {
-  e.preventDefault();
-  dz.classList.remove('drag');
-  const file = e.dataTransfer.files[0];
-  if (!file) return;
-  // ドロップではファイルハンドルが取れないのでフォールバック
-  fileHandle = null;
-  const reader = new FileReader();
-  reader.onload = ev => parseAndInit(ev.target.result);
-  reader.readAsText(file);
-  toast('⚠ ドロップでは上書き保存できません。クリックして開いてください', '');
-});
+  if (!Object.keys(fileHandles).length) {
+    toast('❌ productsを持つJSONファイルが見つかりませんでした'); return;
+  }
+
+  // allProducts を構築（グローバルインデックス付き）
+  let globalIdx = 0;
+  for (const fname of Object.keys(brandData).sort()) {
+    brandData[fname].products.forEach((p, localIdx) => {
+      allProducts.push({ ...p, _i: globalIdx, _file: fname, _localIdx: localIdx });
+      globalIdx++;
+    });
+  }
+
+  initUI();
+  toast(`✅ ${Object.keys(fileHandles).length}ブランド / ${allProducts.length}件 読み込み完了`, 'success');
+}
 
 // ─── UI初期化 ───
 function initUI() {
-  const products = data.products || [];
-  const others   = products.filter(p => p.type === 'Other').length;
-  const updated  = data.updated ? new Date(data.updated).toLocaleDateString('ja-JP') : '—';
+  const others  = allProducts.filter(p => (changes[p._i] || p.type) === 'Other').length;
 
-  document.getElementById('stat-total').textContent   = products.length;
+  document.getElementById('stat-total').textContent   = allProducts.length;
   document.getElementById('stat-other').textContent   = others;
   document.getElementById('stat-changed').textContent = 0;
-  document.getElementById('stat-updated').textContent = updated;
+  document.getElementById('stat-updated').textContent = Object.keys(fileHandles).length + 'ブランド';
 
-  document.getElementById('dropzone').style.display   = 'none';
+  document.getElementById('dropzone').style.display    = 'none';
   document.getElementById('instruction').style.display = 'block';
   document.getElementById('stats-bar').style.display   = 'flex';
+  document.getElementById('filter-bar').style.display  = 'flex';
+  document.getElementById('brand-filter-bar').style.display = 'flex';
   document.getElementById('bottom-bar').style.display  = 'flex';
   document.getElementById('save-btn').disabled = false;
   document.getElementById('view-tabs').style.display = 'flex';
 
-  // populate bulk type select
+  // ブランドフィルターチップ
+  const bc = document.getElementById('brand-chips');
+  bc.innerHTML = `<button class="chip active" onclick="setBrand(null,this)">全て</button>`;
+  Object.keys(fileHandles).sort().forEach(fname => {
+    const label = fname.replace('.json','');
+    const count = allProducts.filter(p => p._file === fname).length;
+    bc.innerHTML += `<button class="chip" onclick="setBrand('${esc(fname)}',this)">${esc(label)} <span style="opacity:.6;font-size:10px">${count}</span></button>`;
+  });
+
+  // bulk type select
   const bts = document.getElementById('bulk-type-select');
   bts.innerHTML = '<option value="">選択してください</option>' +
     TYPES.map(t => `<option value="${t}">${t}</option>`).join('');
 
   switchView('table');
+}
+
+// ─── ブランドフィルター ───
+function setBrand(fname, btn) {
+  activeBrand = fname;
+  selectedIndices.clear();
+  document.querySelectorAll('#brand-chips .chip').forEach(c => c.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (viewMode === 'table') renderTable();
+  else renderKanban();
 }
 
 // ─── ビュー切替 ───
@@ -752,13 +778,9 @@ function switchView(mode) {
   updateBulkBar();
   document.getElementById('tab-table').classList.toggle('active', mode === 'table');
   document.getElementById('tab-kanban').classList.toggle('active', mode === 'kanban');
-
-  // table elements
   document.getElementById('filter-bar').style.display  = mode === 'table' ? 'flex'  : 'none';
   document.getElementById('table-wrap').style.display  = mode === 'table' ? 'block' : 'none';
   document.getElementById('table-view').style.display  = 'block';
-
-  // kanban elements
   document.getElementById('kanban-view').style.display = mode === 'kanban' ? 'block' : 'none';
 
   if (mode === 'table') {
@@ -771,7 +793,7 @@ function switchView(mode) {
 // ─── フィルター ───
 function setFilter(f, btn) {
   filter = f;
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active','warn-active'));
+  document.querySelectorAll('#filter-bar .chip').forEach(c => c.classList.remove('active','warn-active'));
   if (!btn) btn = document.getElementById('chip-' + f);
   if (btn) {
     if (f === 'other') btn.classList.add('warn-active');
@@ -782,61 +804,57 @@ function setFilter(f, btn) {
 
 // ─── テーブル描画 ───
 function renderTable() {
-  const products = data.products || [];
-  const q = document.getElementById('search').value.toLowerCase();
+  const q = (document.getElementById('search').value || '').toLowerCase();
 
-  const filtered = products
-    .map((p, i) => ({...p, _i: i}))
-    .filter(p => {
-      const curType = changes.hasOwnProperty(p._i) ? changes[p._i] : p.type;
-      if (filter === 'other'   && curType !== 'Other') return false;
-      if (filter === 'changed' && !changes.hasOwnProperty(p._i)) return false;
-      if (q && !(p.title + ' ' + p.brand + ' ' + p.type).toLowerCase().includes(q)) return false;
-      return true;
-    });
+  const filtered = allProducts.filter(p => {
+    if (activeBrand && p._file !== activeBrand) return false;
+    const curType = changes.hasOwnProperty(p._i) ? changes[p._i] : p.type;
+    if (filter === 'other'   && curType !== 'Other') return false;
+    if (filter === 'changed' && !changes.hasOwnProperty(p._i)) return false;
+    if (q && !(p.title + ' ' + (p.brand||'') + ' ' + p.type + ' ' + p._file).toLowerCase().includes(q)) return false;
+    return true;
+  });
 
   const tbody = document.getElementById('tbody');
   tbody.innerHTML = '';
   document.getElementById('empty').style.display = filtered.length ? 'none' : 'block';
 
-  filtered.forEach((p) => {
+  filtered.forEach(p => {
     const currentType = changes.hasOwnProperty(p._i) ? changes[p._i] : p.type;
     const isOther     = currentType === 'Other';
     const isChanged   = changes.hasOwnProperty(p._i);
     const isSelected  = selectedIndices.has(p._i);
+    const brandLabel  = p._file.replace('.json','');
 
     const tr = document.createElement('tr');
     if (isSelected) tr.classList.add('selected-row');
     tr.innerHTML = `
-      <td><div class="cb-wrap"><input type="checkbox" class="row-cb" data-idx="${p._i}" ${isSelected ? 'checked' : ''} onchange="toggleRow(${p._i}, this)"></div></td>
+      <td><div class="cb-wrap"><input type="checkbox" class="row-cb" data-idx="${p._i}" ${isSelected?'checked':''} onchange="toggleRow(${p._i},this)"></div></td>
       <td class="title-cell">
         <span class="title-text" title="${esc(p.title)}">${esc(cleanTitle(p.title))}</span>
         <span class="title-seller">${esc(p.brand || p.seller || '')}</span>
       </td>
+      <td><span style="font-size:10px;font-weight:700;color:var(--muted2);letter-spacing:.5px">${esc(brandLabel)}</span></td>
+      <td><span class="type-badge ${isOther?'badge-other':'badge-set'}">${esc(p.type)}</span></td>
       <td>
-        <span class="type-badge ${isOther ? 'badge-other' : 'badge-set'}">${esc(p.type)}</span>
-      </td>
-      <td>
-        <select class="type-select ${isChanged ? 'changed' : ''}"
-                data-idx="${p._i}"
-                onchange="onChange(${p._i}, this)">
-          ${TYPES.map(t => `<option value="${t}" ${currentType===t?'selected':''}>${t}</option>`).join('')}
+        <select class="type-select ${isChanged?'changed':''}" data-idx="${p._i}" onchange="onChange(${p._i},this)">
+          ${TYPES.map(t=>`<option value="${t}" ${currentType===t?'selected':''}>${t}</option>`).join('')}
         </select>
       </td>
       <td style="display:flex;gap:5px;flex-wrap:wrap">
-        ${p.yupoo   ? `<a class="link-btn" href="${esc(p.yupoo)}"   target="_blank">Yupoo</a>`   : ''}
-        ${p.kakobuy ? `<a class="link-btn" href="${esc(p.kakobuy)}" target="_blank">Kakobuy</a>` : ''}
-        ${p.purchase? `<a class="link-btn" href="${esc(p.purchase)}" target="_blank">購入先</a>` : ''}
+        ${p.yupoo   ?`<a class="link-btn" href="${esc(p.yupoo)}"   target="_blank">Yupoo</a>`:''}
+        ${p.kakobuy ?`<a class="link-btn" href="${esc(p.kakobuy)}" target="_blank">Kakobuy</a>`:''}
+        ${p.purchase?`<a class="link-btn" href="${esc(p.purchase)}" target="_blank">購入先</a>`:''}
       </td>
     `;
     tbody.appendChild(tr);
   });
 
-  // sync select-all checkbox
+  // select-all checkbox sync
   const allCbs = [...tbody.querySelectorAll('.row-cb')];
-  const cbAll = document.getElementById('cb-all');
+  const cbAll  = document.getElementById('cb-all');
   if (cbAll && allCbs.length) {
-    cbAll.checked = allCbs.length > 0 && allCbs.every(cb => selectedIndices.has(parseInt(cb.dataset.idx)));
+    cbAll.checked = allCbs.every(cb => selectedIndices.has(parseInt(cb.dataset.idx)));
     cbAll.indeterminate = !cbAll.checked && allCbs.some(cb => selectedIndices.has(parseInt(cb.dataset.idx)));
   }
 
@@ -846,8 +864,9 @@ function renderTable() {
 
 // ─── 変更処理 ───
 function onChange(idx, select) {
-  const orig = data.products[idx].type;
-  if (select.value === orig) {
+  const p = allProducts[idx];
+  const origType = p.type;
+  if (select.value === origType) {
     delete changes[idx];
     select.classList.remove('changed');
   } else {
@@ -864,10 +883,7 @@ function updateStats() {
   const n = Object.keys(changes).length;
   document.getElementById('stat-changed').textContent = n;
   document.getElementById('change-num').textContent   = n;
-
-  // update Other count
-  const products = data.products || [];
-  const others = products.filter((p, i) => (changes[i] || p.type) === 'Other').length;
+  const others = allProducts.filter(p => (changes[p._i] !== undefined ? changes[p._i] : p.type) === 'Other').length;
   document.getElementById('stat-other').textContent = others;
 }
 
@@ -880,214 +896,14 @@ function resetChanges() {
   toast('変更をリセットしました');
 }
 
-// ─── 保存 ───
-async function saveJSON() {
-  if (!data) return;
-  const products = data.products.map((p, i) =>
-    changes.hasOwnProperty(i) ? {...p, type: changes[i]} : p
-  );
-  const out = {
-    ...data,
-    updated: new Date().toISOString().slice(0, 19),
-    count:   products.length,
-    products,
-  };
-  const json = JSON.stringify(out, null, 2);
-
-  if (fileHandle) {
-    // File System Access API — 直接上書き
-    try {
-      const writable = await fileHandle.createWritable();
-      await writable.write(json);
-      await writable.close();
-      changes = {}; data = out;
-      selectedIndices.clear();
-      if (viewMode === 'table') renderTable();
-      else renderKanban();
-      toast('✅ products.json を上書き保存しました！', 'success');
-    } catch(e) {
-      toast('❌ 保存に失敗しました: ' + e.message);
-    }
-  } else {
-    // フォールバック: ダウンロード
-    const blob = new Blob([json], {type: 'application/json'});
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href = url; a.download = 'products.json'; a.click();
-    URL.revokeObjectURL(url);
-    changes = {}; data = out;
-    selectedIndices.clear();
-    if (viewMode === 'table') renderTable();
-    else renderKanban();
-    toast('✅ products.json をダウンロードしました（クリックで開くと次回から上書き保存に）', 'success');
-  }
-}
-
-// ══════════════════════════════════════════════════════
-//  KANBAN
-// ══════════════════════════════════════════════════════
-
-function renderKanban() {
-  if (!data) return;
-  const products = data.products || [];
-  const q = (document.getElementById('kanban-search')?.value || '').toLowerCase();
-  const board = document.getElementById('kanban-board');
-  board.innerHTML = '';
-
-  // Build columns for all TYPES
-  TYPES.forEach(type => {
-    const col = document.createElement('div');
-    col.className = 'kanban-col';
-    col.dataset.type = type;
-
-    // gather items for this column (use current effective type)
-    const items = products
-      .map((p, i) => ({...p, _i: i, _eff: changes.hasOwnProperty(i) ? changes[i] : p.type}))
-      .filter(p => p._eff === type)
-      .filter(p => !q || (p.title + ' ' + (p.brand||'')).toLowerCase().includes(q));
-
-    const head = document.createElement('div');
-    head.className = 'kanban-col-head';
-    head.innerHTML = `
-      <span class="kanban-col-name">${esc(type)}</span>
-      <span class="kanban-col-count" id="kcount-${esc(type)}">${items.length}</span>
-    `;
-    col.appendChild(head);
-
-    const cards = document.createElement('div');
-    cards.className = 'kanban-cards';
-    cards.dataset.type = type;
-
-    // drag-over events on card container
-    cards.addEventListener('dragover', onCardDragOver);
-    cards.addEventListener('dragleave', onCardDragLeave);
-    cards.addEventListener('drop', onCardDrop);
-
-    items.forEach(p => {
-      cards.appendChild(makeKCard(p));
-    });
-
-    col.appendChild(cards);
-    board.appendChild(col);
-  });
-}
-
-function makeKCard(p) {
-  const card = document.createElement('div');
-  card.className = 'kcard' + (changes.hasOwnProperty(p._i) ? ' changed-card' : '');
-  card.draggable = true;
-  card.dataset.idx = p._i;
-
-  const hasImg = p.image && !p.image.startsWith('http') || (p.image && p.image.startsWith('images/'));
-  // We can't load local images in browser context, so just show no-img placeholder for local paths
-  const imgIsLocal = p.image && !p.image.startsWith('http');
-
-  let imgHtml = '';
-  if (p.image && p.image.startsWith('http')) {
-    imgHtml = `<img class="kcard-thumb" src="${esc(p.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`;
-  }
-  // skip local image paths (can't load from file:// in browser)
-
-  card.innerHTML = `
-    ${imgHtml}
-    <div class="kcard-drag-hint">⠿</div>
-    ${p.brand ? `<div class="kcard-brand">${esc(p.brand)}</div>` : ''}
-    <div class="kcard-title">${esc(cleanTitle(p.title))}</div>
-  `;
-
-  card.addEventListener('dragstart', onCardDragStart);
-  card.addEventListener('dragend', onCardDragEnd);
-  return card;
-}
-
-// ─── drag events ───
-function onCardDragStart(e) {
-  dragIdx = parseInt(this.dataset.idx);
-  this.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/plain', dragIdx);
-}
-
-function onCardDragEnd(e) {
-  this.classList.remove('dragging');
-  removePlaceholder();
-  // remove all drag-over highlights
-  document.querySelectorAll('.kanban-col').forEach(c => c.classList.remove('drag-over'));
-  dragIdx = null;
-}
-
-function onCardDragOver(e) {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = 'move';
-  const col = this.closest('.kanban-col');
-  if (col) col.classList.add('drag-over');
-  showPlaceholder(this, e);
-}
-
-function onCardDragLeave(e) {
-  // only remove if leaving the container entirely
-  if (!this.contains(e.relatedTarget)) {
-    const col = this.closest('.kanban-col');
-    if (col) col.classList.remove('drag-over');
-    removePlaceholder();
-  }
-}
-
-function onCardDrop(e) {
-  e.preventDefault();
-  const targetType = this.dataset.type;
-  const col = this.closest('.kanban-col');
-  if (col) col.classList.remove('drag-over');
-  removePlaceholder();
-
-  if (dragIdx === null || !targetType) return;
-
-  const origType = data.products[dragIdx].type;
-  if (targetType === origType) {
-    delete changes[dragIdx];
-  } else {
-    changes[dragIdx] = targetType;
-  }
-
-  updateStats();
-  renderKanban();
-  toast(`✅ → ${targetType}`, 'success');
-}
-
-function showPlaceholder(container, e) {
-  removePlaceholder();
-  placeholder = document.createElement('div');
-  placeholder.className = 'kanban-placeholder';
-
-  // find closest card to insert before
-  const cards = [...container.querySelectorAll('.kcard:not(.dragging)')];
-  let insertBefore = null;
-  for (const card of cards) {
-    const rect = card.getBoundingClientRect();
-    if (e.clientY < rect.top + rect.height / 2) {
-      insertBefore = card;
-      break;
-    }
-  }
-  container.insertBefore(placeholder, insertBefore);
-}
-
-function removePlaceholder() {
-  if (placeholder && placeholder.parentNode) {
-    placeholder.parentNode.removeChild(placeholder);
-  }
-  placeholder = null;
-}
-
 // ─── 一括選択 ───
 function toggleRow(idx, cb) {
   if (cb.checked) selectedIndices.add(idx);
   else selectedIndices.delete(idx);
   const tr = cb.closest('tr');
   if (tr) tr.classList.toggle('selected-row', cb.checked);
-  // update select-all state
   const allCbs = [...document.querySelectorAll('#tbody .row-cb')];
-  const cbAll = document.getElementById('cb-all');
+  const cbAll  = document.getElementById('cb-all');
   if (cbAll) {
     cbAll.checked = allCbs.length > 0 && allCbs.every(c => selectedIndices.has(parseInt(c.dataset.idx)));
     cbAll.indeterminate = !cbAll.checked && allCbs.some(c => selectedIndices.has(parseInt(c.dataset.idx)));
@@ -1109,37 +925,198 @@ function toggleSelectAll(cbAll) {
 }
 
 function updateBulkBar() {
-  const bar = document.getElementById('bulk-bar');
+  const bar   = document.getElementById('bulk-bar');
   const count = selectedIndices.size;
-  if (count > 0) {
-    bar.classList.add('visible');
-    document.getElementById('bulk-count').textContent = `${count}件選択中`;
-  } else {
-    bar.classList.remove('visible');
-  }
+  bar.classList.toggle('visible', count > 0);
+  if (count > 0) document.getElementById('bulk-count').textContent = `${count}件選択中`;
 }
 
-function clearSelection() {
-  selectedIndices.clear();
-  renderTable();
-}
+function clearSelection() { selectedIndices.clear(); renderTable(); }
 
 function applyBulk() {
   const targetType = document.getElementById('bulk-type-select').value;
   if (!targetType) { toast('カテゴリを選択してください'); return; }
   if (!selectedIndices.size) return;
-
   selectedIndices.forEach(idx => {
-    const origType = data.products[idx].type;
+    const origType = allProducts[idx].type;
     if (targetType === origType) delete changes[idx];
     else changes[idx] = targetType;
   });
-
   const count = selectedIndices.size;
   selectedIndices.clear();
   updateStats();
   renderTable();
   toast(`✅ ${count}件 → ${targetType} に移動しました`, 'success');
+}
+
+// ─── 保存（ブランドファイルごとに個別書き込み）───
+async function saveJSON() {
+  if (!allProducts.length) return;
+
+  // どのファイルが変更されているか集計
+  const changedFiles = new Set();
+  Object.keys(changes).forEach(idx => changedFiles.add(allProducts[idx]._file));
+
+  if (!changedFiles.size) { toast('変更がありません'); return; }
+
+  const now = new Date().toISOString().slice(0,19);
+  let savedCount = 0;
+
+  for (const fname of changedFiles) {
+    const handle = fileHandles[fname];
+    if (!handle) continue;
+
+    // このファイルの products を再構築
+    const fileProducts = allProducts
+      .filter(p => p._file === fname)
+      .map(p => {
+        const { _i, _file, _localIdx, ...clean } = p;
+        return changes.hasOwnProperty(_i) ? { ...clean, type: changes[_i] } : clean;
+      });
+
+    const out = { ...brandData[fname], products: fileProducts, updated: now, count: fileProducts.length };
+    const json = JSON.stringify(out, null, 2);
+
+    try {
+      const writable = await handle.createWritable();
+      await writable.write(json);
+      await writable.close();
+      // メモリ上も更新
+      brandData[fname] = out;
+      savedCount++;
+    } catch(e) {
+      toast(`❌ ${fname} の保存失敗: ${e.message}`); return;
+    }
+  }
+
+  // allProducts も更新（typeを反映）
+  allProducts = allProducts.map(p => {
+    if (changes.hasOwnProperty(p._i)) return { ...p, type: changes[p._i] };
+    return p;
+  });
+
+  changes = {};
+  selectedIndices.clear();
+  if (viewMode === 'table') renderTable();
+  else renderKanban();
+  toast(`✅ ${savedCount}ファイル上書き保存しました`, 'success');
+}
+
+// ══════════════════════════════════════════════════
+//  KANBAN
+// ══════════════════════════════════════════════════
+
+function renderKanban() {
+  if (!allProducts.length) return;
+  const q = (document.getElementById('kanban-search')?.value || '').toLowerCase();
+  const board = document.getElementById('kanban-board');
+  board.innerHTML = '';
+
+  TYPES.forEach(type => {
+    const col = document.createElement('div');
+    col.className = 'kanban-col';
+    col.dataset.type = type;
+
+    const items = allProducts
+      .filter(p => {
+        if (activeBrand && p._file !== activeBrand) return false;
+        const eff = changes.hasOwnProperty(p._i) ? changes[p._i] : p.type;
+        if (eff !== type) return false;
+        if (q && !(p.title + ' ' + (p.brand||'')).toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+    col.innerHTML = `
+      <div class="kanban-col-head">
+        <span class="kanban-col-name">${esc(type)}</span>
+        <span class="kanban-col-count">${items.length}</span>
+      </div>`;
+
+    const cards = document.createElement('div');
+    cards.className = 'kanban-cards';
+    cards.dataset.type = type;
+    cards.addEventListener('dragover',  onCardDragOver);
+    cards.addEventListener('dragleave', onCardDragLeave);
+    cards.addEventListener('drop',      onCardDrop);
+
+    items.forEach(p => cards.appendChild(makeKCard(p)));
+    col.appendChild(cards);
+    board.appendChild(col);
+  });
+}
+
+function makeKCard(p) {
+  const card = document.createElement('div');
+  card.className = 'kcard' + (changes.hasOwnProperty(p._i) ? ' changed-card' : '');
+  card.draggable = true;
+  card.dataset.idx = p._i;
+  const imgHtml = (p.image && p.image.startsWith('http'))
+    ? `<img class="kcard-thumb" src="${esc(p.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`
+    : '';
+  card.innerHTML = `
+    ${imgHtml}
+    <div class="kcard-drag-hint">⠿</div>
+    ${p.brand ? `<div class="kcard-brand">${esc(p.brand)}</div>` : ''}
+    <div class="kcard-title">${esc(cleanTitle(p.title))}</div>
+    <div style="font-size:9px;color:var(--muted);margin-top:4px">${esc(p._file.replace('.json',''))}</div>
+  `;
+  card.addEventListener('dragstart', onCardDragStart);
+  card.addEventListener('dragend',   onCardDragEnd);
+  return card;
+}
+
+function onCardDragStart(e) {
+  dragIdx = parseInt(this.dataset.idx);
+  this.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onCardDragEnd() {
+  this.classList.remove('dragging');
+  removePlaceholder();
+  document.querySelectorAll('.kanban-col').forEach(c => c.classList.remove('drag-over'));
+  dragIdx = null;
+}
+function onCardDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  this.closest('.kanban-col')?.classList.add('drag-over');
+  showPlaceholder(this, e);
+}
+function onCardDragLeave(e) {
+  if (!this.contains(e.relatedTarget)) {
+    this.closest('.kanban-col')?.classList.remove('drag-over');
+    removePlaceholder();
+  }
+}
+function onCardDrop(e) {
+  e.preventDefault();
+  const targetType = this.dataset.type;
+  this.closest('.kanban-col')?.classList.remove('drag-over');
+  removePlaceholder();
+  if (dragIdx === null || !targetType) return;
+  const origType = allProducts[dragIdx].type;
+  if (targetType === origType) delete changes[dragIdx];
+  else changes[dragIdx] = targetType;
+  updateStats();
+  renderKanban();
+  toast(`✅ → ${targetType}`, 'success');
+}
+function showPlaceholder(container, e) {
+  removePlaceholder();
+  placeholder = document.createElement('div');
+  placeholder.className = 'kanban-placeholder';
+  const cards = [...container.querySelectorAll('.kcard:not(.dragging)')];
+  let insertBefore = null;
+  for (const card of cards) {
+    if (e.clientY < card.getBoundingClientRect().top + card.getBoundingClientRect().height / 2) {
+      insertBefore = card; break;
+    }
+  }
+  container.insertBefore(placeholder, insertBefore);
+}
+function removePlaceholder() {
+  placeholder?.parentNode?.removeChild(placeholder);
+  placeholder = null;
 }
 
 // ─── ユーティリティ ───
@@ -1149,11 +1126,9 @@ function cleanTitle(raw) {
   s = s.replace(/[\u4e00-\u9fff\u3400-\u4dbf]{2,}[^\u0000-\u007f]*/g, '');
   return s.replace(/\s{2,}/g, ' ').replace(/[-\s]+$/, '').trim() || raw;
 }
-
 function esc(s) {
-  return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
-
 function toast(msg, type='') {
   const el = document.getElementById('toast');
   el.textContent = msg;
@@ -1161,9 +1136,15 @@ function toast(msg, type='') {
   setTimeout(() => el.classList.remove('show'), 2800);
 }
 
-// 初期フィルター
+// 初期状態
 document.getElementById('chip-other').classList.add('warn-active');
 document.getElementById('instruction').style.display = 'block';
+
+// ドロップゾーン（ファイルドロップは非対応を明示）
+const dz = document.getElementById('dropzone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); toast('フォルダはクリックで選択してください'); });
 </script>
 </body>
 </html>
