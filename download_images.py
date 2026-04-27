@@ -3,11 +3,12 @@
 download_images.py
 ──────────────────
 products.json の画像URLをダウンロードして images/ フォルダに保存し、
-products.json のパスをローカルパスに書き換えてgit pushする。
+products.json と data/*.json の両方にローカルパスを書き戻してgit pushする。
 
 使い方:
   python download_images.py
   python download_images.py --no-push
+  python download_images.py --refetch   # 画像なし商品をYupooから再取得
 """
 
 import argparse, hashlib, json, subprocess, time
@@ -16,8 +17,10 @@ from urllib.parse import urlparse
 
 import requests
 
-PRODUCTS_JSON = Path(__file__).parent / "products.json"
-IMAGES_DIR    = Path(__file__).parent / "images"
+ROOT          = Path(__file__).parent
+PRODUCTS_JSON = ROOT / "products.json"
+DATA_DIR      = ROOT / "data"
+IMAGES_DIR    = ROOT / "images"
 IMAGES_DIR.mkdir(exist_ok=True)
 
 HEADERS = {
@@ -26,23 +29,15 @@ HEADERS = {
 }
 
 def url_to_filename(url: str) -> str:
-    """URLからファイル名を生成（拡張子保持）"""
-    parsed = urlparse(url)
-    path   = parsed.path  # 例: /angelking47/f2d7270612/medium.jpg
-    parts  = path.strip("/").split("/")
-    # ハッシュ部分をファイル名に使用
-    key    = hashlib.md5(url.encode()).hexdigest()[:10]
-    ext    = Path(parts[-1]).suffix or ".jpg"
+    key = hashlib.md5(url.encode()).hexdigest()[:10]
+    ext = Path(urlparse(url).path).suffix or ".jpg"
     return f"{key}{ext}"
 
 def download_image(url: str) -> str | None:
-    """画像をダウンロードしてローカルパスを返す"""
     fname = url_to_filename(url)
     fpath = IMAGES_DIR / fname
-
     if fpath.exists():
         return f"images/{fname}"
-
     try:
         r = requests.get(url, headers=HEADERS, timeout=15, stream=True)
         if r.status_code == 200:
@@ -55,19 +50,44 @@ def download_image(url: str) -> str | None:
         print(f"  ❌ {e}: {url[:60]}")
         return None
 
+def write_back_to_data(image_map: dict):
+    """
+    image_map: { yupoo_or_kakobuy_url: local_image_path }
+    data/*.json の各商品に画像パスを書き戻す
+    """
+    updated_files = 0
+    for path in sorted(DATA_DIR.glob("*.json")):
+        try:
+            data     = json.loads(path.read_text("utf-8"))
+            products = data.get("products", [])
+            changed  = 0
+            for p in products:
+                for key_field in ("yupoo", "kakobuy", "purchase"):
+                    key = p.get(key_field)
+                    if key and key in image_map:
+                        p["image"] = image_map[key]
+                        changed += 1
+                        break
+            if changed:
+                data["products"] = products
+                path.write_text(json.dumps(data, ensure_ascii=False, indent=2), "utf-8")
+                print(f"  💾 {path.name}: {changed}件 書き戻し")
+                updated_files += 1
+        except Exception as e:
+            print(f"  ⚠ {path.name} スキップ: {e}")
+    return updated_files
+
 def git_push(msg: str):
-    repo = Path(__file__).parent
     for cmd in [
-        ["git", "add", "images/", "products.json"],
+        ["git", "add", "images/", "products.json", "data/"],
         ["git", "commit", "-m", msg],
         ["git", "push"],
     ]:
-        r = subprocess.run(cmd, cwd=repo, capture_output=True, text=True)
+        r = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
         ok = r.returncode == 0 or "nothing to commit" in r.stdout
         print(f"  {'✓' if ok else '⚠'} {' '.join(cmd)}")
 
 async def refetch_missing_images(products: list) -> int:
-    """画像URLが空の商品をYupooから再取得する"""
     missing = [(i, p) for i, p in enumerate(products)
                if not p.get("image") or p["image"] in (None, "", "None", "null")]
     if not missing:
@@ -78,7 +98,7 @@ async def refetch_missing_images(products: list) -> int:
     refetched = 0
 
     from playwright.async_api import async_playwright
-    from bs4 import BeautifulSoup
+    import asyncio
 
     async with async_playwright() as pw:
         browser = await pw.chromium.launch(headless=True)
@@ -92,7 +112,6 @@ async def refetch_missing_images(products: list) -> int:
             print(f"  [{n:03d}/{len(missing)}] {p['title'][:45]}", end="\r")
             try:
                 await page.goto(yupoo_url, wait_until="networkidle", timeout=35000)
-                import asyncio
                 await asyncio.sleep(2)
                 hrefs = await page.eval_on_selector_all(
                     "img",
@@ -118,35 +137,39 @@ async def refetch_missing_images(products: list) -> int:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--no-push",  action="store_true", help="Git pushをスキップ")
-    parser.add_argument("--refetch",  action="store_true", help="画像なし商品をYupooから再取得")
+    parser.add_argument("--no-push", action="store_true")
+    parser.add_argument("--refetch", action="store_true")
     args = parser.parse_args()
 
     data     = json.loads(PRODUCTS_JSON.read_text("utf-8"))
     products = data["products"]
 
-    # --refetch: 画像URLが空の商品をYupooから再取得
     if args.refetch:
         import asyncio
         asyncio.run(refetch_missing_images(products))
-        # 再取得後にダウンロードへ続く
 
-    # 画像URLがあるものだけダウンロード対象
+    # 画像URLがあるものをダウンロード
     targets = [(i, p) for i, p in enumerate(products)
                if p.get("image") and isinstance(p["image"], str)
                and p["image"].startswith("http")]
 
+    downloaded = 0
+    skipped    = 0
+    image_map  = {}  # { url_key: local_path } — data/*.json 書き戻し用
+
     if targets:
         print(f"\n🖼  画像ダウンロード: {len(targets)}件\n")
-        downloaded = 0
-        skipped    = 0
-
         for n, (i, p) in enumerate(targets, 1):
             url = p["image"]
             print(f"  [{n:03d}/{len(targets)}] {url[30:70]}", end="\r")
             local_path = download_image(url)
             if local_path:
                 products[i]["image"] = local_path
+                # URL → ローカルパスのマップを記録
+                for key_field in ("yupoo", "kakobuy", "purchase"):
+                    key = p.get(key_field)
+                    if key:
+                        image_map[key] = local_path
                 downloaded += 1
             else:
                 skipped += 1
@@ -162,16 +185,21 @@ def main():
     PRODUCTS_JSON.write_text(json.dumps(data, ensure_ascii=False, indent=2), "utf-8")
     print(f"💾 products.json 更新完了")
 
+    # data/*.json にも画像パスを書き戻す
+    if image_map:
+        print(f"\n📂 data/*.json に画像パスを書き戻し中...")
+        write_back_to_data(image_map)
+
     if downloaded == 0 and not args.refetch:
         print("（新規ダウンロードなし）")
         return
 
     if not args.no_push:
         print(f"\n📤 Git push...")
-        git_push(f"update product images")
+        git_push("update product images")
         print(f"\n🌐 約30秒後に反映: https://pandora-doj.pages.dev")
     else:
-        print("\n反映するには: git add images/ products.json && git commit -m 'images' && git push")
+        print("\n反映するには: git add images/ products.json data/ && git commit -m 'images' && git push")
 
 if __name__ == "__main__":
     main()
