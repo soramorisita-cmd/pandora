@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PANDORA Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0f;
+  --s1: #13131a;
+  --s2: #1a1a24;
+  --s3: #22222f;
+  --border: rgba(255,255,255,.07);
+  --border2: rgba(255,255,255,.15);
+  --text: #e8e8f0;
+  --muted: #55556a;
+  --muted2: #8888a0;
+  --accent: #c8f03c;
+  --accent2: #9fc02a;
+  --danger: #f87171;
+  --warning: #fbbf24;
+  --success: #4ade80;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── HEADER ── */
+header {
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; color: var(--accent); }
+.logo span { color: var(--muted2); font-size: 13px; letter-spacing: 1px; margin-left: 12px; font-family: 'Syne', sans-serif; font-weight: 600; }
+.header-actions { display: flex; gap: 10px; align-items: center; }
+
+/* ── VIEW TABS ── */
+.view-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 3px;
+}
+.view-tab {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: .5px;
+  background: transparent;
+  color: var(--muted2);
+}
+.view-tab.active { background: var(--accent); color: #0c0c0f; }
+.view-tab:not(.active):hover { color: var(--text); background: var(--s3); }
+
+/* ── BUTTONS ── */
+.btn {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all .15s;
+  letter-spacing: .5px;
+}
+.btn-primary { background: var(--accent); color: #0c0c0f; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent2); }
+.btn-secondary { background: transparent; color: var(--text); }
+.btn-secondary:hover { background: var(--s2); border-color: var(--border2); }
+.btn-danger { background: rgba(248,113,113,.12); color: var(--danger); border-color: rgba(248,113,113,.25); }
+.btn-danger:hover { background: rgba(248,113,113,.2); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── MAIN LAYOUT ── */
+main { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
+
+/* ── DROP ZONE ── */
+.dropzone {
+  border: 2px dashed var(--border2);
+  border-radius: 16px;
+  padding: 48px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+  margin-bottom: 28px;
+}
+.dropzone:hover, .dropzone.drag { border-color: var(--accent); background: rgba(200,240,60,.04); }
+.dropzone-icon { font-size: 40px; margin-bottom: 12px; }
+.dropzone-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--text); margin-bottom: 6px; }
+.dropzone-sub { font-size: 13px; color: var(--muted2); }
+.dropzone input { display: none; }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.stat {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 120px;
+}
+.stat-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted2); }
+.stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; line-height: 1; }
+.stat-value.accent { color: var(--accent); }
+.stat-value.warning { color: var(--warning); }
+.stat-value.success { color: var(--success); }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.filter-label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.chip {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted2);
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .12s;
+}
+.chip:hover { border-color: var(--border2); color: var(--text); }
+.chip.active { background: var(--accent); color: #0c0c0f; border-color: var(--accent); }
+.chip.warn-active { background: rgba(251,191,36,.15); color: var(--warning); border-color: rgba(251,191,36,.35); }
+.search-input {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  padding: 6px 12px;
+  outline: none;
+  width: 200px;
+  margin-left: auto;
+  transition: border-color .2s;
+}
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--muted); }
+
+/* ── TABLE ── */
+.table-wrap { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  background: var(--s2);
+  padding: 11px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted2);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: rgba(255,255,255,.02); }
+tbody td { padding: 10px 14px; font-size: 12px; vertical-align: middle; }
+
+.title-cell { max-width: 280px; }
+.title-text {
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+  display: block;
+}
+.title-seller { font-size: 10px; color: var(--muted2); margin-top: 2px; }
+
+.type-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+.badge-other { background: rgba(248,113,113,.12); color: var(--danger); border: 1px solid rgba(248,113,113,.2); }
+.badge-set { background: rgba(200,240,60,.1); color: var(--accent); border: 1px solid rgba(200,240,60,.2); }
+
+.type-select {
+  background: var(--s3);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color .15s;
+  width: 140px;
+}
+.type-select:focus { border-color: var(--accent); }
+.type-select.changed { border-color: var(--accent); background: rgba(200,240,60,.06); }
+
+.link-btn {
+  font-size: 11px;
+  color: var(--muted2);
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  transition: all .15s;
+  white-space: nowrap;
+}
+.link-btn:hover { color: var(--accent); border-color: rgba(200,240,60,.3); }
+
+/* ── CHECKBOX ── */
+.cb-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+}
+input[type="checkbox"].row-cb {
+  width: 15px; height: 15px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  border-radius: 3px;
+}
+tbody tr.selected-row { background: rgba(200,240,60,.04); }
+
+/* ── BULK ACTION BAR ── */
+.bulk-bar {
+  position: sticky;
+  top: 56px;
+  z-index: 90;
+  background: rgba(19,19,26,.97);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(200,240,60,.25);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 12px;
+  display: none;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.4);
+}
+.bulk-bar.visible { display: flex; }
+.bulk-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.bulk-label {
+  font-size: 12px;
+  color: var(--muted2);
+  white-space: nowrap;
+}
+.bulk-select {
+  background: var(--s3);
+  border: 1px solid var(--border2);
+  border-radius: 7px;
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color .15s;
+  width: 150px;
+}
+.bulk-select:focus { border-color: var(--accent); }
+.bulk-apply {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 18px;
+  border-radius: 7px;
+  background: var(--accent);
+  color: #0c0c0f;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s;
+}
+.bulk-apply:hover { background: var(--accent2); }
+.bulk-clear {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all .15s;
+  margin-left: auto;
+}
+.bulk-clear:hover { color: var(--text); border-color: var(--border2); }
+
+/* ── KANBAN ── */
+#kanban-wrap {
+  display: none;
+  overflow-x: auto;
+  padding-bottom: 80px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--s3) transparent;
+}
+#kanban-wrap::-webkit-scrollbar { height: 6px; }
+#kanban-wrap::-webkit-scrollbar-track { background: transparent; }
+#kanban-wrap::-webkit-scrollbar-thumb { background: var(--s3); border-radius: 3px; }
+.kanban-board {
+  display: flex;
+  gap: 12px;
+  min-width: max-content;
+  padding: 4px 2px 8px;
+}
+.kanban-col {
+  width: 224px;
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: border-color .15s;
+}
+.kanban-col.drag-over {
+  border-color: var(--accent);
+  background: rgba(200,240,60,.04);
+}
+.kanban-col-head {
+  padding: 11px 14px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.kanban-col-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+.kanban-col-count {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted2);
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 8px;
+  min-width: 26px;
+  text-align: center;
+}
+.kanban-cards {
+  flex: 1;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 60px;
+}
+/* drop placeholder */
+.kanban-placeholder {
+  height: 52px;
+  border: 2px dashed var(--accent);
+  border-radius: 8px;
+  background: rgba(200,240,60,.04);
+  pointer-events: none;
+}
+.kcard {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 10px;
+  cursor: grab;
+  transition: border-color .12s, box-shadow .12s, opacity .12s;
+  user-select: none;
+  position: relative;
+}
+.kcard:hover { border-color: var(--border2); box-shadow: 0 2px 12px rgba(0,0,0,.3); }
+.kcard.dragging { opacity: .35; cursor: grabbing; }
+.kcard.changed-card { border-left: 2px solid var(--accent); }
+.kcard-brand {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.kcard-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.kcard-thumb {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 7px;
+  background: var(--s3);
+  display: block;
+}
+.kcard-no-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--s3);
+  border-radius: 5px;
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kcard-no-img span { font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+.kcard-drag-hint {
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  font-size: 12px;
+  opacity: .25;
+  pointer-events: none;
+}
+
+/* kanban search */
+.kanban-search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.kanban-search-row .search-input { margin-left: 0; }
+.kanban-info {
+  font-size: 12px;
+  color: var(--muted2);
+}
+
+/* ── BOTTOM BAR ── */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(12,12,15,.96);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  z-index: 100;
+}
+.change-count { font-size: 13px; color: var(--muted2); }
+.change-count span { color: var(--accent); font-weight: 700; }
+
+/* ── EMPTY / TOAST ── */
+.empty { text-align: center; padding: 48px; color: var(--muted); font-size: 14px; }
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all .3s;
+  pointer-events: none;
+  z-index: 200;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { border-color: rgba(74,222,128,.3); color: var(--success); }
+
+/* ── INSTRUCTION ── */
+.instruction {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  display: none;
+}
+.instruction h3 { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.instruction ol { padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+.instruction li { font-size: 13px; color: var(--muted2); line-height: 1.6; }
+.instruction code { background: var(--s3); color: var(--text); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">PANDORA <span>ADMIN</span></div>
+  <div class="header-actions">
+    <!-- View tabs (shown after file load) -->
+    <div class="view-tabs" id="view-tabs" style="display:none">
+      <button class="view-tab active" id="tab-table" onclick="switchView('table')">📋 タイプ編集</button>
+      <button class="view-tab" id="tab-kanban" onclick="switchView('kanban')">🗂 カテゴリ移動</button>
+    </div>
+    <button class="btn btn-secondary" onclick="openFile()">
+      📂 JSONを開く
+    </button>
+    <button class="btn btn-primary" id="save-btn" onclick="saveJSON()" disabled>
+      💾 上書き保存
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- ドロップゾーン -->
+  <div class="dropzone" id="dropzone" onclick="openFile()">
+    <div class="dropzone-icon">📦</div>
+    <div class="dropzone-title">products.json をドロップ</div>
+    <div class="dropzone-sub">またはクリックしてファイルを選択</div>
+  </div>
+
+  <!-- 使い方 -->
+  <div class="instruction" id="instruction">
+    <h3>🔧 使い方</h3>
+    <ol>
+      <li>上のエリアに <code>products.json</code> をドラッグ&amp;ドロップ</li>
+      <li>「タイプ編集」: ドロップダウンで正しいカテゴリを選択</li>
+      <li>「カテゴリ移動」: カードをドラッグして別のカテゴリ列にドロップ</li>
+      <li>「保存してダウンロード」→ ダウンロードされた <code>products.json</code> を pandora フォルダに上書き</li>
+      <li>ターミナルで <code>git add products.json &amp;&amp; git commit -m "fix types" &amp;&amp; git push</code></li>
+    </ol>
+  </div>
+
+  <!-- 統計 -->
+  <div class="stats-bar" id="stats-bar" style="display:none">
+    <div class="stat"><div class="stat-label">総商品数</div><div class="stat-value accent" id="stat-total">0</div></div>
+    <div class="stat"><div class="stat-label">Other</div><div class="stat-value warning" id="stat-other">0</div></div>
+    <div class="stat"><div class="stat-label">変更済み</div><div class="stat-value success" id="stat-changed">0</div></div>
+    <div class="stat"><div class="stat-label">最終更新</div><div class="stat-value" id="stat-updated" style="font-size:14px;font-family:'Syne'">—</div></div>
+  </div>
+
+  <!-- TABLE VIEW -->
+  <div id="table-view">
+    <!-- フィルターバー -->
+    <div class="filter-bar" id="filter-bar" style="display:none">
+      <span class="filter-label">表示</span>
+      <button class="chip" id="chip-all" onclick="setFilter('all', this)">全て</button>
+      <button class="chip warn-active" id="chip-other" onclick="setFilter('other', this)">Otherのみ</button>
+      <button class="chip" id="chip-changed" onclick="setFilter('changed', this)">変更済み</button>
+      <input class="search-input" id="search" type="text" placeholder="🔍 検索..." oninput="renderTable()">
+    </div>
+
+    <!-- 一括操作バー -->
+    <div class="bulk-bar" id="bulk-bar">
+      <span class="bulk-count" id="bulk-count">0件選択中</span>
+      <span class="bulk-label">→ カテゴリ：</span>
+      <select class="bulk-select" id="bulk-type-select">
+        <option value="">選択してください</option>
+      </select>
+      <button class="bulk-apply" onclick="applyBulk()">一括移動</button>
+      <button class="bulk-clear" onclick="clearSelection()">✕ 選択解除</button>
+    </div>
+
+    <!-- テーブル -->
+    <div class="table-wrap" id="table-wrap" style="display:none">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:36px"><div class="cb-wrap"><input type="checkbox" class="row-cb" id="cb-all" onchange="toggleSelectAll(this)"></div></th>
+            <th>商品名</th>
+            <th>現在のタイプ</th>
+            <th>変更後</th>
+            <th>リンク</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="empty" id="empty" style="display:none">該当する商品がありません</div>
+    </div>
+  </div>
+
+  <!-- KANBAN VIEW -->
+  <div id="kanban-view" style="display:none">
+    <div class="kanban-search-row">
+      <input class="search-input" id="kanban-search" type="text" placeholder="🔍 カード検索..." oninput="renderKanban()">
+      <span class="kanban-info">カードをドラッグして別の列に移動できます</span>
+    </div>
+    <div id="kanban-wrap">
+      <div class="kanban-board" id="kanban-board"></div>
+    </div>
+  </div>
+</main>
+
+<!-- 下部バー -->
+<div class="bottom-bar" id="bottom-bar" style="display:none">
+  <div class="change-count"><span id="change-num">0</span> 件の変更があります</div>
+  <div style="display:flex;gap:8px">
+    <button class="btn btn-danger" onclick="resetChanges()">変更をリセット</button>
+    <button class="btn btn-primary" onclick="saveJSON()">💾 上書き保存</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const TYPES = [
+  "HOODIES","T-SHIRTS","SHORTS","PANTS",
+  "JACKETS","SWEATERS","TOPS","SHIRTS",
+  "BAGS","ACCESSORIES","Other"
+];
+
+let data     = null;
+let changes  = {};     // index → new type
+let filter   = 'other';
+let viewMode = 'table'; // 'table' | 'kanban'
+let selectedIndices = new Set(); // bulk select
+
+// ─── ドラッグ状態 ───
+let dragIdx      = null;  // dragging product index
+let dragOverCol  = null;  // column type being dragged over
+let placeholder  = null;
+
+// ─── File System Access API ───
+let fileHandle = null;
+
+async function openFile() {
+  try {
+    if ('showOpenFilePicker' in window) {
+      // File System Access API (Chrome/Edge) — 書き込み権限も取得
+      [fileHandle] = await window.showOpenFilePicker({
+        types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }],
+        multiple: false
+      });
+      const file = await fileHandle.getFile();
+      const text = await file.text();
+      parseAndInit(text);
+    } else {
+      // フォールバック: 旧来のファイル選択
+      const input = document.createElement('input');
+      input.type = 'file'; input.accept = '.json';
+      input.onchange = () => {
+        const reader = new FileReader();
+        reader.onload = e => parseAndInit(e.target.result);
+        reader.readAsText(input.files[0]);
+      };
+      input.click();
+    }
+  } catch(e) {
+    if (e.name !== 'AbortError') toast('❌ ファイルを開けませんでした');
+  }
+}
+
+function parseAndInit(text) {
+  try {
+    data    = JSON.parse(text);
+    changes = {};
+    selectedIndices.clear();
+    initUI();
+    toast('✅ 読み込み完了: ' + (data.products?.length || 0) + '件', 'success');
+  } catch {
+    toast('❌ JSONの読み込みに失敗しました');
+  }
+}
+
+// ─── ドラッグ&ドロップ（ファイル読み込み用）───
+const dz = document.getElementById('dropzone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+dz.addEventListener('drop', async e => {
+  e.preventDefault();
+  dz.classList.remove('drag');
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  // ドロップではファイルハンドルが取れないのでフォールバック
+  fileHandle = null;
+  const reader = new FileReader();
+  reader.onload = ev => parseAndInit(ev.target.result);
+  reader.readAsText(file);
+  toast('⚠ ドロップでは上書き保存できません。クリックして開いてください', '');
+});
+
+// ─── UI初期化 ───
+function initUI() {
+  const products = data.products || [];
+  const others   = products.filter(p => p.type === 'Other').length;
+  const updated  = data.updated ? new Date(data.updated).toLocaleDateString('ja-JP') : '—';
+
+  document.getElementById('stat-total').textContent   = products.length;
+  document.getElementById('stat-other').textContent   = others;
+  document.getElementById('stat-changed').textContent = 0;
+  document.getElementById('stat-updated').textContent = updated;
+
+  document.getElementById('dropzone').style.display   = 'none';
+  document.getElementById('instruction').style.display = 'block';
+  document.getElementById('stats-bar').style.display   = 'flex';
+  document.getElementById('bottom-bar').style.display  = 'flex';
+  document.getElementById('save-btn').disabled = false;
+  document.getElementById('view-tabs').style.display = 'flex';
+
+  // populate bulk type select
+  const bts = document.getElementById('bulk-type-select');
+  bts.innerHTML = '<option value="">選択してください</option>' +
+    TYPES.map(t => `<option value="${t}">${t}</option>`).join('');
+
+  switchView('table');
+}
+
+// ─── ビュー切替 ───
+function switchView(mode) {
+  viewMode = mode;
+  selectedIndices.clear();
+  updateBulkBar();
+  document.getElementById('tab-table').classList.toggle('active', mode === 'table');
+  document.getElementById('tab-kanban').classList.toggle('active', mode === 'kanban');
+
+  // table elements
+  document.getElementById('filter-bar').style.display  = mode === 'table' ? 'flex'  : 'none';
+  document.getElementById('table-wrap').style.display  = mode === 'table' ? 'block' : 'none';
+  document.getElementById('table-view').style.display  = 'block';
+
+  // kanban elements
+  document.getElementById('kanban-view').style.display = mode === 'kanban' ? 'block' : 'none';
+
+  if (mode === 'table') {
+    setFilter(filter, document.getElementById('chip-' + filter) || document.getElementById('chip-other'));
+  } else {
+    renderKanban();
+  }
+}
+
+// ─── フィルター ───
+function setFilter(f, btn) {
+  filter = f;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active','warn-active'));
+  if (!btn) btn = document.getElementById('chip-' + f);
+  if (btn) {
+    if (f === 'other') btn.classList.add('warn-active');
+    else btn.classList.add('active');
+  }
+  renderTable();
+}
+
+// ─── テーブル描画 ───
+function renderTable() {
+  const products = data.products || [];
+  const q = document.getElementById('search').value.toLowerCase();
+
+  const filtered = products
+    .map((p, i) => ({...p, _i: i}))
+    .filter(p => {
+      const curType = changes.hasOwnProperty(p._i) ? changes[p._i] : p.type;
+      if (filter === 'other'   && curType !== 'Other') return false;
+      if (filter === 'changed' && !changes.hasOwnProperty(p._i)) return false;
+      if (q && !(p.title + ' ' + p.brand + ' ' + p.type).toLowerCase().includes(q)) return false;
+      return true;
+    });
+
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  document.getElementById('empty').style.display = filtered.length ? 'none' : 'block';
+
+  filtered.forEach((p) => {
+    const currentType = changes.hasOwnProperty(p._i) ? changes[p._i] : p.type;
+    const isOther     = currentType === 'Other';
+    const isChanged   = changes.hasOwnProperty(p._i);
+    const isSelected  = selectedIndices.has(p._i);
+
+    const tr = document.createElement('tr');
+    if (isSelected) tr.classList.add('selected-row');
+    tr.innerHTML = `
+      <td><div class="cb-wrap"><input type="checkbox" class="row-cb" data-idx="${p._i}" ${isSelected ? 'checked' : ''} onchange="toggleRow(${p._i}, this)"></div></td>
+      <td class="title-cell">
+        <span class="title-text" title="${esc(p.title)}">${esc(cleanTitle(p.title))}</span>
+        <span class="title-seller">${esc(p.brand || p.seller || '')}</span>
+      </td>
+      <td>
+        <span class="type-badge ${isOther ? 'badge-other' : 'badge-set'}">${esc(p.type)}</span>
+      </td>
+      <td>
+        <select class="type-select ${isChanged ? 'changed' : ''}"
+                data-idx="${p._i}"
+                onchange="onChange(${p._i}, this)">
+          ${TYPES.map(t => `<option value="${t}" ${currentType===t?'selected':''}>${t}</option>`).join('')}
+        </select>
+      </td>
+      <td style="display:flex;gap:5px;flex-wrap:wrap">
+        ${p.yupoo   ? `<a class="link-btn" href="${esc(p.yupoo)}"   target="_blank">Yupoo</a>`   : ''}
+        ${p.kakobuy ? `<a class="link-btn" href="${esc(p.kakobuy)}" target="_blank">Kakobuy</a>` : ''}
+        ${p.purchase? `<a class="link-btn" href="${esc(p.purchase)}" target="_blank">購入先</a>` : ''}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // sync select-all checkbox
+  const allCbs = [...tbody.querySelectorAll('.row-cb')];
+  const cbAll = document.getElementById('cb-all');
+  if (cbAll && allCbs.length) {
+    cbAll.checked = allCbs.length > 0 && allCbs.every(cb => selectedIndices.has(parseInt(cb.dataset.idx)));
+    cbAll.indeterminate = !cbAll.checked && allCbs.some(cb => selectedIndices.has(parseInt(cb.dataset.idx)));
+  }
+
+  updateStats();
+  updateBulkBar();
+}
+
+// ─── 変更処理 ───
+function onChange(idx, select) {
+  const orig = data.products[idx].type;
+  if (select.value === orig) {
+    delete changes[idx];
+    select.classList.remove('changed');
+  } else {
+    changes[idx] = select.value;
+    select.classList.add('changed');
+  }
+  updateStats();
+  if (filter === 'other' && select.value !== 'Other') {
+    setTimeout(() => renderTable(), 300);
+  }
+}
+
+function updateStats() {
+  const n = Object.keys(changes).length;
+  document.getElementById('stat-changed').textContent = n;
+  document.getElementById('change-num').textContent   = n;
+
+  // update Other count
+  const products = data.products || [];
+  const others = products.filter((p, i) => (changes[i] || p.type) === 'Other').length;
+  document.getElementById('stat-other').textContent = others;
+}
+
+function resetChanges() {
+  if (!Object.keys(changes).length) return;
+  if (!confirm('全ての変更をリセットしますか？')) return;
+  changes = {};
+  if (viewMode === 'table') renderTable();
+  else renderKanban();
+  toast('変更をリセットしました');
+}
+
+// ─── 保存 ───
+async function saveJSON() {
+  if (!data) return;
+  const products = data.products.map((p, i) =>
+    changes.hasOwnProperty(i) ? {...p, type: changes[i]} : p
+  );
+  const out = {
+    ...data,
+    updated: new Date().toISOString().slice(0, 19),
+    count:   products.length,
+    products,
+  };
+  const json = JSON.stringify(out, null, 2);
+
+  if (fileHandle) {
+    // File System Access API — 直接上書き
+    try {
+      const writable = await fileHandle.createWritable();
+      await writable.write(json);
+      await writable.close();
+      changes = {}; data = out;
+      selectedIndices.clear();
+      if (viewMode === 'table') renderTable();
+      else renderKanban();
+      toast('✅ products.json を上書き保存しました！', 'success');
+    } catch(e) {
+      toast('❌ 保存に失敗しました: ' + e.message);
+    }
+  } else {
+    // フォールバック: ダウンロード
+    const blob = new Blob([json], {type: 'application/json'});
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url; a.download = 'products.json'; a.click();
+    URL.revokeObjectURL(url);
+    changes = {}; data = out;
+    selectedIndices.clear();
+    if (viewMode === 'table') renderTable();
+    else renderKanban();
+    toast('✅ products.json をダウンロードしました（クリックで開くと次回から上書き保存に）', 'success');
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  KANBAN
+// ══════════════════════════════════════════════════════
+
+function renderKanban() {
+  if (!data) return;
+  const products = data.products || [];
+  const q = (document.getElementById('kanban-search')?.value || '').toLowerCase();
+  const board = document.getElementById('kanban-board');
+  board.innerHTML = '';
+
+  // Build columns for all TYPES
+  TYPES.forEach(type => {
+    const col = document.createElement('div');
+    col.className = 'kanban-col';
+    col.dataset.type = type;
+
+    // gather items for this column (use current effective type)
+    const items = products
+      .map((p, i) => ({...p, _i: i, _eff: changes.hasOwnProperty(i) ? changes[i] : p.type}))
+      .filter(p => p._eff === type)
+      .filter(p => !q || (p.title + ' ' + (p.brand||'')).toLowerCase().includes(q));
+
+    const head = document.createElement('div');
+    head.className = 'kanban-col-head';
+    head.innerHTML = `
+      <span class="kanban-col-name">${esc(type)}</span>
+      <span class="kanban-col-count" id="kcount-${esc(type)}">${items.length}</span>
+    `;
+    col.appendChild(head);
+
+    const cards = document.createElement('div');
+    cards.className = 'kanban-cards';
+    cards.dataset.type = type;
+
+    // drag-over events on card container
+    cards.addEventListener('dragover', onCardDragOver);
+    cards.addEventListener('dragleave', onCardDragLeave);
+    cards.addEventListener('drop', onCardDrop);
+
+    items.forEach(p => {
+      cards.appendChild(makeKCard(p));
+    });
+
+    col.appendChild(cards);
+    board.appendChild(col);
+  });
+}
+
+function makeKCard(p) {
+  const card = document.createElement('div');
+  card.className = 'kcard' + (changes.hasOwnProperty(p._i) ? ' changed-card' : '');
+  card.draggable = true;
+  card.dataset.idx = p._i;
+
+  const hasImg = p.image && !p.image.startsWith('http') || (p.image && p.image.startsWith('images/'));
+  // We can't load local images in browser context, so just show no-img placeholder for local paths
+  const imgIsLocal = p.image && !p.image.startsWith('http');
+
+  let imgHtml = '';
+  if (p.image && p.image.startsWith('http')) {
+    imgHtml = `<img class="kcard-thumb" src="${esc(p.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`;
+  }
+  // skip local image paths (can't load from file:// in browser)
+
+  card.innerHTML = `
+    ${imgHtml}
+    <div class="kcard-drag-hint">⠿</div>
+    ${p.brand ? `<div class="kcard-brand">${esc(p.brand)}</div>` : ''}
+    <div class="kcard-title">${esc(cleanTitle(p.title))}</div>
+  `;
+
+  card.addEventListener('dragstart', onCardDragStart);
+  card.addEventListener('dragend', onCardDragEnd);
+  return card;
+}
+
+// ─── drag events ───
+function onCardDragStart(e) {
+  dragIdx = parseInt(this.dataset.idx);
+  this.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', dragIdx);
+}
+
+function onCardDragEnd(e) {
+  this.classList.remove('dragging');
+  removePlaceholder();
+  // remove all drag-over highlights
+  document.querySelectorAll('.kanban-col').forEach(c => c.classList.remove('drag-over'));
+  dragIdx = null;
+}
+
+function onCardDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  const col = this.closest('.kanban-col');
+  if (col) col.classList.add('drag-over');
+  showPlaceholder(this, e);
+}
+
+function onCardDragLeave(e) {
+  // only remove if leaving the container entirely
+  if (!this.contains(e.relatedTarget)) {
+    const col = this.closest('.kanban-col');
+    if (col) col.classList.remove('drag-over');
+    removePlaceholder();
+  }
+}
+
+function onCardDrop(e) {
+  e.preventDefault();
+  const targetType = this.dataset.type;
+  const col = this.closest('.kanban-col');
+  if (col) col.classList.remove('drag-over');
+  removePlaceholder();
+
+  if (dragIdx === null || !targetType) return;
+
+  const origType = data.products[dragIdx].type;
+  if (targetType === origType) {
+    delete changes[dragIdx];
+  } else {
+    changes[dragIdx] = targetType;
+  }
+
+  updateStats();
+  renderKanban();
+  toast(`✅ → ${targetType}`, 'success');
+}
+
+function showPlaceholder(container, e) {
+  removePlaceholder();
+  placeholder = document.createElement('div');
+  placeholder.className = 'kanban-placeholder';
+
+  // find closest card to insert before
+  const cards = [...container.querySelectorAll('.kcard:not(.dragging)')];
+  let insertBefore = null;
+  for (const card of cards) {
+    const rect = card.getBoundingClientRect();
+    if (e.clientY < rect.top + rect.height / 2) {
+      insertBefore = card;
+      break;
+    }
+  }
+  container.insertBefore(placeholder, insertBefore);
+}
+
+function removePlaceholder() {
+  if (placeholder && placeholder.parentNode) {
+    placeholder.parentNode.removeChild(placeholder);
+  }
+  placeholder = null;
+}
+
+// ─── 一括選択 ───
+function toggleRow(idx, cb) {
+  if (cb.checked) selectedIndices.add(idx);
+  else selectedIndices.delete(idx);
+  const tr = cb.closest('tr');
+  if (tr) tr.classList.toggle('selected-row', cb.checked);
+  // update select-all state
+  const allCbs = [...document.querySelectorAll('#tbody .row-cb')];
+  const cbAll = document.getElementById('cb-all');
+  if (cbAll) {
+    cbAll.checked = allCbs.length > 0 && allCbs.every(c => selectedIndices.has(parseInt(c.dataset.idx)));
+    cbAll.indeterminate = !cbAll.checked && allCbs.some(c => selectedIndices.has(parseInt(c.dataset.idx)));
+  }
+  updateBulkBar();
+}
+
+function toggleSelectAll(cbAll) {
+  const allCbs = [...document.querySelectorAll('#tbody .row-cb')];
+  allCbs.forEach(cb => {
+    const idx = parseInt(cb.dataset.idx);
+    cb.checked = cbAll.checked;
+    if (cbAll.checked) selectedIndices.add(idx);
+    else selectedIndices.delete(idx);
+    const tr = cb.closest('tr');
+    if (tr) tr.classList.toggle('selected-row', cbAll.checked);
+  });
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulk-bar');
+  const count = selectedIndices.size;
+  if (count > 0) {
+    bar.classList.add('visible');
+    document.getElementById('bulk-count').textContent = `${count}件選択中`;
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+function clearSelection() {
+  selectedIndices.clear();
+  renderTable();
+}
+
+function applyBulk() {
+  const targetType = document.getElementById('bulk-type-select').value;
+  if (!targetType) { toast('カテゴリを選択してください'); return; }
+  if (!selectedIndices.size) return;
+
+  selectedIndices.forEach(idx => {
+    const origType = data.products[idx].type;
+    if (targetType === origType) delete changes[idx];
+    else changes[idx] = targetType;
+  });
+
+  const count = selectedIndices.size;
+  selectedIndices.clear();
+  updateStats();
+  renderTable();
+  toast(`✅ ${count}件 → ${targetType} に移動しました`, 'success');
+}
+
+// ─── ユーティリティ ───
+function cleanTitle(raw) {
+  let s = String(raw || '').trim();
+  s = s.replace(/^(ON SALE\s*)?[¥￥][\d,.\s]+(cny|CNY|usd|USD)?\s*/i, '');
+  s = s.replace(/[\u4e00-\u9fff\u3400-\u4dbf]{2,}[^\u0000-\u007f]*/g, '');
+  return s.replace(/\s{2,}/g, ' ').replace(/[-\s]+$/, '').trim() || raw;
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function toast(msg, type='') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// 初期フィルター
+document.getElementById('chip-other').classList.add('warn-active');
+document.getElementById('instruction').style.display = 'block';
+</script>
+</body>
+</html>
