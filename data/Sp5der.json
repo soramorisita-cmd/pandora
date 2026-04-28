@@ -1,7 +1,7 @@
 {
   "brand": "Sp5der",
   "seller": "pikachushop",
-  "updated": "2026-04-28T12:02:14",
+  "updated": "2026-04-28T12:11:30",
   "products": [
     {
       "album_id": "230725692",
@@ -260,7 +260,7 @@
       "album_id": "216300688",
       "title": "￥285 SP5DER OG WEB V2 RHINESTONE ZIP UP",
       "yupoo_url": "https://pikachushop.x.yupoo.com/albums/216300688?uid=1&isSubCate=false&referrercate=4695853",
-      "type": "Other",
+      "type": "HOODIES",
       "purchase": "https://item.taobao.com/item.htm?id=992372979833",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D992372979833&affcode=a235412",
       "price_cny": null,
@@ -1470,7 +1470,7 @@
       "album_id": "177018147",
       "title": "￥50【Discount price】SP5DER Slate Grey",
       "yupoo_url": "https://pikachushop.x.yupoo.com/albums/177018147?uid=1&isSubCate=false&referrercate=4695853",
-      "type": "ACCESSORIES",
+      "type": "PANTS",
       "purchase": "https://item.taobao.com/item.htm?id=823340832401",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823340832401&affcode=a235412",
       "price_cny": null,
@@ -1525,7 +1525,7 @@
       "album_id": "177010025",
       "title": "￥50 Sp5der Worldwide Red Angel Number 555 NAVY",
       "yupoo_url": "https://pikachushop.x.yupoo.com/albums/177010025?uid=1&isSubCate=false&referrercate=4695853",
-      "type": "ACCESSORIES",
+      "type": "HOODIES",
       "purchase": "https://item.taobao.com/item.htm?id=823127586349",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823127586349&affcode=a235412",
       "price_cny": null,
@@ -2163,7 +2163,7 @@
       "album_id": "177005984",
       "title": "￥50 【DISCOUNT PRICE】  SP5DER TC5 555  BLUE",
       "yupoo_url": "https://pikachushop.x.yupoo.com/albums/177005984?uid=1&isSubCate=false&referrercate=4695853",
-      "type": "ACCESSORIES",
+      "type": "PANTS",
       "purchase": "https://item.taobao.com/item.htm?id=823014562221",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823014562221&affcode=a235412",
       "price_cny": null,
@@ -2478,5 +2478,6 @@
       "price_jpy": null,
       "image": "images/f814ef4c1e.jpg"
     }
-  ]
+  ],
+  "count": 225
 }
