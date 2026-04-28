@@ -52,8 +52,9 @@ def download_image(url: str) -> str | None:
 
 def write_back_to_data(image_map: dict):
     """
-    image_map: { yupoo_or_kakobuy_url: local_image_path }
-    data/*.json の各商品に画像パスを書き戻す
+    image_map: { yupoo_url: local_image_path }
+    yupoo_url はアルバムごとにユニークなのでキーとして使用。
+    purchase URL は色違いバリアントで共有されるため使用しない。
     """
     updated_files = 0
     for path in sorted(DATA_DIR.glob("*.json")):
@@ -62,12 +63,11 @@ def write_back_to_data(image_map: dict):
             products = data.get("products", [])
             changed  = 0
             for p in products:
-                for key_field in ("yupoo", "kakobuy", "purchase"):
-                    key = p.get(key_field)
-                    if key and key in image_map:
-                        p["image"] = image_map[key]
-                        changed += 1
-                        break
+                # yupoo_url（data/*.json）または yupoo（products.json由来）のみで照合
+                key = p.get("yupoo_url") or p.get("yupoo")
+                if key and key in image_map:
+                    p["image"] = image_map[key]
+                    changed += 1
             if changed:
                 data["products"] = products
                 path.write_text(json.dumps(data, ensure_ascii=False, indent=2), "utf-8")
@@ -165,11 +165,10 @@ def main():
             local_path = download_image(url)
             if local_path:
                 products[i]["image"] = local_path
-                # URL → ローカルパスのマップを記録
-                for key_field in ("yupoo", "kakobuy", "purchase"):
-                    key = p.get(key_field)
-                    if key:
-                        image_map[key] = local_path
+                # yupoo URL のみをキーに使う（purchase URLは色違いバリアント間で共有されるため不可）
+                key = p.get("yupoo") or p.get("yupoo_url")
+                if key:
+                    image_map[key] = local_path
                 downloaded += 1
             else:
                 skipped += 1

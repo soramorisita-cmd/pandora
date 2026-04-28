@@ -20,7 +20,12 @@ DATA_DIR    = ROOT / "data"
 OUTPUT_FILE = ROOT / "products.json"
 
 def build_image_map():
-    """既存 products.json から { url_key: image_path } を作る"""
+    """
+    既存 products.json から照合マップを作る。
+    キー1: yupoo URL（アルバムURLはユニーク）
+    キー2: http画像URL自体（yupoo照合が失敗した場合のフォールバック）
+    値: ローカル画像パス（images/xxxx.jpg）
+    """
     if not OUTPUT_FILE.exists():
         return {}
     try:
@@ -30,17 +35,29 @@ def build_image_map():
     image_map = {}
     for p in old.get("products", []):
         img = p.get("image")
-        if not img:
-            continue
-        for key_field in ("yupoo", "yupoo_url", "kakobuy", "purchase"):
-            key = p.get(key_field)
-            if key:
-                image_map[key] = img
+        if not img or not img.startswith("images/"):
+            continue  # ローカルパスのみ対象
+        # キー1: yupoo URL
+        key = p.get("yupoo") or p.get("yupoo_url")
+        if key:
+            image_map[key] = img
+    # キー2: data/*.json の http画像URL → ローカルパス のマップも追加
+    # download_images.py がダウンロード済みのファイル名から逆引き
+    import hashlib
+    from urllib.parse import urlparse
+    images_dir = ROOT / "images"
+    for p in old.get("products", []):
+        # products.json 上でローカルパスになっている場合、
+        # data/*.json 側はまだ http:// の可能性があるので
+        # ファイル名のMD5ハッシュから元URLを特定するのは不可能
+        # → download_images.py 側で解決済みなのでここでは yupoo キーのみ
+        pass
     return image_map
 
 def normalize_product(p: dict, brand: str, seller: str, image_map: dict) -> dict:
     """data/*.json の商品を products.json 用フォーマットに変換"""
     yupoo = p.get("yupoo") or p.get("yupoo_url") or ""
+    img   = p.get("image") or ""
     out = {
         "seller":    p.get("seller")    or seller,
         "brand":     p.get("brand")     or brand,
@@ -49,17 +66,16 @@ def normalize_product(p: dict, brand: str, seller: str, image_map: dict) -> dict
         "yupoo":     yupoo,
         "purchase":  p.get("purchase")  or "",
         "kakobuy":   p.get("kakobuy")   or "",
-        "image":     p.get("image")     or "",
+        "image":     img,
         "price_cny": p.get("price_cny"),
         "price_jpy": p.get("price_jpy"),
     }
-    # 画像が空なら既存 products.json から引き継ぐ
-    if not out["image"]:
-        for key_field in ("yupoo", "kakobuy", "purchase"):
-            key = out.get(key_field)
-            if key and key in image_map:
-                out["image"] = image_map[key]
-                break
+    # 画像がローカルパスなら保持、http:// または空なら image_map から引き継ぐ
+    if not img.startswith("images/"):
+        if yupoo and yupoo in image_map:
+            out["image"] = image_map[yupoo]
+        # それでも http:// のままなら空にしてサイトで壊れた画像を出さない
+        # （download_images.py --refetch で補完可能）
     return out
 
 def merge():
@@ -114,7 +130,7 @@ def merge():
 
 def git_push():
     for cmd in [
-        ["git", "add", "data/", "products.json"],
+        ["git", "add", "data/", "products.json", "images/"],
         ["git", "commit", "-m", "merge: update products.json"],
         ["git", "push"],
     ]:

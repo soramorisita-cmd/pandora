@@ -5,60 +5,107 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PANDORA — Rep Catalog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080808;--s1:#101010;--s2:#181818;--s3:#202020;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.14);--text:#efefef;--muted:#555;--muted2:#888;--accent:#c8f03c;--accent2:#9fc02a;--qc:#38bdf8}
+:root{
+  --bg:#0a0a0a;--s1:#141414;--s2:#1c1c1c;--s3:#242424;
+  --border:rgba(255,255,255,.1);--border2:rgba(255,255,255,.22);
+  --text:#f0f0f0;--muted:#999;--muted2:#ccc;
+  --accent:#c8f03c;--accent2:#9fc02a;--qc:#38bdf8;
+}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0}
-nav{position:sticky;top:0;z-index:200;background:rgba(8,8,8,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;gap:24px}
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--accent);text-decoration:none;flex-shrink:0}
 .nav-cats{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
 .nav-cats::-webkit-scrollbar{display:none}
 .nav-cat{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);text-decoration:none;padding:6px 12px;border-radius:6px;transition:all .15s;white-space:nowrap;border:1px solid transparent}
 .nav-cat:hover{color:var(--text);background:var(--s2);border-color:var(--border)}
-.nav-right{display:flex;gap:8px;flex-shrink:0}
-.nav-link{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:6px;border:1px solid var(--border);transition:all .15s}
+.nav-right{flex-shrink:0}
+.nav-link{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);text-decoration:none;padding:6px 12px;border-radius:6px;border:1px solid var(--border);transition:all .15s}
 .nav-link:hover{color:var(--accent);border-color:rgba(200,240,60,.3)}
-.hero{position:relative;z-index:1;padding:72px 24px 52px;text-align:center;max-width:1400px;margin:0 auto}
-.hero-eye{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,13vw,128px);letter-spacing:3px;line-height:.88;color:var(--text);margin-bottom:14px}
+.hero{position:relative;z-index:1;padding:56px 24px 40px;text-align:center;max-width:1400px;margin:0 auto}
+.hero-eye{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,10vw,108px);letter-spacing:3px;line-height:.88;color:var(--text);margin-bottom:12px}
 .hero-title span{color:var(--accent)}
-.hero-sub{font-size:14px;color:var(--muted2);line-height:1.8}
-.section{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 24px 52px}
-.section-hdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;gap:12px}
+.hero-sub{font-size:13px;color:var(--muted2);line-height:1.8}
+/* SIDEBAR */
+.sidebar{width:210px;flex-shrink:0;position:sticky;top:78px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 90px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--s3) transparent}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
+.sidebar-block{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.sb-title{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.sb-search{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'Syne',sans-serif;font-size:13px;font-weight:600;padding:8px 11px;outline:none;transition:border-color .2s}
+.sb-search:focus{border-color:var(--accent)}
+.sb-search::placeholder{color:var(--muted)}
+.filter-list{display:flex;flex-direction:column;gap:1px}
+.f-item{display:flex;align-items:center;gap:9px;padding:6px 8px;border-radius:7px;cursor:pointer;transition:background .12s}
+.f-item:hover{background:var(--s2)}
+.f-cb{appearance:none;width:15px;height:15px;border:2px solid var(--muted);border-radius:3px;flex-shrink:0;cursor:pointer;position:relative;transition:all .15s}
+.f-cb:checked{background:var(--accent);border-color:var(--accent)}
+.f-cb:checked::after{content:'✓';position:absolute;top:-3px;left:1px;font-size:11px;color:#0a0a0a;font-weight:900}
+.f-label{font-size:13px;font-weight:600;color:var(--text);flex:1;line-height:1.2}
+.f-count{font-size:11px;color:var(--muted);font-weight:600;white-space:nowrap}
+.f-item.active .f-label{color:var(--accent)}
+.btn-reset{width:100%;background:transparent;border:1px solid var(--border);border-radius:7px;color:var(--muted2);font-family:'Syne',sans-serif;font-size:12px;font-weight:700;padding:8px;cursor:pointer;transition:all .15s;margin-top:8px}
+.btn-reset:hover{border-color:var(--border2);color:var(--text)}
+/* LAYOUT */
+.page{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 24px 60px;display:flex;gap:20px;align-items:flex-start}
+.main{flex:1;min-width:0}
+.result-bar{display:flex;align-items:center;margin-bottom:14px}
+.result-count{font-size:13px;font-weight:700;color:var(--muted2)}
+.result-count span{color:var(--accent);font-size:16px}
+.section{margin-bottom:44px}
+.section-hdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;gap:12px}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:2px}
 .section-more{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);text-decoration:none;white-space:nowrap}
 .section-more:hover{text-decoration:underline}
+#flat-wrap{display:none}
+#flat-wrap.visible{display:block}
+#cat-sections-wrap.hidden{display:none}
+/* CARDS */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:10px}
 .card{background:var(--s1);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s,transform .15s}
-.card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.card:hover{border-color:var(--border2);transform:translateY(-2px)}
 .card-img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--s2);display:block;flex-shrink:0}
 .card-noimag{width:100%;aspect-ratio:4/3;background:var(--s2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.card-noimag span{font-size:10px;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
-.card-body{padding:10px;flex:1;display:flex;flex-direction:column;gap:6px}
+.card-noimag span{font-size:10px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;font-weight:700}
+.card-body{padding:11px;flex:1;display:flex;flex-direction:column;gap:6px}
 .card-tags{display:flex;gap:4px;flex-wrap:wrap}
-.tag{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;border-radius:999px;border:1px solid var(--border)}
-.tag-brand{background:rgba(200,240,60,.08);color:#a8d030;border-color:rgba(200,240,60,.18)}
-.tag-type{background:rgba(255,255,255,.04);color:var(--muted2)}
-.card-title{font-size:11.5px;font-weight:700;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1}
-.card-price{font-size:13px;font-weight:700;color:var(--accent)}
+.tag{font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;border-radius:999px;border:1px solid var(--border)}
+.tag-brand{background:rgba(200,240,60,.1);color:#c8f03c;border-color:rgba(200,240,60,.25)}
+.tag-type{background:rgba(255,255,255,.06);color:var(--muted2)}
+.card-title{font-size:12px;font-weight:700;color:var(--text);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.card-price{font-size:14px;font-weight:800;color:var(--accent)}
 .card-actions{display:flex;gap:5px}
-.btn-buy{flex:1;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;color:#080808;background:var(--accent);padding:7px 8px;border-radius:6px;text-decoration:none;transition:background .15s}
+.btn-buy{flex:1;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;color:#0a0a0a;background:var(--accent);padding:7px 8px;border-radius:6px;text-decoration:none;transition:background .15s}
 .btn-buy:hover{background:var(--accent2)}
-.btn-qc{display:flex;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:700;color:var(--qc);background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);padding:7px 9px;border-radius:6px;text-decoration:none;transition:all .15s;flex-shrink:0}
-.btn-qc:hover{background:rgba(56,189,248,.18)}
+.btn-qc{display:flex;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:700;color:var(--qc);background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);padding:7px 9px;border-radius:6px;text-decoration:none;transition:all .15s;flex-shrink:0}
+.btn-qc:hover{background:rgba(56,189,248,.2)}
 .btn-qc svg{width:11px;height:11px}
-#loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50vh;gap:16px;position:relative;z-index:1}
+.empty{text-align:center;padding:60px;color:var(--muted);font-size:14px;font-weight:700}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{animation:fadeIn .18s ease both}
+#loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px;position:relative;z-index:1}
 .spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-#loading p{font-size:13px;color:var(--muted);letter-spacing:1px}
+#loading p{font-size:13px;color:var(--muted2);letter-spacing:1px;font-weight:700}
 footer{position:relative;z-index:1;text-align:center;padding:28px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
 footer a{color:var(--accent);text-decoration:none}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.card{animation:fadeIn .2s ease both}
-@media(max-width:640px){.nav-inner{padding:0 14px;gap:14px}.hero{padding:40px 16px 28px}.section{padding:0 14px 32px}.grid{grid-template-columns:repeat(2,1fr);gap:7px}.nav-right{display:none}}
+/* MOBILE */
+.mobile-filter-btn{width:100%;margin-bottom:12px;background:var(--s1);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:11px 16px;cursor:pointer;display:none;align-items:center;justify-content:space-between;transition:border-color .15s}
+.mobile-filter-btn:hover{border-color:var(--border2)}
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
+.drawer-overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;left:0;top:0;bottom:0;width:280px;background:#161616;z-index:301;overflow-y:auto;transform:translateX(-100%);transition:transform .25s ease;padding:20px 16px;display:flex;flex-direction:column;gap:4px}
+.drawer.open{transform:translateX(0)}
+.drawer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.drawer-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--accent)}
+.drawer-close{background:none;border:none;color:var(--muted2);font-size:22px;cursor:pointer;padding:4px}
+@media(max-width:768px){.sidebar{display:none}.page{padding:10px;gap:0}.grid{grid-template-columns:repeat(2,1fr);gap:8px}.nav-right{display:none}.mobile-filter-btn{display:flex!important}.hero{padding:32px 16px 24px}}
+@media(min-width:769px){.mobile-filter-btn{display:none!important}.drawer-overlay,.drawer{display:none!important}}
 </style>
 </head>
 <body>
@@ -71,69 +118,178 @@ footer a{color:var(--accent);text-decoration:none}
     </div>
   </div>
 </nav>
-
-<div id="loading"><div class="spinner"></div><p>Loading...</p></div>
-
+<div id="loading"><div class="spinner"></div><p>読み込み中...</p></div>
 <div id="app" style="display:none">
   <div class="hero">
     <p class="hero-eye">レプリカ コミュニティ カタログ</p>
     <h1 class="hero-title">自分だけの<br><span>FITS</span></h1>
     <p class="hero-sub">厳選セラー &nbsp;·&nbsp; Kakobuyリンク &nbsp;·&nbsp; QC対応</p>
   </div>
-
-  <div class="section">
-    <div class="section-hdr">
-      <span class="section-title">人気商品</span>
-      <a class="section-more" href="/catalog.html">すべて見る →</a>
-    </div>
-    <div class="grid" id="featured-grid"></div>
+  <div style="max-width:1400px;margin:0 auto;padding:0 14px">
+    <button class="mobile-filter-btn" onclick="openDrawer()">
+      <span>🔍 カテゴリ・ブランドで絞り込む</span>
+      <span style="color:var(--accent);font-size:11px" id="filter-badge"></span>
+    </button>
   </div>
-
-  <div id="cat-sections"></div>
+  <div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <span class="drawer-title">絞り込み</span>
+      <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    </div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
+      <div class="sb-title">検索</div>
+      <input class="sb-search" id="search-mobile" type="text" placeholder="キーワード..." oninput="syncSearch(this)">
+    </div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
+      <div class="sb-title">カテゴリ</div>
+      <div class="filter-list" id="cat-list-mobile"></div>
+    </div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px">
+      <div class="sb-title">ブランド</div>
+      <div class="filter-list" id="brand-list-mobile"></div>
+    </div>
+    <button class="btn-reset" onclick="resetFilters()">リセット</button>
+    <button style="width:100%;background:var(--accent);border:none;border-radius:8px;color:#0a0a0a;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;padding:11px;cursor:pointer;margin-top:6px" onclick="closeDrawer()">結果を見る（<span id="drawer-count">0</span>件）</button>
+  </div>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="sidebar-block">
+        <div class="sb-title">検索</div>
+        <input class="sb-search" id="search" type="text" placeholder="キーワードで絞り込む..." oninput="applyFilters()">
+      </div>
+      <div class="sidebar-block">
+        <div class="sb-title">カテゴリ</div>
+        <div class="filter-list" id="cat-list"></div>
+      </div>
+      <div class="sidebar-block">
+        <div class="sb-title">ブランド</div>
+        <div class="filter-list" id="brand-list"></div>
+        <button class="btn-reset" onclick="resetFilters()">リセット</button>
+      </div>
+    </aside>
+    <div class="main">
+      <div id="flat-wrap">
+        <div class="result-bar">
+          <div class="result-count"><span id="count">0</span> 件の商品</div>
+        </div>
+        <div class="grid" id="flat-grid"></div>
+      </div>
+      <div id="cat-sections-wrap">
+        <div class="section">
+          <div class="section-hdr">
+            <span class="section-title">人気商品</span>
+            <a class="section-more" href="/catalog.html">すべて見る →</a>
+          </div>
+          <div class="grid" id="featured-grid"></div>
+        </div>
+        <div id="cat-sections"></div>
+      </div>
+    </div>
+  </div>
 </div>
-
 <footer>PANDORA &nbsp;·&nbsp; Powered by <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank">Kakobuy</a></footer>
-
 <script>
-function cleanTitle(raw){let s=String(raw).trim();s=s.replace(/^(ON SALE\s*)?[¥￥][\d,.\s]+(cny|CNY|usd|USD)?\s*/i,'');s=s.replace(/\s+[A-Z]{0,4}[-]?\d{2,5}[#\s]*$/g,'');s=s.replace(/[\u4e00-\u9fff\u3400-\u4dbf]{2,}[^\u0000-\u007f]*/g,'');return s.replace(/\s{2,}/g,' ').replace(/[-\s]+$/,'').trim()||raw.slice(0,50)}
-function extractJPY(p){const j=p.price_jpy||p.jpy;if(j&&!['undefined','null',''].includes(String(j).trim())){const n=parseInt(String(j).replace(/[^0-9]/g,''));if(!isNaN(n))return'¥'+n.toLocaleString()}const m=String(p.title||'').match(/[¥￥]([\d,]+)\s*cny/i);if(m)return'¥'+Math.round(parseInt(m[1].replace(',',''))*21).toLocaleString();return''}
+const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","BAGS","ACCESSORIES"];
+let ALL=[],selCats=new Set(),selBrands=new Set();
+function cleanTitle(r){let s=String(r).trim();s=s.replace(/^(ON SALE\s*)?[¥￥][\d,.\s]+(cny|CNY|usd|USD)?\s*/i,'');s=s.replace(/[\u4e00-\u9fff\u3400-\u4dbf]{2,}[^\u0000-\u007f]*/g,'');return s.replace(/\s{2,}/g,' ').replace(/[-\s]+$/,'').trim()||r.slice(0,50)}
+function extractJPY(p){const j=p.price_jpy;if(j&&!['undefined','null',''].includes(String(j).trim())){const n=parseInt(String(j).replace(/[^0-9]/g,''));if(!isNaN(n))return'¥'+n.toLocaleString()}const m=String(p.title||'').match(/[¥￥]([\d,]+)\s*cny/i);if(m)return'¥'+Math.round(parseInt(m[1].replace(',',''))*21).toLocaleString();return''}
 function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-
+function isFiltering(){return selCats.size>0||selBrands.size>0||(document.getElementById('search')?.value||'').length>0}
+function getFiltered(){const q=(document.getElementById('search')?.value||'').toLowerCase();return ALL.filter(p=>{if(selCats.size&&!selCats.has(p.type))return false;if(selBrands.size&&!selBrands.has(p.brand||''))return false;if(q&&!(p.title+' '+p.type+' '+(p.brand||'')).toLowerCase().includes(q))return false;return true;})}
 function makeCard(p,i){
   const title=cleanTitle(p.title),price=extractJPY(p);
   const buyLink=p.kakobuy||p.purchase||'#',qcLink=p.yupoo||'#';
   const brand=p.brand||'',type=p.type||'';
-  const card=document.createElement('div');
-  card.className='card';card.style.animationDelay=Math.min(i,20)*.022+'s';
-  const imgHtml=p.image?`<img class="card-img" src="${esc(p.image)}" alt="${esc(title)}" loading="lazy" onerror="this.outerHTML='<div class=card-noimag><span>No Image</span></div>'">`:`<div class="card-noimag"><span>No Image</span></div>`;
+  const card=document.createElement('div');card.className='card';card.style.animationDelay=Math.min(i,24)*.018+'s';
+  const imgHtml=p.image&&p.image!=='null'&&p.image.length>4?`<img class="card-img" src="${esc(p.image)}" alt="${esc(title)}" loading="lazy" onerror="this.outerHTML='<div class=card-noimag><span>NO IMAGE</span></div>'">`:`<div class="card-noimag"><span>NO IMAGE</span></div>`;
   card.innerHTML=`${imgHtml}<div class="card-body"><div class="card-tags">${brand?`<span class="tag tag-brand">${esc(brand)}</span>`:''} ${type?`<span class="tag tag-type">${esc(type)}</span>`:''}</div><div class="card-title">${esc(title)}</div>${price?`<div class="card-price">${price}</div>`:''}<div class="card-actions"><a class="btn-buy" href="${esc(buyLink)}" target="_blank" rel="noopener">購入する</a><a class="btn-qc" href="${esc(qcLink)}" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>QC</a></div></div>`;
   return card;
 }
-
+function buildCatList(){
+  const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
+  const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
+  const el=document.getElementById('cat-list');el.innerHTML='';
+  cats.forEach(cat=>{
+    const cnt=ALL.filter(p=>p.type===cat).length;
+    const lbl=document.createElement('label');
+    lbl.className='f-item'+(selCats.has(cat)?' active':'');
+    lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selCats.has(cat)?'checked':''} onchange="toggleCat('${cat}',this)"><span class="f-label">${esc(cat)}</span><span class="f-count">${cnt}</span>`;
+    el.appendChild(lbl);
+  });
+}
+function buildBrandList(){
+  const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
+  const brands=[...new Set(src.map(p=>p.brand).filter(Boolean))].sort();
+  const el=document.getElementById('brand-list');el.innerHTML='';
+  brands.forEach(brand=>{
+    const cnt=src.filter(p=>p.brand===brand).length;
+    const lbl=document.createElement('label');
+    lbl.className='f-item'+(selBrands.has(brand)?' active':'');
+    lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selBrands.has(brand)?'checked':''} onchange="toggleBrand('${brand}',this)"><span class="f-label">${esc(brand)}</span><span class="f-count">${cnt}</span>`;
+    el.appendChild(lbl);
+  });
+}
+function toggleCat(cat,cb){cb.checked?selCats.add(cat):selCats.delete(cat);selBrands.clear();buildCatList();buildBrandList();applyFilters()}
+function toggleBrand(brand,cb){cb.checked?selBrands.add(brand):selBrands.delete(brand);applyFilters()}
+function applyFilters(){
+  const filtering=isFiltering();
+  document.getElementById('flat-wrap').classList.toggle('visible',filtering);
+  document.getElementById('cat-sections-wrap').classList.toggle('hidden',filtering);
+  if(!filtering)return;
+  const items=getFiltered();
+  document.getElementById('count').textContent=items.length;
+  const grid=document.getElementById('flat-grid');grid.innerHTML='';
+  if(!items.length){grid.innerHTML='<div class="empty">商品が見つかりませんでした</div>';return}
+  items.forEach((p,i)=>grid.appendChild(makeCard(p,i)));
+}
+function resetFilters(){
+  selCats.clear();selBrands.clear();
+  const s=document.getElementById('search');if(s)s.value='';
+  const sm=document.getElementById('search-mobile');if(sm)sm.value='';
+  buildCatList();buildBrandList();applyFilters();
+  document.getElementById('filter-badge').textContent='';
+}
+function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden';buildMobileLists()}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('open');document.body.style.overflow=''}
+function syncSearch(el){document.getElementById('search').value=el.value;applyFilters()}
+function buildMobileLists(){
+  const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
+  const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
+  const cel=document.getElementById('cat-list-mobile');cel.innerHTML='';
+  cats.forEach(cat=>{
+    const cnt=ALL.filter(p=>p.type===cat).length;
+    const lbl=document.createElement('label');
+    lbl.className='f-item'+(selCats.has(cat)?' active':'');
+    lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selCats.has(cat)?'checked':''} onchange="toggleCat('${cat}',this);buildMobileLists()"><span class="f-label">${esc(cat)}</span><span class="f-count">${cnt}</span>`;
+    cel.appendChild(lbl);
+  });
+  const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
+  const brands=[...new Set(src.map(p=>p.brand).filter(Boolean))].sort();
+  const bel=document.getElementById('brand-list-mobile');bel.innerHTML='';
+  brands.forEach(brand=>{
+    const cnt=src.filter(p=>p.brand===brand).length;
+    const lbl=document.createElement('label');
+    lbl.className='f-item'+(selBrands.has(brand)?' active':'');
+    lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selBrands.has(brand)?'checked':''} onchange="toggleBrand('${brand}',this);buildMobileLists()"><span class="f-label">${esc(brand)}</span><span class="f-count">${cnt}</span>`;
+    bel.appendChild(lbl);
+  });
+  const total=selCats.size+selBrands.size;
+  document.getElementById('filter-badge').textContent=total?`${total}件選択中`:'';
+  document.getElementById('drawer-count').textContent=getFiltered().length;
+}
 async function init(){
   try{
-    const res=await fetch('./products.json');
-    if(!res.ok)throw new Error();
-    const data=await res.json();
-    const ALL=data.products||[];
-    const CAT_ORDER=["HOODIES", "T-SHIRTS", "SHORTS", "PANTS", "JACKETS", "SWEATERS", "TOPS", "SHIRTS", "BAGS", "ACCESSORIES"];
+    const res=await fetch('./products.json');if(!res.ok)throw new Error();
+    const data=await res.json();ALL=data.products||[];
     const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
     const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
-
-    // ナビ
     const nc=document.getElementById('nav-cats');
-    cats.forEach(cat=>{
-      const a=document.createElement('a');
-      a.className='nav-cat';a.href=`/catalog.html?cat=${encodeURIComponent(cat)}`;a.textContent=cat;
-      nc.appendChild(a);
-    });
-
-    // Featured
+    cats.forEach(cat=>{const a=document.createElement('a');a.className='nav-cat';a.href=`/catalog.html?cat=${encodeURIComponent(cat)}`;a.textContent=cat;nc.appendChild(a);});
+    buildCatList();buildBrandList();
     const fg=document.getElementById('featured-grid');
     shuffle(ALL).slice(0,12).forEach((p,i)=>fg.appendChild(makeCard(p,i)));
-
-    // カテゴリセクション
     const cs=document.getElementById('cat-sections');
     cats.forEach(cat=>{
       const items=shuffle(ALL.filter(p=>p.type===cat)).slice(0,6);
@@ -141,10 +297,8 @@ async function init(){
       const sec=document.createElement('div');sec.className='section';
       sec.innerHTML=`<div class="section-hdr"><span class="section-title">${esc(cat.toUpperCase())}</span><a class="section-more" href="/catalog.html?cat=${encodeURIComponent(cat)}">すべて見る →</a></div><div class="grid" id="cg-${esc(cat)}"></div>`;
       cs.appendChild(sec);
-      const g=sec.querySelector('.grid');
-      items.forEach((p,i)=>g.appendChild(makeCard(p,i)));
+      const g=sec.querySelector('.grid');items.forEach((p,i)=>g.appendChild(makeCard(p,i)));
     });
-
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
   }catch(e){

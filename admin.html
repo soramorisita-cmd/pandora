@@ -583,9 +583,9 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
     <!-- フィルターバー -->
     <div class="filter-bar" id="filter-bar" style="display:none">
       <span class="filter-label">表示</span>
-      <button class="chip" id="chip-all" onclick="setFilter('all', this)">全て</button>
-      <button class="chip warn-active" id="chip-other" onclick="setFilter('other', this)">Otherのみ</button>
-      <button class="chip" id="chip-changed" onclick="setFilter('changed', this)">変更済み</button>
+      <button class="chip" id="chip-all" data-filter="all" onclick="setFilter('all', this)">全て</button>
+      <button class="chip warn-active" id="chip-other" data-filter="other" onclick="setFilter('other', this)">Otherのみ</button>
+      <button class="chip" id="chip-changed" data-filter="changed" onclick="setFilter('changed', this)">変更済み</button>
       <input class="search-input" id="search" type="text" placeholder="🔍 検索..." oninput="renderTable()">
     </div>
     <!-- ブランドフィルター -->
@@ -744,6 +744,19 @@ function initUI() {
   document.getElementById('save-btn').disabled = false;
   document.getElementById('view-tabs').style.display = 'flex';
 
+  // カテゴリフィルターチップを動的生成（Other以外）
+  const fb = document.getElementById('filter-bar');
+  const searchInput = fb.querySelector('.search-input');
+  fb.querySelectorAll('.chip-type-dynamic').forEach(el => el.remove());
+  TYPES.filter(t => t !== 'Other').forEach(type => {
+    const btn = document.createElement('button');
+    btn.className = 'chip chip-type-dynamic';
+    btn.dataset.filter = type;
+    btn.textContent = type;
+    btn.onclick = () => setFilter(type, btn);
+    fb.insertBefore(btn, searchInput);
+  });
+
   // ブランドフィルターチップ
   const bc = document.getElementById('brand-chips');
   bc.innerHTML = `<button class="chip active" onclick="setBrand(null,this)">全て</button>`;
@@ -794,7 +807,7 @@ function switchView(mode) {
 function setFilter(f, btn) {
   filter = f;
   document.querySelectorAll('#filter-bar .chip').forEach(c => c.classList.remove('active','warn-active'));
-  if (!btn) btn = document.getElementById('chip-' + f);
+  if (!btn) btn = document.querySelector(`[data-filter="${f}"]`) || document.getElementById('chip-' + f);
   if (btn) {
     if (f === 'other') btn.classList.add('warn-active');
     else btn.classList.add('active');
@@ -811,6 +824,7 @@ function renderTable() {
     const curType = changes.hasOwnProperty(p._i) ? changes[p._i] : p.type;
     if (filter === 'other'   && curType !== 'Other') return false;
     if (filter === 'changed' && !changes.hasOwnProperty(p._i)) return false;
+    if (filter !== 'all' && filter !== 'other' && filter !== 'changed' && curType !== filter) return false;
     if (q && !(p.title + ' ' + (p.brand||'') + ' ' + p.type + ' ' + p._file).toLowerCase().includes(q)) return false;
     return true;
   });

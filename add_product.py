@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+dir # -*- coding: utf-8 -*-
 """
 add_product.py
 ──────────────
@@ -51,6 +51,41 @@ PRODUCT_TYPES = [
     ("BAGS",         ["bag","tote","backpack","pack","pouch","バッグ","背包","挎包","包"]),
     ("ACCESSORIES",  ["cap","hat","beanie","sock","glove","keychain","belt","scarf","帽","袜","手套","钥匙","围巾"]),
 ]
+
+# Yupooサブカテゴリ名 → PANDORAタイプ マッピング（小文字で比較）
+SUBCATEGORY_MAP = {
+    "tee": "T-SHIRTS", "t-shirt": "T-SHIRTS", "t shirt": "T-SHIRTS",
+    "short sleeve": "T-SHIRTS", "jersey": "T-SHIRTS",
+    "hoodie": "HOODIES", "hoody": "HOODIES", "zip hoodie": "HOODIES",
+    "zip hood": "HOODIES", "hood": "HOODIES",
+    "sweater": "SWEATERS", "crewneck": "SWEATERS", "crew": "SWEATERS",
+    "sweatshirt": "SWEATERS", "knit": "SWEATERS",
+    "jacket": "JACKETS", "coat": "JACKETS", "shell tracksuit": "JACKETS",
+    "shell": "JACKETS", "puffer": "JACKETS", "windbreaker": "JACKETS",
+    "bottoms": "PANTS", "pants": "PANTS", "jogger": "PANTS",
+    "trousers": "PANTS", "jeans": "PANTS",
+    "shorts": "SHORTS", "short": "SHORTS", "short tracksuit": "SHORTS",
+    "tracksuit": "SWEATERS", "track": "SWEATERS",
+    "shirt": "SHIRTS",
+    "top": "TOPS", "vest": "TOPS", "polo": "TOPS",
+    "bag": "BAGS", "backpack": "BAGS", "tote": "BAGS",
+    "accessories": "ACCESSORIES", "wear accessories": "ACCESSORIES",
+    "accessory": "ACCESSORIES", "cap": "ACCESSORIES", "hat": "ACCESSORIES",
+    "beanie": "ACCESSORIES", "sock": "ACCESSORIES", "glove": "ACCESSORIES",
+    "keychain": "ACCESSORIES",
+}
+
+def map_subcategory(name: str) -> str:
+    """サブカテゴリ名をPANDORAタイプに変換（前方一致・部分一致）"""
+    nl = name.lower().strip()
+    # 完全一致優先
+    if nl in SUBCATEGORY_MAP:
+        return SUBCATEGORY_MAP[nl]
+    # 前方一致（長いキーから試す）
+    for key in sorted(SUBCATEGORY_MAP.keys(), key=len, reverse=True):
+        if nl.startswith(key) or key in nl:
+            return SUBCATEGORY_MAP[key]
+    return None  # マッチなし → classify()にフォールバック
 
 TYPE_COLORS = {
     "HOODIES":"FFF2CC","JACKETS":"FFE6CC","SWEATERS":"DDEBF7",
@@ -105,6 +140,38 @@ def brand_to_filename(brand: str) -> str:
     return safe + ".json"
 
 # ─────────────────── スクレイパー ───────────────────
+def scrape_subcategories(category_url: str, ctx) -> list[dict]:
+    """
+    カテゴリページのサブカテゴリ一覧を取得する。
+    戻り値: [{"name": "Tee", "url": "https://...", "type": "T-SHIRTS"}, ...]
+    サブカテゴリがない場合は空リスト。
+    """
+    base_url = get_base_url(category_url)
+    page = ctx.new_page()
+    try:
+        page.goto(category_url, wait_until="domcontentloaded", timeout=30000)
+        time.sleep(2)
+        html = page.content()
+    finally:
+        page.close()
+
+    soup = BeautifulSoup(html, "html.parser")
+    subcats = []
+    seen = set()
+
+    # isSubCate=true を含むリンクを検索
+    for a in soup.find_all("a", href=re.compile(r"/categories/\d+.*isSubCate=true")):
+        href = a.get("href", "")
+        name = a.get_text(strip=True)
+        if not name or href in seen:
+            continue
+        seen.add(href)
+        full_url = (base_url + href) if href.startswith("/") else href
+        ptype = map_subcategory(name)
+        subcats.append({"name": name, "url": full_url, "type": ptype})
+
+    return subcats
+
 def scrape_albums(category_url: str, ctx) -> list[dict]:
     albums = []
     base_url = get_base_url(category_url)
@@ -401,20 +468,46 @@ def cmd_scan(url: str):
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
         )
 
-        print("📂 アルバム一覧取得中...")
-        albums = scrape_albums(url, ctx)
+        print("📂 サブカテゴリ確認中...")
+        subcats = scrape_subcategories(url, ctx)
+
+        if subcats:
+            print(f"✅ サブカテゴリ検出: {len(subcats)}件")
+            for sc in subcats:
+                mapped = sc['type'] or '→classify()'
+                print(f"   {sc['name']:<20} → {mapped}")
+            print()
+            albums = []
+            for sc in subcats:
+                print(f"📂 [{sc['name']}] スキャン中...")
+                sc_albums = scrape_albums(sc["url"], ctx)
+                # サブカテゴリのtypeをセット（Noneならclassify()）
+                for a in sc_albums:
+                    a["type"] = sc["type"] or classify(a["title"])
+                albums.extend(sc_albums)
+                print(f"   → {len(sc_albums)}件 (type: {sc['type'] or 'classify()'})")
+        else:
+            print("📂 アルバム一覧取得中...")
+            albums = scrape_albums(url, ctx)
+            if not albums:
+                print("❌ アルバムが取得できませんでした")
+                browser.close()
+                return
+            for a in albums:
+                a["type"] = classify(a["title"])
+
         if not albums:
             print("❌ アルバムが取得できませんでした")
             browser.close()
             return
 
+        # 共通フィールド初期化
         for a in albums:
-            a["type"]      = classify(a["title"])
-            a["purchase"]  = None
-            a["kakobuy"]   = None
-            a["price_cny"] = None
-            a["price_jpy"] = None
-            a["image"]     = None
+            a.setdefault("purchase",  None)
+            a.setdefault("kakobuy",   None)
+            a.setdefault("price_cny", None)
+            a.setdefault("price_jpy", None)
+            a.setdefault("image",     None)
 
         groups = defaultdict(list)
         for a in albums:
@@ -429,7 +522,10 @@ def cmd_scan(url: str):
             taobao = scrape_taobao_link(alb["yupoo_url"], ctx)
             alb["purchase"] = taobao or ""
             alb["kakobuy"]  = to_kakobuy(taobao) if taobao else ""
-            time.sleep(1.0)
+            # 画像も同時取得（アルバムページは既に開いているので追加コスト小）
+            if not alb.get("image"):
+                alb["image"] = scrape_first_image(alb["yupoo_url"], ctx)
+            time.sleep(0.8)
         print()
 
         # Other再分類（Taobao/Weidianの商品名で再試行）
