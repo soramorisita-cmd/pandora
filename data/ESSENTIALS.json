@@ -1,7 +1,7 @@
 {
   "brand": "ESSENTIALS",
   "seller": "steven-1989",
-  "updated": "2026-04-28T21:51:25",
+  "updated": "2026-04-28T15:38:30",
   "products": [
     {
       "album_id": "226313997",
@@ -799,7 +799,7 @@
       "album_id": "168946557",
       "title": "￥218  ESS 松紧抽绳直筒牛仔裤 牛仔蓝 S-XL  6249#",
       "yupoo_url": "https://steven-1989.x.yupoo.com/albums/168946557?uid=1&isSubCate=false&referrercate=3018541",
-      "type": "ACCESSORIES",
+      "type": "PANTS",
       "purchase": "https://item.taobao.com/item.htm?id=814789366293",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D814789366293&affcode=a235412",
       "price_cny": null,
@@ -1279,5 +1279,6 @@
       "price_jpy": null,
       "image": "images/fe44cded6e.jpeg"
     }
-  ]
+  ],
+  "count": 116
 }
