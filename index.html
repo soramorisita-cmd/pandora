@@ -190,7 +190,7 @@ footer a{color:var(--accent);text-decoration:none}
 </div>
 <footer>PANDORA &nbsp;·&nbsp; Powered by <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank">Kakobuy</a></footer>
 <script>
-const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","BAGS","ACCESSORIES"];
+const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
 let ALL=[],selCats=new Set(),selBrands=new Set();
 function cleanTitle(r){let s=String(r).trim();s=s.replace(/^(ON SALE\s*)?[¥￥][\d,.\s]+(cny|CNY|usd|USD)?\s*/i,'');s=s.replace(/[\u4e00-\u9fff\u3400-\u4dbf]{2,}[^\u0000-\u007f]*/g,'');return s.replace(/\s{2,}/g,' ').replace(/[-\s]+$/,'').trim()||r.slice(0,50)}
 function extractJPY(p){const j=p.price_jpy;if(j&&!['undefined','null',''].includes(String(j).trim())){const n=parseInt(String(j).replace(/[^0-9]/g,''));if(!isNaN(n))return'¥'+n.toLocaleString()}const m=String(p.title||'').match(/[¥￥]([\d,]+)\s*cny/i);if(m)return'¥'+Math.round(parseInt(m[1].replace(',',''))*21).toLocaleString();return''}

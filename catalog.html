@@ -79,6 +79,27 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,.97);backdrop-fil
 #loading p{font-size:13px;color:var(--muted2);letter-spacing:1px;font-weight:700}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .card{animation:fadeIn .18s ease both}
+
+/* ── MODEL GROUP CARD ── */
+.model-group{grid-column:1/-1;margin-bottom:4px}
+.model-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s,transform .15s;display:flex;gap:0;position:relative}
+.model-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.model-card-img{width:140px;min-width:140px;aspect-ratio:4/3;object-fit:cover;background:var(--s2);flex-shrink:0}
+.model-card-noimag{width:140px;min-width:140px;aspect-ratio:4/3;background:var(--s2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.model-card-noimag span{font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
+.model-card-body{flex:1;padding:14px;display:flex;flex-direction:column;gap:7px;justify-content:center}
+.model-card-tags{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.model-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--text);line-height:1}
+.model-variant-count{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--accent);background:rgba(200,240,60,.1);border:1px solid rgba(200,240,60,.2);padding:3px 10px;border-radius:999px}
+.model-expand-btn{position:absolute;top:12px;right:12px;font-size:18px;color:var(--muted);transition:transform .2s;pointer-events:none}
+.model-card.expanded .model-expand-btn{transform:rotate(180deg);color:var(--accent)}
+.model-variants{display:none;padding:10px 0 4px;animation:fadeIn .2s ease both}
+.model-variants.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+
+@media(max-width:768px){
+  .model-card-img,.model-card-noimag{width:100px;min-width:100px}
+  .model-name{font-size:18px}
+}
 footer{text-align:center;padding:28px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
 footer a{color:var(--accent);text-decoration:none}
 @media(max-width:768px){
@@ -197,7 +218,7 @@ footer a{color:var(--accent);text-decoration:none}
 <footer>PANDORA &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank">Kakobuy</a></footer>
 
 <script>
-const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","BAGS","ACCESSORIES"];
+const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
 const urlCat=new URLSearchParams(location.search).get('cat')||'all';
 let ALL=[],selCats=new Set(urlCat!=='all'?[urlCat]:[]),selBrands=new Set();
 
@@ -250,12 +271,143 @@ function updateTitle(){
   else el.style.display='none';
 }
 
+function makeVariantCard(p, i) {
+  const title=cleanTitle(p.title),price=extractJPY(p);
+  const buyLink=p.kakobuy||p.purchase||'#',qcLink=p.yupoo||'#';
+  const brand=p.brand||'',type=p.type||'';
+  const card=document.createElement('div');card.className='card';card.style.animationDelay=Math.min(i,24)*.018+'s';
+  const imgHtml=p.image&&p.image!=='null'&&p.image.length>4
+    ?`<img class="card-img" src="${esc(p.image)}" alt="${esc(title)}" loading="lazy" onerror="this.outerHTML='<div class=card-noimag><span>NO IMAGE</span></div>'">`
+    :`<div class="card-noimag"><span>NO IMAGE</span></div>`;
+  card.innerHTML=`${imgHtml}<div class="card-body"><div class="card-tags">${brand?`<span class="tag tag-brand">${esc(brand)}</span>`:''} ${type?`<span class="tag tag-type">${esc(type)}</span>`:''}</div><div class="card-title">${esc(title)}</div>${price?`<div class="card-price">${price}</div>`:''}<div class="card-actions"><a class="btn-buy" href="${esc(buyLink)}" target="_blank" rel="noopener">購入する</a><a class="btn-qc" href="${esc(qcLink)}" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>QC</a></div></div>`;
+  return card;
+}
+
+function makeBatchSection(batchName, items) {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'margin-bottom:14px';
+
+  // バッチヘッダー
+  const head = document.createElement('div');
+  head.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 4px;margin-bottom:8px;cursor:pointer;border-radius:7px;transition:background .12s';
+  head.innerHTML = `
+    <span style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)">▸</span>
+    <span style="font-size:12px;font-weight:700;color:var(--text)">${esc(batchName)}</span>
+    <span style="font-size:10px;color:var(--muted);background:var(--s3);border-radius:999px;padding:1px 8px">${items.length}</span>`;
+  head.addEventListener('mouseenter', () => head.style.background = 'var(--s3)');
+  head.addEventListener('mouseleave', () => head.style.background = '');
+
+  const grid = document.createElement('div');
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:7px';
+  items.forEach((p, i) => grid.appendChild(makeVariantCard(p, i)));
+
+  let open = true;
+  const arrow = head.querySelector('span:first-child');
+  head.addEventListener('click', () => {
+    open = !open;
+    grid.style.display = open ? 'grid' : 'none';
+    arrow.textContent = open ? '▾' : '▸';
+  });
+
+  wrap.appendChild(head);
+  wrap.appendChild(grid);
+  return wrap;
+}
+
+function makeModelGroupCard(modelName, items) {
+  const rep = items[0];
+  const brand = rep.brand || '';
+  const imgHtml = rep.image && rep.image !== 'null' && rep.image.length > 4
+    ? `<img class="model-card-img" src="${esc(rep.image)}" alt="${esc(modelName)}" loading="lazy" onerror="this.outerHTML='<div class=model-card-noimag><span>NO IMAGE</span></div>'">`
+    : `<div class="model-card-noimag"><span>NO IMAGE</span></div>`;
+
+  // バッチでグループ化
+  const batches = new Map();
+  const noBatch = [];
+  items.forEach(p => {
+    if (p.batch) {
+      if (!batches.has(p.batch)) batches.set(p.batch, []);
+      batches.get(p.batch).push(p);
+    } else {
+      noBatch.push(p);
+    }
+  });
+  const hasBatches = batches.size > 0;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'model-group';
+
+  const card = document.createElement('div');
+  card.className = 'model-card';
+  card.innerHTML = `
+    ${imgHtml}
+    <div class="model-card-body">
+      <div class="model-card-tags">
+        ${brand ? `<span class="tag tag-brand">${esc(brand)}</span>` : ''}
+        ${hasBatches ? `<span class="tag" style="background:rgba(200,240,60,.08);color:var(--accent);border-color:rgba(200,240,60,.2)">${batches.size} バッチ</span>` : ''}
+      </div>
+      <div class="model-name">${esc(modelName)}</div>
+      <div class="model-variant-count">▼ ${items.length} バリアント</div>
+    </div>
+    <span class="model-expand-btn">▾</span>`;
+
+  const variantWrap = document.createElement('div');
+  variantWrap.className = 'model-variants';
+
+  if (hasBatches) {
+    // バッチ別セクション
+    batches.forEach((bItems, batchName) => {
+      variantWrap.appendChild(makeBatchSection(batchName, bItems));
+    });
+    // バッチなし商品
+    if (noBatch.length) {
+      variantWrap.appendChild(makeBatchSection('その他', noBatch));
+    }
+  } else {
+    // バッチなし → フラットグリッド
+    noBatch.forEach((p, i) => variantWrap.appendChild(makeVariantCard(p, i)));
+    variantWrap.style.cssText += ';display:none';
+  }
+
+  card.addEventListener('click', () => {
+    const open = variantWrap.classList.toggle('open');
+    card.classList.toggle('expanded', open);
+    const countEl = card.querySelector('.model-variant-count');
+    countEl.textContent = (open ? '▲ ' : '▼ ') + items.length + ' バリアント';
+    card.style.borderColor = open ? 'var(--accent)' : '';
+  });
+
+  wrap.appendChild(card);
+  wrap.appendChild(variantWrap);
+  return wrap;
+}
+
 function applyFilters(){
   const items=getFiltered();
   document.getElementById('count').textContent=items.length;
   const grid=document.getElementById('grid');grid.innerHTML='';
   if(!items.length){grid.innerHTML='<div class="empty">商品が見つかりませんでした</div>';return}
-  items.forEach((p,i)=>{
+
+  // model があるものをグループ化
+  const modelGroups = new Map();  // modelName → products[]
+  const noModel = [];
+
+  items.forEach(p => {
+    if (p.model) {
+      if (!modelGroups.has(p.model)) modelGroups.set(p.model, []);
+      modelGroups.get(p.model).push(p);
+    } else {
+      noModel.push(p);
+    }
+  });
+
+  // モデルグループカード
+  modelGroups.forEach((groupItems, modelName) => {
+    grid.appendChild(makeModelGroupCard(modelName, groupItems));
+  });
+
+  // 通常カード
+  noModel.forEach((p, i) => {
     const title=cleanTitle(p.title),price=extractJPY(p);
     const buyLink=p.kakobuy||p.purchase||'#',qcLink=p.yupoo||'#';
     const brand=p.brand||'',type=p.type||'';
