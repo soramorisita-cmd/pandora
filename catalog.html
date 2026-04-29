@@ -366,7 +366,7 @@ function makeModelGroupCard(modelName, items) {
   } else {
     // バッチなし → フラットグリッド
     noBatch.forEach((p, i) => variantWrap.appendChild(makeVariantCard(p, i)));
-    variantWrap.style.cssText += ';display:none';
+    // display:none はCSS (.model-variants) が既に担うのでインラインスタイル不要
   }
 
   card.addEventListener('click', () => {
