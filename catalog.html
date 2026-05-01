@@ -284,34 +284,7 @@ function makeVariantCard(p, i) {
 }
 
 function makeBatchSection(batchName, items) {
-  const wrap = document.createElement('div');
-  wrap.style.cssText = 'margin-bottom:14px';
-
-  // バッチヘッダー
-  const head = document.createElement('div');
-  head.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 4px;margin-bottom:8px;cursor:pointer;border-radius:7px;transition:background .12s';
-  head.innerHTML = `
-    <span style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent)">▸</span>
-    <span style="font-size:12px;font-weight:700;color:var(--text)">${esc(batchName)}</span>
-    <span style="font-size:10px;color:var(--muted);background:var(--s3);border-radius:999px;padding:1px 8px">${items.length}</span>`;
-  head.addEventListener('mouseenter', () => head.style.background = 'var(--s3)');
-  head.addEventListener('mouseleave', () => head.style.background = '');
-
-  const grid = document.createElement('div');
-  grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:7px';
-  items.forEach((p, i) => grid.appendChild(makeVariantCard(p, i)));
-
-  let open = true;
-  const arrow = head.querySelector('span:first-child');
-  head.addEventListener('click', () => {
-    open = !open;
-    grid.style.display = open ? 'grid' : 'none';
-    arrow.textContent = open ? '▾' : '▸';
-  });
-
-  wrap.appendChild(head);
-  wrap.appendChild(grid);
-  return wrap;
+  // タブ切り替え方式 - この関数は使わない（makeModelGroupCard内で直接実装）
 }
 
 function makeModelGroupCard(modelName, items) {
@@ -325,18 +298,16 @@ function makeModelGroupCard(modelName, items) {
   const batches = new Map();
   const noBatch = [];
   items.forEach(p => {
-    if (p.batch) {
-      if (!batches.has(p.batch)) batches.set(p.batch, []);
-      batches.get(p.batch).push(p);
-    } else {
-      noBatch.push(p);
-    }
+    const key = p.batch || '__none__';
+    if (!batches.has(key)) batches.set(key, []);
+    batches.get(key).push(p);
   });
-  const hasBatches = batches.size > 0;
+  const hasBatches = batches.size > 1 || (batches.size === 1 && !batches.has('__none__'));
 
   const wrap = document.createElement('div');
   wrap.className = 'model-group';
 
+  // モデルカード（ヘッダー）
   const card = document.createElement('div');
   card.className = 'model-card';
   card.innerHTML = `
@@ -351,22 +322,65 @@ function makeModelGroupCard(modelName, items) {
     </div>
     <span class="model-expand-btn">▾</span>`;
 
+  // バリアントエリア
   const variantWrap = document.createElement('div');
   variantWrap.className = 'model-variants';
 
   if (hasBatches) {
-    // バッチ別セクション
-    batches.forEach((bItems, batchName) => {
-      variantWrap.appendChild(makeBatchSection(batchName, bItems));
+    // タブバー
+    const tabBar = document.createElement('div');
+    tabBar.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;padding:10px 0 12px;border-bottom:1px solid var(--border);margin-bottom:12px';
+
+    // グリッドコンテナ
+    const gridWrap = document.createElement('div');
+    gridWrap.className = 'grid';
+
+    let activeTab = null;
+
+    batches.forEach((bItems, batchKey) => {
+      const displayName = batchKey === '__none__' ? 'その他' : batchKey;
+      const tab = document.createElement('button');
+      tab.style.cssText = 'font-family:"Syne",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted2);cursor:pointer;transition:all .15s;white-space:nowrap';
+      tab.textContent = `${displayName}  ${bItems.length}`;
+      tab.dataset.batch = batchKey;
+
+      tab.addEventListener('mouseenter', () => { if (!tab.classList.contains('active')) tab.style.borderColor = 'var(--border2)'; });
+      tab.addEventListener('mouseleave', () => { if (!tab.classList.contains('active')) tab.style.borderColor = 'var(--border)'; });
+
+      tab.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // 全タブをリセット
+        tabBar.querySelectorAll('button').forEach(t => {
+          t.classList.remove('active');
+          t.style.cssText = 'font-family:"Syne",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted2);cursor:pointer;transition:all .15s;white-space:nowrap';
+        });
+        // アクティブタブをスタイル
+        tab.classList.add('active');
+        tab.style.cssText = 'font-family:"Syne",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--accent);background:rgba(200,240,60,.12);color:var(--accent);cursor:pointer;transition:all .15s;white-space:nowrap';
+        // グリッドを差し替え
+        gridWrap.innerHTML = '';
+        bItems.forEach((p, i) => gridWrap.appendChild(makeVariantCard(p, i)));
+      });
+
+      // 最初のタブをデフォルト選択
+      if (!activeTab) {
+        activeTab = tab;
+        tab.classList.add('active');
+        tab.style.cssText = 'font-family:"Syne",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--accent);background:rgba(200,240,60,.12);color:var(--accent);cursor:pointer;transition:all .15s;white-space:nowrap';
+        bItems.forEach((p, i) => gridWrap.appendChild(makeVariantCard(p, i)));
+      }
+
+      tabBar.appendChild(tab);
     });
-    // バッチなし商品
-    if (noBatch.length) {
-      variantWrap.appendChild(makeBatchSection('その他', noBatch));
-    }
+
+    variantWrap.appendChild(tabBar);
+    variantWrap.appendChild(gridWrap);
   } else {
     // バッチなし → フラットグリッド
-    noBatch.forEach((p, i) => variantWrap.appendChild(makeVariantCard(p, i)));
-    // display:none はCSS (.model-variants) が既に担うのでインラインスタイル不要
+    const gridWrap = document.createElement('div');
+    gridWrap.className = 'grid';
+    items.forEach((p, i) => gridWrap.appendChild(makeVariantCard(p, i)));
+    variantWrap.appendChild(gridWrap);
   }
 
   card.addEventListener('click', () => {
