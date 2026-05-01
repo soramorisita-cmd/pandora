@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PANDORA — Rep Catalog</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0a0a;--s1:#141414;--s2:#1c1c1c;--s3:#242424;
@@ -14,7 +14,7 @@
   --accent:#c8f03c;--accent2:#9fc02a;--qc:#38bdf8;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body{font-family:'Inter','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0}
 nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;gap:24px}
@@ -86,6 +86,22 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,.97);backdrop-fil
 .btn-qc:hover{background:rgba(56,189,248,.2)}
 .btn-qc svg{width:11px;height:11px}
 .empty{text-align:center;padding:60px;color:var(--muted);font-size:14px;font-weight:700}
+/* MODEL GROUP */
+.model-group{grid-column:1/-1;margin-bottom:4px}
+.model-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s,transform .15s;display:flex;gap:0;position:relative}
+.model-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.model-card-img{width:140px;min-width:140px;aspect-ratio:4/3;object-fit:cover;background:var(--s2);flex-shrink:0}
+.model-card-noimag{width:140px;min-width:140px;aspect-ratio:4/3;background:var(--s2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.model-card-noimag span{font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
+.model-card-body{flex:1;padding:14px;display:flex;flex-direction:column;gap:7px;justify-content:center}
+.model-card-tags{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.model-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--text);line-height:1}
+.model-variant-count{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--accent);background:rgba(200,240,60,.1);border:1px solid rgba(200,240,60,.2);padding:3px 10px;border-radius:999px}
+.model-expand-btn{position:absolute;top:12px;right:12px;font-size:18px;color:var(--muted);transition:transform .2s;pointer-events:none}
+.model-card.expanded .model-expand-btn{transform:rotate(180deg);color:var(--accent)}
+.model-variants{display:none;padding:12px 0 4px;animation:fadeIn .2s ease both}
+.model-variants.open{display:block}
+@media(max-width:768px){.model-card-img,.model-card-noimag{width:100px;min-width:100px}.model-name{font-size:18px}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .card{animation:fadeIn .18s ease both}
 #loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px;position:relative;z-index:1}
@@ -207,6 +223,48 @@ function makeCard(p,i){
   card.innerHTML=`${imgHtml}<div class="card-body"><div class="card-tags">${brand?`<span class="tag tag-brand">${esc(brand)}</span>`:''} ${type?`<span class="tag tag-type">${esc(type)}</span>`:''}</div><div class="card-title">${esc(title)}</div>${price?`<div class="card-price">${price}</div>`:''}<div class="card-actions"><a class="btn-buy" href="${esc(buyLink)}" target="_blank" rel="noopener">購入する</a><a class="btn-qc" href="${esc(qcLink)}" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>QC</a></div></div>`;
   return card;
 }
+function makeModelGroupCard(modelName,items){
+  const rep=items[0],brand=rep.brand||'';
+  const imgHtml=rep.image&&rep.image!=='null'&&rep.image.length>4?`<img class="model-card-img" src="${esc(rep.image)}" alt="${esc(modelName)}" loading="lazy" onerror="this.outerHTML='<div class=model-card-noimag><span>NO IMAGE</span></div>'">`:`<div class="model-card-noimag"><span>NO IMAGE</span></div>`;
+  const batches=new Map();
+  items.forEach(p=>{const k=p.batch||'__none__';if(!batches.has(k))batches.set(k,[]);batches.get(k).push(p);});
+  const hasBatches=batches.size>1||(batches.size===1&&!batches.has('__none__'));
+  const wrap=document.createElement('div');wrap.className='model-group';
+  const card=document.createElement('div');card.className='model-card';
+  card.innerHTML=`${imgHtml}<div class="model-card-body"><div class="model-card-tags">${brand?`<span class="tag tag-brand">${esc(brand)}</span>`:''} ${hasBatches?`<span class="tag" style="background:rgba(200,240,60,.08);color:var(--accent);border-color:rgba(200,240,60,.2)">${batches.size} バッチ</span>`:''}</div><div class="model-name">${esc(modelName)}</div><div class="model-variant-count">▼ ${items.length} バリアント</div></div><span class="model-expand-btn">▾</span>`;
+  const variantWrap=document.createElement('div');variantWrap.className='model-variants';
+  if(hasBatches){
+    const BASE='font-family:"Inter","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted2);cursor:pointer;transition:all .15s;white-space:nowrap';
+    const ACT='font-family:"Inter","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--accent);background:rgba(200,240,60,.12);color:var(--accent);cursor:pointer;transition:all .15s;white-space:nowrap';
+    const tabBar=document.createElement('div');tabBar.style.cssText='display:flex;gap:6px;flex-wrap:wrap;padding:10px 0 12px;border-bottom:1px solid var(--border);margin-bottom:12px';
+    const gridWrap=document.createElement('div');gridWrap.className='grid';
+    let first=true;
+    batches.forEach((bItems,bk)=>{
+      const tab=document.createElement('button');tab.style.cssText=first?ACT:BASE;
+      tab.textContent=(bk==='__none__'?'その他':bk)+'  '+bItems.length;
+      tab.addEventListener('click',e=>{e.stopPropagation();tabBar.querySelectorAll('button').forEach(t=>t.style.cssText=BASE);tab.style.cssText=ACT;gridWrap.innerHTML='';bItems.forEach((p,i)=>gridWrap.appendChild(makeCard(p,i)));});
+      if(first){bItems.forEach((p,i)=>gridWrap.appendChild(makeCard(p,i)));first=false;}
+      tabBar.appendChild(tab);
+    });
+    variantWrap.appendChild(tabBar);variantWrap.appendChild(gridWrap);
+  } else {
+    const gridWrap=document.createElement('div');gridWrap.className='grid';
+    items.forEach((p,i)=>gridWrap.appendChild(makeCard(p,i)));
+    variantWrap.appendChild(gridWrap);
+  }
+  card.addEventListener('click',()=>{
+    const open=variantWrap.classList.toggle('open');card.classList.toggle('expanded',open);
+    card.querySelector('.model-variant-count').textContent=(open?'▲ ':'▼ ')+items.length+' バリアント';
+    card.style.borderColor=open?'var(--accent)':'';
+  });
+  wrap.appendChild(card);wrap.appendChild(variantWrap);return wrap;
+}
+function renderToGrid(items,grid){
+  const modelGroups=new Map(),noModel=[];
+  items.forEach(p=>{if(p.model){if(!modelGroups.has(p.model))modelGroups.set(p.model,[]);modelGroups.get(p.model).push(p);}else{noModel.push(p);}});
+  modelGroups.forEach((gItems,name)=>grid.appendChild(makeModelGroupCard(name,gItems)));
+  noModel.forEach((p,i)=>grid.appendChild(makeCard(p,i)));
+}
 function buildCatList(){
   const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
   const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
@@ -242,7 +300,7 @@ function applyFilters(){
   document.getElementById('count').textContent=items.length;
   const grid=document.getElementById('flat-grid');grid.innerHTML='';
   if(!items.length){grid.innerHTML='<div class="empty">商品が見つかりませんでした</div>';return}
-  items.forEach((p,i)=>grid.appendChild(makeCard(p,i)));
+  renderToGrid(items,grid);
 }
 function resetFilters(){
   selCats.clear();selBrands.clear();
@@ -297,7 +355,8 @@ async function init(){
       const sec=document.createElement('div');sec.className='section';
       sec.innerHTML=`<div class="section-hdr"><span class="section-title">${esc(cat.toUpperCase())}</span><a class="section-more" href="/catalog.html?cat=${encodeURIComponent(cat)}">すべて見る →</a></div><div class="grid" id="cg-${esc(cat)}"></div>`;
       cs.appendChild(sec);
-      const g=sec.querySelector('.grid');items.forEach((p,i)=>g.appendChild(makeCard(p,i)));
+      const g=sec.querySelector('.grid');
+      renderToGrid(items,g);
     });
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
