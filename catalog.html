@@ -93,8 +93,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,.97);backdrop-fil
 .model-variant-count{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--accent);background:rgba(200,240,60,.1);border:1px solid rgba(200,240,60,.2);padding:3px 10px;border-radius:999px}
 .model-expand-btn{position:absolute;top:12px;right:12px;font-size:18px;color:var(--muted);transition:transform .2s;pointer-events:none}
 .model-card.expanded .model-expand-btn{transform:rotate(180deg);color:var(--accent)}
-.model-variants{display:none;padding:10px 0 4px;animation:fadeIn .2s ease both}
-.model-variants.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.model-variants{display:none;padding:12px 0 4px;animation:fadeIn .2s ease both}
+.model-variants.open{display:block}
 
 @media(max-width:768px){
   .model-card-img,.model-card-noimag{width:100px;min-width:100px}
