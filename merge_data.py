@@ -69,6 +69,8 @@ def normalize_product(p: dict, brand: str, seller: str, image_map: dict) -> dict
         "image":     img,
         "price_cny": p.get("price_cny"),
         "price_jpy": p.get("price_jpy"),
+        "model":     p.get("model")     or None,
+        "batch":     p.get("batch")     or None,
     }
     # 画像がローカルパスなら保持、http:// または空なら image_map から引き継ぐ
     if not img.startswith("images/"):
@@ -130,7 +132,7 @@ def merge():
 
 def git_push():
     for cmd in [
-        ["git", "add", "data/", "products.json", "images/"],
+        ["git", "add", "data/", "products.json", "images/", "index.html", "catalog.html", "converter.html"],
         ["git", "commit", "-m", "merge: update products.json"],
         ["git", "push"],
     ]:

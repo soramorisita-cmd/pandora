@@ -40,6 +40,7 @@ PURCHASE_DOMAINS = [
 
 # ─────────────────── 商品タイプ分類 ───────────────────
 PRODUCT_TYPES = [
+    ("SNEAKERS",     ["sneaker","shoe","jordan","dunk","air force","yeezy","kobe","lebron","vomero","samba","campus","ultraboost","foam runner","スニーカー","球鞋","运动鞋","篮球鞋","跑鞋","aj","nike air","new balance"]),
     ("HOODIES",      ["hoodie","hoody","hooded","zip hoodie","连帽卫衣","连帽","パーカ"]),
     ("JACKETS",      ["jacket","coat","shell","puffer","wind","ジャケット","外套","夹克","棉服","羽绒","棒球"]),
     ("SWEATERS",     ["sweater","crewneck","crew neck","knit","sweatshirt","pullover","圆领","卫衣","针织","毛衣"]),
@@ -73,6 +74,19 @@ SUBCATEGORY_MAP = {
     "accessory": "ACCESSORIES", "cap": "ACCESSORIES", "hat": "ACCESSORIES",
     "beanie": "ACCESSORIES", "sock": "ACCESSORIES", "glove": "ACCESSORIES",
     "keychain": "ACCESSORIES",
+    # スニーカー系
+    "sneaker": "SNEAKERS", "sneakers": "SNEAKERS",
+    "shoe": "SNEAKERS", "shoes": "SNEAKERS",
+    "jordan": "SNEAKERS", "dunk": "SNEAKERS", "force": "SNEAKERS",
+    "yeezy": "SNEAKERS", "boost": "SNEAKERS",
+    "new balance": "SNEAKERS", "nb": "SNEAKERS",
+    "kobe": "SNEAKERS", "lebron": "SNEAKERS",
+    "slide": "SNEAKERS", "foam runner": "SNEAKERS",
+    "sacai": "SNEAKERS", "vomero": "SNEAKERS",
+    "campus": "SNEAKERS", "samba": "SNEAKERS", "sambas": "SNEAKERS",
+    "ultraboost": "SNEAKERS", "ultra boost": "SNEAKERS",
+    "balenciaga": "SNEAKERS", "runner": "SNEAKERS",
+    "air max": "SNEAKERS", "airmax": "SNEAKERS",
 }
 
 def map_subcategory(name: str) -> str:
@@ -140,29 +154,81 @@ def brand_to_filename(brand: str) -> str:
     return safe + ".json"
 
 # ─────────────────── スクレイパー ───────────────────
+def extract_batch_from_title(title: str) -> str | None:
+    """
+    タイトルから【バッチ名】を抽出する。
+    バッチ名: PK / LJR / OG / DT / M版 / TOP など（短い英字 or 日本語）
+    除外: 価格（350yuan等）/ 商品番号（FD2629-100等）/ Pre-order等
+    """
+    brackets = re.findall(r'【([^】]+)】', title)
+    for b in brackets:
+        b = b.strip()
+        # 価格・数字のみはスキップ
+        if re.match(r'^[\d,yuan元Y¥￥\s]+$', b, re.IGNORECASE):
+            continue
+        # Pre-order などスキップ
+        if re.search(r'pre|order|sale', b, re.IGNORECASE):
+            continue
+        # 商品番号パターンをスキップ（例: FD2629-100, BV1310-337, CT0856-600）
+        # 英字2〜3文字 + 数字4〜6文字 + ハイフン + 数字
+        if re.match(r'^[A-Z]{1,3}\d{4,6}(-\d{1,4})?$', b):
+            continue
+        # 長すぎるもの（15文字超）はスキップ
+        if len(b) > 15:
+            continue
+        return b
+    return None
+
 def scrape_subcategories(category_url: str, ctx) -> list[dict]:
     """
-    カテゴリページのサブカテゴリ一覧を取得する。
-    戻り値: [{"name": "Tee", "url": "https://...", "type": "T-SHIRTS"}, ...]
-    サブカテゴリがない場合は空リスト。
+    カテゴリページのメインコンテンツ内にあるバッチボタンを取得する。
+    referrercate=親ID で絞り込み、現在のカテゴリの子のみ取得。
     """
     base_url = get_base_url(category_url)
+    parent_id_m = re.search(r"/categories/(\d+)", category_url)
+    if not parent_id_m:
+        return []
+    parent_id = parent_id_m.group(1)
+
     page = ctx.new_page()
     try:
         page.goto(category_url, wait_until="domcontentloaded", timeout=30000)
         time.sleep(2)
-        html = page.content()
+
+        # referrercate=親ID を含むリンクのみ取得（現在カテゴリの子だけ）
+        js = """
+        (parentId) => {
+            const results = [];
+            const seen = new Set();
+            const needle = 'referrercate=' + parentId;
+            const links = Array.from(document.querySelectorAll('a[href]'));
+            for (const a of links) {
+                const href = a.getAttribute('href') || '';
+                if (!href.includes(needle)) continue;
+                if (!href.includes('isSubCate=true')) continue;
+                const name = a.textContent.trim();
+                if (!name || seen.has(href)) continue;
+                seen.add(href);
+                results.push({ name, href });
+            }
+            return results;
+        }
+        """
+        results = page.evaluate(js, parent_id)
+        print(f"   バッチボタン検出: {len(results)}件")
+        for r in results[:5]:
+            print(f"   → {r['name']}")
+    except Exception as e:
+        print(f"  ⚠ バッチ取得エラー: {e}")
+        results = []
     finally:
         page.close()
 
-    soup = BeautifulSoup(html, "html.parser")
     subcats = []
     seen = set()
-
-    # isSubCate=true を含むリンクを検索
-    for a in soup.find_all("a", href=re.compile(r"/categories/\d+.*isSubCate=true")):
-        href = a.get("href", "")
-        name = a.get_text(strip=True)
+    for item in results:
+        href = item.get("href", "")
+        name = item.get("name", "").strip()
         if not name or href in seen:
             continue
         seen.add(href)
@@ -459,6 +525,10 @@ def cmd_scan(url: str):
         print("ブランド名が空です")
         return
 
+    model = input("モデル名を入力してください（スニーカーなど: AIR JORDAN 1 / スキップはEnter） > ").strip() or None
+    if model:
+        print(f"   モデル: {model} → 同モデルの商品はカタログで1枚のカードにグループ表示されます")
+
     fetch_rates()
     print(f"\n🔍 スキャン: {seller} / ブランド: {brand}")
 
@@ -472,20 +542,19 @@ def cmd_scan(url: str):
         subcats = scrape_subcategories(url, ctx)
 
         if subcats:
-            print(f"✅ サブカテゴリ検出: {len(subcats)}件")
+            print(f"✅ バッチ検出: {len(subcats)}件")
             for sc in subcats:
-                mapped = sc['type'] or '→classify()'
-                print(f"   {sc['name']:<20} → {mapped}")
+                print(f"   {sc['name']:<25} → {sc['type'] or 'classify()'}")
             print()
             albums = []
             for sc in subcats:
                 print(f"📂 [{sc['name']}] スキャン中...")
                 sc_albums = scrape_albums(sc["url"], ctx)
-                # サブカテゴリのtypeをセット（Noneならclassify()）
                 for a in sc_albums:
-                    a["type"] = sc["type"] or classify(a["title"])
+                    a["type"]  = sc["type"] or classify(a["title"])
+                    a["batch"] = sc["name"]  # バッチ名はサブカテゴリ名から確実に取得
                 albums.extend(sc_albums)
-                print(f"   → {len(sc_albums)}件 (type: {sc['type'] or 'classify()'})")
+                print(f"   → {len(sc_albums)}件")
         else:
             print("📂 アルバム一覧取得中...")
             albums = scrape_albums(url, ctx)
@@ -501,13 +570,18 @@ def cmd_scan(url: str):
             browser.close()
             return
 
-        # 共通フィールド初期化
+        # 共通フィールド初期化 + タイトルからバッチを自動抽出
         for a in albums:
             a.setdefault("purchase",  None)
             a.setdefault("kakobuy",   None)
             a.setdefault("price_cny", None)
             a.setdefault("price_jpy", None)
             a.setdefault("image",     None)
+            if model:
+                a["model"] = model
+            # バッチをタイトルから自動抽出（未設定の場合のみ）
+            if not a.get("batch"):
+                a["batch"] = extract_batch_from_title(a.get("title", ""))
 
         groups = defaultdict(list)
         for a in albums:
