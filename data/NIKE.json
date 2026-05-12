@@ -1,7 +1,7 @@
 {
   "brand": "NIKE",
   "seller": "huskyreps",
-  "updated": "2026-05-12T17:02:11",
+  "updated": "2026-05-12T11:04:46",
   "products": [
     {
       "album_id": "221705082",
@@ -21932,22 +21932,10 @@
       "batch": null
     },
     {
-      "album_id": "215181711",
-      "title": "🔥HOT🔥",
-      "yupoo_url": "https://huskyreps.x.yupoo.com/albums/215181711?uid=1&navSource=custom",
-      "type": "Other",
-      "purchase": "",
-      "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/547720ac3a.png",
-      "batch": null
-    },
-    {
       "album_id": "236592666",
       "title": "￥79  N🔥K🔥 SLIPPERS 88050622",
       "yupoo_url": "https://huskyreps.x.yupoo.com/albums/236592666?uid=1&isSubCate=false&referrercate=5192450",
-      "type": "Other",
+      "type": "ACCESSORIES",
       "purchase": "https://item.taobao.com/item.htm?ft=t&id=1049849877685",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fft%3Dt%26id%3D1049849877685&affcode=a235412",
       "price_cny": null,
@@ -22847,7 +22835,7 @@
       "album_id": "231139788",
       "title": "￥~56 N🔥K🔥HEADGEAR 77040267",
       "yupoo_url": "https://huskyreps.x.yupoo.com/albums/231139788?uid=1&isSubCate=false&referrercate=5192450",
-      "type": "Other",
+      "type": "ACCESSORIES",
       "purchase": "https://item.taobao.com/item.htm?ft=t&id=1041069860275",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fft%3Dt%26id%3D1041069860275&affcode=a235412",
       "price_cny": null,
@@ -22859,7 +22847,7 @@
       "album_id": "231139832",
       "title": "￥~56 N🔥K🔥HEADGEAR 77040264",
       "yupoo_url": "https://huskyreps.x.yupoo.com/albums/231139832?uid=1&isSubCate=false&referrercate=5192450",
-      "type": "Other",
+      "type": "ACCESSORIES",
       "purchase": "https://item.taobao.com/item.htm?ft=t&id=1040099305635",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fft%3Dt%26id%3D1040099305635&affcode=a235412",
       "price_cny": null,
@@ -22871,7 +22859,7 @@
       "album_id": "231139833",
       "title": "￥~56 N🔥K🔥WRISTBAND 77040262",
       "yupoo_url": "https://huskyreps.x.yupoo.com/albums/231139833?uid=1&isSubCate=false&referrercate=5192450",
-      "type": "Other",
+      "type": "ACCESSORIES",
       "purchase": "https://item.taobao.com/item.htm?ft=t&id=1040094433288",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fft%3Dt%26id%3D1040094433288&affcode=a235412",
       "price_cny": null,
@@ -22883,7 +22871,7 @@
       "album_id": "231176680",
       "title": "￥~56 N🔥K🔥WRISTBAND 77040260",
       "yupoo_url": "https://huskyreps.x.yupoo.com/albums/231176680?uid=1&isSubCate=false&referrercate=5192450",
-      "type": "Other",
+      "type": "ACCESSORIES",
       "purchase": "https://item.taobao.com/item.htm?ft=t&id=1038407943422",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fft%3Dt%26id%3D1038407943422&affcode=a235412",
       "price_cny": null,
@@ -23390,20 +23378,7 @@
       "image": "images/8a87c0af2b.jpg",
       "model": "NOCTA",
       "batch": null
-    },
-    {
-      "album_id": "207697306",
-      "title": "N🔥C🔥A",
-      "yupoo_url": "https://huskyreps.x.yupoo.com/albums/207697306?uid=1&isSubCate=false&referrercate=5003289",
-      "type": "Other",
-      "purchase": "",
-      "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/b13f4adfce.png",
-      "model": "NOCTA",
-      "batch": null
     }
   ],
-  "count": 1702
+  "count": 1820
 }
