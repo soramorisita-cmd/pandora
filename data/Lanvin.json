@@ -1,7 +1,7 @@
 {
   "brand": "Lanvin",
   "seller": "2335499519",
-  "updated": "2026-05-12T12:56:55",
+  "updated": "2026-05-12T06:03:23",
   "products": [
     {
       "album_id": "177351622",
@@ -219,5 +219,6 @@
       "image": "images/2b347a9656.jpeg",
       "batch": null
     }
-  ]
+  ],
+  "count": 18
 }

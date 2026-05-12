@@ -1,7 +1,7 @@
 {
   "brand": "ADIDAS",
   "seller": "repsmaster",
-  "updated": "2026-05-10T19:14:36",
+  "updated": "2026-05-12T06:03:23",
   "products": [
     {
       "album_id": "199754476",
@@ -237,5 +237,6 @@
       "image": "images/efee3abdde.jpg",
       "model": "Yeezy Slide"
     }
-  ]
+  ],
+  "count": 18
 }

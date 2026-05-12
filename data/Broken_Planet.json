@@ -1,7 +1,7 @@
 {
   "brand": "Broken Planet",
   "seller": "hotdog-official",
-  "updated": "2026-05-12T12:23:22",
+  "updated": "2026-05-12T06:03:23",
   "products": [
     {
       "album_id": "226926111",
@@ -31,7 +31,7 @@
       "album_id": "225178658",
       "title": "209¥（Bpm Zip｜grey）",
       "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/225178658?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
+      "type": "HOODIES",
       "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7688263301",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7688263301&affcode=a235412",
       "price_cny": null,
@@ -1168,18 +1168,6 @@
       "batch": null
     },
     {
-      "album_id": "164532096",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/164532096?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7341530407",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7341530407&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/75af131b85.jpeg",
-      "batch": null
-    },
-    {
       "album_id": "162702966",
       "title": "💥¥135+155（ Heartless Love Set）",
       "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/162702966?uid=1&isSubCate=false&referrercate=4098105",
@@ -1225,18 +1213,6 @@
       "price_cny": null,
       "price_jpy": null,
       "image": "images/bb153b9ba4.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "161209663",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/161209663?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7342532406",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342532406&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/59f71138f1.jpeg",
       "batch": null
     },
     {
@@ -1732,30 +1708,6 @@
       "batch": null
     },
     {
-      "album_id": "138685330",
-      "title": "Sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/138685330?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7341552177",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7341552177&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/635c38ef53.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "138685201",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/138685201?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "",
-      "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/44ea466cc3.jpeg",
-      "batch": null
-    },
-    {
       "album_id": "134467574",
       "title": "¥89 BPM Basics Midnight T-shirt",
       "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/134467574?uid=1&isSubCate=false&referrercate=4098105",
@@ -1789,18 +1741,6 @@
       "price_cny": null,
       "price_jpy": null,
       "image": "images/918fd395fe.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "152127825",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/152127825?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7342447446",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342447446&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/13c8daaef5.jpeg",
       "batch": null
     },
     {
@@ -2476,30 +2416,6 @@
       "batch": null
     },
     {
-      "album_id": "137414035",
-      "title": "Sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/137414035?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "",
-      "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/63dff4f5ac.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "135702274",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/135702274?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7341569017",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7341569017&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/ef2c77a347.jpeg",
-      "batch": null
-    },
-    {
       "album_id": "135701771",
       "title": "¥98 Space Trails T-shirt",
       "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/135701771?uid=1&isSubCate=false&referrercate=4098105",
@@ -2548,42 +2464,6 @@
       "batch": null
     },
     {
-      "album_id": "135214623",
-      "title": "Sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/135214623?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7341546357",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7341546357&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/577d1e0111.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "135214601",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/135214601?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7341500643",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7341500643&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/55f5598ed2.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "135214395",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/135214395?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7342526400",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342526400&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/7e1c2c289d.jpeg",
-      "batch": null
-    },
-    {
       "album_id": "134735175",
       "title": "sold out",
       "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/134735175?uid=1&isSubCate=false&referrercate=4098105",
@@ -2605,42 +2485,6 @@
       "price_cny": null,
       "price_jpy": null,
       "image": "images/b609da2867.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "134279003",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/134279003?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "",
-      "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/1501547e0e.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "133939081",
-      "title": "Sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/133939081?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7341542383",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7341542383&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/2c11367f6e.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "133789541",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/133789541?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7341534431",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7341534431&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/a77794dbc2.jpeg",
       "batch": null
     },
     {
@@ -2668,54 +2512,6 @@
       "batch": null
     },
     {
-      "album_id": "133486220",
-      "title": "Sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/133486220?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7342461242",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342461242&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/980cef83ce.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "133361737",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/133361737?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7341465251",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7341465251&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/ff83c5602b.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "133286437",
-      "title": "sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/133286437?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "",
-      "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/b7ad926c13.jpeg",
-      "batch": null
-    },
-    {
-      "album_id": "132809566",
-      "title": "Sold out",
-      "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/132809566?uid=1&isSubCate=false&referrercate=4098105",
-      "type": "Other",
-      "purchase": "https://shop1621342910.v.weidian.com/item.html?itemID=7342451362",
-      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342451362&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
-      "image": "images/b84e9056cf.jpeg",
-      "batch": null
-    },
-    {
       "album_id": "131897910",
       "title": "sold out",
       "yupoo_url": "https://hotdog-official.x.yupoo.com/albums/131897910?uid=1&isSubCate=false&referrercate=4098105",
@@ -2739,5 +2535,6 @@
       "image": "images/86847fbbc6.jpeg",
       "batch": null
     }
-  ]
+  ],
+  "count": 211
 }
