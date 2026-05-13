@@ -59,6 +59,12 @@ FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link href="
 def esc(s):
     return str(s or "").replace("&","&amp;").replace('"',"&quot;").replace("<","&lt;").replace(">","&gt;")
 
+def abs_img(img):
+    """相対パス 'images/xxx' を '/images/xxx' に変換する"""
+    if img and img != "null" and not img.startswith(("http", "/")):
+        return "/" + img
+    return img or ""
+
 def slugify(s):
     s = re.sub(r"[^\w\s-]", "", str(s or "")).strip()
     return re.sub(r"[\s_-]+", "-", s).lower() or "unknown"
@@ -91,6 +97,7 @@ def fmt_price(p):
 
 def card_css():
     return """
+a{color:inherit;text-decoration:none}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:20px}
 .card{background:var(--s1);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
 .card:hover{border-color:var(--border2)}
@@ -116,11 +123,11 @@ def make_card_html(p, link_to_product=True):
     qc     = esc(p.get("yupoo") or "#")
     brand  = esc(p.get("brand",""))
     ptype  = esc(p.get("type",""))
-    img    = p.get("image","")
+    img    = abs_img(p.get("image",""))
     aid    = album_id_from_yupoo(p.get("yupoo",""))
     prod_url = f"/products/{aid}.html" if aid and link_to_product else None
 
-    if img and img != "null" and len(img) > 4:
+    if img and len(img) > 4:
         img_html = f'<img class="card-img" src="{esc(img)}" alt="{esc(title)}" loading="lazy">'
     else:
         img_html = '<div class="card-noimag">NO IMAGE</div>'
@@ -160,10 +167,10 @@ def build_product_pages(products, out_dir):
         price  = fmt_price(p)
         buy    = p.get("kakobuy") or p.get("purchase") or ""
         qc     = p.get("yupoo","")
-        img    = p.get("image","")
+        img    = abs_img(p.get("image",""))
         desc   = f"{brand} {ptype} レプリカ — {title[:60]}"
 
-        og_img = img if img and img != "null" else ""
+        og_img = img if img else ""
         price_val = ""
         if p.get("price_jpy"):
             try: price_val = str(int(float(p["price_jpy"])))
@@ -225,7 +232,7 @@ def build_product_pages(products, out_dir):
 {NAV_HTML}
 <div class="product-wrap">
   <div class="product-img">
-    {f'<img src="{esc(img)}" alt="{esc(title)}" loading="eager">' if img and img!="null" else '<div class="noimag">NO IMAGE</div>'}
+    {f'<img src="{esc(img)}" alt="{esc(title)}" loading="eager">' if img else '<div class="noimag">NO IMAGE</div>'}
   </div>
   <div class="product-info">
     <div class="product-tags">
