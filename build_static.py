@@ -75,10 +75,31 @@ def album_id_from_yupoo(url):
 
 def clean_title(raw):
     s = str(raw or "").strip()
+    # 行頭の価格表記 (+¥165, 209¥ 等) を除去
+    s = re.sub(r"^[+\s]*[¥￥]?\s*\d[\d,\.]*\s*[¥￥]?\s*(cny|CNY|rmb|usd|USD|yuan|元)?\s*", "", s)
     s = re.sub(r"^(ON SALE\s*)?[¥￥][\d,.\s]+(cny|CNY|usd|USD)?\s*", "", s, flags=re.IGNORECASE)
-    s = re.sub(r"[一-鿿㐀-䶿]{2,}[^\x00-\x7f]*", "", s)
-    s = re.sub(r"\s{2,}", " ", s).strip().rstrip("-").strip()
-    return s or raw[:50]
+    # ブラケット類（【】[]（））をすべて除去
+    stripped = re.sub(r"[（【\[][^）\]】]*[）\]】]", "", s)
+    stripped = re.sub(r"[一-鿿㐀-䶿]{2,}[^\x00-\x7f]*", "", stripped)
+    # 残った単独の価格記号・縦棒を整理
+    stripped = re.sub(r"[¥￥][\d,]+|[\d,]+[¥￥]", "", stripped)
+    stripped = re.sub(r"\s*[｜|]\s*", " ", stripped)
+    stripped = re.sub(r"\s{2,}", " ", stripped).strip().strip("-+").strip()
+    if len(stripped) > 2:
+        return stripped
+    # フォールバック: ブラケット内の最後の有用コンテンツを使用
+    inner = re.findall(r"[（【\([]([^）\]】\)]+)[）\]】\)]", s)
+    for text in reversed(inner):
+        t = re.sub(r"^\s*\d+\s*[¥￥yuan元cny]*\s*$", "", text.strip(), flags=re.IGNORECASE).strip()
+        t = re.sub(r"^[A-Z\s]{1,5}$", "", t).strip()
+        t = re.sub(r"[｜|]", " ", t)
+        t = re.sub(r"\s{2,}", " ", t).strip()
+        if len(t) > 2:
+            return t
+    # 最終フォールバック: 中国語だけ除去
+    fb = re.sub(r"[一-鿿㐀-䶿]{2,}[^\x00-\x7f]*", "", raw)
+    fb = re.sub(r"\s{2,}", " ", fb).strip()
+    return fb or raw[:50]
 
 def fmt_price(p):
     jpy = p.get("price_jpy")
@@ -415,7 +436,33 @@ def patch_index(products):
         print("  [index] index.html が見つかりません（スキップ）")
         return
 
-    featured = [p for p in products if p.get("image") and p["image"] != "null" and p.get("kakobuy")][:12]
+    # カテゴリ別に均等に選んで多様性を確保
+    from collections import defaultdict
+    CAT_ORDER = ["SNEAKERS","HOODIES","T-SHIRTS","JACKETS","PANTS","SHORTS","SWEATERS","TOPS","SHIRTS","BAGS","ACCESSORIES"]
+    by_cat = defaultdict(list)
+    for p in products:
+        t = p.get("type","")
+        if p.get("image") and p["image"] != "null" and p.get("kakobuy") and t:
+            by_cat[t].append(p)
+    cats_sorted = [c for c in CAT_ORDER if c in by_cat] + [c for c in by_cat if c not in CAT_ORDER]
+    featured = []
+    # 1周目: カテゴリごとに1件ずつ
+    for cat in cats_sorted:
+        items = by_cat[cat]
+        with_price = [p for p in items if p.get("price_jpy")]
+        pool = with_price or items
+        if pool:
+            featured.append(pool[0])
+    # 2周目: 足りない分をカテゴリから追加
+    for cat in cats_sorted:
+        if len(featured) >= 12:
+            break
+        items = by_cat[cat]
+        with_price = [p for p in items if p.get("price_jpy")]
+        pool = (with_price or items)
+        if len(pool) > 1:
+            featured.append(pool[1])
+    featured = featured[:12]
     if not featured:
         print("  [index] 特集商品なし（スキップ）")
         return
