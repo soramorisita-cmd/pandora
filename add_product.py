@@ -11,7 +11,7 @@ add_product.py
   python add_product.py import --no-push
 """
 
-import argparse, json, re, subprocess, time
+import argparse, json, re, subprocess, time, asyncio
 from collections import defaultdict
 from pathlib import Path
 from urllib.parse import quote, urlparse, parse_qs, unquote
@@ -156,33 +156,37 @@ def brand_to_filename(brand: str) -> str:
 # ─────────────────── スクレイパー ───────────────────
 def extract_batch_from_title(title: str) -> str | None:
     """
-    タイトルから【バッチ名】を抽出する。
-    バッチ名: PK / LJR / OG / DT / M版 / TOP など（短い英字 or 日本語）
-    除外: 価格（350yuan等）/ 商品番号（FD2629-100等）/ Pre-order等
+    タイトルからバッチ名を抽出する。
+    パターン1: 【PK】【M版】など 【】 内
+    パターン2: 「G batch」「PK batch」など 【】 外のバッチ表記
     """
+    # パターン1: 【バッチ名】
     brackets = re.findall(r'【([^】]+)】', title)
     for b in brackets:
         b = b.strip()
-        # 価格・数字のみはスキップ
-        if re.match(r'^[\d,yuan元Y¥￥\s]+$', b, re.IGNORECASE):
-            continue
-        # Pre-order などスキップ
-        if re.search(r'pre|order|sale', b, re.IGNORECASE):
-            continue
-        # 商品番号パターンをスキップ（例: FD2629-100, BV1310-337, CT0856-600）
-        # 英字2〜3文字 + 数字4〜6文字 + ハイフン + 数字
-        if re.match(r'^[A-Z]{1,3}\d{4,6}(-\d{1,4})?$', b):
-            continue
-        # 長すぎるもの（15文字超）はスキップ
-        if len(b) > 15:
-            continue
+        # 価格パターン: 数字のみ、または 数字+yuan/元/Y/¥
+        if re.match(r'^[\d,.\s]+(yuan|元|Y|¥|￥)?$', b, re.IGNORECASE): continue
+        if re.match(r'^[¥￥][\d,.\s]+', b): continue
+        if re.search(r'pre|order|sale', b, re.IGNORECASE): continue
+        if re.match(r'^[A-Z]{1,3}\d{4,6}(-\d{1,4})?$', b): continue
+        if re.match(r'^\d{4,}-', b): continue
+        if len(b) > 15: continue
         return b
+
+    # パターン2: 「XX batch」「XX Batch」形式（【】外）
+    m = re.search(r'\b([A-Za-z0-9]+(?:\s+[A-Za-z0-9]+)?)\s+[Bb]atch\b', title)
+    if m:
+        candidate = m.group(1).strip()
+        if not re.match(r'^[\d,]+$', candidate):
+            return candidate + ' batch'
+
     return None
 
-def scrape_subcategories(category_url: str, ctx) -> list[dict]:
+def scrape_subcategories(category_url: str, ctx, model: str = None) -> list[dict]:
     """
-    カテゴリページのメインコンテンツ内にあるバッチボタンを取得する。
-    referrercate=親ID で絞り込み、現在のカテゴリの子のみ取得。
+    カテゴリページのメインコンテンツに表示されているバッチボタンを取得する。
+    'categories__box-right-category-item' クラスのリンクがページ固有のバッチ。
+    フォールバック: yupoo-collapse-item の href で絞り込み。
     """
     base_url = get_base_url(category_url)
     parent_id_m = re.search(r"/categories/(\d+)", category_url)
@@ -195,27 +199,33 @@ def scrape_subcategories(category_url: str, ctx) -> list[dict]:
         page.goto(category_url, wait_until="domcontentloaded", timeout=30000)
         time.sleep(2)
 
-        # referrercate=親ID を含むリンクのみ取得（現在カテゴリの子だけ）
         js = """
         (parentId) => {
-            const results = [];
-            const seen = new Set();
-            const needle = 'referrercate=' + parentId;
-            const links = Array.from(document.querySelectorAll('a[href]'));
-            for (const a of links) {
-                const href = a.getAttribute('href') || '';
-                if (!href.includes(needle)) continue;
-                if (!href.includes('isSubCate=true')) continue;
-                const name = a.textContent.trim();
-                if (!name || seen.has(href)) continue;
-                seen.add(href);
-                results.push({ name, href });
+            // 優先: メインコンテンツのバッチボタン（ページ固有）
+            const mainButtons = Array.from(
+                document.querySelectorAll('a.categories__box-right-category-item')
+            );
+            if (mainButtons.length > 0) {
+                return mainButtons.map(a => ({
+                    name: a.textContent.trim(),
+                    href: a.getAttribute('href')
+                }));
             }
-            return results;
+
+            // フォールバック: yupoo-collapse-item の href で親IDを探す
+            const items = Array.from(document.querySelectorAll('.yupoo-collapse-item'));
+            const target = items.find(el =>
+                (el.getAttribute('href') || '').includes('/categories/' + parentId)
+            );
+            if (!target) return [];
+            const box = target.querySelector('.yupoo-collapse-content-box');
+            if (!box) return [];
+            return Array.from(box.querySelectorAll('a.yupoo-collapse-content-item'))
+                .map(a => ({ name: a.textContent.trim(), href: a.getAttribute('href') }));
         }
         """
         results = page.evaluate(js, parent_id)
-        print(f"   バッチボタン検出: {len(results)}件")
+        print(f"   バッチ検出: {len(results)}件")
         for r in results[:5]:
             print(f"   → {r['name']}")
     except Exception as e:
@@ -317,6 +327,78 @@ def scrape_taobao_link(album_url: str, ctx, retries=3):
         finally:
             page.close()
     return None
+
+
+async def fetch_album_async(browser, alb: dict, sem: asyncio.Semaphore, idx: int, total: int):
+    """非同期で1アルバムの購入リンクと画像を取得する"""
+    async with sem:
+        ctx = await browser.new_context()
+        page = await ctx.new_page()
+        try:
+            await page.goto(alb["yupoo_url"], wait_until="domcontentloaded", timeout=40000)
+            await asyncio.sleep(1.5)
+            html = await page.content()
+            soup = BeautifulSoup(html, "html.parser")
+
+            # 購入リンク取得
+            taobao = None
+            for a in soup.find_all("a", href=True):
+                h = a["href"]
+                if "yupoo.com/external" in h:
+                    taobao = extract_purchase_url(h); break
+                if any(d in h for d in PURCHASE_DOMAINS):
+                    taobao = extract_purchase_url(h); break
+            if not taobao:
+                pat = re.compile(
+                    r'https?://[^\s\'"<>]*(?:' +
+                    '|'.join(d.replace('.', r'\.') for d in PURCHASE_DOMAINS) +
+                    r')[^\s\'"<>]*'
+                )
+                found = pat.findall(soup.get_text())
+                if found:
+                    taobao = extract_purchase_url(found[0])
+            if not taobao:
+                hrefs = await page.eval_on_selector_all("a[href]", "els => els.map(e => e.href)")
+                for h in hrefs:
+                    if "yupoo.com/external" in h:
+                        taobao = extract_purchase_url(h); break
+                    if any(d in h for d in PURCHASE_DOMAINS):
+                        taobao = extract_purchase_url(h); break
+
+            alb["purchase"] = taobao or ""
+            alb["kakobuy"]  = to_kakobuy(taobao) if taobao else ""
+
+            # 画像取得
+            if not alb.get("image"):
+                hrefs_img = await page.eval_on_selector_all(
+                    "img", "els => els.map(e => e.getAttribute('data-src') || e.src || '')"
+                )
+                for src in hrefs_img:
+                    if src and ("photo.yupoo" in src or "uvd.yupoo" in src):
+                        alb["image"] = src; break
+
+            print(f"   [{idx:03d}/{total}] ✓ {alb['title'][:40]}", end="\r")
+        except Exception as e:
+            alb["purchase"] = ""
+            alb["kakobuy"]  = ""
+            print(f"   [{idx:03d}/{total}] ❌ {str(e)[:30]}", end="\r")
+        finally:
+            await page.close()
+            await ctx.close()
+
+
+async def fetch_all_albums_async(albums: list, workers: int = 5):
+    """全アルバムを並列取得する（workers=同時接続数）"""
+    from playwright.async_api import async_playwright
+    sem = asyncio.Semaphore(workers)
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch(headless=True)
+        tasks = [
+            fetch_album_async(browser, alb, sem, i+1, len(albums))
+            for i, alb in enumerate(albums)
+        ]
+        await asyncio.gather(*tasks)
+        await browser.close()
 
 
 def scrape_purchase_product_name(purchase_url: str, ctx) -> str:
@@ -539,7 +621,7 @@ def cmd_scan(url: str):
         )
 
         print("📂 サブカテゴリ確認中...")
-        subcats = scrape_subcategories(url, ctx)
+        subcats = scrape_subcategories(url, ctx, model=model)
 
         if subcats:
             print(f"✅ バッチ検出: {len(subcats)}件")
@@ -570,7 +652,7 @@ def cmd_scan(url: str):
             browser.close()
             return
 
-        # 共通フィールド初期化 + タイトルからバッチを自動抽出
+        # 共通フィールド初期化
         for a in albums:
             a.setdefault("purchase",  None)
             a.setdefault("kakobuy",   None)
@@ -579,8 +661,8 @@ def cmd_scan(url: str):
             a.setdefault("image",     None)
             if model:
                 a["model"] = model
-            # バッチをタイトルから自動抽出（未設定の場合のみ）
-            if not a.get("batch"):
+            # バッチ未設定の場合のみタイトルから抽出（サブカテゴリ取得できなかった場合のフォールバック）
+            if not a.get("batch") and not subcats:
                 a["batch"] = extract_batch_from_title(a.get("title", ""))
 
         groups = defaultdict(list)
@@ -590,16 +672,13 @@ def cmd_scan(url: str):
         for ptype, items in sorted(groups.items()):
             print(f"   {ptype:<14}: {len(items)}件")
 
-        print(f"\n🔗 購入リンク取得中...")
-        for i, alb in enumerate(albums):
-            print(f"   [{i+1:03d}/{len(albums)}] {alb['title'][:45]}", end="\r")
-            taobao = scrape_taobao_link(alb["yupoo_url"], ctx)
-            alb["purchase"] = taobao or ""
-            alb["kakobuy"]  = to_kakobuy(taobao) if taobao else ""
-            # 画像も同時取得（アルバムページは既に開いているので追加コスト小）
-            if not alb.get("image"):
-                alb["image"] = scrape_first_image(alb["yupoo_url"], ctx)
-            time.sleep(0.8)
+        print(f"\n🔗 購入リンク・画像取得中（並列5件）...")
+        import threading
+        def run_async():
+            asyncio.run(fetch_all_albums_async(albums, workers=5))
+        t = threading.Thread(target=run_async)
+        t.start()
+        t.join()
         print()
 
         # Other再分類（Taobao/Weidianの商品名で再試行）

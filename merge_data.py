@@ -132,7 +132,8 @@ def merge():
 
 def git_push():
     for cmd in [
-        ["git", "add", "data/", "products.json", "images/", "index.html", "catalog.html", "converter.html"],
+        ["git", "add", "-f", "images/"],
+        ["git", "add", "data/", "products.json", "index.html", "catalog.html", "converter.html"],
         ["git", "commit", "-m", "merge: update products.json"],
         ["git", "push"],
     ]:

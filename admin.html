@@ -555,8 +555,8 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
   <!-- ドロップゾーン -->
   <div class="dropzone" id="dropzone" onclick="openFolder()">
     <div class="dropzone-icon">📁</div>
-    <div class="dropzone-title">data フォルダを選択</div>
-    <div class="dropzone-sub">クリックして pandora/data フォルダを開く（Chrome/Edge）</div>
+    <div class="dropzone-title">pandora フォルダを選択</div>
+    <div class="dropzone-sub">クリックして pandora ルートフォルダを開く（data/ と images/ を自動検出）</div>
   </div>
 
   <div class="instruction" id="instruction">
@@ -583,9 +583,11 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
     <!-- フィルターバー -->
     <div class="filter-bar" id="filter-bar" style="display:none">
       <span class="filter-label">表示</span>
-      <button class="chip" id="chip-all" data-filter="all" onclick="setFilter('all', this)">全て</button>
-      <button class="chip warn-active" id="chip-other" data-filter="other" onclick="setFilter('other', this)">Otherのみ</button>
-      <button class="chip" id="chip-changed" data-filter="changed" onclick="setFilter('changed', this)">変更済み</button>
+      <button class="chip" id="chip-all" onclick="setFilter('all', this)">全て</button>
+      <button class="chip warn-active" id="chip-other" onclick="setFilter('other', this)">Otherのみ</button>
+      <button class="chip" id="chip-changed" onclick="setFilter('changed', this)">変更済み</button>
+      <span style="width:1px;background:var(--border);margin:0 4px;align-self:stretch"></span>
+      <div id="type-chips" style="display:flex;gap:4px;flex-wrap:wrap"></div>
       <input class="search-input" id="search" type="text" placeholder="🔍 検索..." oninput="renderTable()">
     </div>
     <!-- ブランドフィルター -->
@@ -602,6 +604,7 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
         <option value="">選択してください</option>
       </select>
       <button class="bulk-apply" onclick="applyBulk()">一括移動</button>
+      <button class="bulk-apply" onclick="bulkDelete()" style="background:rgba(248,113,113,.15);color:var(--danger);border:1px solid rgba(248,113,113,.3)">🗑 一括削除</button>
       <button class="bulk-clear" onclick="clearSelection()">✕ 選択解除</button>
     </div>
 
@@ -611,11 +614,13 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
         <thead>
           <tr>
             <th style="width:36px"><div class="cb-wrap"><input type="checkbox" class="row-cb" id="cb-all" onchange="toggleSelectAll(this)"></div></th>
+            <th style="width:72px">画像</th>
             <th>商品名</th>
             <th style="width:110px">ブランド</th>
             <th>現在のタイプ</th>
             <th>変更後</th>
             <th>リンク</th>
+            <th style="width:40px"></th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
@@ -651,7 +656,7 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
 const TYPES = [
   "HOODIES","T-SHIRTS","SHORTS","PANTS",
   "JACKETS","SWEATERS","TOPS","SHIRTS",
-  "BAGS","ACCESSORIES","Other"
+  "SNEAKERS","BAGS","ACCESSORIES","Other"
 ];
 
 // ─── 状態 ───
@@ -660,7 +665,8 @@ let brandData    = {};   // filename → parsed JSON { products:[], updated, ...
 let allProducts  = [];   // flat: { ...product, _i, _file, _localIdx }
 let changes      = {};   // _i → new type
 let filter       = 'other';
-let activeBrand  = null; // null=全て, or filename
+let activeBrand  = null;
+let activeType   = null; // カテゴリフィルター // null=全て, or filename
 let viewMode     = 'table';
 let selectedIndices = new Set();
 
@@ -672,13 +678,16 @@ let placeholder = null;
 //  FILE SYSTEM ACCESS API
 // ══════════════════════════════════════════════════
 
+let imagesDirHandle = null;
+let imageBlobCache  = {};  // filename → blob URL
+
 async function openFolder() {
   if (!('showDirectoryPicker' in window)) {
     toast('❌ Chrome/Edge が必要です'); return;
   }
-  let dirHandle;
+  let rootHandle;
   try {
-    dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+    rootHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
   } catch(e) {
     if (e.name !== 'AbortError') toast('❌ フォルダを開けませんでした');
     return;
@@ -689,10 +698,22 @@ async function openFolder() {
   allProducts = [];
   changes     = {};
   selectedIndices.clear();
+  imageBlobCache = {};
+  imagesDirHandle = null;
+
+  // data/ と images/ を探す
+  let dataDirHandle = null;
+  for await (const [name, handle] of rootHandle.entries()) {
+    if (handle.kind === 'directory' && name === 'data') dataDirHandle = handle;
+    if (handle.kind === 'directory' && name === 'images') imagesDirHandle = handle;
+  }
+
+  // dataフォルダが見つからない場合は選択されたフォルダ自体をdataとして扱う
+  const targetDir = dataDirHandle || rootHandle;
 
   // 全 .json ファイルを読み込む
   const loadPromises = [];
-  for await (const [name, handle] of dirHandle.entries()) {
+  for await (const [name, handle] of targetDir.entries()) {
     if (handle.kind === 'file' && name.endsWith('.json')) {
       loadPromises.push((async () => {
         const file = await handle.getFile();
@@ -723,7 +744,25 @@ async function openFolder() {
   }
 
   initUI();
-  toast(`✅ ${Object.keys(fileHandles).length}ブランド / ${allProducts.length}件 読み込み完了`, 'success');
+  const imgMsg = imagesDirHandle ? '（画像あり）' : '（images/フォルダ未検出）';
+  toast(`✅ ${Object.keys(fileHandles).length}ブランド / ${allProducts.length}件 読み込み完了 ${imgMsg}`, 'success');
+}
+
+// ローカル画像パスをblob URLに変換
+async function getImageUrl(imagePath) {
+  if (!imagePath || !imagesDirHandle) return null;
+  if (!imagePath.startsWith('images/')) return imagePath; // http URL はそのまま
+  const filename = imagePath.replace('images/', '');
+  if (imageBlobCache[filename]) return imageBlobCache[filename];
+  try {
+    const fileHandle = await imagesDirHandle.getFileHandle(filename);
+    const file = await fileHandle.getFile();
+    const url = URL.createObjectURL(file);
+    imageBlobCache[filename] = url;
+    return url;
+  } catch {
+    return null;
+  }
 }
 
 // ─── UI初期化 ───
@@ -744,19 +783,6 @@ function initUI() {
   document.getElementById('save-btn').disabled = false;
   document.getElementById('view-tabs').style.display = 'flex';
 
-  // カテゴリフィルターチップを動的生成（Other以外）
-  const fb = document.getElementById('filter-bar');
-  const searchInput = fb.querySelector('.search-input');
-  fb.querySelectorAll('.chip-type-dynamic').forEach(el => el.remove());
-  TYPES.filter(t => t !== 'Other').forEach(type => {
-    const btn = document.createElement('button');
-    btn.className = 'chip chip-type-dynamic';
-    btn.dataset.filter = type;
-    btn.textContent = type;
-    btn.onclick = () => setFilter(type, btn);
-    fb.insertBefore(btn, searchInput);
-  });
-
   // ブランドフィルターチップ
   const bc = document.getElementById('brand-chips');
   bc.innerHTML = `<button class="chip active" onclick="setBrand(null,this)">全て</button>`;
@@ -765,6 +791,22 @@ function initUI() {
     const count = allProducts.filter(p => p._file === fname).length;
     bc.innerHTML += `<button class="chip" onclick="setBrand('${esc(fname)}',this)">${esc(label)} <span style="opacity:.6;font-size:10px">${count}</span></button>`;
   });
+
+  // タイプチップ描画
+  const tc = document.getElementById('type-chips');
+  if (tc) {
+    tc.innerHTML = '';
+    TYPES.filter(t => t !== 'Other').forEach(t => {
+      const cnt = allProducts.filter(p => (changes[p._i] !== undefined ? changes[p._i] : p.type) === t).length;
+      if (!cnt) return;
+      const btn = document.createElement('button');
+      btn.className = 'chip';
+      btn.textContent = `${t} ${cnt}`;
+      btn.dataset.type = t;
+      btn.onclick = () => setTypeFilter(t, btn);
+      tc.appendChild(btn);
+    });
+  }
 
   // bulk type select
   const bts = document.getElementById('bulk-type-select');
@@ -804,10 +846,26 @@ function switchView(mode) {
 }
 
 // ─── フィルター ───
+function setTypeFilter(type, btn) {
+  if (activeType === type) {
+    activeType = null;
+    btn.classList.remove('active');
+  } else {
+    activeType = type;
+    document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    // 全て/Other/変更済みフィルターはリセット
+    filter = 'all';
+    document.querySelectorAll('#filter-bar .chip:not([data-type])').forEach(c => c.classList.remove('active','warn-active'));
+    document.getElementById('chip-all')?.classList.add('active');
+  }
+  renderTable();
+}
+
 function setFilter(f, btn) {
   filter = f;
   document.querySelectorAll('#filter-bar .chip').forEach(c => c.classList.remove('active','warn-active'));
-  if (!btn) btn = document.querySelector(`[data-filter="${f}"]`) || document.getElementById('chip-' + f);
+  if (!btn) btn = document.getElementById('chip-' + f);
   if (btn) {
     if (f === 'other') btn.classList.add('warn-active');
     else btn.classList.add('active');
@@ -822,9 +880,9 @@ function renderTable() {
   const filtered = allProducts.filter(p => {
     if (activeBrand && p._file !== activeBrand) return false;
     const curType = changes.hasOwnProperty(p._i) ? changes[p._i] : p.type;
+    if (activeType && curType !== activeType) return false;
     if (filter === 'other'   && curType !== 'Other') return false;
     if (filter === 'changed' && !changes.hasOwnProperty(p._i)) return false;
-    if (filter !== 'all' && filter !== 'other' && filter !== 'changed' && curType !== filter) return false;
     if (q && !(p.title + ' ' + (p.brand||'') + ' ' + p.type + ' ' + p._file).toLowerCase().includes(q)) return false;
     return true;
   });
@@ -844,6 +902,11 @@ function renderTable() {
     if (isSelected) tr.classList.add('selected-row');
     tr.innerHTML = `
       <td><div class="cb-wrap"><input type="checkbox" class="row-cb" data-idx="${p._i}" ${isSelected?'checked':''} onchange="toggleRow(${p._i},this)"></div></td>
+      <td style="padding:6px 8px">
+        ${p.image && p.image.length > 4
+          ? `<img data-src="${esc(p.image)}" class="admin-thumb" style="width:60px;height:45px;object-fit:cover;border-radius:5px;background:var(--s3);display:block" loading="lazy">`
+          : `<div style="width:60px;height:45px;background:var(--s3);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--muted)">NO IMG</div>`}
+      </td>
       <td class="title-cell">
         <span class="title-text" title="${esc(p.title)}">${esc(cleanTitle(p.title))}</span>
         <span class="title-seller">${esc(p.brand || p.seller || '')}</span>
@@ -860,6 +923,7 @@ function renderTable() {
         ${p.kakobuy ?`<a class="link-btn" href="${esc(p.kakobuy)}" target="_blank">Kakobuy</a>`:''}
         ${p.purchase?`<a class="link-btn" href="${esc(p.purchase)}" target="_blank">購入先</a>`:''}
       </td>
+      <td><button onclick="deleteProduct(${p._i})" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;padding:4px 6px;border-radius:5px;transition:color .15s" onmouseover="this.style.color='var(--danger)'" onmouseout="this.style.color='var(--muted)'" title="削除">🗑</button></td>
     `;
     tbody.appendChild(tr);
   });
@@ -874,6 +938,27 @@ function renderTable() {
 
   updateStats();
   updateBulkBar();
+
+  // 非同期で画像を読み込む
+  loadThumbImages();
+}
+
+async function loadThumbImages() {
+  const imgs = document.querySelectorAll('#tbody img.admin-thumb[data-src]');
+  for (const img of imgs) {
+    const src = img.dataset.src;
+    if (!src) continue;
+    if (src.startsWith('http')) {
+      img.src = src;
+      img.onerror = () => img.style.display = 'none';
+    } else if (imagesDirHandle) {
+      const url = await getImageUrl(src);
+      if (url) { img.src = url; }
+      else { img.style.display = 'none'; }
+    } else {
+      img.style.display = 'none';
+    }
+  }
 }
 
 // ─── 変更処理 ───
@@ -947,6 +1032,39 @@ function updateBulkBar() {
 
 function clearSelection() { selectedIndices.clear(); renderTable(); }
 
+// ─── 削除処理 ───
+let deletedIndices = new Set();
+
+function deleteProduct(idx) {
+  deletedIndices.add(idx);
+  // allProducts から除去
+  allProducts = allProducts.filter(p => p._i !== idx);
+  // インデックスを振り直す
+  allProducts.forEach((p, i) => p._i = i);
+  // changes と selectedIndices もリセット
+  changes = {};
+  selectedIndices.clear();
+  updateStats();
+  if (viewMode === 'table') renderTable();
+  else renderKanban();
+  toast(`🗑 1件削除しました`, '');
+}
+
+function bulkDelete() {
+  if (!selectedIndices.size) return;
+  const count = selectedIndices.size;
+  if (!confirm(`${count}件を削除しますか？`)) return;
+  const toDelete = new Set(selectedIndices);
+  allProducts = allProducts.filter(p => !toDelete.has(p._i));
+  allProducts.forEach((p, i) => p._i = i);
+  changes = {};
+  selectedIndices.clear();
+  updateStats();
+  if (viewMode === 'table') renderTable();
+  else renderKanban();
+  toast(`🗑 ${count}件削除しました`, '');
+}
+
 function applyBulk() {
   const targetType = document.getElementById('bulk-type-select').value;
   if (!targetType) { toast('カテゴリを選択してください'); return; }
@@ -965,22 +1083,20 @@ function applyBulk() {
 
 // ─── 保存（ブランドファイルごとに個別書き込み）───
 async function saveJSON() {
-  if (!allProducts.length) return;
-
-  // どのファイルが変更されているか集計
-  const changedFiles = new Set();
-  Object.keys(changes).forEach(idx => changedFiles.add(allProducts[idx]._file));
-
-  if (!changedFiles.size) { toast('変更がありません'); return; }
-
+  if (!allProducts.length && Object.keys(fileHandles).length === 0) return;
   const now = new Date().toISOString().slice(0,19);
   let savedCount = 0;
+
+  // 変更・削除が発生したファイルを特定
+  const changedFiles = new Set();
+  Object.keys(changes).forEach(idx => changedFiles.add(allProducts[idx]?._file));
+  // 削除後に残る商品のファイルも全部再保存（削除された商品を除くため）
+  Object.keys(fileHandles).forEach(fname => changedFiles.add(fname));
 
   for (const fname of changedFiles) {
     const handle = fileHandles[fname];
     if (!handle) continue;
 
-    // このファイルの products を再構築
     const fileProducts = allProducts
       .filter(p => p._file === fname)
       .map(p => {
@@ -995,7 +1111,6 @@ async function saveJSON() {
       const writable = await handle.createWritable();
       await writable.write(json);
       await writable.close();
-      // メモリ上も更新
       brandData[fname] = out;
       savedCount++;
     } catch(e) {
@@ -1003,7 +1118,7 @@ async function saveJSON() {
     }
   }
 
-  // allProducts も更新（typeを反映）
+  // allProducts のtypeも更新
   allProducts = allProducts.map(p => {
     if (changes.hasOwnProperty(p._i)) return { ...p, type: changes[p._i] };
     return p;

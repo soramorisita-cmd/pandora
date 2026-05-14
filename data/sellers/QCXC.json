@@ -1,0 +1,30 @@
+{
+  "seller": "QCXC",
+  "brand": "Sneakers",
+  "products": [
+    {
+      "seller": "QCXC",
+      "brand": "Sneakers",
+      "type": "Other",
+      "title": "QCXC Discord:https://discord.gg/xme5EWKF",
+      "yupoo": "http://qcxcaj1.x.yupoo.com/albums/205836405?uid=1&isSubCate=false&referrercate=4973703",
+      "purchase": "https://discord.gg/xme5EWKF",
+      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fdiscord.gg%2Fxme5EWKF&affcode=a235412",
+      "image": "https://photo.yupoo.com/qcxcaj1/1fc27546/medium.jpg",
+      "price_cny": null,
+      "price_jpy": null
+    },
+    {
+      "seller": "QCXC",
+      "brand": "Sneakers",
+      "type": "Other",
+      "title": "KakoBuy",
+      "yupoo": "http://qcxcaj1.x.yupoo.com/albums/215306194?uid=1&isSubCate=false&referrercate=5055828",
+      "purchase": "https://kakobuy.com/register/?affcode=zh64n",
+      "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fkakobuy.com%2Fregister%2F%3Faffcode%3Dzh64n&affcode=a235412",
+      "image": "https://photo.yupoo.com/qcxcaj1/d41a8b30/medium.png",
+      "price_cny": null,
+      "price_jpy": null
+    }
+  ]
+}
