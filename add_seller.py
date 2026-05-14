@@ -14,7 +14,7 @@ add_seller.py  ―  セラー個別追加ツール（カテゴリからブラン
   python add_seller.py --name baymaxsocks --url "https://baymaxsocks.x.yupoo.com/categories/140683?isSubCate=true" --dry-run
 """
 
-import argparse, asyncio, io, json, re, sys, time
+import argparse, asyncio, concurrent.futures, io, json, re, sys, time
 from pathlib import Path
 from urllib.parse import quote, urlparse, parse_qs, unquote
 import requests
@@ -210,11 +210,11 @@ PRODUCT_TYPES = [
                      "棉服", "羽绒", "棒球"]),
     ("SWEATERS",    ["sweater", "crewneck", "crew neck", "knit", "sweatshirt", "pullover",
                      "圆领", "卫衣", "针织", "毛衣"]),
-    ("T-SHIRTS",    ["tee", "t-shirt", "t shirt", "tank top", "short sleeve", "tシャツ", "短袖", "t恤"]),
-    ("TOPS",        ["top", "vest", "polo", "rugby"]),
-    ("SHIRTS",      ["shirt", "flannel", "oxford", "button", "シャツ", "衬衫"]),
+    ("T-SHIRTS",    ["tee", "t-shirt", "t shirt", "tank top", "short sleeve", "tシャツ", "短袖", "长袖", "t恤"]),
     ("SHORTS",      ["short", "ショーツ", "短裤", "sweatshort"]),
     ("PANTS",       ["pant", "jogger", "sweatpant", "trouser", "denim", "jeans", "卫裤", "长裤"]),
+    ("TOPS",        [r"\btop\b", "vest", "polo", "rugby"]),
+    ("SHIRTS",      ["shirt", "flannel", "oxford", "button", "シャツ", "衬衫"]),
     ("BAGS",        ["bag", "tote", "backpack", "pack", "pouch", "バッグ", "背包", "挎包"]),
     ("HATS",        ["cap", "hat", "beanie", "bucket", "snapback", "帽"]),
     ("ACCESSORIES", ["belt", "keychain", "scarf", "glove", "wallet", "jersey",
@@ -224,9 +224,112 @@ PRODUCT_TYPES = [
 def classify(title: str) -> str:
     tl = title.lower()
     for ptype, kws in PRODUCT_TYPES:
-        if any(kw in tl for kw in kws):
-            return ptype
+        for kw in kws:
+            if "\\" in kw:
+                if re.search(kw, tl):
+                    return ptype
+            elif kw in tl:
+                return ptype
     return "Other"
+
+def needs_taobao_enrichment(title: str) -> bool:
+    """タイトルから商品タイプを判定できない場合にTaobao補完が必要か"""
+    return classify(title) == "Other"
+
+SIMPLE_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0 Safari/537.36",
+    "Accept-Language": "zh-CN,zh;q=0.9",
+}
+
+def _clean_shop_title(raw: str) -> str:
+    """Taobao/Weidian のページタイトルからサフィックスを除去"""
+    t = raw.strip()
+    t = re.sub(r'\s*[-_—|·]\s*(淘宝|天猫|Tmall|Taobao|1688|微店|weidian).*$', '', t, flags=re.IGNORECASE)
+    t = re.sub(r'\s*(淘宝|天猫|微店)$', '', t).strip()
+    return t
+
+def fetch_weidian_title(url: str) -> str:
+    """Weidian URL から requests で商品名を取得（SSR対応）"""
+    try:
+        r = requests.get(url, headers=SIMPLE_HEADERS, timeout=10, allow_redirects=True)
+        if r.status_code != 200:
+            return ""
+        m = re.search(r'<title[^>]*>([^<]{4,200})</title>', r.text)
+        if m:
+            return _clean_shop_title(m.group(1))
+        m = re.search(r'"name"\s*:\s*"([^"]{4,200})"', r.text)
+        if m:
+            return m.group(1).strip()
+    except Exception:
+        pass
+    return ""
+
+async def fetch_taobao_title_pw(browser, url: str, sem: asyncio.Semaphore) -> str:
+    """Playwright で Taobao 商品タイトルを取得"""
+    async with sem:
+        ctx = await browser.new_context(user_agent=SIMPLE_HEADERS["User-Agent"])
+        page = await ctx.new_page()
+        try:
+            await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+            await asyncio.sleep(2)
+            title = await page.title()
+            if title:
+                return _clean_shop_title(title)
+        except Exception:
+            pass
+        finally:
+            try: await page.close()
+            except Exception: pass
+            try: await ctx.close()
+            except Exception: pass
+    return ""
+
+async def _enrich_taobao_async(targets: list) -> int:
+    from playwright.async_api import async_playwright
+    sem = asyncio.Semaphore(5)
+    enriched = 0
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch(headless=True)
+        tasks = [fetch_taobao_title_pw(browser, p["purchase"], sem) for p in targets]
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        await browser.close()
+    for p, res in zip(targets, results):
+        if isinstance(res, str) and len(res) > 4:
+            p["taobao_title"] = res
+            enriched += 1
+    return enriched
+
+def enrich_titles_from_taobao(products: list) -> int:
+    """分類不能タイトルの商品について Taobao/Weidian から商品名を取得し taobao_title に保存"""
+    targets = [p for p in products if p.get("purchase") and needs_taobao_enrichment(p.get("title", ""))]
+    if not targets:
+        return 0
+    print(f"  [taobao] 分類不能 {len(targets)} 件のタイトルを補完中...")
+
+    enriched = 0
+    weidian = [p for p in targets if "weidian.com" in p.get("purchase", "")]
+    taobao  = [p for p in targets if "weidian.com" not in p.get("purchase", "")]
+
+    # Weidian は requests で並列取得
+    if weidian:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
+            futs = {ex.submit(fetch_weidian_title, p["purchase"]): p for p in weidian}
+            for fut in concurrent.futures.as_completed(futs):
+                p = futs[fut]
+                try:
+                    t = fut.result()
+                    if t:
+                        p["taobao_title"] = t
+                        enriched += 1
+                except Exception:
+                    pass
+
+    # Taobao は Playwright で取得
+    if taobao:
+        enriched += asyncio.run(_enrich_taobao_async(taobao))
+
+    print(f"  [taobao] {enriched}/{len(targets)} 件補完完了")
+    return enriched
 
 def to_kakobuy(url: str) -> str:
     if not url:
@@ -535,6 +638,9 @@ def run(seller_name: str, url: str, fixed_brand: str | None, forced_type: str | 
     asyncio.run(fetch_all_albums(all_albums))
     print()
 
+    # 3.5 IDのみタイトルの場合 Taobao から商品名を補完
+    enrich_titles_from_taobao(all_albums)
+
     # 4. products.json 用データに変換（既存スキーマに合わせる）
     products = []
     for alb in all_albums:
@@ -542,10 +648,12 @@ def run(seller_name: str, url: str, fixed_brand: str | None, forced_type: str | 
             continue  # 購入リンクなしはスキップ
         cat_brands = alb.pop("_cat_brands", [])
         brand = assign_brand(alb.get("title", ""), cat_brands, fixed_brand)
+        # 分類用テキスト: Taobaoタイトルがあればそちらを優先
+        classify_text = alb.get("taobao_title") or alb.get("title", "")
         products.append({
             "seller":    seller_name,
             "brand":     brand,
-            "type":      forced_type or classify(alb.get("title", "")),
+            "type":      forced_type or classify(classify_text),
             "title":     alb.get("title", ""),
             "yupoo":     alb["yupoo_url"],
             "purchase":  alb.get("purchase", ""),
