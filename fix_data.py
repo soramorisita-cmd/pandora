@@ -44,7 +44,7 @@ BRAND_RULES = [
     ("Salomon",      ["salomon", "xt-6", "speedcross", "xa pro"]),
     ("Asics",        ["asics", "gel-", "nimbus", "kayano", "gel kayano"]),
     ("Puma",         ["puma"]),
-    ("Reebok",       ["reebok", "classic"]),
+    ("Reebok",       ["reebok", "reebok classic", "club c 85"]),
     ("Converse",     ["converse", "chuck taylor", "all star ct"]),
     ("Vans",         ["vans", "old skool", "sk8-hi", "slip-on"]),
     ("ON Running",   ["on running", "cloud surfer", "cloudmonster"]),
@@ -146,18 +146,21 @@ def fix_brands():
 
     fixed = 0
     for p in products:
-        if p.get("brand") not in CAT_AS_BRAND:
-            continue
         title = p.get("title", "")
         seller = p.get("seller", "")
+        current = p.get("brand", "")
+
+        # タイトルキーワードで判定（全商品対象）
         new_brand = detect_brand(title)
-        if not new_brand:
+
+        # キーワード不一致の場合、カテゴリ名ブランドのみセラーデフォルトで補完
+        if not new_brand and current in CAT_AS_BRAND:
             new_brand = SELLER_BRAND_DEFAULT.get(seller)
-        if not new_brand:
+
+        if not new_brand or new_brand == current:
             continue
-        if new_brand != p["brand"]:
-            p["brand"] = new_brand
-            fixed += 1
+        p["brand"] = new_brand
+        fixed += 1
 
     data["products"] = products
     PRODUCTS_JSON.write_text(
