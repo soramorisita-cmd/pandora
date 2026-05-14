@@ -472,23 +472,25 @@ async def fetch_all_albums(albums: list, workers: int = 5):
         await browser.close()
 
 # ── メイン ───────────────────────────────────────────────────────────────
-def run(seller_name: str, url: str, fixed_brand: str | None, dry_run: bool):
+def run(seller_name: str, url: str, fixed_brand: str | None, forced_type: str | None, direct: bool, dry_run: bool):
     print(f"\n[add_seller] セラー: {seller_name}  URL: {url}")
-    print(f"            ブランド指定: {fixed_brand or 'auto (カテゴリ名から検出)'}")
+    print(f"            ブランド: {fixed_brand or 'auto'}  タイプ: {forced_type or 'auto'}  直接取得: {direct}")
 
-    # 1. カテゴリ一覧を取得
-    print("\n[1] カテゴリ取得中...")
-    categories = get_categories(url)
-
-    if not categories:
-        print("  カテゴリが見つかりません。URLを直接アルバムとして処理します。")
-        categories = [{"name": "default", "url": url}]
-
-    print(f"  {len(categories)} カテゴリ検出:")
-    for cat in categories:
-        brands = parse_category_brands(cat["name"])
-        brand_str = " / ".join(brands) if brands else "(不明)"
-        print(f"    [{brand_str:25s}] {cat['name'][:60]}")
+    # 1. カテゴリ一覧を取得（--direct の場合はスキップしてURLから直接アルバム取得）
+    if direct:
+        print("\n[1] --direct モード: URLから直接アルバム取得")
+        categories = [{"name": fixed_brand or "default", "url": url}]
+    else:
+        print("\n[1] カテゴリ取得中...")
+        categories = get_categories(url)
+        if not categories:
+            print("  カテゴリが見つかりません。URLを直接アルバムとして処理します。")
+            categories = [{"name": "default", "url": url}]
+        print(f"  {len(categories)} カテゴリ検出:")
+        for cat in categories:
+            brands = parse_category_brands(cat["name"])
+            brand_str = " / ".join(brands) if brands else "(不明)"
+            print(f"    [{brand_str:25s}] {cat['name'][:60]}")
 
     if dry_run:
         print("\n[dry-run] ここで終了。実際に取得するには --dry-run を外してください。")
@@ -502,11 +504,11 @@ def run(seller_name: str, url: str, fixed_brand: str | None, dry_run: bool):
         albums = get_albums_in_url(cat["url"])
         time.sleep(REQ_SLEEP)
         for alb in albums:
-            alb["_cat_brands"] = cat_brands  # 後でブランド割当に使用
+            alb["_cat_brands"] = cat_brands
         all_albums.extend(albums)
         print(f"  {cat['name'][:50]}: {len(albums)} 件")
 
-    # アルバムがない場合 (categories URL が直接アルバムリストの場合)
+    # アルバムがない場合 URL直接から取得
     if not all_albums:
         print("  カテゴリ内にアルバムなし → URL直接からアルバム取得")
         all_albums = get_albums_in_url(url)
@@ -534,7 +536,7 @@ def run(seller_name: str, url: str, fixed_brand: str | None, dry_run: bool):
         products.append({
             "seller":    seller_name,
             "brand":     brand,
-            "type":      classify(alb.get("title", "")),
+            "type":      forced_type or classify(alb.get("title", "")),
             "title":     alb.get("title", ""),
             "yupoo":     alb["yupoo_url"],
             "purchase":  alb.get("purchase", ""),
@@ -593,6 +595,8 @@ if __name__ == "__main__":
     parser.add_argument("--name",    required=True, help="セラー識別名 (例: baymaxsocks)")
     parser.add_argument("--url",     required=True, help="YupooのURL")
     parser.add_argument("--brand",   default=None,  help="ブランド固定指定 (省略でauto)")
+    parser.add_argument("--type",    default=None,  help="商品タイプ固定 (例: ACCESSORIES, SOCKS, SNEAKERS)")
+    parser.add_argument("--direct",  action="store_true", help="カテゴリを解析せず直接URLからアルバム取得")
     parser.add_argument("--dry-run", action="store_true", help="カテゴリ構造だけ確認して終了")
     args = parser.parse_args()
-    run(args.name, args.url, args.brand, args.dry_run)
+    run(args.name, args.url, args.brand, args.type, args.direct, args.dry_run)

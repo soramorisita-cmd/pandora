@@ -1,13 +1,13 @@
 {
   "_comment": "セラーごとのブランド対応表。ここを編集後 python fix_data.py --brands を実行。",
-  "2335499519":       "Lanvin",
-  "angelking47":      "Denim Tears",
+  "2335499519": "Lanvin",
+  "angelking47": "Denim Tears",
   "elephant-factory": "Syna World",
-  "hotdog-official":  "Broken Planet",
-  "huskyreps":        "NIKE",
-  "kdi220":           "Lacoste",
-  "noghost":          "Supreme",
-  "pikachushop":      "HELLSTAR",
-  "repsmaster":       "Adidas",
-  "steven-1989":      "ESSENTIALS"
+  "hotdog-official": "Broken Planet",
+  "huskyreps": "NIKE",
+  "kdi220": "Lacoste",
+  "noghost": "Supreme",
+  "pikachushop": "HELLSTAR",
+  "repsmaster": "Adidas",
+  "steven-1989": "ESSENTIALS"
 }
