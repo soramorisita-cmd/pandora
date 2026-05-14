@@ -3,12 +3,15 @@
 build_static.py — PR1 SSG ビルドスクリプト
 
 生成物:
-  products/{album_id}.html   個別商品ページ（全件）
-  category/{type}/index.html カテゴリ別ランディングページ
-  brand/{slug}/index.html    ブランド別ランディングページ
-  sitemap.xml                全URL列挙
-  robots.txt                 クローラー指示
-  index.html                 トップ12商品を静的埋め込み済みに更新
+  products/{album_id}.html     個別商品ページ（全件）
+  category/{type}/index.html   カテゴリ別ランディングページ
+  brand/{slug}/index.html      ブランド別ランディングページ
+  data/cat/{type_slug}.json    カテゴリ別分割JSON（PR10 lazy load用）
+  data/cats_meta.json          カテゴリ一覧メタ（件数のみ）
+  sitemap.xml                  全URL列挙
+  robots.txt                   クローラー指示
+  _headers                     Cloudflare Cache-Control
+  index.html                   トップ12商品を静的埋め込み済みに更新
 
 使い方:
   python build_static.py
@@ -502,6 +505,77 @@ def patch_index(products):
     index_path.write_text(content, encoding="utf-8")
     print(f"  [index] トップ {len(featured)} 件を index.html に埋め込み")
 
+# ── 7. カテゴリ別JSON分割（PR10: lazy load用） ──────────────────────
+def split_products_json(products, updated):
+    """
+    data/cat/{type_slug}.json を生成する。
+    catalog.html が ?cat=TYPE の時だけこれをフェッチ → 初回転送量を大幅削減。
+    - purchase フィールドは kakobuy と重複するため除外（-9% サイズ）
+    - price_cny も除外（price_jpy に変換済み）
+    """
+    from collections import defaultdict
+    cat_dir = ROOT / "data" / "cat"
+    cat_dir.mkdir(parents=True, exist_ok=True)
+
+    EXCLUDE = {"purchase", "price_cny"}
+    by_cat = defaultdict(list)
+    for p in products:
+        cat = p.get("type") or "other"
+        slim = {k: v for k, v in p.items() if k not in EXCLUDE}
+        by_cat[cat].append(slim)
+
+    sizes = []
+    for cat, items in by_cat.items():
+        slug = cat.lower().replace("-", "_").replace(" ", "_")
+        payload = json.dumps(
+            {"type": cat, "count": len(items), "updated": updated, "products": items},
+            ensure_ascii=False, separators=(',', ':')
+        )
+        out_path = cat_dir / f"{slug}.json"
+        out_path.write_text(payload, encoding="utf-8")
+        sizes.append((cat, len(items), len(payload) // 1024))
+
+    # カテゴリ一覧メタ（件数のみ、nav 描画用）
+    CAT_ORDER = ["SNEAKERS","HOODIES","T-SHIRTS","JACKETS","PANTS","SHORTS",
+                 "SWEATERS","TOPS","SHIRTS","BAGS","ACCESSORIES"]
+    sorted_cats = (
+        [c for c in CAT_ORDER if c in by_cat] +
+        sorted(c for c in by_cat if c not in CAT_ORDER)
+    )
+    cats_meta = [{"type": c, "count": len(by_cat[c]), "slug": c.lower().replace("-","_").replace(" ","_")} for c in sorted_cats]
+    (ROOT / "data" / "cats_meta.json").write_text(
+        json.dumps({"total": len(products), "categories": cats_meta}, ensure_ascii=False, separators=(',', ':')),
+        encoding="utf-8"
+    )
+
+    print(f"  [split] {len(by_cat)} カテゴリ → data/cat/")
+    for cat, cnt, kb in sorted(sizes, key=lambda x: -x[1])[:5]:
+        print(f"    {cat}: {cnt}件 / {kb}KB")
+
+
+def build_headers():
+    """Cloudflare Pages 用 _headers（Cache-Control）"""
+    headers = """\
+# Cloudflare Pages Cache-Control
+/products.json
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/data/*.json
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/data/cat/*.json
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/products/*.html
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+/images/*
+  Cache-Control: public, max-age=2592000
+/category/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/brand/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+"""
+    (ROOT / "_headers").write_text(headers, encoding="utf-8")
+    print("  [headers] _headers 生成完了")
+
+
 # ── メイン ──────────────────────────────────────────────────────────
 def main():
     global DOMAIN
@@ -519,6 +593,8 @@ def main():
     build_brand_pages(products, ROOT / "brand")
     build_sitemap(products, ROOT / "sitemap.xml")
     build_robots(ROOT / "robots.txt")
+    split_products_json(products, data.get("updated", ""))
+    build_headers()
     patch_index(products)
 
     print(f"\n[build] 完了！")

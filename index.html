@@ -686,6 +686,15 @@ function buildMobileLists(){
 }
 async function init(){
   try{
+    // cats_meta.json で件数を先取り（軽量、ナビ・統計用）
+    try{
+      const metaRes=await fetch('./data/cats_meta.json');
+      if(metaRes.ok){
+        const meta=await metaRes.json();
+        const sc=document.getElementById('stat-count');
+        if(sc)sc.textContent=(meta.total||0).toLocaleString();
+      }
+    }catch{}
     const res=await fetch('./products.json');if(!res.ok)throw new Error();
     const data=await res.json();ALL=data.products||[];
     const sc=document.getElementById('stat-count');if(sc)sc.textContent=ALL.length.toLocaleString();

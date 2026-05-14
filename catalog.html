@@ -296,7 +296,18 @@ function buildBrandList(){
   });
 }
 
-function toggleCat(cat,cb){cb.checked?selCats.add(cat):selCats.delete(cat);selBrands.clear();buildCatList();buildBrandList();updateTitle();applyFilters();const c=[...selCats];history.replaceState(null,'',c.length===1?`/catalog.html?cat=${encodeURIComponent(c[0])}`:'/catalog.html')}
+function toggleCat(cat,cb){
+  cb.checked?selCats.add(cat):selCats.delete(cat);
+  selBrands.clear();
+  const c=[...selCats];
+  history.replaceState(null,'',c.length===1?`/catalog.html?cat=${encodeURIComponent(c[0])}`:'/catalog.html');
+  if(!loadedFull){
+    // 別カテゴリを選択 or 複数選択 → 全件が必要。フォールバック読み込み
+    ensureFullData().then(()=>{buildCatList();buildBrandList();updateTitle();applyFilters();});
+  }else{
+    buildCatList();buildBrandList();updateTitle();applyFilters();
+  }
+}
 function toggleBrand(brand,cb){cb.checked?selBrands.add(brand):selBrands.delete(brand);applyFilters()}
 
 function updateTitle(){
@@ -480,19 +491,59 @@ function buildNav(cats){
   });
 }
 
+// カテゴリslugマップ（type名 → ファイル名）
+const CAT_SLUG = {};
+CAT_ORDER.forEach(t => { CAT_SLUG[t] = t.toLowerCase().replace(/-/g,'_').replace(/ /g,'_'); });
+
+let loadedFull = false;  // products.json 全件フェッチ済み
+
+async function fetchCat(type) {
+  const slug = CAT_SLUG[type] || type.toLowerCase().replace(/-/g,'_').replace(/ /g,'_');
+  const res = await fetch(`./data/cat/${slug}.json`);
+  if (!res.ok) throw new Error(`cat/${slug}.json not found`);
+  const data = await res.json();
+  return data.products || [];
+}
+
+async function ensureFullData() {
+  if (loadedFull) return;
+  const res = await fetch('./products.json');
+  if (!res.ok) throw new Error();
+  const data = await res.json();
+  ALL = data.products || [];
+  loadedFull = true;
+}
+
 async function init(){
   try{
-    const res=await fetch('./products.json');if(!res.ok)throw new Error();
-    const data=await res.json();ALL=data.products||[];
+    const params = new URLSearchParams(location.search);
+    const catParam = params.get('cat');
+
+    if (catParam) {
+      // ?cat=TYPE のとき: そのカテゴリのJSONのみロード（高速）
+      try {
+        ALL = await fetchCat(catParam);
+        selCats.add(catParam);
+      } catch {
+        // フォールバック: 全件ロード
+        await ensureFullData();
+        selCats.add(catParam);
+      }
+    } else {
+      // 全件ビュー: 通常通り products.json をロード
+      await ensureFullData();
+    }
+
     const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
     const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
     buildNav(cats);buildCatList();buildBrandList();updateTitle();applyFilters();
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
   }catch(e){
-    document.getElementById('loading').innerHTML=`<p style="color:#f87171;font-size:14px">products.json を読み込めませんでした</p>`;
+    document.getElementById('loading').innerHTML=`<p style="color:#f87171;font-size:14px">データを読み込めませんでした</p>`;
   }
 }
+
 init();
 
 function openDrawer(){
