@@ -30,7 +30,7 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 AFFCODE       = "a235412"
 KAKOBUY_BASE  = "https://www.kakobuy.com/item/details"
-MAX_ALBUMS    = 50
+MAX_ALBUMS    = 500
 REQ_SLEEP     = 0.5
 
 REQ_HEADERS = {
@@ -343,31 +343,42 @@ def get_categories(url: str) -> list[dict]:
 
 # ── アルバムリスト取得 ────────────────────────────────────────────────────
 def get_albums_in_url(base_url: str, max_albums: int = MAX_ALBUMS) -> list[dict]:
-    """URL（カテゴリページ or アルバムページ）からアルバムリストを取得"""
-    albums = []
-    try:
-        r = requests.get(base_url, headers=REQ_HEADERS, timeout=15)
-        if r.status_code != 200:
-            return albums
-        base_domain = get_base_domain(base_url)
-        seen = set()
-        for a in BeautifulSoup(r.text, "lxml").find_all("a", href=True):
-            href = a["href"]
-            m = re.search(r"/albums/(\d+)", href)
-            if not m or m.group(1) in seen:
-                continue
-            seen.add(m.group(1))
-            full_url = href if href.startswith("http") else base_domain + href
-            title = a.get("title", "") or a.get_text(strip=True) or ""
-            albums.append({"album_id": m.group(1), "title": title,
-                           "yupoo_url": full_url, "purchase": "", "kakobuy": "", "image": ""})
-            if len(albums) >= max_albums:
-                break
-    except Exception as e:
-        print(f"  [ERR] get_albums: {e}")
+    """URL（カテゴリページ or アルバムページ）からアルバムリストを取得（ページネーション対応）"""
+    all_albums: list[dict] = []
+    seen: set[str] = set()
+    base_domain = get_base_domain(base_url)
+    sep = "&" if "?" in base_url else "?"
 
-    if not albums:
-        # Playwright フォールバック
+    for page_num in range(1, 999):
+        page_url = base_url if page_num == 1 else f"{base_url}{sep}page={page_num}"
+        page_albums: list[dict] = []
+        try:
+            r = requests.get(page_url, headers=REQ_HEADERS, timeout=15)
+            if r.status_code != 200:
+                break
+            for a in BeautifulSoup(r.text, "lxml").find_all("a", href=True):
+                href = a["href"]
+                m = re.search(r"/albums/(\d+)", href)
+                if not m or m.group(1) in seen:
+                    continue
+                seen.add(m.group(1))
+                full_url = href if href.startswith("http") else base_domain + href
+                title = a.get("title", "") or a.get_text(strip=True) or ""
+                page_albums.append({"album_id": m.group(1), "title": title,
+                                    "yupoo_url": full_url, "purchase": "", "kakobuy": "", "image": ""})
+        except Exception as e:
+            print(f"  [ERR] get_albums page {page_num}: {e}")
+            break
+
+        if not page_albums:
+            break
+        all_albums.extend(page_albums)
+        if len(all_albums) >= max_albums:
+            break
+        time.sleep(REQ_SLEEP)
+
+    if not all_albums:
+        # Playwright フォールバック（requestsで0件のとき）
         from playwright.sync_api import sync_playwright
         try:
             with sync_playwright() as pw:
@@ -377,8 +388,6 @@ def get_albums_in_url(base_url: str, max_albums: int = MAX_ALBUMS) -> list[dict]
                 time.sleep(2)
                 html = page.content()
                 page.close(); browser.close()
-            base_domain = get_base_domain(base_url)
-            seen = set()
             for a in BeautifulSoup(html, "lxml").find_all("a", href=True):
                 href = a.get("href", "")
                 m = re.search(r"/albums/(\d+)", href)
@@ -387,13 +396,13 @@ def get_albums_in_url(base_url: str, max_albums: int = MAX_ALBUMS) -> list[dict]
                 seen.add(m.group(1))
                 full_url = href if href.startswith("http") else base_domain + href
                 title = a.get("title", "") or a.get_text(strip=True) or ""
-                albums.append({"album_id": m.group(1), "title": title,
-                               "yupoo_url": full_url, "purchase": "", "kakobuy": "", "image": ""})
-                if len(albums) >= max_albums:
+                all_albums.append({"album_id": m.group(1), "title": title,
+                                   "yupoo_url": full_url, "purchase": "", "kakobuy": "", "image": ""})
+                if len(all_albums) >= max_albums:
                     break
         except Exception as e:
             print(f"  [ERR] playwright albums: {e}")
-    return albums
+    return all_albums
 
 # ── アルバム詳細取得 (Playwright 非同期) ─────────────────────────────────
 async def fetch_album_detail(browser, alb: dict, sem: asyncio.Semaphore, idx: int, total: int):
