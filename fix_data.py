@@ -20,6 +20,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 
 ROOT = Path(__file__).parent
 PRODUCTS_JSON = ROOT / "products.json"
+SELLER_BRANDS_JSON = ROOT / "seller_brands.json"
 IMAGES_DIR = ROOT / "images"
 IMAGES_DIR.mkdir(exist_ok=True)
 
@@ -144,16 +145,25 @@ def fix_brands():
     data = json.loads(PRODUCTS_JSON.read_text("utf-8"))
     products = data["products"]
 
+    # seller_brands.json を読み込み（存在しない場合は空）
+    seller_map = {}
+    if SELLER_BRANDS_JSON.exists():
+        raw = json.loads(SELLER_BRANDS_JSON.read_text("utf-8"))
+        seller_map = {k: v for k, v in raw.items() if not k.startswith("_")}
+
     fixed = 0
     for p in products:
-        title = p.get("title", "")
         seller = p.get("seller", "")
         current = p.get("brand", "")
 
-        # タイトルキーワードで判定（全商品対象）
-        new_brand = detect_brand(title)
+        # 1) seller_brands.json が最優先
+        new_brand = seller_map.get(seller)
 
-        # キーワード不一致の場合、カテゴリ名ブランドのみセラーデフォルトで補完
+        # 2) 未登録セラーはタイトルキーワードで判定
+        if not new_brand:
+            new_brand = detect_brand(p.get("title", ""))
+
+        # 3) それでも不明かつカテゴリ名ブランドならセラーデフォルトで補完
         if not new_brand and current in CAT_AS_BRAND:
             new_brand = SELLER_BRAND_DEFAULT.get(seller)
 
