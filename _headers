@@ -13,3 +13,5 @@
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 /brand/*
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/luxury/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400

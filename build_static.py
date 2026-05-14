@@ -40,6 +40,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,.97);backdrop-fil
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--accent)}
 .nav-link{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);padding:6px 12px;border-radius:6px;border:1px solid var(--border)}
 .nav-link:hover{color:var(--accent);border-color:rgba(200,240,60,.3)}
+.nav-luxury{color:#d4af37!important;border-color:rgba(212,175,55,.35)!important}
+.nav-luxury:hover{color:#f0cc5a!important;border-color:rgba(212,175,55,.6)!important}
 .wrap{max-width:1200px;margin:0 auto;padding:32px 24px 60px}
 footer{text-align:center;padding:24px;font-size:11px;color:var(--muted);letter-spacing:1px}
 footer a{color:var(--muted2)}
@@ -50,6 +52,7 @@ NAV_HTML = """\
   <div class="nav-inner">
     <a class="nav-logo" href="/">PANDORA</a>
     <a class="nav-link" href="/catalog.html">全商品</a>
+    <a class="nav-link nav-luxury" href="/luxury/">LUXURY</a>
     <a class="nav-link" href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy</a>
   </div>
 </nav>"""
@@ -176,6 +179,20 @@ def make_card_html(p, link_to_product=True):
     </div>
   </div>
 </div>"""
+
+# ── ラグジュアリーブランド定義 ───────────────────────────────────────
+LUXURY_BRANDS = {
+    # ファッションハウス
+    "Balenciaga", "Gucci", "Dior", "Louis Vuitton", "Celine", "Prada",
+    "Hermes", "Moncler", "Lanvin", "Maison Margiela", "Givenchy",
+    "Saint Laurent", "Bottega Veneta", "Valentino", "Loewe",
+    # ラグジュアリーストリート
+    "Off-White", "Amiri", "Purple Brand", "Chrome Hearts", "Vetements",
+    "WE11DONE", "Gallery Dept", "Rhude", "Fear of God",
+    # コンテンポラリーラグジュアリー
+    "Ami Paris", "Jacquemus", "Casablanca", "Acne Studios",
+    "A-Cold-Wall*", "Rick Owens",
+}
 
 # ── 1. 商品個別ページ ────────────────────────────────────────────────
 def build_product_pages(products, out_dir):
@@ -398,12 +415,105 @@ h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin
         count += 1
     print(f"  [brand] {count} ページ生成")
 
-# ── 4. sitemap.xml ───────────────────────────────────────────────────
+# ── 4. ラグジュアリーページ ──────────────────────────────────────────
+def build_luxury_page(products, out_dir):
+    from collections import defaultdict
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    luxury_products = [p for p in products if p.get("brand") in LUXURY_BRANDS]
+    if not luxury_products:
+        print("  [luxury] 対象商品なし（スキップ）")
+        return
+
+    by_brand = defaultdict(list)
+    for p in luxury_products:
+        by_brand[p["brand"]].append(p)
+
+    # ブランドカード HTML
+    brand_cards_html = ""
+    for brand, items in sorted(by_brand.items(), key=lambda x: -len(x[1])):
+        slug = slugify(brand)
+        thumb = next((abs_img(p["image"]) for p in items if p.get("image") and p["image"] != "null"), "")
+        thumb_html = (f'<img src="{esc(thumb)}" alt="{esc(brand)}" loading="lazy">'
+                      if thumb else f'<div class="brand-noimag">{esc(brand)}</div>')
+        brand_cards_html += f"""<a class="brand-card" href="/brand/{slug}/">
+  <div class="brand-thumb">{thumb_html}</div>
+  <div class="brand-info">
+    <div class="brand-name">{esc(brand)}</div>
+    <div class="brand-count">{len(items)} items</div>
+  </div>
+</a>"""
+
+    # 注目商品（画像あり・各ブランド1件ずつ最大12件）
+    featured = []
+    for brand, items in sorted(by_brand.items(), key=lambda x: -len(x[1])):
+        pool = [p for p in items if p.get("image") and p["image"] != "null" and p.get("kakobuy")]
+        if pool:
+            featured.append(pool[0])
+        if len(featured) >= 12:
+            break
+    cards_html = "\n".join(make_card_html(p) for p in featured)
+
+    html = f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LUXURY — ハイブランドレプリカ | PANDORA</title>
+<meta name="description" content="Balenciaga・Off-White・Amiri・Chrome Hearts など厳選ハイブランドのレプリカを掲載。{len(luxury_products)}点のラグジュアリーアイテム。">
+<meta property="og:title" content="LUXURY | PANDORA">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{DOMAIN}/luxury/">
+<link rel="canonical" href="{DOMAIN}/luxury/">
+{FONTS}
+<style>{SHARED_CSS}{card_css()}
+:root{{--gold:#d4af37;--gold2:#f0cc5a;--gold-bg:rgba(212,175,55,.08);--gold-border:rgba(212,175,55,.25)}}
+.luxury-hero{{background:linear-gradient(160deg,#111 0%,#1a1500 100%);border-bottom:1px solid var(--gold-border);padding:56px 24px 48px;text-align:center}}
+.luxury-hero h1{{font-family:'Bebas Neue',sans-serif;font-size:72px;letter-spacing:10px;color:var(--gold);line-height:1}}
+.luxury-hero p{{color:var(--muted2);font-size:14px;margin-top:12px;letter-spacing:1px}}
+.luxury-hero .total{{display:inline-block;margin-top:16px;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--gold);border:1px solid var(--gold-border);padding:6px 18px;border-radius:999px;background:var(--gold-bg)}}
+.section-title{{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px;color:var(--gold);margin:40px 0 16px}}
+.brand-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:48px}}
+.brand-card{{background:var(--s1);border:1px solid var(--gold-border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s}}
+.brand-card:hover{{border-color:var(--gold)}}
+.brand-thumb{{aspect-ratio:4/3;overflow:hidden;background:var(--s2)}}
+.brand-thumb img{{width:100%;height:100%;object-fit:cover;display:block}}
+.brand-noimag{{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;letter-spacing:1px;color:var(--gold);text-transform:uppercase;text-align:center;padding:8px}}
+.brand-info{{padding:10px 12px}}
+.brand-name{{font-size:12px;font-weight:800;letter-spacing:.5px;color:var(--text)}}
+.brand-count{{font-size:10px;color:var(--gold);margin-top:3px;font-weight:600}}
+.tag-brand{{background:rgba(212,175,55,.1);color:var(--gold);border-color:var(--gold-border)}}
+</style>
+</head>
+<body>
+{NAV_HTML}
+<div class="luxury-hero">
+  <h1>LUXURY</h1>
+  <p>厳選ハイブランド・レプリカコレクション</p>
+  <span class="total">{len(luxury_products)} ITEMS · {len(by_brand)} BRANDS</span>
+</div>
+<div class="wrap">
+  <div class="section-title">BRANDS</div>
+  <div class="brand-grid">{brand_cards_html}</div>
+  <div class="section-title">FEATURED</div>
+  <div class="grid">{cards_html}</div>
+  <div style="text-align:center;margin-top:28px">
+    <a href="/catalog.html" style="font-size:12px;font-weight:700;color:var(--gold);border:1px solid var(--gold-border);padding:10px 24px;border-radius:6px;display:inline-block">全カタログを見る &rarr;</a>
+  </div>
+</div>
+{FOOTER_HTML}
+</body>
+</html>"""
+    (out_dir / "index.html").write_text(html, encoding="utf-8")
+    print(f"  [luxury] {len(by_brand)} ブランド / {len(luxury_products)} 件")
+
+# ── 5. sitemap.xml ───────────────────────────────────────────────────
 def build_sitemap(products, out_path: Path):
     today = time.strftime("%Y-%m-%d")
     urls = [
         f"  <url><loc>{DOMAIN}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>",
         f"  <url><loc>{DOMAIN}/catalog.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>",
+        f"  <url><loc>{DOMAIN}/luxury/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>",
     ]
     # カテゴリ
     cats = {p["type"] for p in products if p.get("type")}
@@ -571,6 +681,8 @@ def build_headers():
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 /brand/*
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/luxury/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 """
     (ROOT / "_headers").write_text(headers, encoding="utf-8")
     print("  [headers] _headers 生成完了")
@@ -591,6 +703,7 @@ def main():
     build_product_pages(products, ROOT / "products")
     build_category_pages(products, ROOT / "category")
     build_brand_pages(products, ROOT / "brand")
+    build_luxury_page(products, ROOT / "luxury")
     build_sitemap(products, ROOT / "sitemap.xml")
     build_robots(ROOT / "robots.txt")
     split_products_json(products, data.get("updated", ""))
