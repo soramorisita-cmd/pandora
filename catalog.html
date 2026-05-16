@@ -51,6 +51,13 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 .cat-pill{font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);padding:7px 16px;border-radius:999px;border:1px solid var(--border);white-space:nowrap;cursor:pointer;transition:all .12s;background:transparent;flex-shrink:0}
 .cat-pill:hover{border-color:var(--border2);color:var(--text);background:var(--s2)}
 .cat-pill.active{background:var(--accent);color:#111;border-color:var(--accent);font-weight:800}
+/* BRAND BAR */
+.brand-bar{background:var(--bg);border-bottom:1px solid var(--border)}
+.brand-bar-inner{display:flex;gap:6px;overflow-x:auto;padding:7px 24px;scrollbar-width:none;max-width:1400px;margin:0 auto}
+.brand-bar-inner::-webkit-scrollbar{display:none}
+.brand-pill{font-size:11px;font-weight:700;letter-spacing:.3px;color:var(--muted2);padding:5px 14px;border-radius:999px;border:1px solid var(--border);white-space:nowrap;cursor:pointer;transition:all .12s;background:var(--s1);flex-shrink:0}
+.brand-pill:hover{border-color:var(--border2);color:var(--text);background:var(--s2)}
+.brand-pill.active{background:var(--accent-dark);color:#fff;border-color:var(--accent-dark);font-weight:800}
 
 /* ── SIDEBAR ── */
 .sidebar{width:210px;flex-shrink:0;position:sticky;top:112px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 120px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--s3) transparent}
@@ -153,6 +160,8 @@ footer a{color:var(--accent);text-decoration:none}
   .btn-qc{padding:8px 9px}
   .cat-bar-inner{padding:8px 10px}
   .cat-pill{font-size:10px;padding:6px 12px}
+  .brand-bar-inner{padding:6px 10px}
+  .brand-pill{font-size:10px;padding:4px 11px}
 }
 @media(min-width:769px){
   .mobile-filter-btn{display:none}
@@ -220,6 +229,10 @@ footer a{color:var(--accent);text-decoration:none}
   <!-- カテゴリタブバー (uufinds style) -->
   <div class="cat-bar">
     <div class="cat-bar-inner" id="cat-pills"></div>
+  </div>
+  <!-- ブランドクイックチップ -->
+  <div class="brand-bar">
+    <div class="brand-bar-inner" id="brand-pills"></div>
   </div>
 
   <!-- モバイルフィルターボタン -->
@@ -347,7 +360,7 @@ function buildCatBar(){
   all.addEventListener('click',()=>{
     selCats.clear();selBrands.clear();
     history.replaceState(null,'','/catalog.html');
-    buildCatBar();buildBrandList();updateTitle();applyFilters();
+    buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();
   });
   el.appendChild(all);
   allCats.forEach(cat=>{
@@ -359,9 +372,9 @@ function buildCatBar(){
       const c=[...selCats];
       history.replaceState(null,'',c.length===1?`/catalog.html?cat=${encodeURIComponent(c[0])}`:'/catalog.html');
       if(!loadedFull){
-        ensureFullData().then(()=>{buildCatBar();buildBrandList();updateTitle();applyFilters();});
+        ensureFullData().then(()=>{buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();});
       }else{
-        buildCatBar();buildBrandList();updateTitle();applyFilters();
+        buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();
       }
     });
     el.appendChild(pill);
@@ -388,12 +401,30 @@ function toggleCat(cat,cb){
   const c=[...selCats];
   history.replaceState(null,'',c.length===1?`/catalog.html?cat=${encodeURIComponent(c[0])}`:'/catalog.html');
   if(!loadedFull){
-    ensureFullData().then(()=>{buildCatBar();buildBrandList();updateTitle();applyFilters();});
+    ensureFullData().then(()=>{buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();});
   }else{
-    buildCatBar();buildBrandList();updateTitle();applyFilters();
+    buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();
   }
 }
-function toggleBrand(brand,cb){cb.checked?selBrands.add(brand):selBrands.delete(brand);applyFilters()}
+function toggleBrand(brand,cb){cb.checked?selBrands.add(brand):selBrands.delete(brand);buildBrandBar();applyFilters()}
+function buildBrandBar(){
+  const el=document.getElementById('brand-pills');if(!el)return;
+  const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
+  const counts={};src.forEach(p=>{if(p.brand)counts[p.brand]=(counts[p.brand]||0)+1;});
+  const topBrands=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,15).map(e=>e[0]);
+  el.innerHTML='';
+  topBrands.forEach(brand=>{
+    const pill=document.createElement('button');
+    pill.className='brand-pill'+(selBrands.size===1&&selBrands.has(brand)?' active':'');
+    pill.textContent=brand;
+    pill.addEventListener('click',()=>{
+      if(selBrands.size===1&&selBrands.has(brand)){selBrands.clear();}
+      else{selBrands.clear();selBrands.add(brand);}
+      buildBrandBar();buildBrandList();applyFilters();
+    });
+    el.appendChild(pill);
+  });
+}
 
 function updateTitle(){
   const el=document.getElementById('cat-title');
@@ -570,7 +601,7 @@ function applyFilters(){
   noModel.forEach((p, i) => grid.appendChild(makeVariantCard(p, i)));
 }
 
-function resetFilters(){selCats.clear();selBrands.clear();document.getElementById('search').value='';const cs=document.getElementById('catalog-search');if(cs)cs.value='';const ch=document.getElementById('catalog-search-hint');if(ch)ch.style.display='none';history.replaceState(null,'','/catalog.html');buildCatBar();buildBrandList();updateTitle();applyFilters()}
+function resetFilters(){selCats.clear();selBrands.clear();document.getElementById('search').value='';const cs=document.getElementById('catalog-search');if(cs)cs.value='';const ch=document.getElementById('catalog-search-hint');if(ch)ch.style.display='none';history.replaceState(null,'','/catalog.html');buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters()}
 
 function buildNav(cats){
   const nc=document.getElementById('nav-cats');
@@ -627,7 +658,7 @@ async function init(){
 
     const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
     const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
-    buildNav(cats);buildCatList();buildBrandList();updateTitle();applyFilters();
+    buildNav(cats);buildCatList();buildBrandList();buildBrandBar();updateTitle();applyFilters();
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
   }catch(e){

@@ -47,6 +47,13 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 .cat-pill{font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);padding:7px 16px;border-radius:999px;border:1px solid var(--border);white-space:nowrap;cursor:pointer;transition:all .12s;background:transparent;flex-shrink:0}
 .cat-pill:hover{border-color:var(--border2);color:var(--text);background:var(--s2)}
 .cat-pill.active{background:var(--accent);color:#111;border-color:var(--accent);font-weight:800}
+/* BRAND BAR */
+.brand-bar{background:var(--bg);border-bottom:1px solid var(--border)}
+.brand-bar-inner{display:flex;gap:6px;overflow-x:auto;padding:7px 24px;scrollbar-width:none;max-width:1400px;margin:0 auto}
+.brand-bar-inner::-webkit-scrollbar{display:none}
+.brand-pill{font-size:11px;font-weight:700;letter-spacing:.3px;color:var(--muted2);padding:5px 14px;border-radius:999px;border:1px solid var(--border);white-space:nowrap;cursor:pointer;transition:all .12s;background:var(--s1);flex-shrink:0}
+.brand-pill:hover{border-color:var(--border2);color:var(--text);background:var(--s2)}
+.brand-pill.active{background:var(--accent-dark);color:#fff;border-color:var(--accent-dark);font-weight:800}
 /* SIDEBAR */
 .sidebar{width:210px;flex-shrink:0;position:sticky;top:112px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 90px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--s3) transparent}
 .sidebar::-webkit-scrollbar{width:3px}
@@ -78,17 +85,9 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 /* LAYOUT */
 .page{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 24px 60px;display:flex;gap:20px;align-items:flex-start}
 .main{flex:1;min-width:0}
-.result-bar{display:flex;align-items:center;margin-bottom:14px}
+.result-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .result-count{font-size:13px;font-weight:700;color:var(--muted2)}
 .result-count span{color:var(--accent-dark);font-size:16px}
-.section{margin-bottom:44px}
-.section-hdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;gap:12px}
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:2px}
-.section-more{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent-dark);text-decoration:none;white-space:nowrap}
-.section-more:hover{text-decoration:underline}
-#flat-wrap{display:none}
-#flat-wrap.visible{display:block}
-#cat-sections-wrap.hidden{display:none}
 /* CARDS */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
 .card{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .18s,transform .18s,box-shadow .18s;box-shadow:0 1px 4px rgba(0,0,0,.07),0 2px 10px rgba(0,0,0,.04)}
@@ -146,7 +145,7 @@ footer a{color:var(--accent-dark);text-decoration:none}
 .drawer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .drawer-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--accent-dark)}
 .drawer-close{background:none;border:none;color:var(--muted2);font-size:22px;cursor:pointer;padding:4px}
-@media(max-width:768px){.sidebar{display:none}.page{padding:10px;gap:0}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.nav-right{display:none}.mobile-filter-btn{display:flex!important}.hero{padding:32px 16px 24px}.card-title{font-size:12px}.card-price{font-size:15px}.btn-buy{font-size:13px;padding:8px 6px}.btn-qc{padding:8px 9px}.cat-bar-inner{padding:8px 10px}.cat-pill{font-size:10px;padding:6px 12px}}
+@media(max-width:768px){.sidebar{display:none}.page{padding:10px;gap:0}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.nav-right{display:none}.mobile-filter-btn{display:flex!important}.hero{padding:32px 16px 24px}.card-title{font-size:12px}.card-price{font-size:15px}.btn-buy{font-size:13px;padding:8px 6px}.btn-qc{padding:8px 9px}.cat-bar-inner{padding:8px 10px}.cat-pill{font-size:10px;padding:6px 12px}.brand-bar-inner{padding:6px 10px}.brand-pill{font-size:10px;padding:4px 11px}}
 @media(min-width:769px){.mobile-filter-btn{display:none!important}.drawer-overlay,.drawer{display:none!important}}
 /* HERO STATS + CTAs */
 .hero-stats{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap}
@@ -250,6 +249,10 @@ footer a{color:var(--accent-dark);text-decoration:none}
   <div class="cat-bar">
     <div class="cat-bar-inner" id="cat-pills"></div>
   </div>
+  <!-- ブランドクイックチップ -->
+  <div class="brand-bar">
+    <div class="brand-bar-inner" id="brand-pills"></div>
+  </div>
   <div style="max-width:1400px;margin:0 auto;padding:0 14px">
     <button class="mobile-filter-btn" onclick="openDrawer()">
       <span>🏷 ブランドで絞り込む</span>
@@ -287,23 +290,17 @@ footer a{color:var(--accent-dark);text-decoration:none}
       </div>
     </aside>
     <div class="main">
-      <div id="flat-wrap">
-        <div class="result-bar">
-          <div class="result-count"><span id="count">0</span> 件の商品</div>
-        </div>
-        <div id="active-filters" class="filter-chips"></div>
-        <div class="grid" id="flat-grid"></div>
+      <div class="result-bar">
+        <div class="result-count"><span id="count">0</span> 件の商品</div>
+        <select id="sort-select" onchange="applyFilters()" style="background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--muted2);font-size:12px;font-weight:700;padding:6px 10px;outline:none;cursor:pointer">
+          <option value="default">並び順: 標準</option>
+          <option value="price-asc">価格: 安い順</option>
+          <option value="price-desc">価格: 高い順</option>
+          <option value="has-price">価格あり優先</option>
+        </select>
       </div>
-      <div id="cat-sections-wrap">
-        <div class="section">
-          <div class="section-hdr">
-            <span class="section-title">人気商品</span>
-            <a class="section-more" href="/catalog.html">すべて見る →</a>
-          </div>
-          <div class="grid" id="featured-grid"></div>
-        </div>
-        <div id="cat-sections"></div>
-      </div>
+      <div id="active-filters" class="filter-chips"></div>
+      <div class="grid" id="grid"></div>
     </div>
   </div>
 </div>
@@ -575,7 +572,20 @@ function doHeroSearch(){
   document.getElementById('app')?.scrollIntoView({behavior:'smooth'})
 }
 function isFiltering(){return selCats.size>0||selBrands.size>0||(document.getElementById('search')?.value||'').length>0}
-function getFiltered(){const q=(document.getElementById('search')?.value||'').toLowerCase();return ALL.filter(p=>{if(selCats.size&&!selCats.has(p.type))return false;if(selBrands.size&&!selBrands.has(p.brand||''))return false;if(q&&!(p.title+' '+p.type+' '+(p.brand||'')).toLowerCase().includes(q))return false;return true;})}
+function getFiltered(){
+  const q=(document.getElementById('search')?.value||'').toLowerCase();
+  let items=ALL.filter(p=>{
+    if(selCats.size&&!selCats.has(p.type))return false;
+    if(selBrands.size&&!selBrands.has(p.brand||''))return false;
+    if(q&&!(p.title+' '+p.type+' '+(p.brand||'')).toLowerCase().includes(q))return false;
+    return true;
+  });
+  const sort=(document.getElementById('sort-select')||{value:'default'}).value;
+  if(sort==='price-asc')items=[...items].sort((a,b)=>(Number(a.price_jpy)||999999)-(Number(b.price_jpy)||999999));
+  else if(sort==='price-desc')items=[...items].sort((a,b)=>(Number(b.price_jpy)||0)-(Number(a.price_jpy)||0));
+  else if(sort==='has-price')items=[...items].sort((a,b)=>(b.price_jpy?1:0)-(a.price_jpy?1:0));
+  return items;
+}
 function makeCard(p,i){
   const title=cleanTitle(p.title),price=extractJPY(p),cny=extractCNY(p);
   const buyLink=p.kakobuy||p.purchase||'#',qcLink=p.yupoo||'#';
@@ -666,8 +676,25 @@ function buildBrandList(){
     el.appendChild(lbl);
   });
 }
-function toggleCat(cat,cb){cb.checked?selCats.add(cat):selCats.delete(cat);selBrands.clear();buildCatList();buildBrandList();applyFilters()}
-function toggleBrand(brand,cb){cb.checked?selBrands.add(brand):selBrands.delete(brand);applyFilters()}
+function toggleCat(cat,cb){cb.checked?selCats.add(cat):selCats.delete(cat);selBrands.clear();buildCatList();buildBrandList();buildBrandBar();applyFilters()}
+function buildBrandBar(){
+  const el=document.getElementById('brand-pills');if(!el)return;
+  const counts={};ALL.forEach(p=>{if(p.brand)counts[p.brand]=(counts[p.brand]||0)+1;});
+  const topBrands=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,15).map(e=>e[0]);
+  el.innerHTML='';
+  topBrands.forEach(brand=>{
+    const pill=document.createElement('button');
+    pill.className='brand-pill'+(selBrands.size===1&&selBrands.has(brand)?' active':'');
+    pill.textContent=brand;
+    pill.addEventListener('click',()=>{
+      if(selBrands.size===1&&selBrands.has(brand)){selBrands.clear();}
+      else{selBrands.clear();selBrands.add(brand);}
+      buildBrandBar();buildBrandList();applyFilters();
+    });
+    el.appendChild(pill);
+  });
+}
+function toggleBrand(brand,cb){cb.checked?selBrands.add(brand):selBrands.delete(brand);buildBrandBar();applyFilters()}
 function renderChips(){
   const el=document.getElementById('active-filters');
   if(!el)return;
@@ -687,13 +714,9 @@ function renderChips(){
 }
 function applyFilters(){
   renderChips();
-  const filtering=isFiltering();
-  document.getElementById('flat-wrap').classList.toggle('visible',filtering);
-  document.getElementById('cat-sections-wrap').classList.toggle('hidden',filtering);
-  if(!filtering)return;
   const items=getFiltered();
   document.getElementById('count').textContent=items.length;
-  const grid=document.getElementById('flat-grid');grid.innerHTML='';
+  const grid=document.getElementById('grid');grid.innerHTML='';
   if(!items.length){grid.innerHTML='<div class="empty"><p style="font-size:22px;margin-bottom:8px">🔍</p><p style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px">条件に一致する商品が見つかりませんでした</p><p style="font-size:12px;color:var(--muted);margin-bottom:18px">キーワードを変えるか、フィルターをリセットしてみてください</p><button onclick="resetFilters()" style="background:var(--accent);border:none;border-radius:8px;color:#111;font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:800;padding:10px 24px;cursor:pointer">フィルターをリセット</button></div>';return}
   renderToGrid(items,grid);
 }
@@ -702,7 +725,7 @@ function resetFilters(){
   const s=document.getElementById('search');if(s)s.value='';
   const hs=document.getElementById('hero-search');if(hs)hs.value='';
   const hint=document.getElementById('hero-hint');if(hint){hint.className='hero-search-hint';hint.textContent='商品名で絞り込み、またはリンクをKakobuyリンクに変換してジャンプ';}
-  buildCatList();buildBrandList();applyFilters();
+  buildCatList();buildBrandList();buildBrandBar();applyFilters();
   document.getElementById('filter-badge').textContent='';
 }
 function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden';buildMobileLists()}
@@ -752,19 +775,7 @@ async function init(){
     const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
     const nc=document.getElementById('nav-cats');
     cats.forEach(cat=>{const a=document.createElement('a');a.className='nav-cat';a.href=`/catalog.html?cat=${encodeURIComponent(cat)}`;a.textContent=cat;nc.appendChild(a);});
-    buildCatList();buildBrandList();
-    const fg=document.getElementById('featured-grid');
-    shuffle(ALL).slice(0,12).forEach((p,i)=>fg.appendChild(makeCard(p,i)));
-    const cs=document.getElementById('cat-sections');
-    cats.forEach(cat=>{
-      const items=shuffle(ALL.filter(p=>p.type===cat)).slice(0,6);
-      if(!items.length)return;
-      const sec=document.createElement('div');sec.className='section';
-      sec.innerHTML=`<div class="section-hdr"><span class="section-title">${esc(cat.toUpperCase())}</span><a class="section-more" href="/catalog.html?cat=${encodeURIComponent(cat)}">すべて見る →</a></div><div class="grid" id="cg-${esc(cat)}"></div>`;
-      cs.appendChild(sec);
-      const g=sec.querySelector('.grid');
-      renderToGrid(items,g);
-    });
+    buildCatList();buildBrandList();buildBrandBar();applyFilters();
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
     const sp=document.getElementById('static-products');if(sp)sp.style.display='none';
