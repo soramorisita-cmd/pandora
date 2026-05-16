@@ -611,7 +611,7 @@ function makeModelGroupCard(modelName,items){
   const variantWrap=document.createElement('div');variantWrap.className='model-variants';
   if(hasBatches){
     const BASE='font-family:"DM Sans","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted2);cursor:pointer;transition:all .15s;white-space:nowrap';
-    const ACT='font-family:"DM Sans","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--accent);background:rgba(200,240,60,.12);color:var(--accent);cursor:pointer;transition:all .15s;white-space:nowrap';
+    const ACT='font-family:"DM Sans","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid rgba(74,122,0,.35);background:rgba(74,122,0,.09);color:var(--accent-dark);cursor:pointer;transition:all .15s;white-space:nowrap';
     const tabBar=document.createElement('div');tabBar.style.cssText='display:flex;gap:6px;flex-wrap:wrap;padding:10px 0 12px;border-bottom:1px solid var(--border);margin-bottom:12px';
     const gridWrap=document.createElement('div');gridWrap.className='grid';
     let first=true;

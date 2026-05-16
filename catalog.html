@@ -520,7 +520,7 @@ function makeModelGroupCard(modelName, items) {
         });
         // アクティブタブをスタイル
         tab.classList.add('active');
-        tab.style.cssText = 'font-family:"Syne",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--accent);background:rgba(200,240,60,.12);color:var(--accent);cursor:pointer;transition:all .15s;white-space:nowrap';
+        tab.style.cssText = 'font-family:"DM Sans","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid rgba(74,122,0,.35);background:rgba(74,122,0,.09);color:var(--accent-dark);cursor:pointer;transition:all .15s;white-space:nowrap';
         // グリッドを差し替え
         gridWrap.innerHTML = '';
         bItems.forEach((p, i) => gridWrap.appendChild(makeVariantCard(p, i)));
@@ -530,7 +530,7 @@ function makeModelGroupCard(modelName, items) {
       if (!activeTab) {
         activeTab = tab;
         tab.classList.add('active');
-        tab.style.cssText = 'font-family:"Syne",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--accent);background:rgba(200,240,60,.12);color:var(--accent);cursor:pointer;transition:all .15s;white-space:nowrap';
+        tab.style.cssText = 'font-family:"DM Sans","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid rgba(74,122,0,.35);background:rgba(74,122,0,.09);color:var(--accent-dark);cursor:pointer;transition:all .15s;white-space:nowrap';
         bItems.forEach((p, i) => gridWrap.appendChild(makeVariantCard(p, i)));
       }
 
