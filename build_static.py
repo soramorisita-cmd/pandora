@@ -122,6 +122,17 @@ def fmt_price(p):
             pass
     return ""
 
+def fmt_cny(p):
+    cny = p.get("price_cny")
+    if cny and str(cny) not in ("None","null",""):
+        try:
+            n = int(float(str(cny)))
+            if n > 0:
+                return f"{n}元"
+        except Exception:
+            pass
+    return ""
+
 def card_css():
     return """
 a{color:inherit;text-decoration:none}
@@ -136,7 +147,8 @@ a{color:inherit;text-decoration:none}
 .tag-brand{background:rgba(74,122,0,.08);color:var(--accent-dark);border-color:rgba(74,122,0,.2)}
 .tag-type{background:rgba(0,0,0,.05);color:var(--muted2);border-color:rgba(0,0,0,.09)}
 .card-title{font-size:13px;font-weight:600;color:var(--muted2);line-height:1.45;flex:1}
-.card-price{font-size:17px;font-weight:800;color:var(--accent-dark);letter-spacing:.3px}
+.card-price{font-size:17px;font-weight:800;color:var(--accent-dark);letter-spacing:.3px;display:flex;align-items:baseline;gap:5px}
+.card-price-cny{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0}
 .card-actions{display:flex;gap:5px;margin-top:2px}
 .btn-buy{flex:1;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;color:#111;background:var(--accent);padding:9px 8px;border-radius:7px}
 .btn-buy:hover{background:var(--accent2)}
@@ -146,6 +158,7 @@ a{color:inherit;text-decoration:none}
 def make_card_html(p, link_to_product=True):
     title  = clean_title(p.get("title",""))
     price  = fmt_price(p)
+    cny    = fmt_cny(p)
     buy    = esc(p.get("kakobuy") or p.get("purchase") or "#")
     qc     = esc(p.get("yupoo") or "#")
     brand  = esc(p.get("brand",""))
@@ -163,6 +176,7 @@ def make_card_html(p, link_to_product=True):
         img_html = f'<a href="{prod_url}">{img_html}</a>'
 
     title_html = f'<a href="{prod_url}">{esc(title)}</a>' if prod_url else esc(title)
+    cny_html   = f'<span class="card-price-cny">/ {cny}</span>' if cny else ''
 
     return f"""<div class="card">
   {img_html}
@@ -172,7 +186,7 @@ def make_card_html(p, link_to_product=True):
       {f'<span class="tag tag-type">{ptype}</span>' if ptype else ''}
     </div>
     <div class="card-title">{title_html}</div>
-    {f'<div class="card-price">{price}</div>' if price else ''}
+    {f'<div class="card-price">{price}{cny_html}</div>' if price else ''}
     <div class="card-actions">
       <a class="btn-buy" href="{buy}" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="{qc}" target="_blank" rel="noopener">QC</a>
