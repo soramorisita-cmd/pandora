@@ -536,7 +536,7 @@ a{color:inherit;text-decoration:none}
 const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
 let ALL=[],selCats=new Set(),selBrands=new Set(),allCats=[];
 const PAGE_SIZE=48;let pageItems=[];let renderedCount=0;
-const BOOST_BRANDS=new Set(['Denim Tears','NIKE','Sp5der']);
+const BOOST_BRANDS=new Set(['Denim Tears','NIKE','Sp5der','ESSENTIALS']);
 function cleanTitle(r){
   let s=String(r).trim();
   s=s.replace(/^[+\s]*[¥￥]?\s*\d[\d,.]*\s*[¥￥]?\s*(?:cny|rmb|usd|yuan|元)?\s*/i,'');
@@ -779,6 +779,9 @@ function buildMobileLists(){
   document.getElementById('drawer-count').textContent=getFiltered().length;
 }
 function buildPageOrder(all){
+  // 同じモデルはトップページに最大3件まで
+  const modelCnt={};
+  all=all.filter(p=>{if(!p.model)return true;modelCnt[p.model]=(modelCnt[p.model]||0)+1;return modelCnt[p.model]<=3;});
   // Top 10: localStorage の閲覧回数順（未閲覧なら各ブランド代表1件）
   const views=JSON.parse(localStorage.getItem('pdra_views')||'{}');
   const viewed=all.filter(p=>p.yupoo&&views[p.yupoo]>0).sort((a,b)=>(views[b.yupoo]||0)-(views[a.yupoo]||0));
