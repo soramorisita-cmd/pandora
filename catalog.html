@@ -38,6 +38,16 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 .cat-bar{position:sticky;top:58px;z-index:150;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .cat-bar-inner{display:flex;gap:6px;overflow-x:auto;padding:10px 24px;scrollbar-width:none;max-width:1400px;margin:0 auto}
 .cat-bar-inner::-webkit-scrollbar{display:none}
+/* ── SEARCH BAR ── */
+.search-section{background:var(--bg);padding:14px 24px;border-bottom:1px solid var(--border)}
+.search-section-inner{max-width:1400px;margin:0 auto}
+.site-search-bar{display:flex;background:#fff;border:1.5px solid var(--border2);border-radius:10px;overflow:hidden;transition:border-color .2s,box-shadow .2s;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.site-search-bar:focus-within{border-color:var(--accent-dark);box-shadow:0 2px 14px rgba(74,122,0,.15)}
+#catalog-search{flex:1;border:none;outline:none;font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:14px;font-weight:500;color:var(--text);background:transparent;padding:11px 16px;min-width:0}
+#catalog-search::placeholder{color:var(--muted)}
+.site-search-btn{padding:0 18px;background:var(--accent);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:800;color:#111;display:flex;align-items:center;gap:6px;transition:background .15s;flex-shrink:0;white-space:nowrap}
+.site-search-btn:hover{background:var(--accent2)}
+.search-convert-hint{font-size:11px;color:var(--accent-dark);font-weight:700;margin-top:6px;display:none}
 .cat-pill{font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);padding:7px 16px;border-radius:999px;border:1px solid var(--border);white-space:nowrap;cursor:pointer;transition:all .12s;background:transparent;flex-shrink:0}
 .cat-pill:hover{border-color:var(--border2);color:var(--text);background:var(--s2)}
 .cat-pill.active{background:var(--accent);color:#111;border-color:var(--accent);font-weight:800}
@@ -190,6 +200,22 @@ footer a{color:var(--accent);text-decoration:none}
 <div id="loading"><div class="spinner"></div><p>読み込み中...</p></div>
 
 <div id="app" style="display:none">
+  <!-- 検索バー -->
+  <div class="search-section">
+    <div class="search-section-inner">
+      <div class="site-search-bar">
+        <input id="catalog-search" type="text" autocomplete="off"
+          placeholder="商品名で検索、またはWeidian / Taobao / 1688 のリンクをKakobuyリンクに変換..."
+          oninput="onCatalogSearchInput(this.value)"
+          onkeydown="if(event.key==='Enter')doCatalogSearch()">
+        <button class="site-search-btn" onclick="doCatalogSearch()">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
+          検索 / 変換
+        </button>
+      </div>
+      <div class="search-convert-hint" id="catalog-search-hint">↵ Enterでリンクを変換してKakobuyで開く</div>
+    </div>
+  </div>
   <!-- カテゴリタブバー (uufinds style) -->
   <div class="cat-bar">
     <div class="cat-bar-inner" id="cat-pills"></div>
@@ -278,8 +304,23 @@ function cleanTitle(r){
 function extractJPY(p){const j=p.price_jpy;if(j&&!['undefined','null',''].includes(String(j).trim())){const n=parseInt(String(j).replace(/[^0-9]/g,''));if(!isNaN(n))return'¥'+n.toLocaleString()}const m=String(p.title||'').match(/[¥￥]([\d,]+)\s*cny/i);if(m)return'¥'+Math.round(parseInt(m[1].replace(',',''))*21).toLocaleString();return''}
 function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
+function isShopLink(s){return/(weidian\.com|taobao\.com|1688\.com|jd\.com|shop\d+\.v\.weidian)/i.test(s)}
+function toKakobuyLink(raw){let u=raw.trim();if(!/^https?:\/\//i.test(u))u='https://'+u;return'https://www.kakobuy.com/item/details?url='+encodeURIComponent(u)+'&affcode=a235412'}
+function onCatalogSearchInput(val){
+  const hint=document.getElementById('catalog-search-hint');
+  const s=document.getElementById('search');
+  if(isShopLink(val)){if(hint)hint.style.display='block';return}
+  if(hint)hint.style.display='none';
+  if(s){s.value=val;applyFilters()}
+}
+function doCatalogSearch(){
+  const val=(document.getElementById('catalog-search')?.value||'').trim();
+  if(!val)return;
+  if(isShopLink(val)){window.open(toKakobuyLink(val),'_blank','noopener');return}
+  const s=document.getElementById('search');if(s){s.value=val;applyFilters()}
+}
 function getFiltered(){
-  const q=document.getElementById('search').value.toLowerCase();
+  const q=(document.getElementById('search')?.value||'').toLowerCase();
   let items=ALL.filter(p=>{
     if(selCats.size&&!selCats.has(p.type))return false;
     if(selBrands.size&&!selBrands.has(p.brand||''))return false;
@@ -534,7 +575,7 @@ function applyFilters(){
   noModel.forEach((p, i) => grid.appendChild(makeVariantCard(p, i)));
 }
 
-function resetFilters(){selCats.clear();selBrands.clear();document.getElementById('search').value='';const sm=document.getElementById('search-mobile');if(sm)sm.value='';history.replaceState(null,'','/catalog.html');buildCatBar();buildBrandList();updateTitle();applyFilters()}
+function resetFilters(){selCats.clear();selBrands.clear();document.getElementById('search').value='';const sm=document.getElementById('search-mobile');if(sm)sm.value='';const cs=document.getElementById('catalog-search');if(cs)cs.value='';const ch=document.getElementById('catalog-search-hint');if(ch)ch.style.display='none';history.replaceState(null,'','/catalog.html');buildCatBar();buildBrandList();updateTitle();applyFilters()}
 
 function buildNav(cats){
   const nc=document.getElementById('nav-cats');

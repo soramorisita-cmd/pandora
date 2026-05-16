@@ -167,32 +167,22 @@ footer a{color:var(--accent-dark);text-decoration:none}
 .trust-desc{font-size:12px;color:var(--muted2);line-height:1.6}
 .trust-arrow{font-size:22px;color:var(--muted);padding-top:34px;flex-shrink:0}
 @media(max-width:640px){.trust-arrow{display:none}.trust-inner{gap:2px}.trust-step{min-width:110px;padding:12px 8px}}
-/* FOOTER INVITE BAR */
-.footer-invite-bar{position:relative;z-index:1;background:var(--s1);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 24px;text-align:center;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
-.footer-invite-bar span{font-size:12px;color:var(--muted2)}
-.invite-code-btn{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--accent);background:rgba(200,240,60,.08);border:1px solid rgba(200,240,60,.3);padding:5px 16px;border-radius:8px;cursor:pointer;transition:all .15s}
-.invite-code-btn:hover{background:rgba(200,240,60,.18)}
-.invite-sub{font-size:11px;color:var(--muted)}
 .footer-inner{max-width:1400px;margin:0 auto;padding:18px 24px;display:flex;flex-direction:column;align-items:center;gap:10px}
 .footer-links{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
 .footer-links a{font-size:12px;font-weight:700;color:var(--muted2);text-decoration:none;letter-spacing:.5px;transition:color .15s}
-.footer-links a:hover{color:var(--accent)}
+.footer-links a:hover{color:var(--accent-dark)}
 .footer-legal{font-size:11px;color:var(--muted);text-align:center;line-height:1.8}
 .footer-legal a{color:var(--muted2);text-decoration:none}
-/* INVITE MODAL */
-#invite-modal{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center}
-#invite-modal.open{display:flex}
-.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
-.modal-box{position:relative;z-index:1;background:var(--s1);border:1px solid var(--border2);border-radius:16px;padding:36px 28px;text-align:center;max-width:340px;width:90%;display:flex;flex-direction:column;gap:12px}
-.modal-close{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;transition:color .15s}
-.modal-close:hover{color:var(--text)}
-.modal-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.modal-code{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:6px;color:var(--accent);line-height:1}
-.modal-desc{font-size:13px;color:var(--muted2);line-height:1.6}
-.modal-btn{display:block;background:var(--accent);color:#0a0a0a;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;padding:12px 24px;border-radius:8px;text-decoration:none;transition:background .15s}
-.modal-btn:hover{background:var(--accent2)}
-.modal-copy{background:transparent;border:1px solid var(--border);color:var(--muted2);font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:12px;font-weight:700;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all .15s}
-.modal-copy:hover{border-color:var(--border2);color:var(--text)}
+/* HERO SEARCH */
+.hero-search-wrap{max-width:620px;margin:22px auto 0}
+.hero-search-bar{display:flex;background:#fff;border:1.5px solid var(--border2);border-radius:12px;overflow:hidden;transition:border-color .2s,box-shadow .2s;box-shadow:0 4px 20px rgba(0,0,0,.09)}
+.hero-search-bar:focus-within{border-color:var(--accent-dark);box-shadow:0 4px 24px rgba(74,122,0,.18)}
+#hero-search{flex:1;border:none;outline:none;font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:14px;font-weight:500;color:var(--text);background:transparent;padding:14px 18px;min-width:0}
+#hero-search::placeholder{color:var(--muted)}
+.hero-search-btn{padding:0 22px;background:var(--accent);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:800;color:#111;display:flex;align-items:center;gap:7px;transition:background .15s;flex-shrink:0;white-space:nowrap}
+.hero-search-btn:hover{background:var(--accent2)}
+.hero-search-hint{font-size:11px;color:var(--muted);margin-top:9px;text-align:center;letter-spacing:.2px;transition:color .2s}
+.hero-search-hint.is-link{color:var(--accent-dark);font-weight:700}
 /* LOADING: reduce height since hero is now always visible */
 #loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:32vh;gap:16px;position:relative;z-index:1}
 </style>
@@ -218,9 +208,18 @@ footer a{color:var(--accent-dark);text-decoration:none}
     <span class="hero-stat-sep">·</span>
     <span class="hero-stat">QC写真あり</span>
   </div>
-  <div class="hero-ctas">
-    <a class="btn-hero-primary" href="#static-products">商品を見る</a>
-    <button class="btn-hero-secondary" onclick="showInviteModal()">招待コード <strong>E59PV9HY3</strong></button>
+  <div class="hero-search-wrap">
+    <div class="hero-search-bar">
+      <input id="hero-search" type="text" autocomplete="off"
+        placeholder="商品名 または Weidian / Taobao / 1688 のリンクを貼り付け..."
+        oninput="onHeroInput(this.value)"
+        onkeydown="if(event.key==='Enter')doHeroSearch()">
+      <button class="hero-search-btn" onclick="doHeroSearch()">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
+        検索
+      </button>
+    </div>
+    <p class="hero-search-hint" id="hero-hint">商品名で絞り込み、またはリンクをKakobuyリンクに変換してジャンプ</p>
   </div>
 </div>
 <section class="trust-section">
@@ -527,11 +526,6 @@ a{color:inherit;text-decoration:none}
 </section>
 <!-- /SSG -->
 
-<div class="footer-invite-bar">
-  <span>Kakobuy 招待コード</span>
-  <button class="invite-code-btn" onclick="copyInviteCode(this)">E59PV9HY3</button>
-  <span class="invite-sub">↑ クリックでコピー &nbsp;·&nbsp; 新規登録で初回特典あり</span>
-</div>
 <footer>
   <div class="footer-inner">
     <div class="footer-links">
@@ -546,24 +540,9 @@ a{color:inherit;text-decoration:none}
     </div>
   </div>
 </footer>
-<div id="invite-modal">
-  <div class="modal-overlay" onclick="closeInviteModal()"></div>
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeInviteModal()">✕</button>
-    <div class="modal-label">Kakobuy 招待コード</div>
-    <div class="modal-code">E59PV9HY3</div>
-    <p class="modal-desc">このコードで新規登録すると初回特典が適用されます</p>
-    <a class="modal-btn" href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener" onclick="closeInviteModal()">Kakobuyで新規登録する →</a>
-    <button class="modal-copy" onclick="copyInviteCode(this)">コードをコピー</button>
-  </div>
-</div>
 <script>
 const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
 let ALL=[],selCats=new Set(),selBrands=new Set(),allCats=[];
-function showInviteModal(){document.getElementById('invite-modal').classList.add('open')}
-function closeInviteModal(){document.getElementById('invite-modal').classList.remove('open');localStorage.setItem('pandora_invite_shown','1')}
-function copyInviteCode(btn){navigator.clipboard.writeText('E59PV9HY3').then(()=>{const orig=btn.textContent;btn.textContent='コピーしました！';setTimeout(()=>btn.textContent=orig,1500)}).catch(()=>{const orig=btn.textContent;btn.textContent='コピー失敗';setTimeout(()=>btn.textContent=orig,1500)})}
-(function initInviteModal(){if(localStorage.getItem('pandora_invite_shown'))return;let shown=false;const show=()=>{if(shown)return;shown=true;showInviteModal()};setTimeout(show,30000);let ticking=false;const onScroll=()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{const ratio=window.scrollY/(document.body.scrollHeight-window.innerHeight||1);if(ratio>.6){show();window.removeEventListener('scroll',onScroll)}ticking=false})};window.addEventListener('scroll',onScroll,{passive:true})})();
 function cleanTitle(r){
   let s=String(r).trim();
   s=s.replace(/^[+\s]*[¥￥]?\s*\d[\d,.]*\s*[¥￥]?\s*(?:cny|rmb|usd|yuan|元)?\s*/i,'');
@@ -581,6 +560,24 @@ function cleanTitle(r){
 function extractJPY(p){const j=p.price_jpy;if(j&&!['undefined','null',''].includes(String(j).trim())){const n=parseInt(String(j).replace(/[^0-9]/g,''));if(!isNaN(n))return'¥'+n.toLocaleString()}const m=String(p.title||'').match(/[¥￥]([\d,]+)\s*cny/i);if(m)return'¥'+Math.round(parseInt(m[1].replace(',',''))*21).toLocaleString();return''}
 function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+/* ── HERO SEARCH ── */
+function isShopLink(s){return/(weidian\.com|taobao\.com|1688\.com|jd\.com|shop\d+\.v\.weidian)/i.test(s)||/^https?:\/\/(weidian|item\.taobao|detail\.1688|shop\d+\.v\.weidian)/i.test(s)}
+function toKakobuyLink(raw){let u=raw.trim();if(!/^https?:\/\//i.test(u))u='https://'+u;return'https://www.kakobuy.com/item/details?url='+encodeURIComponent(u)+'&affcode=a235412'}
+function onHeroInput(val){
+  const hint=document.getElementById('hero-hint');
+  if(!hint)return;
+  if(val.trim().length===0){hint.className='hero-search-hint';hint.textContent='商品名で絞り込み、またはリンクをKakobuyリンクに変換してジャンプ';return}
+  if(isShopLink(val)){hint.className='hero-search-hint is-link';hint.textContent='↵ Enterでリンクを変換してKakobuyで開く';return}
+  hint.className='hero-search-hint';hint.textContent='↵ Enterで商品を絞り込み';
+  const s=document.getElementById('search');if(s){s.value=val;applyFilters()}
+}
+function doHeroSearch(){
+  const val=(document.getElementById('hero-search')?.value||'').trim();
+  if(!val)return;
+  if(isShopLink(val)){window.open(toKakobuyLink(val),'_blank','noopener');return}
+  const s=document.getElementById('search');if(s){s.value=val;applyFilters()}
+  document.getElementById('app')?.scrollIntoView({behavior:'smooth'})
+}
 function isFiltering(){return selCats.size>0||selBrands.size>0||(document.getElementById('search')?.value||'').length>0}
 function getFiltered(){const q=(document.getElementById('search')?.value||'').toLowerCase();return ALL.filter(p=>{if(selCats.size&&!selCats.has(p.type))return false;if(selBrands.size&&!selBrands.has(p.brand||''))return false;if(q&&!(p.title+' '+p.type+' '+(p.brand||'')).toLowerCase().includes(q))return false;return true;})}
 function makeCard(p,i){
