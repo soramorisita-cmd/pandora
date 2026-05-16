@@ -174,7 +174,7 @@ def make_card_html(p, link_to_product=True):
     <div class="card-title">{title_html}</div>
     {f'<div class="card-price">{price}</div>' if price else ''}
     <div class="card-actions">
-      <a class="btn-buy" href="{buy}" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="{buy}" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="{qc}" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -282,7 +282,7 @@ def build_product_pages(products, out_dir):
     </div>
     <h1 class="product-title">{esc(title)}</h1>
     {f'<div class="product-price">{price}</div>' if price else ''}
-    {f'<a class="btn-primary" href="{esc(buy)}" target="_blank" rel="noopener">Kakobuy で購入する</a>' if buy else ''}
+    {f'<a class="btn-primary" href="{esc(buy)}" target="_blank" rel="noopener">Kakobuyで見る →</a>' if buy else ''}
     {f'<a class="btn-secondary" href="{esc(qc)}" target="_blank" rel="noopener">QC写真を見る (Yupoo)</a>' if qc else ''}
     <a class="back-link" href="/catalog.html?cat={esc(ptype)}">&larr; {esc(ptype)} を全部見る</a>
   </div>

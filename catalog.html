@@ -236,10 +236,6 @@ footer a{color:var(--accent);text-decoration:none}
       <span class="drawer-title">絞り込み</span>
       <button class="drawer-close" onclick="closeDrawer()">✕</button>
     </div>
-    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
-      <div class="sb-title">検索</div>
-      <input class="sb-search" id="search-mobile" type="text" placeholder="キーワード..." oninput="syncSearch(this)">
-    </div>
     <div id="cat-list-mobile" style="display:none"></div>
     <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px">
       <div class="sb-title">ブランド</div>
@@ -251,11 +247,8 @@ footer a{color:var(--accent);text-decoration:none}
 
   <div class="page">
     <div id="cat-list" style="display:none"></div>
+    <input type="hidden" id="search">
     <aside class="sidebar">
-      <div class="sidebar-block">
-        <div class="sb-title">検索</div>
-        <input class="sb-search" id="search" type="text" placeholder="キーワードで絞り込む..." oninput="applyFilters()">
-      </div>
       <div class="sidebar-block">
         <div class="sb-title">ブランド</div>
         <div class="filter-list" id="brand-list"></div>
@@ -414,7 +407,7 @@ function makeVariantCard(p, i) {
   const imgHtml=p.image&&p.image!=='null'&&p.image.length>4
     ?`<img class="card-img" src="${esc(p.image)}" alt="${esc(title)}" loading="lazy" onerror="this.outerHTML='<div class=card-noimag><span>NO IMAGE</span></div>'">`
     :`<div class="card-noimag"><span>NO IMAGE</span></div>`;
-  card.innerHTML=`${imgHtml}<div class="card-body"><div class="card-tags">${brand?`<span class="tag tag-brand" style="cursor:pointer" title="${esc(brand)}で絞り込む">${esc(brand)}</span>`:''} ${type?`<span class="tag tag-type" style="cursor:pointer" title="${esc(type)}で絞り込む">${esc(type)}</span>`:''}</div><div class="card-title">${esc(title)}</div>${price?`<div class="card-price">${price}</div>`:''}<div class="card-actions"><a class="btn-buy" href="${esc(buyLink)}" target="_blank" rel="noopener">購入する</a><a class="btn-qc" href="${esc(qcLink)}" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>QC</a></div></div>`;
+  card.innerHTML=`${imgHtml}<div class="card-body"><div class="card-tags">${brand?`<span class="tag tag-brand" style="cursor:pointer" title="${esc(brand)}で絞り込む">${esc(brand)}</span>`:''} ${type?`<span class="tag tag-type" style="cursor:pointer" title="${esc(type)}で絞り込む">${esc(type)}</span>`:''}</div><div class="card-title">${esc(title)}</div>${price?`<div class="card-price">${price}</div>`:''}<div class="card-actions"><a class="btn-buy" href="${esc(buyLink)}" target="_blank" rel="noopener">Kakobuyで見る →</a><a class="btn-qc" href="${esc(qcLink)}" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>QC</a></div></div>`;
   if(brand){const bt=card.querySelector('.tag-brand');if(bt){bt.addEventListener('click',e=>{e.stopPropagation();selBrands.clear();selBrands.add(brand);buildBrandList();applyFilters();});}}
   if(type){const tt=card.querySelector('.tag-type');if(tt){tt.addEventListener('click',e=>{e.stopPropagation();selCats.clear();selCats.add(type);selBrands.clear();buildCatBar();buildBrandList();updateTitle();applyFilters();});}}
   return card;
@@ -556,7 +549,7 @@ function applyFilters(){
   const items=getFiltered();
   document.getElementById('count').textContent=items.length;
   const grid=document.getElementById('grid');grid.innerHTML='';
-  if(!items.length){grid.innerHTML='<div class="empty">商品が見つかりませんでした</div>';return}
+  if(!items.length){grid.innerHTML='<div class="empty"><p style="font-size:22px;margin-bottom:8px">🔍</p><p style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px">条件に一致する商品が見つかりませんでした</p><p style="font-size:12px;color:var(--muted);margin-bottom:18px">キーワードを変えるか、フィルターをリセットしてみてください</p><button onclick="resetFilters()" style="background:var(--accent);border:none;border-radius:8px;color:#111;font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:800;padding:10px 24px;cursor:pointer">フィルターをリセット</button></div>';return}
 
   const modelGroups = new Map();
   const noModel = [];
@@ -575,7 +568,7 @@ function applyFilters(){
   noModel.forEach((p, i) => grid.appendChild(makeVariantCard(p, i)));
 }
 
-function resetFilters(){selCats.clear();selBrands.clear();document.getElementById('search').value='';const sm=document.getElementById('search-mobile');if(sm)sm.value='';const cs=document.getElementById('catalog-search');if(cs)cs.value='';const ch=document.getElementById('catalog-search-hint');if(ch)ch.style.display='none';history.replaceState(null,'','/catalog.html');buildCatBar();buildBrandList();updateTitle();applyFilters()}
+function resetFilters(){selCats.clear();selBrands.clear();document.getElementById('search').value='';const cs=document.getElementById('catalog-search');if(cs)cs.value='';const ch=document.getElementById('catalog-search-hint');if(ch)ch.style.display='none';history.replaceState(null,'','/catalog.html');buildCatBar();buildBrandList();updateTitle();applyFilters()}
 
 function buildNav(cats){
   const nc=document.getElementById('nav-cats');

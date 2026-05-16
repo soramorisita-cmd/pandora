@@ -262,10 +262,6 @@ footer a{color:var(--accent-dark);text-decoration:none}
       <button class="drawer-close" onclick="closeDrawer()">✕</button>
     </div>
     <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
-      <div class="sb-title">検索</div>
-      <input class="sb-search" id="search-mobile" type="text" placeholder="キーワード..." oninput="syncSearch(this)">
-    </div>
-    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
       <div class="sb-title">カテゴリ</div>
       <div class="filter-list" id="cat-list-mobile"></div>
     </div>
@@ -277,11 +273,8 @@ footer a{color:var(--accent-dark);text-decoration:none}
     <button style="width:100%;background:var(--accent);border:none;border-radius:8px;color:#0a0a0a;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:800;padding:11px;cursor:pointer;margin-top:6px" onclick="closeDrawer()">結果を見る（<span id="drawer-count">0</span>件）</button>
   </div>
   <div class="page">
+    <input type="hidden" id="search">
     <aside class="sidebar">
-      <div class="sidebar-block">
-        <div class="sb-title">検索</div>
-        <input class="sb-search" id="search" type="text" placeholder="キーワードで絞り込む..." oninput="applyFilters()">
-      </div>
       <div class="sidebar-block">
         <div class="sb-title">カテゴリ</div>
         <div class="filter-list" id="cat-list"></div>
@@ -350,7 +343,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/199754476.html">FV8425</a></div>
     <div class="card-price">¥2,315</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fweidian.com%2Fitem.html%3FitemID%3D7488912496&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fweidian.com%2Fitem.html%3FitemID%3D7488912496&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://repsmaster.x.yupoo.com/albums/199754476?uid=1&amp;isSubCate=true&amp;referrercate=514383" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -365,7 +358,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/225178658.html">Bpm Zip grey</a></div>
     <div class="card-price">¥4,838</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7688263301&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7688263301&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/225178658?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -380,7 +373,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/226926111.html">Bpm-reversible footba T-shirt+shorts black</a></div>
     <div class="card-price">¥3,241</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7702855661&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7702855661&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/226926111?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -395,7 +388,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/162362725.html">Polar Fleece</a></div>
     <div class="card-price">¥6,922</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342479066&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342479066&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/162362725?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -410,7 +403,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/154304994.html">Denim Jeans - Washed Bue</a></div>
     <div class="card-price">¥4,838</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342570790&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342570790&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/154304994?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -425,7 +418,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/221748786.html">Bpm-Cargo Pants Washed Black</a></div>
     <div class="card-price">¥6,459</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7650052444&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7650052444&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/221748786?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -440,7 +433,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/201271064.html">Bpm Washing Basics Shorts/Midnight Black</a></div>
     <div class="card-price">¥4,144</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7498411495&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7498411495&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/201271064?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -455,7 +448,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/218497436.html">2.0 BPM—Knit Black</a></div>
     <div class="card-price">¥4,514</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7619549291&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7619549291&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/218497436?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -470,7 +463,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/179202385.html">Football Set</a></div>
     <div class="card-price">¥2,986</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342461256&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342461256&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/179202385?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -485,7 +478,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/173933281.html">Button-Up Shirt</a></div>
     <div class="card-price">¥3,218</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7340937526&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7340937526&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/173933281?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -500,7 +493,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/162362587.html">a pack of 3 pairs</a></div>
     <div class="card-price">¥1,134</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342465204&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7342465204&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/162362587?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -515,7 +508,7 @@ a{color:inherit;text-decoration:none}
     <div class="card-title"><a href="/products/215786797.html">Beanie star camo</a></div>
     <div class="card-price">¥1,134</div>
     <div class="card-actions">
-      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7595478492&amp;affcode=a235412" target="_blank" rel="noopener">購入する</a>
+      <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1621342910.v.weidian.com%2Fitem.html%3FitemID%3D7595478492&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="https://hotdog-official.x.yupoo.com/albums/215786797?uid=1&amp;isSubCate=false&amp;referrercate=4098105" target="_blank" rel="noopener">QC</a>
     </div>
   </div>
@@ -532,7 +525,7 @@ a{color:inherit;text-decoration:none}
       <a href="/catalog.html">全カタログ</a>
       <a href="/converter.html">リンク変換</a>
       <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank">Kakobuyで購入</a>
-      <a href="http://www.pandorareps.v2012.coreserver.jp/photos/" target="_blank">QCギャラリー</a>
+      <a href="/catalog.html">全カタログ</a>
     </div>
     <div class="footer-legal">
       PANDORA &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank">Powered by Kakobuy</a><br>
@@ -586,7 +579,7 @@ function makeCard(p,i){
   const brand=p.brand||'',type=p.type||'';
   const card=document.createElement('div');card.className='card';card.style.animationDelay=Math.min(i,24)*.018+'s';
   const imgHtml=p.image&&p.image!=='null'&&p.image.length>4?`<img class="card-img" src="${esc(p.image)}" alt="${esc(title)}" loading="lazy" onerror="this.outerHTML='<div class=card-noimag><span>NO IMAGE</span></div>'">`:`<div class="card-noimag"><span>NO IMAGE</span></div>`;
-  card.innerHTML=`${imgHtml}<div class="card-body"><div class="card-tags">${brand?`<span class="tag tag-brand" style="cursor:pointer" title="${esc(brand)}で絞り込む">${esc(brand)}</span>`:''} ${type?`<span class="tag tag-type" style="cursor:pointer" title="${esc(type)}で絞り込む">${esc(type)}</span>`:''}</div><div class="card-title">${esc(title)}</div>${price?`<div class="card-price">${price}</div>`:''}<div class="card-actions"><a class="btn-buy" href="${esc(buyLink)}" target="_blank" rel="noopener">購入する</a><a class="btn-qc" href="${esc(qcLink)}" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>QC</a></div></div>`;
+  card.innerHTML=`${imgHtml}<div class="card-body"><div class="card-tags">${brand?`<span class="tag tag-brand" style="cursor:pointer" title="${esc(brand)}で絞り込む">${esc(brand)}</span>`:''} ${type?`<span class="tag tag-type" style="cursor:pointer" title="${esc(type)}で絞り込む">${esc(type)}</span>`:''}</div><div class="card-title">${esc(title)}</div>${price?`<div class="card-price">${price}</div>`:''}<div class="card-actions"><a class="btn-buy" href="${esc(buyLink)}" target="_blank" rel="noopener">Kakobuyで見る →</a><a class="btn-qc" href="${esc(qcLink)}" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>QC</a></div></div>`;
   if(brand){const bt=card.querySelector('.tag-brand');if(bt){bt.addEventListener('click',e=>{e.stopPropagation();selBrands.clear();selBrands.add(brand);buildBrandList();applyFilters();});}}
   if(type){const tt=card.querySelector('.tag-type');if(tt){tt.addEventListener('click',e=>{e.stopPropagation();selCats.clear();selCats.add(type);selBrands.clear();buildCatList();buildBrandList();applyFilters();});}}
   return card;
@@ -698,13 +691,14 @@ function applyFilters(){
   const items=getFiltered();
   document.getElementById('count').textContent=items.length;
   const grid=document.getElementById('flat-grid');grid.innerHTML='';
-  if(!items.length){grid.innerHTML='<div class="empty">商品が見つかりませんでした</div>';return}
+  if(!items.length){grid.innerHTML='<div class="empty"><p style="font-size:22px;margin-bottom:8px">🔍</p><p style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px">条件に一致する商品が見つかりませんでした</p><p style="font-size:12px;color:var(--muted);margin-bottom:18px">キーワードを変えるか、フィルターをリセットしてみてください</p><button onclick="resetFilters()" style="background:var(--accent);border:none;border-radius:8px;color:#111;font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:800;padding:10px 24px;cursor:pointer">フィルターをリセット</button></div>';return}
   renderToGrid(items,grid);
 }
 function resetFilters(){
   selCats.clear();selBrands.clear();
   const s=document.getElementById('search');if(s)s.value='';
-  const sm=document.getElementById('search-mobile');if(sm)sm.value='';
+  const hs=document.getElementById('hero-search');if(hs)hs.value='';
+  const hint=document.getElementById('hero-hint');if(hint){hint.className='hero-search-hint';hint.textContent='商品名で絞り込み、またはリンクをKakobuyリンクに変換してジャンプ';}
   buildCatList();buildBrandList();applyFilters();
   document.getElementById('filter-badge').textContent='';
 }
