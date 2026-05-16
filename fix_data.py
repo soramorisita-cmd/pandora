@@ -156,12 +156,12 @@ def fix_brands():
         seller = p.get("seller", "")
         current = p.get("brand", "")
 
-        # 1) seller_brands.json が最優先
-        new_brand = seller_map.get(seller)
+        # 1) タイトルキーワードで判定（最優先）
+        new_brand = detect_brand(p.get("title", ""))
 
-        # 2) 未登録セラーはタイトルキーワードで判定
+        # 2) キーワードで判定できなかった場合は seller_brands.json を参照
         if not new_brand:
-            new_brand = detect_brand(p.get("title", ""))
+            new_brand = seller_map.get(seller)
 
         # 3) それでも不明かつカテゴリ名ブランドならセラーデフォルトで補完
         if not new_brand and current in CAT_AS_BRAND:
