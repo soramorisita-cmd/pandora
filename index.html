@@ -797,13 +797,16 @@ function buildPageOrder(all){
     }
   }
   const usedSet=new Set(top10.map(p=>p.yupoo));
-  const boosted=all.filter(p=>BOOST_BRANDS.has(p.brand)&&!usedSet.has(p.yupoo));
+  // NIKEスニーカーは専用枠、その他ブーストブランドは共有枠
+  const nikeSneakers=all.filter(p=>p.brand==='NIKE'&&p.type==='SNEAKERS'&&!usedSet.has(p.yupoo));
+  const otherBoost=all.filter(p=>BOOST_BRANDS.has(p.brand)&&!(p.brand==='NIKE'&&p.type==='SNEAKERS')&&!usedSet.has(p.yupoo));
   const normal=all.filter(p=>!BOOST_BRANDS.has(p.brand)&&!usedSet.has(p.yupoo));
-  // 2件normalごとに1件boostedを挿入（全体の約33%がブースト対象）
-  const mixed=[];let bi=0,ni=0;
-  while(ni<normal.length||bi<boosted.length){
+  // サイクル: [normal, normal, otherBoost, nikeSneaker] → NIKEスニーカー25%
+  const mixed=[];let bi=0,ni=0,nsi=0;
+  while(ni<normal.length||bi<otherBoost.length||nsi<nikeSneakers.length){
     for(let k=0;k<2&&ni<normal.length;k++)mixed.push(normal[ni++]);
-    if(bi<boosted.length)mixed.push(boosted[bi++]);
+    if(bi<otherBoost.length)mixed.push(otherBoost[bi++]);
+    if(nsi<nikeSneakers.length)mixed.push(nikeSneakers[nsi++]);
   }
   return[...top10,...mixed];
 }
