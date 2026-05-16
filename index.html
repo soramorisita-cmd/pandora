@@ -40,8 +40,15 @@ nav{position:sticky;top:0;z-index:200;background:rgba(10,10,10,.97);backdrop-fil
 .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,10vw,108px);letter-spacing:3px;line-height:.88;color:var(--text);margin-bottom:12px}
 .hero-title span{color:var(--accent)}
 .hero-sub{font-size:13px;color:var(--muted2);line-height:1.8}
+/* ── CATEGORY TAB BAR ── */
+.cat-bar{position:sticky;top:58px;z-index:150;background:rgba(10,10,10,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.cat-bar-inner{display:flex;gap:6px;overflow-x:auto;padding:10px 24px;scrollbar-width:none;max-width:1400px;margin:0 auto}
+.cat-bar-inner::-webkit-scrollbar{display:none}
+.cat-pill{font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);padding:7px 16px;border-radius:999px;border:1px solid var(--border);white-space:nowrap;cursor:pointer;transition:all .12s;background:transparent;flex-shrink:0}
+.cat-pill:hover{border-color:var(--border2);color:var(--text);background:var(--s2)}
+.cat-pill.active{background:var(--accent);color:#0a0a0a;border-color:var(--accent);font-weight:800}
 /* SIDEBAR */
-.sidebar{width:210px;flex-shrink:0;position:sticky;top:78px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 90px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--s3) transparent}
+.sidebar{width:210px;flex-shrink:0;position:sticky;top:112px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 90px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--s3) transparent}
 .sidebar::-webkit-scrollbar{width:3px}
 .sidebar::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
 .sidebar-block{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
@@ -138,7 +145,7 @@ footer a{color:var(--accent);text-decoration:none}
 .drawer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .drawer-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--accent)}
 .drawer-close{background:none;border:none;color:var(--muted2);font-size:22px;cursor:pointer;padding:4px}
-@media(max-width:768px){.sidebar{display:none}.page{padding:10px;gap:0}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.nav-right{display:none}.mobile-filter-btn{display:flex!important}.hero{padding:32px 16px 24px}.card-title{font-size:12px}.card-price{font-size:15px}.btn-buy{font-size:13px;padding:8px 6px}.btn-qc{padding:8px 9px}}
+@media(max-width:768px){.sidebar{display:none}.page{padding:10px;gap:0}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.nav-right{display:none}.mobile-filter-btn{display:flex!important}.hero{padding:32px 16px 24px}.card-title{font-size:12px}.card-price{font-size:15px}.btn-buy{font-size:13px;padding:8px 6px}.btn-qc{padding:8px 9px}.cat-bar-inner{padding:8px 10px}.cat-pill{font-size:10px;padding:6px 12px}}
 @media(min-width:769px){.mobile-filter-btn{display:none!important}.drawer-overlay,.drawer{display:none!important}}
 /* HERO STATS + CTAs */
 .hero-stats{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap}
@@ -239,9 +246,13 @@ footer a{color:var(--accent);text-decoration:none}
 </section>
 <div id="loading"><div class="spinner"></div><p>読み込み中...</p></div>
 <div id="app" style="display:none">
+  <!-- カテゴリタブバー (uufinds style) -->
+  <div class="cat-bar">
+    <div class="cat-bar-inner" id="cat-pills"></div>
+  </div>
   <div style="max-width:1400px;margin:0 auto;padding:0 14px">
     <button class="mobile-filter-btn" onclick="openDrawer()">
-      <span>🔍 カテゴリ・ブランドで絞り込む</span>
+      <span>🏷 ブランドで絞り込む</span>
       <span style="color:var(--accent);font-size:11px" id="filter-badge"></span>
     </button>
   </div>
@@ -548,7 +559,7 @@ a{color:inherit;text-decoration:none}
 </div>
 <script>
 const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
-let ALL=[],selCats=new Set(),selBrands=new Set();
+let ALL=[],selCats=new Set(),selBrands=new Set(),allCats=[];
 function showInviteModal(){document.getElementById('invite-modal').classList.add('open')}
 function closeInviteModal(){document.getElementById('invite-modal').classList.remove('open');localStorage.setItem('pandora_invite_shown','1')}
 function copyInviteCode(btn){navigator.clipboard.writeText('E59PV9HY3').then(()=>{const orig=btn.textContent;btn.textContent='コピーしました！';setTimeout(()=>btn.textContent=orig,1500)}).catch(()=>{const orig=btn.textContent;btn.textContent='コピー失敗';setTimeout(()=>btn.textContent=orig,1500)})}
@@ -628,14 +639,25 @@ function renderToGrid(items,grid){
 }
 function buildCatList(){
   const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
-  const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
-  const el=document.getElementById('cat-list');el.innerHTML='';
-  cats.forEach(cat=>{
-    const cnt=ALL.filter(p=>p.type===cat).length;
-    const lbl=document.createElement('label');
-    lbl.className='f-item'+(selCats.has(cat)?' active':'');
-    lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selCats.has(cat)?'checked':''} onchange="toggleCat('${cat}',this)"><span class="f-label">${esc(cat)}</span><span class="f-count">${cnt}</span>`;
-    el.appendChild(lbl);
+  allCats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
+  buildCatBar();
+  const el=document.getElementById('cat-list');if(el){el.innerHTML='';allCats.forEach(cat=>{const cnt=ALL.filter(p=>p.type===cat).length;const lbl=document.createElement('label');lbl.className='f-item'+(selCats.has(cat)?' active':'');lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selCats.has(cat)?'checked':''} onchange="toggleCat('${cat}',this)"><span class="f-label">${esc(cat)}</span><span class="f-count">${cnt}</span>`;el.appendChild(lbl);});}
+}
+function buildCatBar(){
+  const el=document.getElementById('cat-pills');if(!el)return;
+  el.innerHTML='';
+  const all=document.createElement('button');all.className='cat-pill'+(selCats.size===0?' active':'');
+  all.textContent='ALL';
+  all.addEventListener('click',()=>{selCats.clear();selBrands.clear();buildCatBar();buildBrandList();applyFilters();});
+  el.appendChild(all);
+  allCats.forEach(cat=>{
+    const pill=document.createElement('button');pill.className='cat-pill'+(selCats.has(cat)?' active':'');
+    pill.textContent=cat;
+    pill.addEventListener('click',()=>{
+      if(selCats.has(cat)){selCats.delete(cat);}else{selCats.clear();selCats.add(cat);}
+      selBrands.clear();buildCatBar();buildBrandList();applyFilters();
+    });
+    el.appendChild(pill);
   });
 }
 function buildBrandList(){
