@@ -729,13 +729,18 @@ function appendPage(grid){
   renderedCount+=batch.length;
   syncLoadMoreBtn();
 }
+let scrollObs=null;
 function loadMoreItems(){appendPage(document.getElementById('grid'));}
 function syncLoadMoreBtn(){
-  let w=document.getElementById('load-more-wrap');
-  if(renderedCount>=pageItems.length){if(w)w.remove();return;}
-  const rem=pageItems.length-renderedCount,next=Math.min(PAGE_SIZE,rem);
-  if(!w){w=document.createElement('div');w.id='load-more-wrap';w.style.cssText='text-align:center;padding:32px 0 16px';document.getElementById('grid').insertAdjacentElement('afterend',w);}
-  w.innerHTML=`<button onclick="loadMoreItems()" style="background:var(--s1);border:1.5px solid var(--border2);border-radius:10px;color:var(--text);font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:13px;font-weight:700;padding:13px 36px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--accent-dark)'" onmouseout="this.style.borderColor='var(--border2)'">さらに ${next} 件を表示 <span style="color:var(--muted);font-weight:500;font-size:12px">（残り ${rem} 件）</span></button>`;
+  if(scrollObs){scrollObs.disconnect();scrollObs=null;}
+  const w=document.getElementById('load-more-wrap');if(w)w.remove();
+  if(renderedCount>=pageItems.length)return;
+  const sentinel=document.createElement('div');sentinel.id='load-more-wrap';
+  sentinel.style.cssText='height:80px;display:flex;align-items:center;justify-content:center';
+  sentinel.innerHTML='<div class="spinner"></div>';
+  document.getElementById('grid').insertAdjacentElement('afterend',sentinel);
+  scrollObs=new IntersectionObserver(entries=>{if(entries[0].isIntersecting)loadMoreItems();},{rootMargin:'300px'});
+  scrollObs.observe(sentinel);
 }
 function resetFilters(){
   selCats.clear();selBrands.clear();
