@@ -799,14 +799,16 @@ function buildPageOrder(all){
   const usedSet=new Set(top10.map(p=>p.yupoo));
   // NIKEスニーカーは専用枠、その他ブーストブランドは共有枠
   const nikeSneakers=all.filter(p=>p.brand==='NIKE'&&p.type==='SNEAKERS'&&!usedSet.has(p.yupoo));
-  const otherBoost=all.filter(p=>BOOST_BRANDS.has(p.brand)&&!(p.brand==='NIKE'&&p.type==='SNEAKERS')&&!usedSet.has(p.yupoo));
+  const sp5derItems=all.filter(p=>p.brand==='Sp5der'&&!usedSet.has(p.yupoo));
+  const otherBoost=all.filter(p=>BOOST_BRANDS.has(p.brand)&&!(p.brand==='NIKE'&&p.type==='SNEAKERS')&&p.brand!=='Sp5der'&&!usedSet.has(p.yupoo));
   const normal=all.filter(p=>!BOOST_BRANDS.has(p.brand)&&!usedSet.has(p.yupoo));
-  // サイクル: [normal, normal, otherBoost, nikeSneaker] → NIKEスニーカー25%
-  const mixed=[];let bi=0,ni=0,nsi=0;
-  while(ni<normal.length||bi<otherBoost.length||nsi<nikeSneakers.length){
+  // サイクル: [normal, normal, otherBoost, nikeSneaker, sp5der] → 各20%
+  const mixed=[];let bi=0,ni=0,nsi=0,si=0;
+  while(ni<normal.length||bi<otherBoost.length||nsi<nikeSneakers.length||si<sp5derItems.length){
     for(let k=0;k<2&&ni<normal.length;k++)mixed.push(normal[ni++]);
     if(bi<otherBoost.length)mixed.push(otherBoost[bi++]);
     if(nsi<nikeSneakers.length)mixed.push(nikeSneakers[nsi++]);
+    if(si<sp5derItems.length)mixed.push(sp5derItems[si++]);
   }
   return[...top10,...mixed];
 }
