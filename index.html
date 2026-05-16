@@ -636,10 +636,7 @@ function makeModelGroupCard(modelName,items){
   wrap.appendChild(card);wrap.appendChild(variantWrap);return wrap;
 }
 function renderToGrid(items,grid){
-  const modelGroups=new Map(),noModel=[];
-  items.forEach(p=>{if(p.model){if(!modelGroups.has(p.model))modelGroups.set(p.model,[]);modelGroups.get(p.model).push(p);}else{noModel.push(p);}});
-  modelGroups.forEach((gItems,name)=>grid.appendChild(makeModelGroupCard(name,gItems)));
-  noModel.forEach((p,i)=>grid.appendChild(makeCard(p,i)));
+  items.forEach((p,i)=>grid.appendChild(makeCard(p,i)));
 }
 function buildCatList(){
   const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
