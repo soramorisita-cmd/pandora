@@ -781,38 +781,12 @@ function buildMobileLists(){
   document.getElementById('drawer-count').textContent=getFiltered().length;
 }
 function buildPageOrder(all){
-  // 同じモデルはトップページに最大3件まで
-  const modelCnt={};
-  all=all.filter(p=>{if(!p.model)return true;modelCnt[p.model]=(modelCnt[p.model]||0)+1;return modelCnt[p.model]<=3;});
-  // Top 10: localStorage の閲覧回数順（未閲覧なら各ブランド代表1件）
   const views=JSON.parse(localStorage.getItem('pdra_views')||'{}');
   const viewed=all.filter(p=>p.yupoo&&views[p.yupoo]>0).sort((a,b)=>(views[b.yupoo]||0)-(views[a.yupoo]||0));
-  let top10=[...viewed.slice(0,10)];
-  if(top10.length<10){
-    const used=new Set(top10.map(p=>p.yupoo));
-    const counts={};all.forEach(p=>{if(p.brand)counts[p.brand]=(counts[p.brand]||0)+1;});
-    const topBrands=Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(e=>e[0]);
-    for(const brand of topBrands){
-      if(top10.length>=10)break;
-      const pick=all.find(p=>p.brand===brand&&p.image&&p.price_jpy&&p.kakobuy&&!used.has(p.yupoo));
-      if(pick){top10.push(pick);used.add(pick.yupoo);}
-    }
-  }
+  const top10=viewed.slice(0,10);
   const usedSet=new Set(top10.map(p=>p.yupoo));
-  // NIKEスニーカーは専用枠、その他ブーストブランドは共有枠
-  const nikeSneakers=all.filter(p=>p.brand==='NIKE'&&p.type==='SNEAKERS'&&!usedSet.has(p.yupoo));
-  const sp5derItems=all.filter(p=>p.brand==='Sp5der'&&!usedSet.has(p.yupoo));
-  const otherBoost=all.filter(p=>BOOST_BRANDS.has(p.brand)&&!(p.brand==='NIKE'&&p.type==='SNEAKERS')&&p.brand!=='Sp5der'&&!usedSet.has(p.yupoo));
-  const normal=all.filter(p=>!BOOST_BRANDS.has(p.brand)&&!usedSet.has(p.yupoo));
-  // サイクル: [normal, normal, otherBoost, nikeSneaker, sp5der] → 各20%
-  const mixed=[];let bi=0,ni=0,nsi=0,si=0;
-  while(ni<normal.length||bi<otherBoost.length||nsi<nikeSneakers.length||si<sp5derItems.length){
-    for(let k=0;k<2&&ni<normal.length;k++)mixed.push(normal[ni++]);
-    if(bi<otherBoost.length)mixed.push(otherBoost[bi++]);
-    if(nsi<nikeSneakers.length)mixed.push(nikeSneakers[nsi++]);
-    if(si<sp5derItems.length)mixed.push(sp5derItems[si++]);
-  }
-  return[...top10,...mixed];
+  const rest=shuffle(all.filter(p=>!usedSet.has(p.yupoo)));
+  return[...top10,...rest];
 }
 async function init(){
   try{
