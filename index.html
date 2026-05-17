@@ -605,13 +605,17 @@ function makeCard(p,i){
 }
 function makeModelGroupCard(modelName,items){
   const rep=items[0],brand=rep.brand||'';
-  const thumb=rep.image&&rep.image!=='null'&&rep.image.length>4?`<img class="model-band-thumb" src="${esc(rep.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`:'' ;
   const batches=new Map();
   items.forEach(p=>{const k=p.batch||'__none__';if(!batches.has(k))batches.set(k,[]);batches.get(k).push(p);});
   const hasBatches=batches.size>1||(batches.size===1&&!batches.has('__none__'));
   const wrap=document.createElement('div');wrap.className='model-group';
   const header=document.createElement('div');header.className='model-band-header';
-  header.innerHTML=`${thumb}${brand?`<span class="tag tag-brand" style="cursor:pointer">${esc(brand)}</span>`:''}<span class="model-band-name">${esc(modelName)}</span><div class="model-band-meta">${hasBatches?`<span class="model-band-badge" style="background:rgba(200,240,60,.08);color:var(--accent-dark);border:1px solid rgba(74,122,0,.2)">${batches.size} バッチ</span>`:''}<span class="model-band-badge" style="background:var(--s2);color:var(--muted2);border:1px solid var(--border)">${items.length}件</span><span class="model-band-arrow">▾</span></div>`;
+  if(rep.image&&rep.image!=='null'&&rep.image.length>4){
+    const img=document.createElement('img');img.className='model-band-thumb';img.src=rep.image;img.alt='';
+    img.addEventListener('error',()=>{img.style.display='none';});
+    header.appendChild(img);
+  }
+  header.insertAdjacentHTML('beforeend',`${brand?`<span class="tag tag-brand" style="cursor:pointer">${esc(brand)}</span>`:''}<span class="model-band-name">${esc(modelName)}</span><div class="model-band-meta">${hasBatches?`<span class="model-band-badge" style="background:rgba(200,240,60,.08);color:var(--accent-dark);border:1px solid rgba(74,122,0,.2)">${batches.size} バッチ</span>`:''}<span class="model-band-badge" style="background:var(--s2);color:var(--muted2);border:1px solid var(--border)">${items.length}件</span><span class="model-band-arrow">▾</span></div>`);
   if(brand){const bt=header.querySelector('.tag-brand');if(bt){bt.addEventListener('click',e=>{e.stopPropagation();selBrands.clear();selBrands.add(brand);buildBrandList();applyFilters();});}}
   const body=document.createElement('div');body.className='model-band-body';
   const batchBar=document.createElement('div');batchBar.className='model-batch-bar';
