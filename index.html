@@ -113,21 +113,21 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 .btn-qc svg{width:12px;height:12px}
 .empty{text-align:center;padding:60px;color:var(--muted);font-size:14px;font-weight:700}
 /* MODEL GROUP */
-.model-group{grid-column:1/-1;margin-bottom:4px}
-.model-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s,transform .15s;display:flex;gap:0;position:relative}
-.model-card:hover{border-color:var(--border2);transform:translateY(-2px)}
-.model-card-img{width:140px;min-width:140px;aspect-ratio:4/3;object-fit:cover;background:var(--s2);flex-shrink:0}
-.model-card-noimag{width:140px;min-width:140px;aspect-ratio:4/3;background:var(--s2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.model-card-noimag span{font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
-.model-card-body{flex:1;padding:14px;display:flex;flex-direction:column;gap:7px;justify-content:center}
-.model-card-tags{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
-.model-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--text);line-height:1}
-.model-variant-count{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--accent-dark);background:rgba(74,122,0,.08);border:1px solid rgba(74,122,0,.18);padding:3px 10px;border-radius:999px}
-.model-expand-btn{position:absolute;top:12px;right:12px;font-size:18px;color:var(--muted);transition:transform .2s;pointer-events:none}
-.model-card.expanded .model-expand-btn{transform:rotate(180deg);color:var(--accent-dark)}
-.model-variants{display:none;padding:12px 0 4px;animation:fadeIn .2s ease both}
-.model-variants.open{display:block}
-@media(max-width:768px){.model-card-img,.model-card-noimag{width:100px;min-width:100px}.model-name{font-size:18px}}
+.model-group{grid-column:1/-1;margin-bottom:2px}
+.model-band-header{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--s1);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .15s,background .15s;user-select:none}
+.model-band-header:hover{border-color:var(--border2);background:var(--s2)}
+.model-group.open .model-band-header{border-radius:10px 10px 0 0;border-bottom-color:transparent;border-color:var(--accent);background:var(--s2)}
+.model-band-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--text);line-height:1;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.model-band-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.model-band-badge{font-size:10px;font-weight:800;letter-spacing:.5px;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.model-band-arrow{font-size:16px;color:var(--muted);transition:transform .22s;flex-shrink:0}
+.model-group.open .model-band-arrow{transform:rotate(180deg);color:var(--accent-dark)}
+.model-band-body{display:none;border:1px solid var(--accent);border-top:none;border-radius:0 0 10px 10px;padding:14px 16px 16px;background:var(--s1)}
+.model-group.open .model-band-body{display:block;animation:fadeIn .18s ease both}
+.model-batch-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.model-batch-btn{font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted2);cursor:pointer;transition:all .12s;white-space:nowrap;font-family:'DM Sans','Noto Sans JP',sans-serif}
+.model-batch-btn:hover{border-color:var(--border2);color:var(--text)}
+.model-batch-btn.active{border-color:rgba(74,122,0,.4);background:rgba(74,122,0,.09);color:var(--accent-dark)}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .card{animation:fadeIn .18s ease both}
 .spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--accent-dark);border-radius:50%;animation:spin .7s linear infinite}
@@ -604,40 +604,33 @@ function makeCard(p,i){
 }
 function makeModelGroupCard(modelName,items){
   const rep=items[0],brand=rep.brand||'';
-  const imgHtml=rep.image&&rep.image!=='null'&&rep.image.length>4?`<img class="model-card-img" src="${esc(rep.image)}" alt="${esc(modelName)}" loading="lazy" onerror="this.outerHTML='<div class=model-card-noimag><span>NO IMAGE</span></div>'">`:`<div class="model-card-noimag"><span>NO IMAGE</span></div>`;
   const batches=new Map();
   items.forEach(p=>{const k=p.batch||'__none__';if(!batches.has(k))batches.set(k,[]);batches.get(k).push(p);});
   const hasBatches=batches.size>1||(batches.size===1&&!batches.has('__none__'));
   const wrap=document.createElement('div');wrap.className='model-group';
-  const card=document.createElement('div');card.className='model-card';
-  card.innerHTML=`${imgHtml}<div class="model-card-body"><div class="model-card-tags">${brand?`<span class="tag tag-brand" style="cursor:pointer" title="${esc(brand)}で絞り込む">${esc(brand)}</span>`:''} ${hasBatches?`<span class="tag" style="background:rgba(200,240,60,.08);color:var(--accent);border-color:rgba(200,240,60,.2)">${batches.size} バッチ</span>`:''}</div><div class="model-name">${esc(modelName)}</div><div class="model-variant-count">▼ ${items.length} バリアント</div></div><span class="model-expand-btn">▾</span>`;
-  if(brand){const bt=card.querySelector('.tag-brand');if(bt){bt.addEventListener('click',e=>{e.stopPropagation();selBrands.clear();selBrands.add(brand);buildBrandList();applyFilters();});}}
-  const variantWrap=document.createElement('div');variantWrap.className='model-variants';
-  if(hasBatches){
-    const BASE='font-family:"DM Sans","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted2);cursor:pointer;transition:all .15s;white-space:nowrap';
-    const ACT='font-family:"DM Sans","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid rgba(74,122,0,.35);background:rgba(74,122,0,.09);color:var(--accent-dark);cursor:pointer;transition:all .15s;white-space:nowrap';
-    const tabBar=document.createElement('div');tabBar.style.cssText='display:flex;gap:6px;flex-wrap:wrap;padding:10px 0 12px;border-bottom:1px solid var(--border);margin-bottom:12px';
-    const gridWrap=document.createElement('div');gridWrap.className='grid';
-    let first=true;
-    batches.forEach((bItems,bk)=>{
-      const tab=document.createElement('button');tab.style.cssText=first?ACT:BASE;
-      tab.textContent=(bk==='__none__'?'その他':bk)+'  '+bItems.length;
-      tab.addEventListener('click',e=>{e.stopPropagation();tabBar.querySelectorAll('button').forEach(t=>t.style.cssText=BASE);tab.style.cssText=ACT;gridWrap.innerHTML='';bItems.forEach((p,i)=>gridWrap.appendChild(makeCard(p,i)));});
-      if(first){bItems.forEach((p,i)=>gridWrap.appendChild(makeCard(p,i)));first=false;}
-      tabBar.appendChild(tab);
+  const header=document.createElement('div');header.className='model-band-header';
+  header.innerHTML=`${brand?`<span class="tag tag-brand" style="cursor:pointer">${esc(brand)}</span>`:''}<span class="model-band-name">${esc(modelName)}</span><div class="model-band-meta">${hasBatches?`<span class="model-band-badge" style="background:rgba(200,240,60,.08);color:var(--accent-dark);border:1px solid rgba(74,122,0,.2)">${batches.size} バッチ</span>`:''}<span class="model-band-badge" style="background:var(--s2);color:var(--muted2);border:1px solid var(--border)">${items.length}件</span><span class="model-band-arrow">▾</span></div>`;
+  if(brand){const bt=header.querySelector('.tag-brand');if(bt){bt.addEventListener('click',e=>{e.stopPropagation();selBrands.clear();selBrands.add(brand);buildBrandList();applyFilters();});}}
+  const body=document.createElement('div');body.className='model-band-body';
+  const batchBar=document.createElement('div');batchBar.className='model-batch-bar';
+  const gridWrap=document.createElement('div');gridWrap.className='grid';
+  let firstBatch=true;
+  batches.forEach((bItems,bk)=>{
+    const btn=document.createElement('button');btn.className='model-batch-btn'+(firstBatch?' active':'');
+    btn.textContent=(bk==='__none__'?'すべて':bk)+' '+bItems.length+'件';
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      batchBar.querySelectorAll('.model-batch-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      gridWrap.innerHTML='';
+      bItems.forEach((p,i)=>gridWrap.appendChild(makeCard(p,i)));
     });
-    variantWrap.appendChild(tabBar);variantWrap.appendChild(gridWrap);
-  } else {
-    const gridWrap=document.createElement('div');gridWrap.className='grid';
-    items.forEach((p,i)=>gridWrap.appendChild(makeCard(p,i)));
-    variantWrap.appendChild(gridWrap);
-  }
-  card.addEventListener('click',()=>{
-    const open=variantWrap.classList.toggle('open');card.classList.toggle('expanded',open);
-    card.querySelector('.model-variant-count').textContent=(open?'▲ ':'▼ ')+items.length+' バリアント';
-    card.style.borderColor=open?'var(--accent)':'';
+    if(firstBatch){bItems.forEach((p,i)=>gridWrap.appendChild(makeCard(p,i)));firstBatch=false;}
+    batchBar.appendChild(btn);
   });
-  wrap.appendChild(card);wrap.appendChild(variantWrap);return wrap;
+  body.appendChild(batchBar);body.appendChild(gridWrap);
+  header.addEventListener('click',()=>wrap.classList.toggle('open'));
+  wrap.appendChild(header);wrap.appendChild(body);return wrap;
 }
 function renderToGrid(items,grid){
   const modelGroups=new Map(),noModel=[];
