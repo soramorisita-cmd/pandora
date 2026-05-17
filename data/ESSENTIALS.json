@@ -780,8 +780,8 @@
       "type": "PANTS",
       "purchase": "https://weidian.com/item.html?itemID=7534461309",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fweidian.com%2Fitem.html%3FitemID%3D7534461309&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 198.0,
+      "price_jpy": 4584,
       "image": "images/536757bdb3.jpg"
     },
     {
