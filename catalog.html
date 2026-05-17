@@ -131,8 +131,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 
 /* ── MODEL GROUP BAND ── */
 .model-group{grid-column:1/-1;margin-bottom:2px}
-.model-band-thumb{width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0;background:var(--s2)}
-.model-band-header{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--s1);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .15s,background .15s;user-select:none}
+.model-band-thumb{width:120px;min-width:120px;aspect-ratio:4/3;object-fit:cover;border-radius:8px;flex-shrink:0;background:var(--s2)}
+.model-band-header{display:flex;align-items:center;gap:14px;padding:10px 16px;background:var(--s1);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .15s,background .15s;user-select:none}
 .model-band-header:hover{border-color:var(--border2);background:var(--s2)}
 .model-group.open .model-band-header{border-radius:10px 10px 0 0;border-bottom-color:transparent;border-color:var(--accent);background:var(--s2)}
 .model-band-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--text);line-height:1;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -148,8 +148,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 .model-batch-btn.active{border-color:rgba(74,122,0,.4);background:rgba(74,122,0,.09);color:var(--accent-dark)}
 
 @media(max-width:768px){
-  .model-card-img,.model-card-noimag{width:100px;min-width:100px}
-  .model-name{font-size:18px}
+  .model-band-thumb{width:80px;min-width:80px}
 }
 footer{text-align:center;padding:28px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
 footer a{color:var(--accent);text-decoration:none}
