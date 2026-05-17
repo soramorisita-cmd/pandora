@@ -640,7 +640,10 @@ function makeModelGroupCard(modelName,items){
   wrap.appendChild(card);wrap.appendChild(variantWrap);return wrap;
 }
 function renderToGrid(items,grid){
-  items.forEach((p,i)=>grid.appendChild(makeCard(p,i)));
+  const modelGroups=new Map(),noModel=[];
+  items.forEach(p=>{if(p.model){if(!modelGroups.has(p.model))modelGroups.set(p.model,[]);modelGroups.get(p.model).push(p);}else{noModel.push(p);}});
+  modelGroups.forEach((gItems,name)=>grid.appendChild(makeModelGroupCard(name,gItems)));
+  noModel.forEach((p,i)=>grid.appendChild(makeCard(p,i)));
 }
 function buildCatList(){
   const allTypes=new Set(ALL_PRODUCTS.map(p=>p.type).filter(Boolean));
@@ -783,9 +786,14 @@ function buildMobileLists(){
 function buildPageOrder(all){
   const views=JSON.parse(localStorage.getItem('pdra_views')||'{}');
   const viewed=all.filter(p=>p.yupoo&&views[p.yupoo]>0).sort((a,b)=>(views[b.yupoo]||0)-(views[a.yupoo]||0));
-  const top10=viewed.slice(0,10);
-  const usedSet=new Set(top10.map(p=>p.yupoo));
-  const rest=shuffle(all.filter(p=>!usedSet.has(p.yupoo)));
+  const top10Models=new Set();const top10=[];
+  for(const p of viewed){
+    const key=p.model||p.yupoo;
+    if(!top10Models.has(key)){top10Models.add(key);top10.push(p);}
+    if(top10.length>=10)break;
+  }
+  const usedModels=new Set(top10.map(p=>p.model||p.yupoo));
+  const rest=shuffle(all.filter(p=>!usedModels.has(p.model||p.yupoo)));
   return[...top10,...rest];
 }
 async function init(){
