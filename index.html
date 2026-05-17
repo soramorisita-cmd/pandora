@@ -535,7 +535,7 @@ a{color:inherit;text-decoration:none}
 </footer>
 <script>
 const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
-let ALL=[],selCats=new Set(),selBrands=new Set(),allCats=[];
+let ALL=[],ALL_PRODUCTS=[],selCats=new Set(),selBrands=new Set(),allCats=[];
 const PAGE_SIZE=48;let pageItems=[];let renderedCount=0;
 const BOOST_BRANDS=new Set(['Denim Tears','NIKE','Sp5der','ESSENTIALS']);
 function cleanTitle(r){
@@ -577,7 +577,7 @@ function doHeroSearch(){
 function isFiltering(){return selCats.size>0||selBrands.size>0||(document.getElementById('search')?.value||'').length>0}
 function getFiltered(){
   const q=(document.getElementById('search')?.value||'').toLowerCase();
-  let items=ALL.filter(p=>{
+  let items=ALL_PRODUCTS.filter(p=>{
     if(selCats.size&&!selCats.has(p.type))return false;
     if(selBrands.size&&!selBrands.has(p.brand||''))return false;
     if(q&&!(p.title+' '+p.type+' '+(p.brand||'')).toLowerCase().includes(q))return false;
@@ -642,10 +642,10 @@ function renderToGrid(items,grid){
   items.forEach((p,i)=>grid.appendChild(makeCard(p,i)));
 }
 function buildCatList(){
-  const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
+  const allTypes=new Set(ALL_PRODUCTS.map(p=>p.type).filter(Boolean));
   allCats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
   buildCatBar();
-  const el=document.getElementById('cat-list');if(el){el.innerHTML='';allCats.forEach(cat=>{const cnt=ALL.filter(p=>p.type===cat).length;const lbl=document.createElement('label');lbl.className='f-item'+(selCats.has(cat)?' active':'');lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selCats.has(cat)?'checked':''} onchange="toggleCat('${cat}',this)"><span class="f-label">${esc(cat)}</span><span class="f-count">${cnt}</span>`;el.appendChild(lbl);});}
+  const el=document.getElementById('cat-list');if(el){el.innerHTML='';allCats.forEach(cat=>{const cnt=ALL_PRODUCTS.filter(p=>p.type===cat).length;const lbl=document.createElement('label');lbl.className='f-item'+(selCats.has(cat)?' active':'');lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selCats.has(cat)?'checked':''} onchange="toggleCat('${cat}',this)"><span class="f-label">${esc(cat)}</span><span class="f-count">${cnt}</span>`;el.appendChild(lbl);});}
 }
 function buildCatBar(){
   const el=document.getElementById('cat-pills');if(!el)return;
@@ -665,7 +665,7 @@ function buildCatBar(){
   });
 }
 function buildBrandList(){
-  const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
+  const src=selCats.size?ALL_PRODUCTS.filter(p=>selCats.has(p.type)):ALL_PRODUCTS;
   const brands=[...new Set(src.map(p=>p.brand).filter(Boolean))].sort();
   const el=document.getElementById('brand-list');el.innerHTML='';
   brands.forEach(brand=>{
@@ -754,17 +754,17 @@ function openDrawer(){document.getElementById('drawer').classList.add('open');do
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('open');document.body.style.overflow=''}
 function syncSearch(el){document.getElementById('search').value=el.value;applyFilters()}
 function buildMobileLists(){
-  const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
+  const allTypes=new Set(ALL_PRODUCTS.map(p=>p.type).filter(Boolean));
   const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
   const cel=document.getElementById('cat-list-mobile');cel.innerHTML='';
   cats.forEach(cat=>{
-    const cnt=ALL.filter(p=>p.type===cat).length;
+    const cnt=ALL_PRODUCTS.filter(p=>p.type===cat).length;
     const lbl=document.createElement('label');
     lbl.className='f-item'+(selCats.has(cat)?' active':'');
     lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selCats.has(cat)?'checked':''} onchange="toggleCat('${cat}',this);buildMobileLists()"><span class="f-label">${esc(cat)}</span><span class="f-count">${cnt}</span>`;
     cel.appendChild(lbl);
   });
-  const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
+  const src=selCats.size?ALL_PRODUCTS.filter(p=>selCats.has(p.type)):ALL_PRODUCTS;
   const brands=[...new Set(src.map(p=>p.brand).filter(Boolean))].sort();
   const bel=document.getElementById('brand-list-mobile');bel.innerHTML='';
   brands.forEach(brand=>{
@@ -825,8 +825,8 @@ async function init(){
       }
     }catch{}
     const res=await fetch('./products.json');if(!res.ok)throw new Error();
-    const data=await res.json();ALL=buildPageOrder(data.products||[]);
-    const sc=document.getElementById('stat-count');if(sc)sc.textContent=ALL.length.toLocaleString();
+    const data=await res.json();ALL_PRODUCTS=data.products||[];ALL=buildPageOrder(ALL_PRODUCTS);
+    const sc=document.getElementById('stat-count');if(sc)sc.textContent=ALL_PRODUCTS.length.toLocaleString();
     const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
     const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
     const nc=document.getElementById('nav-cats');
