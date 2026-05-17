@@ -536,7 +536,7 @@ a{color:inherit;text-decoration:none}
 <script>
 const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
 let ALL=[],ALL_PRODUCTS=[],selCats=new Set(),selBrands=new Set(),allCats=[];
-const PAGE_SIZE=48;let pageItems=[];let renderedCount=0;
+const PAGE_SIZE=48;let pageItems=[];let pageGroups=[];let renderedCount=0;
 const BOOST_BRANDS=new Set(['Denim Tears','NIKE','Sp5der','ESSENTIALS']);
 function cleanTitle(r){
   let s=String(r).trim();
@@ -710,9 +710,19 @@ function renderChips(){
     el.appendChild(chip);
   });
 }
+function buildPageGroups(items){
+  const modelMap=new Map();
+  items.forEach(p=>{if(p.model){if(!modelMap.has(p.model))modelMap.set(p.model,[]);modelMap.get(p.model).push(p);}});
+  const seenModels=new Set();const groups=[];
+  items.forEach(p=>{
+    if(p.model){if(!seenModels.has(p.model)){seenModels.add(p.model);groups.push({type:'group',name:p.model,items:modelMap.get(p.model)});}}
+    else{groups.push({type:'item',product:p});}
+  });
+  return groups;
+}
 function applyFilters(){
   renderChips();
-  pageItems=getFiltered();renderedCount=0;
+  pageItems=getFiltered();pageGroups=buildPageGroups(pageItems);renderedCount=0;
   const old=document.getElementById('load-more-wrap');if(old)old.remove();
   document.getElementById('count').textContent=pageItems.length;
   const grid=document.getElementById('grid');grid.innerHTML='';
@@ -720,9 +730,12 @@ function applyFilters(){
   appendPage(grid);
 }
 function appendPage(grid){
-  const batch=pageItems.slice(renderedCount,renderedCount+PAGE_SIZE);
+  const batch=pageGroups.slice(renderedCount,renderedCount+PAGE_SIZE);
   if(!batch.length)return;
-  renderToGrid(batch,grid);
+  batch.forEach(g=>{
+    if(g.type==='group')grid.appendChild(makeModelGroupCard(g.name,g.items));
+    else grid.appendChild(makeCard(g.product,renderedCount));
+  });
   renderedCount+=batch.length;
   syncLoadMoreBtn();
 }
@@ -731,7 +744,7 @@ function loadMoreItems(){appendPage(document.getElementById('grid'));}
 function syncLoadMoreBtn(){
   if(scrollObs){scrollObs.disconnect();scrollObs=null;}
   const w=document.getElementById('load-more-wrap');if(w)w.remove();
-  if(renderedCount>=pageItems.length)return;
+  if(renderedCount>=pageGroups.length)return;
   const sentinel=document.createElement('div');sentinel.id='load-more-wrap';
   sentinel.style.cssText='height:80px;display:flex;align-items:center;justify-content:center';
   sentinel.innerHTML='<div class="spinner"></div>';
