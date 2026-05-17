@@ -114,6 +114,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 .empty{text-align:center;padding:60px;color:var(--muted);font-size:14px;font-weight:700}
 /* MODEL GROUP */
 .model-group{grid-column:1/-1;margin-bottom:2px}
+.model-band-thumb{width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0;background:var(--s2)}
 .model-band-header{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--s1);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .15s,background .15s;user-select:none}
 .model-band-header:hover{border-color:var(--border2);background:var(--s2)}
 .model-group.open .model-band-header{border-radius:10px 10px 0 0;border-bottom-color:transparent;border-color:var(--accent);background:var(--s2)}
@@ -604,12 +605,13 @@ function makeCard(p,i){
 }
 function makeModelGroupCard(modelName,items){
   const rep=items[0],brand=rep.brand||'';
+  const thumb=rep.image&&rep.image!=='null'&&rep.image.length>4?`<img class="model-band-thumb" src="${esc(rep.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`:'' ;
   const batches=new Map();
   items.forEach(p=>{const k=p.batch||'__none__';if(!batches.has(k))batches.set(k,[]);batches.get(k).push(p);});
   const hasBatches=batches.size>1||(batches.size===1&&!batches.has('__none__'));
   const wrap=document.createElement('div');wrap.className='model-group';
   const header=document.createElement('div');header.className='model-band-header';
-  header.innerHTML=`${brand?`<span class="tag tag-brand" style="cursor:pointer">${esc(brand)}</span>`:''}<span class="model-band-name">${esc(modelName)}</span><div class="model-band-meta">${hasBatches?`<span class="model-band-badge" style="background:rgba(200,240,60,.08);color:var(--accent-dark);border:1px solid rgba(74,122,0,.2)">${batches.size} バッチ</span>`:''}<span class="model-band-badge" style="background:var(--s2);color:var(--muted2);border:1px solid var(--border)">${items.length}件</span><span class="model-band-arrow">▾</span></div>`;
+  header.innerHTML=`${thumb}${brand?`<span class="tag tag-brand" style="cursor:pointer">${esc(brand)}</span>`:''}<span class="model-band-name">${esc(modelName)}</span><div class="model-band-meta">${hasBatches?`<span class="model-band-badge" style="background:rgba(200,240,60,.08);color:var(--accent-dark);border:1px solid rgba(74,122,0,.2)">${batches.size} バッチ</span>`:''}<span class="model-band-badge" style="background:var(--s2);color:var(--muted2);border:1px solid var(--border)">${items.length}件</span><span class="model-band-arrow">▾</span></div>`;
   if(brand){const bt=header.querySelector('.tag-brand');if(bt){bt.addEventListener('click',e=>{e.stopPropagation();selBrands.clear();selBrands.add(brand);buildBrandList();applyFilters();});}}
   const body=document.createElement('div');body.className='model-band-body';
   const batchBar=document.createElement('div');batchBar.className='model-batch-bar';
@@ -791,16 +793,13 @@ function buildMobileLists(){
 }
 function buildPageOrder(all){
   const views=JSON.parse(localStorage.getItem('pdra_views')||'{}');
-  const viewed=all.filter(p=>p.yupoo&&views[p.yupoo]>0).sort((a,b)=>(views[b.yupoo]||0)-(views[a.yupoo]||0));
-  const top10Models=new Set();const top10=[];
-  for(const p of viewed){
-    const key=p.model||p.yupoo;
-    if(!top10Models.has(key)){top10Models.add(key);top10.push(p);}
-    if(top10.length>=10)break;
-  }
-  const usedModels=new Set(top10.map(p=>p.model||p.yupoo));
-  const rest=shuffle(all.filter(p=>!usedModels.has(p.model||p.yupoo)));
-  return[...top10,...rest];
+  const modelViews={};
+  all.forEach(p=>{const key=p.model||p.yupoo;if(p.yupoo&&views[p.yupoo])modelViews[key]=(modelViews[key]||0)+views[p.yupoo];});
+  const topModels=Object.entries(modelViews).filter(e=>e[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,10).map(e=>e[0]);
+  const topSet=new Set(topModels);
+  const top=topModels.flatMap(m=>all.filter(p=>(p.model||p.yupoo)===m));
+  const rest=shuffle(all.filter(p=>!topSet.has(p.model||p.yupoo)));
+  return[...top,...rest];
 }
 async function init(){
   try{

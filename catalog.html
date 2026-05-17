@@ -129,21 +129,23 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .card{animation:fadeIn .18s ease both}
 
-/* ── MODEL GROUP CARD ── */
-.model-group{grid-column:1/-1;margin-bottom:4px}
-.model-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s,transform .15s;display:flex;gap:0;position:relative}
-.model-card:hover{border-color:var(--border2);transform:translateY(-2px)}
-.model-card-img{width:140px;min-width:140px;aspect-ratio:4/3;object-fit:cover;background:var(--s2);flex-shrink:0}
-.model-card-noimag{width:140px;min-width:140px;aspect-ratio:4/3;background:var(--s2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.model-card-noimag span{font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
-.model-card-body{flex:1;padding:14px;display:flex;flex-direction:column;gap:7px;justify-content:center}
-.model-card-tags{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
-.model-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--text);line-height:1}
-.model-variant-count{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--accent-dark);background:rgba(74,122,0,.08);border:1px solid rgba(74,122,0,.18);padding:3px 10px;border-radius:999px}
-.model-expand-btn{position:absolute;top:12px;right:12px;font-size:18px;color:var(--muted);transition:transform .2s;pointer-events:none}
-.model-card.expanded .model-expand-btn{transform:rotate(180deg);color:var(--accent-dark)}
-.model-variants{display:none;padding:12px 0 4px;animation:fadeIn .2s ease both}
-.model-variants.open{display:block}
+/* ── MODEL GROUP BAND ── */
+.model-group{grid-column:1/-1;margin-bottom:2px}
+.model-band-thumb{width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0;background:var(--s2)}
+.model-band-header{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--s1);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .15s,background .15s;user-select:none}
+.model-band-header:hover{border-color:var(--border2);background:var(--s2)}
+.model-group.open .model-band-header{border-radius:10px 10px 0 0;border-bottom-color:transparent;border-color:var(--accent);background:var(--s2)}
+.model-band-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--text);line-height:1;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.model-band-meta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.model-band-badge{font-size:10px;font-weight:800;letter-spacing:.5px;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.model-band-arrow{font-size:16px;color:var(--muted);transition:transform .22s;flex-shrink:0}
+.model-group.open .model-band-arrow{transform:rotate(180deg);color:var(--accent-dark)}
+.model-band-body{display:none;border:1px solid var(--accent);border-top:none;border-radius:0 0 10px 10px;padding:14px 16px 16px;background:var(--s1)}
+.model-group.open .model-band-body{display:block;animation:fadeIn .18s ease both}
+.model-batch-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.model-batch-btn{font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted2);cursor:pointer;transition:all .12s;white-space:nowrap;font-family:'DM Sans','Noto Sans JP',sans-serif}
+.model-batch-btn:hover{border-color:var(--border2);color:var(--text)}
+.model-batch-btn.active{border-color:rgba(74,122,0,.4);background:rgba(74,122,0,.09);color:var(--accent-dark)}
 
 @media(max-width:768px){
   .model-card-img,.model-card-noimag{width:100px;min-width:100px}
@@ -301,7 +303,7 @@ footer a{color:var(--accent);text-decoration:none}
 const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
 const urlCat=new URLSearchParams(location.search).get('cat')||'all';
 let ALL=[],selCats=new Set(urlCat!=='all'?[urlCat]:[]),selBrands=new Set(),allCats=[];
-const PAGE_SIZE=48;let pageItems=[];let renderedCount=0;
+const PAGE_SIZE=48;let pageItems=[];let pageGroups=[];let renderedCount=0;
 
 function cleanTitle(r){
   let s=String(r).trim();
@@ -489,113 +491,35 @@ function makeBatchSection(batchName, items) {
   // タブ切り替え方式 - この関数は使わない（makeModelGroupCard内で直接実装）
 }
 
-function makeModelGroupCard(modelName, items) {
-  const rep = items[0];
-  const brand = rep.brand || '';
-  const imgHtml = rep.image && rep.image !== 'null' && rep.image.length > 4
-    ? `<img class="model-card-img" src="${esc(rep.image)}" alt="${esc(modelName)}" loading="lazy" onerror="this.outerHTML='<div class=model-card-noimag><span>NO IMAGE</span></div>'">`
-    : `<div class="model-card-noimag"><span>NO IMAGE</span></div>`;
-
-  // バッチでグループ化
-  const batches = new Map();
-  const noBatch = [];
-  items.forEach(p => {
-    const key = p.batch || '__none__';
-    if (!batches.has(key)) batches.set(key, []);
-    batches.get(key).push(p);
-  });
-  const hasBatches = batches.size > 1 || (batches.size === 1 && !batches.has('__none__'));
-
-  const wrap = document.createElement('div');
-  wrap.className = 'model-group';
-
-  // モデルカード（ヘッダー）
-  const card = document.createElement('div');
-  card.className = 'model-card';
-  card.innerHTML = `
-    ${imgHtml}
-    <div class="model-card-body">
-      <div class="model-card-tags">
-        ${brand ? `<span class="tag tag-brand">${esc(brand)}</span>` : ''}
-        ${hasBatches ? `<span class="tag" style="background:rgba(200,240,60,.08);color:var(--accent);border-color:rgba(200,240,60,.2)">${batches.size} バッチ</span>` : ''}
-      </div>
-      <div class="model-name">${esc(modelName)}</div>
-      <div class="model-variant-count">▼ ${items.length} バリアント</div>
-    </div>
-    <span class="model-expand-btn">▾</span>`;
-
-  // バリアントエリア
-  const variantWrap = document.createElement('div');
-  variantWrap.className = 'model-variants';
-
-  if (hasBatches) {
-    // タブバー
-    const tabBar = document.createElement('div');
-    tabBar.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;padding:10px 0 12px;border-bottom:1px solid var(--border);margin-bottom:12px';
-
-    // グリッドコンテナ
-    const gridWrap = document.createElement('div');
-    gridWrap.className = 'grid';
-
-    let activeTab = null;
-
-    batches.forEach((bItems, batchKey) => {
-      const displayName = batchKey === '__none__' ? 'その他' : batchKey;
-      const tab = document.createElement('button');
-      tab.style.cssText = 'font-family:"Syne",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted2);cursor:pointer;transition:all .15s;white-space:nowrap';
-      tab.textContent = `${displayName}  ${bItems.length}`;
-      tab.dataset.batch = batchKey;
-
-      tab.addEventListener('mouseenter', () => { if (!tab.classList.contains('active')) tab.style.borderColor = 'var(--border2)'; });
-      tab.addEventListener('mouseleave', () => { if (!tab.classList.contains('active')) tab.style.borderColor = 'var(--border)'; });
-
-      tab.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // 全タブをリセット
-        tabBar.querySelectorAll('button').forEach(t => {
-          t.classList.remove('active');
-          t.style.cssText = 'font-family:"Syne",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--muted2);cursor:pointer;transition:all .15s;white-space:nowrap';
-        });
-        // アクティブタブをスタイル
-        tab.classList.add('active');
-        tab.style.cssText = 'font-family:"DM Sans","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid rgba(74,122,0,.35);background:rgba(74,122,0,.09);color:var(--accent-dark);cursor:pointer;transition:all .15s;white-space:nowrap';
-        // グリッドを差し替え
-        gridWrap.innerHTML = '';
-        bItems.forEach((p, i) => gridWrap.appendChild(makeVariantCard(p, i)));
-      });
-
-      // 最初のタブをデフォルト選択
-      if (!activeTab) {
-        activeTab = tab;
-        tab.classList.add('active');
-        tab.style.cssText = 'font-family:"DM Sans","Noto Sans JP",sans-serif;font-size:11px;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid rgba(74,122,0,.35);background:rgba(74,122,0,.09);color:var(--accent-dark);cursor:pointer;transition:all .15s;white-space:nowrap';
-        bItems.forEach((p, i) => gridWrap.appendChild(makeVariantCard(p, i)));
-      }
-
-      tabBar.appendChild(tab);
+function makeModelGroupCard(modelName,items){
+  const rep=items[0],brand=rep.brand||'';
+  const thumb=rep.image&&rep.image!=='null'&&rep.image.length>4?`<img class="model-band-thumb" src="${esc(rep.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`:'' ;
+  const batches=new Map();
+  items.forEach(p=>{const k=p.batch||'__none__';if(!batches.has(k))batches.set(k,[]);batches.get(k).push(p);});
+  const hasBatches=batches.size>1||(batches.size===1&&!batches.has('__none__'));
+  const wrap=document.createElement('div');wrap.className='model-group';
+  const header=document.createElement('div');header.className='model-band-header';
+  header.innerHTML=`${thumb}${brand?`<span class="tag tag-brand" style="cursor:pointer">${esc(brand)}</span>`:''}<span class="model-band-name">${esc(modelName)}</span><div class="model-band-meta">${hasBatches?`<span class="model-band-badge" style="background:rgba(200,240,60,.08);color:var(--accent-dark);border:1px solid rgba(74,122,0,.2)">${batches.size} バッチ</span>`:''}<span class="model-band-badge" style="background:var(--s2);color:var(--muted2);border:1px solid var(--border)">${items.length}件</span><span class="model-band-arrow">▾</span></div>`;
+  const body=document.createElement('div');body.className='model-band-body';
+  const batchBar=document.createElement('div');batchBar.className='model-batch-bar';
+  const gridWrap=document.createElement('div');gridWrap.className='grid';
+  let firstBatch=true;
+  batches.forEach((bItems,bk)=>{
+    const btn=document.createElement('button');btn.className='model-batch-btn'+(firstBatch?' active':'');
+    btn.textContent=(bk==='__none__'?'すべて':bk)+' '+bItems.length+'件';
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      batchBar.querySelectorAll('.model-batch-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      gridWrap.innerHTML='';
+      bItems.forEach((p,i)=>gridWrap.appendChild(makeVariantCard(p,i)));
     });
-
-    variantWrap.appendChild(tabBar);
-    variantWrap.appendChild(gridWrap);
-  } else {
-    // バッチなし → フラットグリッド
-    const gridWrap = document.createElement('div');
-    gridWrap.className = 'grid';
-    items.forEach((p, i) => gridWrap.appendChild(makeVariantCard(p, i)));
-    variantWrap.appendChild(gridWrap);
-  }
-
-  card.addEventListener('click', () => {
-    const open = variantWrap.classList.toggle('open');
-    card.classList.toggle('expanded', open);
-    const countEl = card.querySelector('.model-variant-count');
-    countEl.textContent = (open ? '▲ ' : '▼ ') + items.length + ' バリアント';
-    card.style.borderColor = open ? 'var(--accent)' : '';
+    if(firstBatch){bItems.forEach((p,i)=>gridWrap.appendChild(makeVariantCard(p,i)));firstBatch=false;}
+    batchBar.appendChild(btn);
   });
-
-  wrap.appendChild(card);
-  wrap.appendChild(variantWrap);
-  return wrap;
+  body.appendChild(batchBar);body.appendChild(gridWrap);
+  header.addEventListener('click',()=>wrap.classList.toggle('open'));
+  wrap.appendChild(header);wrap.appendChild(body);return wrap;
 }
 
 function renderChips(){
@@ -622,9 +546,19 @@ function renderToGrid(items,grid){
   modelGroups.forEach((gItems,name)=>grid.appendChild(makeModelGroupCard(name,gItems)));
   noModel.forEach((p,i)=>grid.appendChild(makeVariantCard(p,i)));
 }
+function buildPageGroups(items){
+  const modelMap=new Map();
+  items.forEach(p=>{if(p.model){if(!modelMap.has(p.model))modelMap.set(p.model,[]);modelMap.get(p.model).push(p);}});
+  const seenModels=new Set();const groups=[];
+  items.forEach(p=>{
+    if(p.model){if(!seenModels.has(p.model)){seenModels.add(p.model);groups.push({type:'group',name:p.model,items:modelMap.get(p.model)});}}
+    else{groups.push({type:'item',product:p});}
+  });
+  return groups;
+}
 function applyFilters(){
   renderChips();
-  pageItems=getFiltered();renderedCount=0;
+  pageItems=getFiltered();pageGroups=buildPageGroups(pageItems);renderedCount=0;
   const old=document.getElementById('load-more-wrap');if(old)old.remove();
   document.getElementById('count').textContent=pageItems.length;
   const grid=document.getElementById('grid');grid.innerHTML='';
@@ -632,9 +566,12 @@ function applyFilters(){
   appendPage(grid);
 }
 function appendPage(grid){
-  const batch=pageItems.slice(renderedCount,renderedCount+PAGE_SIZE);
+  const batch=pageGroups.slice(renderedCount,renderedCount+PAGE_SIZE);
   if(!batch.length)return;
-  renderToGrid(batch,grid);
+  batch.forEach(g=>{
+    if(g.type==='group')grid.appendChild(makeModelGroupCard(g.name,g.items));
+    else grid.appendChild(makeVariantCard(g.product,renderedCount));
+  });
   renderedCount+=batch.length;
   syncLoadMoreBtn();
 }
@@ -643,7 +580,7 @@ function loadMoreItems(){appendPage(document.getElementById('grid'));}
 function syncLoadMoreBtn(){
   if(scrollObs){scrollObs.disconnect();scrollObs=null;}
   const w=document.getElementById('load-more-wrap');if(w)w.remove();
-  if(renderedCount>=pageItems.length)return;
+  if(renderedCount>=pageGroups.length)return;
   const sentinel=document.createElement('div');sentinel.id='load-more-wrap';
   sentinel.style.cssText='height:80px;display:flex;align-items:center;justify-content:center';
   sentinel.innerHTML='<div class="spinner"></div>';
