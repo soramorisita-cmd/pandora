@@ -577,7 +577,8 @@ function doHeroSearch(){
 function isFiltering(){return selCats.size>0||selBrands.size>0||(document.getElementById('search')?.value||'').length>0}
 function getFiltered(){
   const q=(document.getElementById('search')?.value||'').toLowerCase();
-  let items=ALL_PRODUCTS.filter(p=>{
+  const base=(selCats.size||selBrands.size||q)?ALL_PRODUCTS:ALL;
+  let items=base.filter(p=>{
     if(selCats.size&&!selCats.has(p.type))return false;
     if(selBrands.size&&!selBrands.has(p.brand||''))return false;
     if(q&&!(p.title+' '+p.type+' '+(p.brand||'')).toLowerCase().includes(q))return false;
