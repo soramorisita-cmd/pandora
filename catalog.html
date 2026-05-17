@@ -147,9 +147,6 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 .model-batch-btn:hover{border-color:var(--border2);color:var(--text)}
 .model-batch-btn.active{border-color:rgba(74,122,0,.4);background:rgba(74,122,0,.09);color:var(--accent-dark)}
 
-@media(max-width:768px){
-  .model-band-thumb{width:80px;min-width:80px}
-}
 footer{text-align:center;padding:28px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
 footer a{color:var(--accent);text-decoration:none}
 @media(max-width:900px){
@@ -159,14 +156,25 @@ footer a{color:var(--accent);text-decoration:none}
   .nav-right{display:none}
   .mobile-filter-btn{display:flex}
   .result-bar{flex-direction:column;gap:8px;align-items:flex-start}
-  .card-title{font-size:12px}
+  .card-body{padding:10px;gap:5px}
+  .card-title{font-size:13px}
   .card-price{font-size:15px}
-  .btn-buy{font-size:13px;padding:8px 6px}
-  .btn-qc{padding:8px 9px}
+  .tag{font-size:10px;letter-spacing:0;padding:3px 7px}
+  .btn-buy{font-size:13px;letter-spacing:.5px;padding:9px 6px}
+  .btn-qc{padding:9px 10px}
   .cat-bar-inner{padding:8px 10px}
-  .cat-pill{font-size:10px;padding:6px 12px}
+  .cat-pill{font-size:11px;padding:6px 13px}
   .brand-bar-inner{padding:6px 10px}
-  .brand-pill{font-size:10px;padding:4px 11px}
+  .brand-pill{font-size:11px;padding:5px 12px}
+  .model-band-thumb{width:80px;min-width:80px}
+  .model-band-name{font-size:17px}
+  .model-band-badge{font-size:10px}
+}
+@media(max-width:480px){
+  .grid{gap:8px}
+  .card-actions{flex-direction:column;gap:4px}
+  .btn-buy{text-align:center}
+  .btn-qc{justify-content:center}
 }
 @media(min-width:901px){
   .mobile-filter-btn{display:none}
