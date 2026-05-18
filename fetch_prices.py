@@ -118,7 +118,8 @@ def price_from_title(title: str) -> float | None:
     return None
 
 # ── ② ページ HTML から価格を抽出（共通）────────────────────────────
-PRICE_RE = re.compile(r'¥\s*([\d]+(?:\.[\d]+)?)')
+PRICE_RE = re.compile(r'[¥￥]\s*([\d]+(?:\.[\d]+)?)')  # 半角¥・全角￥両対応
+KAKOBUY_CNY_RE = re.compile(r'CNY\s*[¥￥]\s*([\d]+(?:\.[\d]+)?)')  # Kakobuy CNY表示専用
 JSON_PRICE_RE = re.compile(
     r'"(?:price|skuPrice|minPrice|currentPrice|priceRmb)"\s*:\s*"?([\d]+(?:\.[\d]+)?)"?'
 )
@@ -204,6 +205,12 @@ async def fetch_kakobuy(kakobuy_url: str, browser: Browser) -> float | None:
             return document.body.innerText;
         }""")
         if price_text:
+            # Kakobuyは "CNY ￥593.59" 形式を優先
+            m = KAKOBUY_CNY_RE.search(price_text)
+            if m:
+                v = float(m.group(1))
+                if 10 < v < 50_000:
+                    return v
             return parse_price(price_text)
         return None
     except Exception:
@@ -269,7 +276,8 @@ async def run(products: list[dict], limit: int | None, dry_run: bool):
                     price = await fetch_weidian(p["purchase"], browser)
                 elif pf == "jadeship":
                     price = await fetch_jadeship(p["purchase"], browser)
-                # taobao / kakobuy はブロック/削除済みのためスキップ
+                elif pf == "taobao" and p.get("kakobuy"):
+                    price = await fetch_kakobuy(p["kakobuy"], browser)
             except Exception:
                 pass
             results[i] = price

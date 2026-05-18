@@ -714,7 +714,17 @@ def main():
 
     data     = json.loads((ROOT / "products.json").read_text(encoding="utf-8"))
     products = data.get("products", [])
+
+    # Taobao購入リンクがあるが価格未取得の商品は除外（削除済みリスティング）
+    def _is_taobao(url: str) -> bool:
+        return bool(url) and "taobao.com" in urlparse(url).netloc.lower()
+    before = len(products)
+    products = [
+        p for p in products
+        if not (_is_taobao(p.get("purchase", "")) and not p.get("price_jpy"))
+    ]
     print(f"[build] {len(products)} 件の商品を処理中... (domain: {DOMAIN})")
+    print(f"  (Taobao削除済み除外: {before - len(products)} 件)")
 
     build_product_pages(products, ROOT / "products")
     build_category_pages(products, ROOT / "category")
