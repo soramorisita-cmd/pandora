@@ -11,9 +11,12 @@ products.json と data/*.json の両方にローカルパスを書き戻してgi
   python download_images.py --refetch   # 画像なし商品をYupooから再取得
 """
 
-import argparse, hashlib, json, subprocess, time
+import argparse, hashlib, json, subprocess, sys, time
 from pathlib import Path
 from urllib.parse import urlparse
+
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
 
 import requests
 

@@ -62,16 +62,58 @@ def taobao_item_id(url: str) -> str | None:
     return parse_qs(urlparse(url).query).get("id", [None])[0]
 
 # ── ① タイトルから価格を取得（最速）───────────────────────────────
+# パターン1: 【110yuan】【¥110】 形式
 TITLE_PRICE_RE = re.compile(
     r'[【\[]\s*(\d+(?:\.\d+)?)\s*(?:yuan|cny|rmb|元|￥|¥)\s*[】\]]',
     re.IGNORECASE,
 )
+# パターン2: ￥127 / ¥ 105 / ￥~139（チルダあり）形式
+TITLE_PRICE_RE2 = re.compile(r'[￥¥][~\s]*(\d+(?:\.\d+)?)')
+# パターン2b: 160￥ / 50¥（数字が先）形式
+TITLE_PRICE_RE2b = re.compile(r'(?<!\d)(\d+(?:\.\d+)?)\s*[￥¥]')
+# パターン3: P585 / P430 形式（価格を P+数字で表す）
+TITLE_PRICE_RE3 = re.compile(r'\bP(\d{3,4})\b')
+# パターン4: 【数字】 形式（【520】など、カッコ内が3桁以上の数字のみ）
+TITLE_PRICE_RE4 = re.compile(r'[【\[](\d{3,5})[】\]]')
+# パターン5: 【440Y】【 320Y 】 形式（Y=yuan、スペース許容）
+TITLE_PRICE_RE5 = re.compile(r'[【\[]\s*(\d{2,4})\s*[Yy]\s*[】\]]')
 
 def price_from_title(title: str) -> float | None:
+    # パターン1: 【110yuan】
     m = TITLE_PRICE_RE.search(title)
     if m:
         v = float(m.group(1))
-        if 1 < v < 100_000:
+        if 10 < v < 10_000:
+            return v
+    # パターン2: ￥127 / ¥ 105
+    m = TITLE_PRICE_RE2.search(title)
+    if m:
+        v = float(m.group(1))
+        if 10 < v < 10_000:
+            return v
+    # パターン2b: 160￥ / 50¥（数字が先）
+    m = TITLE_PRICE_RE2b.search(title)
+    if m:
+        v = float(m.group(1))
+        if 10 < v < 10_000:
+            return v
+    # パターン3: P585（先頭に来るものを優先）
+    m = TITLE_PRICE_RE3.match(title.strip())
+    if m:
+        v = float(m.group(1))
+        if 10 < v < 10_000:
+            return v
+    # パターン4: 【520】
+    m = TITLE_PRICE_RE4.search(title)
+    if m:
+        v = float(m.group(1))
+        if 10 < v < 10_000:
+            return v
+    # パターン5: 【440Y】
+    m = TITLE_PRICE_RE5.search(title)
+    if m:
+        v = float(m.group(1))
+        if 10 < v < 10_000:
             return v
     return None
 
@@ -133,6 +175,43 @@ async def fetch_taobao(purchase_url: str, browser: Browser) -> float | None:
 async def fetch_jadeship(purchase_url: str, browser: Browser) -> float | None:
     return await fetch_page_price(purchase_url, browser)
 
+async def fetch_kakobuy(kakobuy_url: str, browser: Browser) -> float | None:
+    """KakobuyページからCNY価格を取得（Taobaoの代替）"""
+    if not kakobuy_url:
+        return None
+    ctx = await browser.new_context(
+        user_agent=(
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        ),
+        locale="zh-CN",
+    )
+    page = await ctx.new_page()
+    try:
+        await page.goto(kakobuy_url, wait_until="networkidle", timeout=35_000)
+        await asyncio.sleep(2)
+        # Kakobuyの価格要素を取得（CNY表示）
+        price_text = await page.evaluate("""() => {
+            const selectors = [
+                '.item-price', '.price-cny', '.goods-price',
+                '[class*="price"]', '.detail-price', '.sku-price'
+            ];
+            for (const sel of selectors) {
+                const el = document.querySelector(sel);
+                if (el) return el.textContent;
+            }
+            // フォールバック: ページ全体から¥数字を探す
+            return document.body.innerText;
+        }""")
+        if price_text:
+            return parse_price(price_text)
+        return None
+    except Exception:
+        return None
+    finally:
+        await page.close()
+        await ctx.close()
+
 # ── メインループ ─────────────────────────────────────────────────────
 async def run(products: list[dict], limit: int | None, dry_run: bool):
     rate = fetch_rates()
@@ -182,7 +261,7 @@ async def run(products: list[dict], limit: int | None, dry_run: bool):
                     price = await fetch_weidian(p["purchase"], browser)
                 elif pf == "jadeship":
                     price = await fetch_jadeship(p["purchase"], browser)
-                # taobao はブロックされるためスキップ
+                # taobao / kakobuy はブロック/削除済みのためスキップ
             except Exception:
                 pass
             results[i] = price
