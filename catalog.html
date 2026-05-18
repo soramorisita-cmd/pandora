@@ -93,6 +93,10 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 .result-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .result-count{font-size:13px;font-weight:700;color:var(--muted2)}
 .result-count span{color:var(--accent-dark);font-size:16px}
+.view-toggle{display:flex;border:1px solid var(--border);border-radius:7px;overflow:hidden;flex-shrink:0}
+.view-toggle-btn{background:transparent;border:none;padding:6px 12px;font-size:12px;font-weight:700;color:var(--muted2);cursor:pointer;transition:all .12s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.view-toggle-btn:hover{background:var(--s2);color:var(--text)}
+.view-toggle-btn.active{background:var(--accent);color:#111}
 .cat-title-bar{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:3px;margin-bottom:14px;color:var(--text)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
 .card{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .18s,transform .18s,box-shadow .18s;box-shadow:0 1px 4px rgba(0,0,0,.07),0 2px 10px rgba(0,0,0,.04)}
@@ -290,12 +294,18 @@ footer a{color:var(--accent);text-decoration:none}
     <div class="main">
       <div class="result-bar">
         <div class="result-count"><span id="count">0</span> 件の商品</div>
-        <select id="sort-select" onchange="applyFilters()" style="background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--muted2);font-size:12px;font-weight:700;padding:6px 10px;outline:none;cursor:pointer">
-          <option value="default">並び順: 標準</option>
-          <option value="price-asc">価格: 安い順</option>
-          <option value="price-desc">価格: 高い順</option>
-          <option value="has-price">価格あり優先</option>
-        </select>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <div class="view-toggle">
+            <button class="view-toggle-btn" data-mode="flat" onclick="setViewMode('flat')">カード</button>
+            <button class="view-toggle-btn" data-mode="groups" onclick="setViewMode('groups')">帯</button>
+          </div>
+          <select id="sort-select" onchange="applyFilters()" style="background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--muted2);font-size:12px;font-weight:700;padding:6px 10px;outline:none;cursor:pointer">
+            <option value="default">並び順: 標準</option>
+            <option value="price-asc">価格: 安い順</option>
+            <option value="price-desc">価格: 高い順</option>
+            <option value="has-price">価格あり優先</option>
+          </select>
+        </div>
       </div>
       <div id="active-filters" class="filter-chips"></div>
       <div class="cat-title-bar" id="cat-title" style="display:none"></div>
@@ -311,6 +321,12 @@ const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOP
 const urlCat=new URLSearchParams(location.search).get('cat')||'all';
 let ALL=[],selCats=new Set(urlCat!=='all'?[urlCat]:[]),selBrands=new Set(),allCats=[];
 const PAGE_SIZE=48;let pageItems=[];let pageGroups=[];let renderedCount=0;
+let viewMode=localStorage.getItem('pdra_view')||'groups';
+function setViewMode(mode){
+  viewMode=mode;localStorage.setItem('pdra_view',mode);
+  document.querySelectorAll('.view-toggle-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+  applyFilters();
+}
 
 function cleanTitle(r){
   let s=String(r).trim();
@@ -569,7 +585,9 @@ function buildPageGroups(items){
 }
 function applyFilters(){
   renderChips();
-  pageItems=getFiltered();pageGroups=buildPageGroups(pageItems);renderedCount=0;
+  pageItems=getFiltered();
+  pageGroups=viewMode==='groups'?buildPageGroups(pageItems):pageItems.map(p=>({type:'item',product:p}));
+  renderedCount=0;
   const old=document.getElementById('load-more-wrap');if(old)old.remove();
   document.getElementById('count').textContent=pageItems.length;
   const grid=document.getElementById('grid');grid.innerHTML='';
@@ -579,9 +597,9 @@ function applyFilters(){
 function appendPage(grid){
   const batch=pageGroups.slice(renderedCount,renderedCount+PAGE_SIZE);
   if(!batch.length)return;
-  batch.forEach(g=>{
+  batch.forEach((g,i)=>{
     if(g.type==='group')grid.appendChild(makeModelGroupCard(g.name,g.items));
-    else grid.appendChild(makeVariantCard(g.product,renderedCount));
+    else grid.appendChild(makeVariantCard(g.product,renderedCount+i));
   });
   renderedCount+=batch.length;
   syncLoadMoreBtn();
@@ -657,7 +675,9 @@ async function init(){
 
     const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
     const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
-    buildNav(cats);buildCatList();buildBrandList();buildBrandBar();updateTitle();applyFilters();
+    buildNav(cats);buildCatList();buildBrandList();buildBrandBar();updateTitle();
+    document.querySelectorAll('.view-toggle-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===viewMode));
+    applyFilters();
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
   }catch(e){
