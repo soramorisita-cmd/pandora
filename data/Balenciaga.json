@@ -375,8 +375,8 @@
       "batch": "XA Batch Balenciaga Runer",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 440.0,
+      "price_jpy": 10248,
       "image": "images/b83cf7a47d.jpg",
       "model": "XLシリーズ+その他"
     },
@@ -401,8 +401,8 @@
       "batch": "XA Batch Balenciaga Runer",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 440.0,
+      "price_jpy": 10248,
       "image": "images/ded4c676b8.jpg",
       "model": "XLシリーズ+その他"
     },

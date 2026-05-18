@@ -1846,8 +1846,8 @@
       "type": "HOODIES",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 209.0,
+      "price_jpy": 4868,
       "image": "images/e2c8de939b.jpeg",
       "batch": null
     },

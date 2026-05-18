@@ -1110,8 +1110,8 @@
       "type": "ACCESSORIES",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 78.0,
+      "price_jpy": 1817,
       "image": "images/2d8587860a.jpg"
     },
     {
@@ -1693,8 +1693,8 @@
       "type": "PANTS",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 188.0,
+      "price_jpy": 4379,
       "image": "images/93a2ca7b0c.jpg"
     },
     {
@@ -1704,8 +1704,8 @@
       "type": "HOODIES",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 198.0,
+      "price_jpy": 4611,
       "image": "images/d2ceb16b2b.jpg"
     },
     {

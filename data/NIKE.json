@@ -6745,8 +6745,8 @@
       "batch": "3A Batch Air Force 1",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 200.0,
+      "price_jpy": 4658,
       "image": "images/d8e3b3a348.jpg",
       "model": "AF1",
       "seller": "repsmaster"
@@ -7053,8 +7053,8 @@
       "batch": "3A Batch Air Force 1",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 200.0,
+      "price_jpy": 4658,
       "image": "images/6aef2bf89f.jpg",
       "model": "AF1",
       "seller": "repsmaster"
@@ -7599,8 +7599,8 @@
       "batch": "3A Batch Air Force 1",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 200.0,
+      "price_jpy": 4658,
       "image": "images/2e7abc07e1.jpg",
       "model": "AF1",
       "seller": "repsmaster"
@@ -23848,8 +23848,8 @@
       "type": "ACCESSORIES",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 66.0,
+      "price_jpy": 1537,
       "image": "images/2ef2635c90.jpg",
       "batch": null,
       "seller": "huskyreps"

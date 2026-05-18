@@ -604,8 +604,8 @@
       "type": "SWEATERS",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 180.0,
+      "price_jpy": 4192,
       "image": "images/a274e54be6.jpg"
     },
     {

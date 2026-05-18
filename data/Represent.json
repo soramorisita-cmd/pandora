@@ -1834,8 +1834,8 @@
       "type": "SWEATERS",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 155.0,
+      "price_jpy": 3610,
       "image": "images/2241234e4f.jpeg",
       "batch": null
     },
@@ -1990,8 +1990,8 @@
       "type": "HOODIES",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 170.0,
+      "price_jpy": 3959,
       "image": "images/21a99da84e.jpeg",
       "batch": null
     },

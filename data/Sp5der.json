@@ -736,8 +736,8 @@
       "type": "T-SHIRTS",
       "purchase": "",
       "kakobuy": "",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 95.0,
+      "price_jpy": 2213,
       "image": "images/8d90b590f5.jpg"
     },
     {

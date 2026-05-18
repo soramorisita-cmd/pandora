@@ -216,29 +216,37 @@ async def fetch_kakobuy(kakobuy_url: str, browser: Browser) -> float | None:
 async def run(products: list[dict], limit: int | None, dry_run: bool):
     rate = fetch_rates()
 
-    # 対象: price_cny が null かつ purchase がある商品
-    targets = [
+    # Pass1対象: price_cny が null の全商品（purchase の有無問わずタイトルから試みる）
+    title_targets = [
+        (i, p) for i, p in enumerate(products)
+        if p.get("price_cny") is None
+    ]
+    # Pass2対象: purchase URL がある商品（Playwright）
+    pw_targets_all = [
         (i, p) for i, p in enumerate(products)
         if p.get("price_cny") is None and p.get("purchase")
     ]
     if limit:
-        targets = targets[:limit]
+        title_targets = title_targets[:limit]
+        pw_targets_all = pw_targets_all[:limit]
 
-    total = len(targets)
+    total = len(title_targets)
     print(f"\n対象: {total} 件（全 {len(products)} 件中）\n")
 
     # ── Pass 1: タイトルから即時取得 ─────────────────────────────────
     title_hit = 0
     playwright_queue: list[tuple[int, dict]] = []
+    priced_by_title = set()
 
-    for i, p in targets:
+    for i, p in title_targets:
         price = price_from_title(p.get("title", ""))
         if price:
             if not dry_run:
                 products[i]["price_cny"] = round(price, 2)
                 products[i]["price_jpy"] = round(price * rate)
             title_hit += 1
-        else:
+            priced_by_title.add(i)
+        elif p.get("purchase"):
             playwright_queue.append((i, p))
 
     print(f"[pass1] title: {title_hit} 件取得")
