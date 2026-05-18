@@ -307,8 +307,8 @@
       "type": "SWEATERS",
       "purchase": "https://item.taobao.com/item.htm?ft=t&id=1038166429458",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fft%3Dt%26id%3D1038166429458&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 50.0,
+      "price_jpy": 1164,
       "image": "images/b7249b8480.jpg"
     },
     {
@@ -362,8 +362,8 @@
       "type": "HOODIES",
       "purchase": "https://item.taobao.com/item.htm?ft=t&id=1038994364364",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fft%3Dt%26id%3D1038994364364&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 160.0,
+      "price_jpy": 3726,
       "image": "images/8d4037ae25.jpeg"
     },
     {
@@ -461,8 +461,8 @@
       "type": "JACKETS",
       "purchase": "https://item.taobao.com/item.htm?ft=t&id=1037222786654",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fft%3Dt%26id%3D1037222786654&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 80.0,
+      "price_jpy": 1863,
       "image": "images/ce7f98a469.jpeg"
     },
     {
@@ -538,8 +538,8 @@
       "type": "HOODIES",
       "purchase": "https://item.taobao.com/item.htm?ft=t&id=1038156845660",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fft%3Dt%26id%3D1038156845660&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 110.0,
+      "price_jpy": 2562,
       "image": "images/62f4e17db9.jpeg"
     },
     {
