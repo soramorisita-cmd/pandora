@@ -340,7 +340,8 @@ def build_category_pages(products, out_dir):
         cat_dir = out_dir / slug
         cat_dir.mkdir(parents=True, exist_ok=True)
         desc = CAT_DESC.get(cat, f"PANDORAのレプリカ {cat} コレクション。厳選セラーから仕入れた高品質アイテム。")
-        featured = [p for p in items if p.get("image") and p["image"]!="null"][:24] or items[:24]
+        items_sorted = sorted(items, key=lambda p: 0 if p.get("price_jpy") else 1)
+        featured = [p for p in items_sorted if p.get("image") and p["image"]!="null"][:24] or items_sorted[:24]
         cards = "\n".join(make_card_html(p) for p in featured)
         jsonld = json.dumps({
             "@context":"https://schema.org","@type":"CollectionPage",
@@ -399,7 +400,8 @@ def build_brand_pages(products, out_dir):
         b_dir = out_dir / slug
         b_dir.mkdir(parents=True, exist_ok=True)
         desc = f"{brand} のレプリカアイテム一覧。PANDORAが厳選したセラーから{len(items)}点を掲載。"
-        featured = [p for p in items if p.get("image") and p["image"]!="null"][:24] or items[:24]
+        items_sorted = sorted(items, key=lambda p: 0 if p.get("price_jpy") else 1)
+        featured = [p for p in items_sorted if p.get("image") and p["image"]!="null"][:24] or items_sorted[:24]
         cards = "\n".join(make_card_html(p) for p in featured)
         html = f"""<!DOCTYPE html>
 <html lang="ja">
@@ -645,7 +647,7 @@ def split_products_json(products, updated):
 
     EXCLUDE = {"purchase", "price_cny"}
     by_cat = defaultdict(list)
-    for p in products:
+    for p in sorted(products, key=lambda p: 0 if p.get("price_jpy") else 1):
         cat = p.get("type") or "other"
         slim = {k: v for k, v in p.items() if k not in EXCLUDE}
         by_cat[cat].append(slim)

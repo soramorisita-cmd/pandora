@@ -376,6 +376,8 @@ function getFiltered(){
     items=[...items].sort((a,b)=>{const pa=Number(a.price_jpy)||0,pb=Number(b.price_jpy)||0;return pb-pa;});
   }else if(sort==='has-price'){
     items=[...items].sort((a,b)=>(b.price_jpy?1:0)-(a.price_jpy?1:0));
+  }else{
+    items=[...items].sort((a,b)=>(b.price_jpy?1:0)-(a.price_jpy?1:0));
   }
   return items;
 }

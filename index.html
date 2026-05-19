@@ -641,6 +641,7 @@ function getFiltered(){
   if(sort==='price-asc')items=[...items].sort((a,b)=>(Number(a.price_jpy)||999999)-(Number(b.price_jpy)||999999));
   else if(sort==='price-desc')items=[...items].sort((a,b)=>(Number(b.price_jpy)||0)-(Number(a.price_jpy)||0));
   else if(sort==='has-price')items=[...items].sort((a,b)=>(b.price_jpy?1:0)-(a.price_jpy?1:0));
+  else items=[...items].sort((a,b)=>(b.price_jpy?1:0)-(a.price_jpy?1:0));
   return items;
 }
 function makeCard(p,i){
@@ -846,8 +847,10 @@ function buildPageOrder(all){
   const topModels=Object.entries(modelViews).filter(e=>e[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,10).map(e=>e[0]);
   const topSet=new Set(topModels);
   const top=topModels.flatMap(m=>all.filter(p=>(p.model||p.yupoo)===m));
-  const rest=shuffle(all.filter(p=>!topSet.has(p.model||p.yupoo)));
-  return[...top,...rest];
+  const allRest=all.filter(p=>!topSet.has(p.model||p.yupoo));
+  const restPriced=shuffle(allRest.filter(p=>p.price_jpy));
+  const restNone=shuffle(allRest.filter(p=>!p.price_jpy));
+  return[...top,...restPriced,...restNone];
 }
 async function init(){
   try{
