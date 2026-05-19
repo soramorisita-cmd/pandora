@@ -29,7 +29,7 @@ from playwright.async_api import async_playwright, Browser
 PRODUCTS_JSON = Path(__file__).parent / "products.json"
 DATA_DIR      = Path(__file__).parent / "data"
 SAVE_EVERY    = 100
-WORKERS       = 5
+WORKERS       = 3
 CNY_TO_JPY    = 21.5
 
 # ── 為替 ─────────────────────────────────────────────────────────────
@@ -196,30 +196,24 @@ async def fetch_kakobuy(kakobuy_url: str, browser: Browser) -> float | None:
     )
     page = await ctx.new_page()
     try:
-        await page.goto(kakobuy_url, wait_until="networkidle", timeout=35_000)
-        await asyncio.sleep(2)
-        # Kakobuyの価格要素を取得（CNY表示）
-        price_text = await page.evaluate("""() => {
-            const selectors = [
-                '.item-price', '.price-cny', '.goods-price',
-                '[class*="price"]', '.detail-price', '.sku-price'
-            ];
-            for (const sel of selectors) {
-                const el = document.querySelector(sel);
-                if (el) return el.textContent;
-            }
-            // フォールバック: ページ全体から¥数字を探す
-            return document.body.innerText;
-        }""")
-        if price_text:
-            # Kakobuyは "CNY ￥593.59" 形式を優先
-            m = KAKOBUY_CNY_RE.search(price_text)
-            if m:
-                v = float(m.group(1))
-                if 10 < v < 50_000:
-                    return v
-            return parse_price(price_text)
-        return None
+        # networkidle はKakobuyの常時通信でタイムアウトするため load を使う
+        await page.goto(kakobuy_url, wait_until="load", timeout=35_000)
+        # 価格要素が動的に描画されるまで最大8秒待つ
+        try:
+            await page.wait_for_selector("text=/CNY|￥|¥/", timeout=8_000)
+        except Exception:
+            pass
+        await asyncio.sleep(1)
+        body_text = await page.evaluate("() => document.body.innerText")
+        if not body_text:
+            return None
+        # "CNY ￥46.26" 形式（\xa0 = ノーブレークスペースも考慮）
+        m = re.search(r'CNY[\s ]*[¥￥][\s ]*([\d]+(?:\.[\d]+)?)', body_text)
+        if m:
+            v = float(m.group(1))
+            if 10 < v < 50_000:
+                return v
+        return parse_price(body_text)
     except Exception:
         return None
     finally:
