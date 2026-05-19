@@ -609,6 +609,7 @@ function extractJPY(p){const j=p.price_jpy;if(j&&!['undefined','null',''].includ
 function extractCNY(p){const c=p.price_cny;if(c&&!['undefined','null',''].includes(String(c).trim())){const n=parseFloat(String(c));if(!isNaN(n)&&n>0)return Math.round(n)+'元'}return''}
 function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function brandInterleave(items){const byBrand={};items.forEach(p=>{const b=p.brand||'__';if(!byBrand[b])byBrand[b]=[];byBrand[b].push(p);});const brands=shuffle(Object.keys(byBrand));const result=[];let more=true;while(more){more=false;for(const b of brands){if(byBrand[b].length){result.push(byBrand[b].shift());more=true;}}}return result;}
 /* ── HERO SEARCH ── */
 function isShopLink(s){return/(weidian\.com|taobao\.com|1688\.com|jd\.com|shop\d+\.v\.weidian)/i.test(s)||/^https?:\/\/(weidian|item\.taobao|detail\.1688|shop\d+\.v\.weidian)/i.test(s)}
 function toKakobuyLink(raw){let u=raw.trim();if(!/^https?:\/\//i.test(u))u='https://'+u;return'https://www.kakobuy.com/item/details?url='+encodeURIComponent(u)+'&affcode=a235412'}
@@ -848,8 +849,8 @@ function buildPageOrder(all){
   const topSet=new Set(topModels);
   const top=topModels.flatMap(m=>all.filter(p=>(p.model||p.yupoo)===m));
   const allRest=all.filter(p=>!topSet.has(p.model||p.yupoo));
-  const restPriced=shuffle(allRest.filter(p=>p.price_jpy));
-  const restNone=shuffle(allRest.filter(p=>!p.price_jpy));
+  const restPriced=brandInterleave(allRest.filter(p=>p.price_jpy));
+  const restNone=brandInterleave(allRest.filter(p=>!p.price_jpy));
   return[...top,...restPriced,...restNone];
 }
 async function init(){
