@@ -575,7 +575,7 @@ tbody tr.selected-row { background: rgba(200,240,60,.04); }
     <div class="stat"><div class="stat-label">総商品数</div><div class="stat-value accent" id="stat-total">0</div></div>
     <div class="stat"><div class="stat-label">Other</div><div class="stat-value warning" id="stat-other">0</div></div>
     <div class="stat"><div class="stat-label">変更済み</div><div class="stat-value success" id="stat-changed">0</div></div>
-    <div class="stat"><div class="stat-label">最終更新</div><div class="stat-value" id="stat-updated" style="font-size:14px;font-family:'Syne'">—</div></div>
+    <div class="stat"><div class="stat-label">ソース</div><div class="stat-value" id="stat-updated" style="font-size:14px;font-family:'Syne'">—</div></div>
   </div>
 
   <!-- TABLE VIEW -->
@@ -669,6 +669,10 @@ let activeBrand  = null;
 let activeType   = null; // カテゴリフィルター // null=全て, or filename
 let viewMode     = 'table';
 let selectedIndices = new Set();
+// products.json モード
+let isProductsJsonMode = false;
+let productsJsonHandle = null;
+let productsJsonMeta   = {};  // updated, count など
 
 // ─── ドラッグ状態 ───
 let dragIdx     = null;
@@ -701,17 +705,37 @@ async function openFolder() {
   imageBlobCache = {};
   imagesDirHandle = null;
 
-  // data/ と images/ を探す
+  // data/ と images/ と products.json を探す
   let dataDirHandle = null;
+  let rootProdHandle = null;
   for await (const [name, handle] of rootHandle.entries()) {
     if (handle.kind === 'directory' && name === 'data') dataDirHandle = handle;
     if (handle.kind === 'directory' && name === 'images') imagesDirHandle = handle;
+    if (handle.kind === 'file' && name === 'products.json') rootProdHandle = handle;
   }
 
-  // dataフォルダが見つからない場合は選択されたフォルダ自体をdataとして扱う
-  const targetDir = dataDirHandle || rootHandle;
+  // ── products.json が見つかった場合は直接読み込む（優先）──
+  if (rootProdHandle) {
+    isProductsJsonMode = true;
+    productsJsonHandle = rootProdHandle;
+    const file = await rootProdHandle.getFile();
+    const data = JSON.parse(await file.text());
+    productsJsonMeta = { updated: data.updated, count: data.count };
+    let globalIdx = 0;
+    (data.products || []).forEach(p => {
+      const brand = p.brand || 'Other';
+      allProducts.push({ ...p, _i: globalIdx, _file: brand, _localIdx: globalIdx });
+      fileHandles[brand] = null; // ブランドフィルター用ダミー
+      globalIdx++;
+    });
+    initUI();
+    toast(`✅ products.json から ${allProducts.length}件 読み込み完了`, 'success');
+    return;
+  }
 
-  // 全 .json ファイルを読み込む
+  // ── フォールバック: data/*.json を読み込む ──
+  isProductsJsonMode = false;
+  const targetDir = dataDirHandle || rootHandle;
   const loadPromises = [];
   for await (const [name, handle] of targetDir.entries()) {
     if (handle.kind === 'file' && name.endsWith('.json')) {
@@ -734,7 +758,6 @@ async function openFolder() {
     toast('❌ productsを持つJSONファイルが見つかりませんでした'); return;
   }
 
-  // allProducts を構築（グローバルインデックス付き）
   let globalIdx = 0;
   for (const fname of Object.keys(brandData).sort()) {
     brandData[fname].products.forEach((p, localIdx) => {
@@ -772,7 +795,9 @@ function initUI() {
   document.getElementById('stat-total').textContent   = allProducts.length;
   document.getElementById('stat-other').textContent   = others;
   document.getElementById('stat-changed').textContent = 0;
-  document.getElementById('stat-updated').textContent = Object.keys(fileHandles).length + 'ブランド';
+  document.getElementById('stat-updated').textContent = isProductsJsonMode
+    ? 'products.json'
+    : Object.keys(fileHandles).length + 'ブランド';
 
   document.getElementById('dropzone').style.display    = 'none';
   document.getElementById('instruction').style.display = 'block';
@@ -1081,35 +1106,57 @@ function applyBulk() {
   toast(`✅ ${count}件 → ${targetType} に移動しました`, 'success');
 }
 
-// ─── 保存（ブランドファイルごとに個別書き込み）───
+// ─── 保存 ───
 async function saveJSON() {
-  if (!allProducts.length && Object.keys(fileHandles).length === 0) return;
+  if (!allProducts.length) return;
+  const changedCount = Object.keys(changes).length;
   const now = new Date().toISOString().slice(0,19);
-  let savedCount = 0;
 
-  // 変更・削除が発生したファイルを特定
+  // ── products.json モード ──
+  if (isProductsJsonMode) {
+    const updatedProducts = allProducts.map(p => {
+      const { _i, _file, _localIdx, ...clean } = p;
+      return changes.hasOwnProperty(_i) ? { ...clean, type: changes[_i] } : clean;
+    });
+    const out = { ...productsJsonMeta, updated: now, count: updatedProducts.length, products: updatedProducts };
+    try {
+      const writable = await productsJsonHandle.createWritable();
+      await writable.write(JSON.stringify(out, null, 2));
+      await writable.close();
+    } catch(e) {
+      toast(`❌ products.json の保存失敗: ${e.message}`); return;
+    }
+    productsJsonMeta = { updated: now, count: updatedProducts.length };
+    allProducts = allProducts.map(p =>
+      changes.hasOwnProperty(p._i) ? { ...p, type: changes[p._i] } : p
+    );
+    changes = {};
+    selectedIndices.clear();
+    updateStats();
+    if (viewMode === 'table') renderTable(); else renderKanban();
+    toast(`✅ products.json に ${changedCount}件のカテゴリ変更を保存しました`, 'success');
+    return;
+  }
+
+  // ── data/*.json モード（ブランドファイルごとに個別書き込み）──
+  let savedCount = 0;
   const changedFiles = new Set();
   Object.keys(changes).forEach(idx => changedFiles.add(allProducts[idx]?._file));
-  // 削除後に残る商品のファイルも全部再保存（削除された商品を除くため）
   Object.keys(fileHandles).forEach(fname => changedFiles.add(fname));
 
   for (const fname of changedFiles) {
     const handle = fileHandles[fname];
     if (!handle) continue;
-
     const fileProducts = allProducts
       .filter(p => p._file === fname)
       .map(p => {
         const { _i, _file, _localIdx, ...clean } = p;
         return changes.hasOwnProperty(_i) ? { ...clean, type: changes[_i] } : clean;
       });
-
     const out = { ...brandData[fname], products: fileProducts, updated: now, count: fileProducts.length };
-    const json = JSON.stringify(out, null, 2);
-
     try {
       const writable = await handle.createWritable();
-      await writable.write(json);
+      await writable.write(JSON.stringify(out, null, 2));
       await writable.close();
       brandData[fname] = out;
       savedCount++;
@@ -1118,16 +1165,12 @@ async function saveJSON() {
     }
   }
 
-  // allProducts のtypeも更新
-  allProducts = allProducts.map(p => {
-    if (changes.hasOwnProperty(p._i)) return { ...p, type: changes[p._i] };
-    return p;
-  });
-
+  allProducts = allProducts.map(p =>
+    changes.hasOwnProperty(p._i) ? { ...p, type: changes[p._i] } : p
+  );
   changes = {};
   selectedIndices.clear();
-  if (viewMode === 'table') renderTable();
-  else renderKanban();
+  if (viewMode === 'table') renderTable(); else renderKanban();
   toast(`✅ ${savedCount}ファイル上書き保存しました`, 'success');
 }
 
