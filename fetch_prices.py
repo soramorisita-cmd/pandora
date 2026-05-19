@@ -21,7 +21,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='repla
 
 import json, re, time, asyncio, argparse
 from pathlib import Path
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, unquote
 
 import requests
 from playwright.async_api import async_playwright, Browser
@@ -53,6 +53,13 @@ def platform(url: str) -> str:
     if "weidian.com" in h: return "weidian"
     if "jadeship.com" in h: return "jadeship"
     return "unknown"
+
+def kakobuy_inner_url(kakobuy_url: str) -> str:
+    """kakobuy URLの url= パラメータからラップされた元URLを取り出す"""
+    if not kakobuy_url:
+        return ""
+    qs = parse_qs(urlparse(kakobuy_url).query)
+    return unquote(qs.get("url", [""])[0])
 
 def weidian_item_id(url: str) -> str | None:
     qs = parse_qs(urlparse(url).query)
@@ -253,8 +260,19 @@ async def run(products: list[dict], limit: int | None, dry_run: bool):
                 products[i]["price_jpy"] = round(price * rate)
             title_hit += 1
             priced_by_title.add(i)
-        elif p.get("purchase"):
-            playwright_queue.append((i, p))
+        else:
+            # purchase URL か kakobuy内URLがあればPlaywrightキューへ
+            purchase = p.get("purchase", "")
+            inner = kakobuy_inner_url(p.get("kakobuy", ""))
+            pf_purchase = platform(purchase)
+            pf_inner    = platform(inner)
+            has_scrapable = (
+                pf_purchase in ("weidian", "jadeship") or
+                (pf_purchase == "taobao" and p.get("kakobuy")) or
+                pf_inner in ("weidian", "jadeship", "taobao")
+            )
+            if has_scrapable:
+                playwright_queue.append((i, p))
 
     print(f"[pass1] title: {title_hit} 件取得")
     if title_hit > 0 and not dry_run:
@@ -269,15 +287,29 @@ async def run(products: list[dict], limit: int | None, dry_run: bool):
 
     async def worker(idx: int, i: int, p: dict):
         async with sem:
-            pf = platform(p["purchase"])
+            purchase = p.get("purchase", "")
+            kakobuy  = p.get("kakobuy", "")
+            inner    = kakobuy_inner_url(kakobuy)
+            # 使うURLとplatformを決定: purchaseを優先、なければkakobuy内URL
+            if purchase and platform(purchase) in ("weidian", "jadeship"):
+                pf, url = platform(purchase), purchase
+            elif inner and platform(inner) == "weidian":
+                pf, url = "weidian", inner
+            elif inner and platform(inner) == "jadeship":
+                pf, url = "jadeship", inner
+            elif platform(purchase) == "taobao" or platform(inner) == "taobao":
+                pf, url = "taobao", kakobuy
+            else:
+                pf, url = "unknown", ""
+
             price = None
             try:
                 if pf == "weidian":
-                    price = await fetch_weidian(p["purchase"], browser)
+                    price = await fetch_weidian(url, browser)
                 elif pf == "jadeship":
-                    price = await fetch_jadeship(p["purchase"], browser)
-                elif pf == "taobao" and p.get("kakobuy"):
-                    price = await fetch_kakobuy(p["kakobuy"], browser)
+                    price = await fetch_jadeship(url, browser)
+                elif pf == "taobao" and url:
+                    price = await fetch_kakobuy(url, browser)
             except Exception:
                 pass
             results[i] = price
