@@ -59,6 +59,10 @@ NAV_HTML = """\
 
 FOOTER_HTML = '<footer>PANDORA &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy で購入</a></footer>'
 
+APP_META = '<meta name="apple-itunes-app" content="app-id=6456410137">'
+
+MOBILE_APP_JS = """<script>(function(){var ua=navigator.userAgent;var isIOS=/iPhone|iPad|iPod/i.test(ua);var isAnd=/Android/i.test(ua);if(!isIOS&&!isAnd)return;function tryApp(webUrl){var appUrl=webUrl.replace('https://www.kakobuy.com/','kakobuy://');if(isAnd){window.location.href='intent://'+appUrl.replace('kakobuy://','')+'#Intent;scheme=kakobuy;S.browser_fallback_url='+encodeURIComponent(webUrl)+';end';}else{var t=setTimeout(function(){window.open(webUrl,'_blank');},1500);var onVis=function(){clearTimeout(t);document.removeEventListener('visibilitychange',onVis);};document.addEventListener('visibilitychange',onVis);var ifr=document.createElement('iframe');ifr.style.cssText='position:fixed;width:1px;height:1px;opacity:0;top:-1px';document.body.appendChild(ifr);ifr.src=appUrl;setTimeout(function(){if(ifr.parentNode)ifr.parentNode.removeChild(ifr);},2000);}}document.addEventListener('click',function(e){var a=e.target.closest('a.btn-buy,a.btn-primary');if(!a||!a.href||!a.href.includes('kakobuy.com/item'))return;e.preventDefault();tryApp(a.href);});})()</script>"""
+
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">'
 
 # ── ユーティリティ ───────────────────────────────────────────────────
@@ -262,6 +266,7 @@ def build_product_pages(products, out_dir):
 {f'<meta property="og:image" content="{esc(og_img)}">' if og_img else ''}
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="{DOMAIN}/products/{aid}.html">
+{APP_META}
 {FONTS}
 <style>{SHARED_CSS}
 .product-wrap{{max-width:800px;margin:40px auto;padding:0 24px 60px;display:flex;gap:32px;align-items:flex-start}}
@@ -303,6 +308,7 @@ def build_product_pages(products, out_dir):
   </div>
 </div>
 {FOOTER_HTML}
+{MOBILE_APP_JS}
 </body>
 </html>"""
         (out_dir / f"{aid}.html").write_text(html, encoding="utf-8")
@@ -361,6 +367,7 @@ def build_category_pages(products, out_dir):
 <meta property="og:type" content="website">
 <meta property="og:url" content="{DOMAIN}/category/{slug}/">
 <link rel="canonical" href="{DOMAIN}/category/{slug}/">
+{APP_META}
 {FONTS}
 <style>{SHARED_CSS}{card_css()}
 h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-bottom:6px}}
@@ -379,6 +386,7 @@ h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin
   <a class="more-link" href="/catalog.html?cat={esc(cat)}">全{len(items)}点を見る &rarr;</a>
 </div>
 {FOOTER_HTML}
+{MOBILE_APP_JS}
 </body>
 </html>"""
         (cat_dir / "index.html").write_text(html, encoding="utf-8")
@@ -411,6 +419,7 @@ def build_brand_pages(products, out_dir):
 <title>{esc(brand)} レプリカ | PANDORA</title>
 <meta name="description" content="{esc(desc[:150])}">
 <link rel="canonical" href="{DOMAIN}/brand/{slug}/">
+{APP_META}
 {FONTS}
 <style>{SHARED_CSS}{card_css()}
 h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-bottom:6px}}
@@ -427,6 +436,7 @@ h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin
   <a class="more-link" href="/catalog.html">&larr; 全カタログへ</a>
 </div>
 {FOOTER_HTML}
+{MOBILE_APP_JS}
 </body>
 </html>"""
         (b_dir / "index.html").write_text(html, encoding="utf-8")
@@ -483,6 +493,7 @@ def build_luxury_page(products, out_dir):
 <meta property="og:type" content="website">
 <meta property="og:url" content="{DOMAIN}/luxury/">
 <link rel="canonical" href="{DOMAIN}/luxury/">
+{APP_META}
 {FONTS}
 <style>{SHARED_CSS}{card_css()}
 :root{{--gold:#d4af37;--gold2:#f0cc5a;--gold-bg:rgba(212,175,55,.08);--gold-border:rgba(212,175,55,.25)}}
@@ -520,6 +531,7 @@ def build_luxury_page(products, out_dir):
   </div>
 </div>
 {FOOTER_HTML}
+{MOBILE_APP_JS}
 </body>
 </html>"""
     (out_dir / "index.html").write_text(html, encoding="utf-8")
