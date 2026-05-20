@@ -18,6 +18,7 @@ from urllib.parse import urlparse
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
 
+import boto3
 import requests
 
 ROOT          = Path(__file__).parent
@@ -25,6 +26,20 @@ PRODUCTS_JSON = ROOT / "products.json"
 DATA_DIR      = ROOT / "data"
 IMAGES_DIR    = ROOT / "images"
 IMAGES_DIR.mkdir(exist_ok=True)
+
+R2_ENDPOINT    = "https://03a918d6e412d0f3b6933b92cfb1d82e.r2.cloudflarestorage.com"
+R2_BUCKET      = "pandora-images"
+R2_PUBLIC_BASE = "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev"
+ACCESS_KEY     = "e6071157ffb3c35505499b4dad59e6d4"
+SECRET_KEY     = "4488a8ea3f08edfd3e2770bea132db1eb59e9d777e11dd82a863cce4570561e4"
+
+s3 = boto3.client(
+    "s3",
+    endpoint_url=R2_ENDPOINT,
+    aws_access_key_id=ACCESS_KEY,
+    aws_secret_access_key=SECRET_KEY,
+    region_name="auto",
+)
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
@@ -39,13 +54,25 @@ def url_to_filename(url: str) -> str:
 def download_image(url: str) -> str | None:
     fname = url_to_filename(url)
     fpath = IMAGES_DIR / fname
+    r2_url = f"{R2_PUBLIC_BASE}/{fname}"
+
+    # ローカルキャッシュがあればR2にアップロードしてR2 URLを返す
     if fpath.exists():
-        return f"images/{fname}"
+        try:
+            s3.head_object(Bucket=R2_BUCKET, Key=fname)
+        except Exception:
+            ct = "image/png" if fname.endswith(".png") else "image/webp" if fname.endswith(".webp") else "image/jpeg"
+            s3.upload_file(str(fpath), R2_BUCKET, fname, ExtraArgs={"ContentType": ct})
+        return r2_url
+
     try:
         r = requests.get(url, headers=HEADERS, timeout=15, stream=True)
         if r.status_code == 200:
-            fpath.write_bytes(r.content)
-            return f"images/{fname}"
+            content = r.content
+            fpath.write_bytes(content)  # ローカルキャッシュとして保存
+            ct = "image/png" if fname.endswith(".png") else "image/webp" if fname.endswith(".webp") else "image/jpeg"
+            s3.put_object(Bucket=R2_BUCKET, Key=fname, Body=content, ContentType=ct)
+            return r2_url
         else:
             print(f"  ⚠ HTTP {r.status_code}: {url[:60]}")
             return None
@@ -82,7 +109,7 @@ def write_back_to_data(image_map: dict):
 
 def git_push(msg: str):
     for cmd in [
-        ["git", "add", "images/", "products.json", "data/"],
+        ["git", "add", "products.json", "data/"],
         ["git", "commit", "-m", msg],
         ["git", "push"],
     ]:
