@@ -845,9 +845,11 @@ function buildPageOrder(all){
   const views=JSON.parse(localStorage.getItem('pdra_views')||'{}');
   const modelViews={};
   all.forEach(p=>{const key=p.model||p.yupoo;if(p.yupoo&&views[p.yupoo])modelViews[key]=(modelViews[key]||0)+views[p.yupoo];});
-  const topModels=Object.entries(modelViews).filter(e=>e[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,10).map(e=>e[0]);
+  // ブランドごとに最大1モデル・合計3件まで（同一ブランド偏り防止）
+  const brandSeen=new Set();
+  const topModels=Object.entries(modelViews).filter(e=>e[1]>0).sort((a,b)=>b[1]-a[1]).filter(([key])=>{const p=all.find(pr=>(pr.model||pr.yupoo)===key);const br=p?.brand||'__';if(brandSeen.has(br))return false;brandSeen.add(br);return true;}).slice(0,3).map(e=>e[0]);
   const topSet=new Set(topModels);
-  const top=topModels.flatMap(m=>all.filter(p=>(p.model||p.yupoo)===m));
+  const top=brandInterleave(topModels.flatMap(m=>all.filter(p=>(p.model||p.yupoo)===m)));
   const allRest=all.filter(p=>!topSet.has(p.model||p.yupoo));
   const restPriced=brandInterleave(allRest.filter(p=>p.price_jpy));
   const restNone=brandInterleave(allRest.filter(p=>!p.price_jpy));
