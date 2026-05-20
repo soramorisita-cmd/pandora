@@ -59,6 +59,14 @@ NAV_HTML = """\
 
 FOOTER_HTML = '<footer>PANDORA &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy で購入</a></footer>'
 
+CAT_JA = {
+    "SNEAKERS": "スニーカー", "HOODIES": "パーカー", "T-SHIRTS": "Tシャツ",
+    "JACKETS": "ジャケット", "JEANS": "ジーンズ", "PANTS": "パンツ",
+    "SHORTS": "ショーツ", "SWEATERS": "スウェット", "TOPS": "トップス",
+    "SHIRTS": "シャツ", "BAGS": "バッグ", "ACCESSORIES": "アクセサリー",
+    "HATS": "ハット", "SOCKS": "ソックス", "OTHER": "その他",
+}
+
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">'
 
 # ── ユーティリティ ───────────────────────────────────────────────────
@@ -184,7 +192,7 @@ def make_card_html(p, link_to_product=True):
   <div class="card-body">
     <div class="card-tags">
       {f'<span class="tag tag-brand">{brand}</span>' if brand else ''}
-      {f'<span class="tag tag-type">{ptype}</span>' if ptype else ''}
+      {f'<span class="tag tag-type">{esc(CAT_JA.get(p.get("type",""), ptype))}</span>' if ptype else ''}
     </div>
     <div class="card-title">{title_html}</div>
     {f'<div class="card-price">{price}{cny_html}</div>' if price else ''}
@@ -354,9 +362,9 @@ def build_category_pages(products, out_dir):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{esc(cat)} レプリカ — 厳選{len(items)}点 | PANDORA</title>
+<title>{esc(CAT_JA.get(cat,cat))} レプリカ — 厳選{len(items)}点 | PANDORA</title>
 <meta name="description" content="{esc(desc[:150])}">
-<meta property="og:title" content="{esc(cat)} レプリカ | PANDORA">
+<meta property="og:title" content="{esc(CAT_JA.get(cat,cat))} レプリカ | PANDORA">
 <meta property="og:description" content="{esc(desc[:150])}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{DOMAIN}/category/{slug}/">
@@ -372,7 +380,7 @@ h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin
 <body>
 {NAV_HTML}
 <div class="wrap">
-  <h1>{esc(cat)}</h1>
+  <h1>{esc(CAT_JA.get(cat,cat))}</h1>
   <p class="sub">{esc(desc)}</p>
   <p class="sub">{len(items)}点のアイテム</p>
   <div class="grid">{cards}</div>
