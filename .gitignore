@@ -1,1 +1,9 @@
-﻿
+products/
+__pycache__/
+*.pyc
+*.xlsx
+batch_progress.json
+old_products.json
+products_backup_*.json
+data/sellers/
+data/*.json
