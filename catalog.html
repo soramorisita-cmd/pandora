@@ -395,9 +395,10 @@ function buildCatBar(){
   el.innerHTML='';
   const all=document.createElement('button');all.className='cat-pill'+(selCats.size===0?' active':'');
   all.textContent='ALL';
-  all.addEventListener('click',()=>{
+  all.addEventListener('click',async ()=>{
     selCats.clear();selBrands.clear();
     history.replaceState(null,'','/catalog.html');
+    await ensureFullData();
     buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();
   });
   el.appendChild(all);
@@ -622,7 +623,7 @@ function syncLoadMoreBtn(){
   scrollObs.observe(sentinel);
 }
 
-function resetFilters(){selCats.clear();selBrands.clear();document.getElementById('search').value='';const cs=document.getElementById('catalog-search');if(cs)cs.value='';const ch=document.getElementById('catalog-search-hint');if(ch)ch.style.display='none';history.replaceState(null,'','/catalog.html');buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters()}
+async function resetFilters(){selCats.clear();selBrands.clear();document.getElementById('search').value='';const cs=document.getElementById('catalog-search');if(cs)cs.value='';const ch=document.getElementById('catalog-search-hint');if(ch)ch.style.display='none';history.replaceState(null,'','/catalog.html');await ensureFullData();buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters()}
 
 function buildNav(cats){
   const nc=document.getElementById('nav-cats');
