@@ -320,7 +320,7 @@ footer a{color:var(--accent);text-decoration:none}
 const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
 const CAT_JA={"SNEAKERS":"スニーカー","HOODIES":"パーカー","T-SHIRTS":"Tシャツ","JACKETS":"ジャケット","JEANS":"ジーンズ","PANTS":"パンツ","SHORTS":"ショーツ","SWEATERS":"スウェット","TOPS":"トップス","SHIRTS":"シャツ","BAGS":"バッグ","ACCESSORIES":"アクセサリー","HATS":"ハット","SOCKS":"ソックス","OTHER":"その他"};
 const urlCat=new URLSearchParams(location.search).get('cat')||'all';
-let ALL=[],selCats=new Set(urlCat!=='all'?[urlCat]:[]),selBrands=new Set(),allCats=[];
+let ALL=[],selCats=new Set(urlCat!=='all'?[urlCat]:[]),selBrands=new Set(),allCats=[],_rebuilding=false;
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function brandInterleave(items){const byBrand={};items.forEach(p=>{const b=p.brand||'__';if(!byBrand[b])byBrand[b]=[];byBrand[b].push(p);});const brands=shuffle(Object.keys(byBrand));const result=[];let more=true;while(more){more=false;for(const b of brands){if(byBrand[b].length){result.push(byBrand[b].shift());more=true;}}}return result;}
 const PAGE_SIZE=48;let pageItems=[];let pageGroups=[];let renderedCount=0;
@@ -408,7 +408,6 @@ function buildCatBar(){
     pill.textContent=CAT_JA[cat]||cat;
     pill.addEventListener('click',()=>{
       if(selCats.has(cat)){selCats.delete(cat);}else{selCats.clear();selCats.add(cat);}
-      selBrands.clear();
       const c=[...selCats];
       history.replaceState(null,'',c.length===1?`/catalog.html?cat=${encodeURIComponent(c[0])}`:'/catalog.html');
       if(!loadedFull){
@@ -422,6 +421,7 @@ function buildCatBar(){
 }
 
 function buildBrandList(){
+  _rebuilding=true;
   const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
   const brands=[...new Set(src.map(p=>p.brand).filter(Boolean))].sort();
   const el=document.getElementById('brand-list');el.innerHTML='';
@@ -435,6 +435,7 @@ function buildBrandList(){
   });
   buildAZBar('brand-az-desktop',brands);
   const inp=document.getElementById('brand-search-input');if(inp)inp.value='';
+  _rebuilding=false;
 }
 function buildAZBar(containerId,brands){
   const el=document.getElementById(containerId);if(!el)return;
@@ -467,7 +468,6 @@ function filterBrandList(q){
 
 function toggleCat(cat,cb){
   cb.checked?selCats.add(cat):selCats.delete(cat);
-  selBrands.clear();
   const c=[...selCats];
   history.replaceState(null,'',c.length===1?`/catalog.html?cat=${encodeURIComponent(c[0])}`:'/catalog.html');
   if(!loadedFull){
@@ -476,7 +476,7 @@ function toggleCat(cat,cb){
     buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();
   }
 }
-function toggleBrand(brand,cb){cb.checked?selBrands.add(brand):selBrands.delete(brand);buildBrandBar();applyFilters()}
+function toggleBrand(brand,cb){if(_rebuilding)return;cb.checked?selBrands.add(brand):selBrands.delete(brand);buildBrandBar();applyFilters()}
 function buildBrandBar(){
   const el=document.getElementById('brand-pills');if(!el)return;
   const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
@@ -590,6 +590,7 @@ function buildPageGroups(items){
   return groups;
 }
 function applyFilters(){
+  console.log('[applyFilters] cats:',[...selCats],'brands:',[...selBrands],new Error().stack.split('\n')[1]);
   renderChips();
   pageItems=getFiltered();
   pageGroups=viewMode==='groups'?buildPageGroups(pageItems):pageItems.map(p=>({type:'item',product:p}));
@@ -632,7 +633,21 @@ function buildNav(cats){
     const a=document.createElement('a');
     a.className='nav-cat'+(selCats.has(cat)?' active':'');
     a.href=`/catalog.html?cat=${encodeURIComponent(cat)}`;
-    a.textContent=CAT_JA[cat]||cat;nc.appendChild(a);
+    a.dataset.cat=cat;
+    a.textContent=CAT_JA[cat]||cat;
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      if(selCats.has(cat)){selCats.delete(cat);}else{selCats.clear();selCats.add(cat);}
+      const c=[...selCats];
+      history.replaceState(null,'',c.length===1?`/catalog.html?cat=${encodeURIComponent(c[0])}`:'/catalog.html');
+      nc.querySelectorAll('.nav-cat').forEach(link=>{link.classList.toggle('active',selCats.has(link.dataset.cat));});
+      if(!loadedFull){
+        ensureFullData().then(()=>{buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();});
+      }else{
+        buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();
+      }
+    });
+    nc.appendChild(a);
   });
 }
 
@@ -710,6 +725,7 @@ function syncSearch(el){
   applyFilters();
 }
 function buildMobileLists(){
+  _rebuilding=true;
   // ブランドのみ（カテゴリはタブバーで選択）
   const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
   const brands=[...new Set(src.map(p=>p.brand).filter(Boolean))].sort();
@@ -722,6 +738,7 @@ function buildMobileLists(){
     lbl.dataset.brand=brand;
     bel.appendChild(lbl);
   });
+  _rebuilding=false;
   buildAZBar('brand-az-mobile',brands);
   const minp=document.getElementById('brand-search-mobile');if(minp)minp.value='';
   // 件数バッジ
