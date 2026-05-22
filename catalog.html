@@ -590,7 +590,6 @@ function buildPageGroups(items){
   return groups;
 }
 function applyFilters(){
-  console.log('[applyFilters] cats:',[...selCats],'brands:',[...selBrands],new Error().stack.split('\n')[1]);
   renderChips();
   pageItems=getFiltered();
   pageGroups=viewMode==='groups'?buildPageGroups(pageItems):pageItems.map(p=>({type:'item',product:p}));
