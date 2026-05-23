@@ -693,6 +693,10 @@ def build_headers():
     """Cloudflare Pages 用 _headers（Cache-Control）"""
     headers = """\
 # Cloudflare Pages Cache-Control
+/catalog.html
+  Cache-Control: no-cache, must-revalidate
+/index.html
+  Cache-Control: no-cache, must-revalidate
 /products.json
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 /data/*.json
