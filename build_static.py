@@ -63,7 +63,7 @@ CAT_JA = {
     "SNEAKERS": "スニーカー", "HOODIES": "パーカー", "T-SHIRTS": "Tシャツ",
     "JACKETS": "ジャケット", "JEANS": "ジーンズ", "PANTS": "パンツ",
     "SHORTS": "ショーツ", "SWEATERS": "スウェット", "TOPS": "トップス",
-    "SHIRTS": "シャツ", "BAGS": "バッグ", "ACCESSORIES": "アクセサリー",
+    "SHIRTS": "シャツ", "BAGS": "バッグ", "BELTS": "ベルト", "ACCESSORIES": "アクセサリー",
     "HATS": "ハット", "SOCKS": "ソックス", "OTHER": "その他",
 }
 
@@ -339,6 +339,7 @@ def build_category_pages(products, out_dir):
         "TOPS":"レプリカトップス・ベスト・ポロシャツ。",
         "SHIRTS":"レプリカシャツ・フランネル・ワークシャツ。",
         "BAGS":"レプリカバッグ・トート・バックパック。",
+        "BELTS":"レプリカベルト。Louis Vuitton・Gucci・Hermesなど高級ブランドのベルトを厳選。",
         "ACCESSORIES":"レプリカアクセサリー・キャップ・ソックス。",
     }
 
@@ -577,7 +578,7 @@ def patch_index(products):
 
     # カテゴリ別に均等に選んで多様性を確保
     from collections import defaultdict
-    CAT_ORDER = ["SNEAKERS","HOODIES","T-SHIRTS","JACKETS","JEANS","PANTS","SHORTS","SWEATERS","TOPS","SHIRTS","BAGS","ACCESSORIES"]
+    CAT_ORDER = ["SNEAKERS","HOODIES","T-SHIRTS","JACKETS","JEANS","PANTS","SHORTS","SWEATERS","TOPS","SHIRTS","BAGS","BELTS","ACCESSORIES"]
     by_cat = defaultdict(list)
     for p in products:
         t = p.get("type","")
@@ -673,7 +674,7 @@ def split_products_json(products, updated):
 
     # カテゴリ一覧メタ（件数のみ、nav 描画用）
     CAT_ORDER = ["SNEAKERS","HOODIES","T-SHIRTS","JACKETS","JEANS","PANTS","SHORTS",
-                 "SWEATERS","TOPS","SHIRTS","BAGS","ACCESSORIES"]
+                 "SWEATERS","TOPS","SHIRTS","BAGS","BELTS","ACCESSORIES"]
     sorted_cats = (
         [c for c in CAT_ORDER if c in by_cat] +
         sorted(c for c in by_cat if c not in CAT_ORDER)

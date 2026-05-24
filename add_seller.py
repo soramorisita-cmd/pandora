@@ -218,8 +218,9 @@ PRODUCT_TYPES = [
     ("SHIRTS",      ["shirt", "flannel", "oxford", "button", "シャツ", "衬衫"]),
     ("BAGS",        ["bag", "tote", "backpack", "pack", "pouch", "バッグ", "背包", "挎包"]),
     ("HATS",        ["cap", "hat", "beanie", "bucket", "snapback", "帽"]),
-    ("ACCESSORIES", ["belt", "keychain", "scarf", "glove", "wallet", "jersey",
-                     "手套", "围巾", "钥匙", "腰带"]),
+    ("BELTS",       ["belt", "ベルト", "腰带", "皮带"]),
+    ("ACCESSORIES", ["keychain", "scarf", "glove", "wallet", "jersey",
+                     "手套", "围巾", "钥匙"]),
 ]
 
 def classify(title: str) -> str:
