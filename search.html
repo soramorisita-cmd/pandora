@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>商品データ検索 — PANDORA</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f9faf6;--text:#1a1a1a;--border:#e5e7e0;--accent:#c8f03c;--accent-dark:#4a7a00;--accent2:#b8de2c;--muted:#888;--muted2:#555;--s2:#f0f2eb;--qc:#0284c7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{color:inherit;text-decoration:none}
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;gap:16px;overflow-x:auto}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--accent-dark);flex-shrink:0}
+.nav-link{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);padding:6px 12px;border-radius:6px;border:1px solid var(--border);white-space:nowrap;flex-shrink:0}
+.nav-link:hover{color:var(--accent-dark);border-color:rgba(74,122,0,.25)}
+.nav-link.active{color:var(--accent-dark);border-color:rgba(74,122,0,.4);background:rgba(74,122,0,.07)}
+.nav-luxury{color:#d4af37!important;border-color:rgba(212,175,55,.35)!important}
+.nav-luxury:hover{color:#f0cc5a!important;border-color:rgba(212,175,55,.6)!important}
+
+.wrap{max-width:660px;margin:0 auto;padding:44px 20px 80px}
+h1{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:var(--accent-dark);margin-bottom:6px}
+.subtitle{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.6}
+
+.search-box{display:flex;gap:8px;margin-bottom:10px}
+.search-input{
+  flex:1;border:2px solid var(--border);border-radius:10px;padding:13px 16px;
+  font-size:14px;font-family:inherit;background:#fff;outline:none;
+  transition:border-color .15s;min-width:0
+}
+.search-input:focus{border-color:var(--accent-dark)}
+.search-input::placeholder{color:var(--muted)}
+.search-btn{
+  background:var(--accent);color:#111;font-family:'Bebas Neue',sans-serif;
+  font-size:17px;letter-spacing:1.5px;padding:13px 22px;
+  border:none;border-radius:10px;cursor:pointer;white-space:nowrap;
+  transition:background .15s;flex-shrink:0
+}
+.search-btn:hover{background:var(--accent2)}
+.search-btn:active{transform:scale(.97)}
+
+.hint{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:32px}
+.hint strong{color:var(--muted2)}
+.hint code{background:var(--s2);padding:1px 5px;border-radius:4px;font-size:11px;font-family:monospace}
+
+/* ── 結果カード ── */
+#result{margin-top:4px}
+.result-card{
+  background:#fff;border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;display:flex;flex-direction:column
+}
+@media(min-width:500px){.result-card{flex-direction:row}}
+.result-img{width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--s2)}
+@media(min-width:500px){.result-img{width:200px;height:200px;flex-shrink:0}}
+.result-noimag{
+  width:100%;aspect-ratio:1/1;background:var(--s2);display:flex;
+  align-items:center;justify-content:center;font-size:10px;
+  letter-spacing:1px;color:var(--muted);text-transform:uppercase;font-weight:700
+}
+@media(min-width:500px){.result-noimag{width:200px;height:200px;flex-shrink:0}}
+.result-body{padding:20px 22px;flex:1;display:flex;flex-direction:column;gap:11px}
+.result-tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid var(--border)}
+.tag-brand{background:rgba(74,122,0,.08);color:var(--accent-dark);border-color:rgba(74,122,0,.2)}
+.tag-type{background:rgba(0,0,0,.05);color:var(--muted2);border-color:rgba(0,0,0,.09)}
+.result-title{font-size:13px;font-weight:600;color:var(--muted2);line-height:1.5}
+.result-price{font-size:20px;font-weight:800;color:var(--accent-dark);display:flex;align-items:baseline;gap:6px}
+.result-price-cny{font-size:12px;font-weight:600;color:var(--muted)}
+.result-weight{
+  display:flex;align-items:center;gap:8px;font-size:13px;
+  font-weight:700;background:rgba(74,122,0,.07);
+  border:1px solid rgba(74,122,0,.18);border-radius:9px;padding:10px 14px;
+  color:var(--accent-dark)
+}
+.result-weight-na{
+  font-size:12px;color:var(--muted);background:var(--s2);
+  border-radius:9px;padding:10px 14px;line-height:1.55
+}
+.result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:2px}
+.btn-buy{
+  font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;
+  color:#111;background:var(--accent);padding:10px 18px;border-radius:8px;
+  text-align:center;transition:background .15s
+}
+.btn-buy:hover{background:var(--accent2)}
+.btn-acbuy{
+  font-size:12px;font-weight:700;color:var(--qc);
+  background:rgba(2,132,199,.08);border:1px solid rgba(2,132,199,.22);
+  padding:10px 14px;border-radius:8px;transition:background .15s
+}
+.btn-acbuy:hover{background:rgba(2,132,199,.14)}
+
+/* ── 状態 ── */
+.err{background:#fff3f3;border:1px solid #fca5a5;color:#b91c1c;border-radius:10px;padding:16px 20px;font-size:14px;line-height:1.6}
+.loading{text-align:center;color:var(--muted);padding:40px 0;font-size:14px}
+
+footer{text-align:center;padding:24px;font-size:11px;color:var(--muted);letter-spacing:1px}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">PANDORA</a>
+    <a class="nav-link" href="/catalog.html">全商品</a>
+    <a class="nav-link nav-luxury" href="/luxury/">LUXURY</a>
+    <a class="nav-link active" href="/search.html">商品検索</a>
+    <a class="nav-link" href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <h1>商品データ検索</h1>
+  <p class="subtitle">商品URLを貼り付けると、重量・体積・価格などの詳細データを表示します。</p>
+
+  <div class="search-box">
+    <input class="search-input" id="url-input" type="url"
+      placeholder="YupooのURLまたは商品URLを貼り付けてください"
+      autocomplete="off" spellcheck="false">
+    <button class="search-btn" onclick="doSearch()">検索</button>
+  </div>
+  <div class="hint">
+    <strong>対応URL例：</strong><br>
+    Yupoo: <code>misschen7.x.yupoo.com/albums/123456789</code><br>
+    Weidian: <code>weidian.com/item.html?itemID=123456</code><br>
+    Taobao: <code>item.taobao.com/item.htm?id=123456</code><br>
+    Kakobuy: <code>kakobuy.com/products/item?itemId=123456&amp;platform=weidian</code>
+  </div>
+
+  <div id="result"></div>
+</div>
+
+<footer>PANDORA &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuyで購入</a></footer>
+
+<script>
+const CAT_JA = {
+  SNEAKERS:"スニーカー", CLOTHING:"ウェア", BAGS:"バッグ", BELTS:"ベルト",
+  ACCESSORIES:"アクセサリー", CAPS:"キャップ", SHOES:"シューズ",
+  WATCHES:"ウォッチ", JEWELRY:"ジュエリー", OTHER:"その他"
+};
+
+// row indices: [title, brand, type, image, price_cny, price_jpy, weight_g, volume_cm, kakobuy, purchase]
+const T=0, B=1, C=2, IMG=3, PC=4, PJ=5, W=6, V=7, KK=8, PU=9;
+
+let lookupData = null;
+
+async function loadLookup() {
+  if (lookupData) return lookupData;
+  const res = await fetch('/product-lookup.json');
+  if (!res.ok) throw new Error('fetch failed');
+  lookupData = await res.json();
+  return lookupData;
+}
+
+function extractId(raw) {
+  const url = raw.trim();
+  // Yupoo album ID
+  const alb = url.match(/\/albums?\/(\d+)/);
+  if (alb) return { type: 'a', id: alb[1] };
+  try {
+    const u = new URL(url);
+    const h = u.hostname.toLowerCase();
+    const p = u.searchParams;
+    // Kakobuy
+    if (h.includes('kakobuy.com')) {
+      const id = p.get('itemId');
+      if (id) return { type: 'i', id };
+    }
+    // Weidian
+    if (h.includes('weidian.com')) {
+      const id = p.get('itemID') || p.get('id');
+      if (id) return { type: 'i', id };
+    }
+    // Taobao / Tmall
+    if (h.includes('taobao.com') || h.includes('tmall.com')) {
+      const id = p.get('id');
+      if (id) return { type: 'i', id };
+    }
+  } catch {}
+  return null;
+}
+
+function buildAcbuyUrl(purchase) {
+  if (!purchase) return null;
+  try {
+    const u = new URL(purchase);
+    const h = u.hostname.toLowerCase();
+    const p = u.searchParams;
+    if (h.includes('weidian.com')) {
+      const id = p.get('itemID') || p.get('id');
+      if (id) return `https://www.acbuy.com/product?url=${encodeURIComponent(purchase)}&id=${id}&source=WD`;
+    }
+    if (h.includes('taobao.com') || h.includes('tmall.com')) {
+      const id = p.get('id');
+      if (id) return `https://www.acbuy.com/product?url=${encodeURIComponent(purchase)}&id=${id}&source=TB`;
+    }
+  } catch {}
+  return null;
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderResult(row) {
+  const catJa = CAT_JA[row[C]] || row[C] || '';
+  const imgHtml = row[IMG]
+    ? `<img class="result-img" src="${esc(row[IMG])}" alt="${esc(row[T])}" loading="lazy">`
+    : `<div class="result-noimag">NO IMAGE</div>`;
+
+  let priceHtml = '';
+  if (row[PJ]) {
+    const cnyPart = row[PC] ? `<span class="result-price-cny">/ ¥${esc(row[PC])} CNY</span>` : '';
+    priceHtml = `<div class="result-price">¥${Number(row[PJ]).toLocaleString('ja-JP')}${cnyPart}</div>`;
+  } else if (row[PC]) {
+    priceHtml = `<div class="result-price"><span class="result-price-cny">¥${esc(row[PC])} CNY</span></div>`;
+  }
+
+  let weightHtml;
+  if (row[W]) {
+    const vol = row[V] ? ` <span style="font-weight:400;color:var(--muted2)">· ${String(row[V]).replace(/\*/g,'×')} cm</span>` : '';
+    weightHtml = `<div class="result-weight">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M12 2a4 4 0 0 1 4 4H8a4 4 0 0 1 4-4z"/>
+        <rect x="3" y="6" width="18" height="15" rx="2"/>
+      </svg>
+      ${esc(row[W])}g${vol}
+    </div>`;
+  } else {
+    const acbuyUrl = buildAcbuyUrl(row[PU]);
+    const acbuyLink = acbuyUrl
+      ? ` <a href="${esc(acbuyUrl)}" target="_blank" rel="noopener" style="color:var(--qc);text-decoration:underline;text-underline-offset:2px">ACbuyで確認</a>`
+      : '';
+    weightHtml = `<div class="result-weight-na">重量データは未取得です。${acbuyLink}</div>`;
+  }
+
+  const kakobuy = row[KK] || row[PU];
+  const buyBtn = kakobuy
+    ? `<a class="btn-buy" href="${esc(kakobuy)}" target="_blank" rel="noopener">Kakobuyで見る →</a>`
+    : '';
+  const acbuyUrl = buildAcbuyUrl(row[PU]);
+  const acbuyBtn = acbuyUrl
+    ? `<a class="btn-acbuy" href="${esc(acbuyUrl)}" target="_blank" rel="noopener">ACbuyで確認</a>`
+    : '';
+
+  return `<div class="result-card">
+  ${imgHtml}
+  <div class="result-body">
+    <div class="result-tags">
+      ${row[B] ? `<span class="tag tag-brand">${esc(row[B])}</span>` : ''}
+      ${catJa  ? `<span class="tag tag-type">${esc(catJa)}</span>`  : ''}
+    </div>
+    <div class="result-title">${esc(row[T])}</div>
+    ${priceHtml}
+    ${weightHtml}
+    <div class="result-actions">${buyBtn}${acbuyBtn}</div>
+  </div>
+</div>`;
+}
+
+async function doSearch() {
+  const input = document.getElementById('url-input').value.trim();
+  const out   = document.getElementById('result');
+  if (!input) return;
+
+  const key = extractId(input);
+  if (!key) {
+    out.innerHTML = `<div class="err">対応していないURLです。<br>Yupoo・Weidian・Taobao・KakobuyのURLを入力してください。</div>`;
+    return;
+  }
+
+  out.innerHTML = `<div class="loading">検索中…</div>`;
+  try {
+    const data = await loadLookup();
+    const row  = (data[key.type] || {})[key.id];
+    if (!row) {
+      out.innerHTML = `<div class="err">商品が見つかりませんでした。<br><small style="opacity:.7">このサイトに掲載されていない商品の可能性があります。</small></div>`;
+      return;
+    }
+    out.innerHTML = renderResult(row);
+  } catch {
+    out.innerHTML = `<div class="err">データの読み込みに失敗しました。ページを再読み込みしてお試しください。</div>`;
+  }
+}
+
+document.getElementById('url-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+
+// URLパラメータから自動検索（?q=<url>）
+(function(){
+  const q = new URLSearchParams(location.search).get('q');
+  if (q) {
+    document.getElementById('url-input').value = q;
+    doSearch();
+  }
+})();
+</script>
+</body>
+</html>

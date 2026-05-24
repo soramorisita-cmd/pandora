@@ -20,7 +20,7 @@ build_static.py — PR1 SSG ビルドスクリプト
 
 import json, re, sys, io, argparse, time
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
@@ -53,6 +53,7 @@ NAV_HTML = """\
     <a class="nav-logo" href="/">PANDORA</a>
     <a class="nav-link" href="/catalog.html">全商品</a>
     <a class="nav-link nav-luxury" href="/luxury/">LUXURY</a>
+    <a class="nav-link" href="/search.html">商品検索</a>
     <a class="nav-link" href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy</a>
   </div>
 </nav>"""
@@ -157,6 +158,8 @@ a{color:inherit;text-decoration:none}
 .card-title{font-size:13px;font-weight:600;color:var(--muted2);line-height:1.45;flex:1}
 .card-price{font-size:17px;font-weight:800;color:var(--accent-dark);letter-spacing:.3px;display:flex;align-items:baseline;gap:5px}
 .card-price-cny{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0}
+.card-weight{font-size:11px;color:var(--muted);letter-spacing:0;display:flex;align-items:center;gap:3px}
+.card-weight svg{opacity:.55}
 .card-actions{display:flex;gap:5px;margin-top:2px}
 .btn-buy{flex:1;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;color:#111;background:var(--accent);padding:9px 8px;border-radius:7px}
 .btn-buy:hover{background:var(--accent2)}
@@ -173,6 +176,8 @@ def make_card_html(p, link_to_product=True):
     brand  = esc(p.get("brand",""))
     ptype  = esc(p.get("type",""))
     img    = abs_img(p.get("image",""))
+    weight_g  = p.get("weight_g")
+    volume_cm = p.get("volume_cm","")
     aid    = album_id_from_yupoo(p.get("yupoo",""))
     prod_url = f"/products/{aid}.html" if aid and link_to_product else None
 
@@ -186,6 +191,17 @@ def make_card_html(p, link_to_product=True):
 
     title_html = f'<a href="{prod_url}">{esc(title)}</a>' if prod_url else esc(title)
     cny_html   = f'<span class="card-price-cny">/ {cny}</span>' if cny else ''
+    if weight_g:
+        vol_str = volume_cm.replace("*", "×") if volume_cm else ""
+        vol_part = f" · {vol_str}cm" if vol_str else ""
+        weight_html = (
+            f'<div class="card-weight">'
+            f'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">'
+            f'<path d="M12 2a4 4 0 0 1 4 4H8a4 4 0 0 1 4-4z"/><rect x="3" y="6" width="18" height="15" rx="2"/>'
+            f'</svg>{weight_g}g{vol_part}</div>'
+        )
+    else:
+        weight_html = ''
 
     return f"""<div class="card">
   {img_html}
@@ -196,6 +212,7 @@ def make_card_html(p, link_to_product=True):
     </div>
     <div class="card-title">{title_html}</div>
     {f'<div class="card-price">{price}{cny_html}</div>' if price else ''}
+    {weight_html}
     <div class="card-actions">
       <a class="btn-buy" href="{buy}" target="_blank" rel="noopener">Kakobuyで見る →</a>
       <a class="btn-qc" href="{qc}" target="_blank" rel="noopener">QC</a>
@@ -719,6 +736,50 @@ def build_headers():
     print("  [headers] _headers 生成完了")
 
 
+# ── 商品ルックアップJSON生成 ────────────────────────────────────────────
+def generate_lookup_json(products: list):
+    by_album = {}
+    by_item  = {}
+    for p in products:
+        row = [
+            p.get("title", "")[:80],
+            p.get("brand", ""),
+            p.get("type", ""),
+            p.get("image", ""),
+            p.get("price_cny") or "",
+            p.get("price_jpy") or "",
+            p.get("weight_g") or "",
+            p.get("volume_cm") or "",
+            p.get("kakobuy") or "",
+            p.get("purchase") or "",
+        ]
+        yupoo = p.get("yupoo", "")
+        if yupoo:
+            m = re.search(r'/albums?/(\d+)', yupoo)
+            if m:
+                by_album[m.group(1)] = row
+        purchase = p.get("purchase", "")
+        if purchase:
+            try:
+                parsed = urlparse(purchase)
+                qs     = parse_qs(parsed.query)
+                netloc = parsed.netloc.lower()
+                if "weidian.com" in netloc:
+                    item_id = (qs.get("itemID") or qs.get("id") or [None])[0]
+                    if item_id:
+                        by_item[item_id] = row
+                elif "taobao.com" in netloc or "tmall.com" in netloc:
+                    item_id = qs.get("id", [None])[0]
+                    if item_id:
+                        by_item[item_id] = row
+            except Exception:
+                pass
+    lookup = {"a": by_album, "i": by_item}
+    out_path = ROOT / "product-lookup.json"
+    out_path.write_text(json.dumps(lookup, ensure_ascii=False, separators=(",", ":")), "utf-8")
+    print(f"  [lookup] {len(by_album)} albums / {len(by_item)} items → product-lookup.json")
+
+
 # ── メイン ──────────────────────────────────────────────────────────
 def main():
     global DOMAIN
@@ -750,6 +811,7 @@ def main():
     split_products_json(products, data.get("updated", ""))
     build_headers()
     patch_index(products)
+    generate_lookup_json(products)
 
     print(f"\n[build] 完了！")
 
