@@ -187,15 +187,17 @@ footer a{color:var(--accent);text-decoration:none}
 }
 /* ── DRAWER（モバイル用） ── */
 .mobile-filter-btn{
-  width:100%;margin-bottom:12px;
-  background:var(--accent);border:none;border-radius:9px;
-  color:#111;font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:14px;font-weight:800;
-  padding:13px 16px;cursor:pointer;display:none;align-items:center;justify-content:space-between;
-  box-shadow:0 2px 8px rgba(200,240,60,.35);
-  transition:background .15s,box-shadow .15s;
+  width:100%;margin-bottom:14px;
+  background:var(--accent);border:2px solid rgba(0,0,0,.13);border-radius:12px;
+  color:#111;font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:15px;font-weight:800;
+  letter-spacing:.4px;
+  padding:15px 18px;cursor:pointer;display:none;align-items:center;justify-content:space-between;
+  box-shadow:0 4px 14px rgba(180,230,40,.5),0 1px 3px rgba(0,0,0,.1);
+  transition:background .15s,box-shadow .15s,transform .1s;
 }
 @media(max-width:768px){.mobile-filter-btn{display:flex!important}}
-.mobile-filter-btn:hover{background:var(--accent2);box-shadow:0 3px 12px rgba(200,240,60,.45)}
+.mobile-filter-btn:hover{background:var(--accent2);box-shadow:0 6px 18px rgba(160,210,30,.55),0 1px 3px rgba(0,0,0,.12)}
+.mobile-filter-btn:active{transform:scale(.98)}
 .drawer-overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;
   opacity:0;pointer-events:none;transition:opacity .25s;
@@ -256,8 +258,14 @@ footer a{color:var(--accent);text-decoration:none}
   <!-- モバイルフィルターボタン -->
   <div style="max-width:1400px;margin:0 auto;padding:10px 14px 0">
     <button class="mobile-filter-btn" onclick="openDrawer()">
-      <span>🏷 ブランドで絞り込む</span>
-      <span style="color:var(--accent);font-size:11px" id="filter-badge"></span>
+      <span style="display:flex;align-items:center;gap:8px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+        ブランドで絞り込む
+      </span>
+      <span style="display:flex;align-items:center;gap:6px">
+        <span id="filter-badge" style="background:var(--accent-dark);color:#fff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;display:none"></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </span>
     </button>
   </div>
 
@@ -743,7 +751,9 @@ function buildMobileLists(){
   const minp=document.getElementById('brand-search-mobile');if(minp)minp.value='';
   // 件数バッジ
   const total=selCats.size+selBrands.size;
-  document.getElementById('filter-badge').textContent=total?`${total}件選択中`:'';
+  const badge=document.getElementById('filter-badge');
+  badge.textContent=total?`${total}件選択中`:'';
+  badge.style.display=total?'inline':'none';
   document.getElementById('drawer-count').textContent=getFiltered().length;
 }
 </script>
