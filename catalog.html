@@ -156,15 +156,15 @@ footer a{color:var(--accent);text-decoration:none}
 /* ── DRAWER（モバイル用） ── */
 .mobile-filter-btn{
   width:100%;margin-bottom:14px;
-  background:var(--accent);border:2px solid rgba(0,0,0,.13);border-radius:12px;
+  background:var(--accent);border:2px solid #7aaa00;border-bottom:4px solid #5a8800;border-radius:12px;
   color:#111;font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:15px;font-weight:800;
   letter-spacing:.4px;
   padding:15px 18px;cursor:pointer;display:none;align-items:center;justify-content:space-between;
-  box-shadow:0 4px 14px rgba(180,230,40,.5),0 1px 3px rgba(0,0,0,.1);
+  box-shadow:0 4px 12px rgba(0,0,0,.25);
   transition:background .15s,box-shadow .15s,transform .1s;
 }
-.mobile-filter-btn:hover{background:var(--accent2);box-shadow:0 6px 18px rgba(160,210,30,.55),0 1px 3px rgba(0,0,0,.12)}
-.mobile-filter-btn:active{transform:scale(.98)}
+.mobile-filter-btn:hover{background:var(--accent2);box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.mobile-filter-btn:active{transform:scale(.98);border-bottom-width:2px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
 @media(max-width:900px){
   .sidebar{display:none}
   .page{padding:10px;gap:0}
