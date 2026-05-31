@@ -551,8 +551,8 @@
       "batch": "B30",
       "purchase": "https://item.taobao.com/item.htm?id=830817506303",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D830817506303&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 625.88,
+      "price_jpy": 14696,
       "image": "https://photo.yupoo.com/2335499519/f6b3a0b1/medium.jpg"
     },
     {
@@ -779,8 +779,8 @@
       "batch": "B30",
       "purchase": "https://item.taobao.com/item.htm?id=830817506303",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D830817506303&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 625.88,
+      "price_jpy": 14696,
       "image": "https://photo.yupoo.com/2335499519/848ae6b7/medium.jpg"
     },
     {
@@ -1307,8 +1307,8 @@
       "batch": "B57",
       "purchase": "https://item.taobao.com/item.htm?id=865189403512",
       "kakobuy": "https://www.kakobuy.com/item/details?url=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D865189403512&affcode=a235412",
-      "price_cny": null,
-      "price_jpy": null,
+      "price_cny": 638.42,
+      "price_jpy": 14990,
       "image": "https://photo.yupoo.com/2335499519/2d603457/medium.jpeg"
     },
     {
