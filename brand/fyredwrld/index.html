@@ -25,6 +25,16 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 footer{text-align:center;padding:24px;font-size:11px;color:var(--muted);letter-spacing:1px}
 footer a{color:var(--muted2)}
 
+.gender-bar{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.gf-btn{font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  padding:5px 14px;border-radius:999px;border:1px solid var(--border);
+  background:var(--s1);color:var(--muted2);cursor:pointer;transition:.15s}
+.gf-btn:hover{background:var(--s2)}
+.gf-btn.active{background:var(--accent);color:#111;border-color:var(--accent2)}
+.card.g-hidden{display:none}
+.tag-women{background:rgba(236,72,153,.09);color:#be185d;border-color:rgba(236,72,153,.25)}
+.tag-men{background:rgba(59,130,246,.09);color:#1d4ed8;border-color:rgba(59,130,246,.25)}
+
 a{color:inherit;text-decoration:none}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-top:20px}
 .card{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .18s,transform .18s,box-shadow .18s;box-shadow:0 1px 4px rgba(0,0,0,.07),0 2px 10px rgba(0,0,0,.04)}
@@ -65,12 +75,14 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
 <div class="wrap">
   <h1>Fyredwrld</h1>
   <p class="sub">Fyredwrld のレプリカアイテム一覧。PANDORAが厳選したセラーから24点を掲載。</p>
+  
   <div class="grid"><div class="card">
   <a href="/products/232318676.html"><img class="card-img" src="https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/yupoo_232318676.jpg" alt="Firemade pants (inspired by Pinup )" loading="lazy"></a>
   <div class="card-body">
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">パンツ</span>
+      
     </div>
     <div class="card-title"><a href="/products/232318676.html">Firemade pants (inspired by Pinup )</a></div>
     <div class="card-price">¥4,803<span class="card-price-cny">/ 205元</span></div>
@@ -87,6 +99,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">ジーンズ</span>
+      
     </div>
     <div class="card-title"><a href="/products/223915210.html">FIREMADE selvedge denim jeans(inspired by seven3sevens)</a></div>
     <div class="card-price">¥5,934<span class="card-price-cny">/ 254元</span></div>
@@ -103,6 +116,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">ジャケット</span>
+      
     </div>
     <div class="card-title"><a href="/products/225324393.html">Firemade Double Layer Wool Shacket</a></div>
     <div class="card-price">¥7,453<span class="card-price-cny">/ 320元</span></div>
@@ -119,6 +133,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">スウェット</span>
+      
     </div>
     <div class="card-title"><a href="/products/229542469.html">Firemade FISHERMAN KNIT HENLEY (inspired by forthon.la)</a></div>
     <div class="card-price">¥4,192<span class="card-price-cny">/ 180元</span></div>
@@ -135,6 +150,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">スウェット</span>
+      
     </div>
     <div class="card-title"><a href="/products/223049841.html">Firemade mohair knit</a></div>
     <div class="card-price">¥5,590<span class="card-price-cny">/ 240元</span></div>
@@ -151,6 +167,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">スウェット</span>
+      
     </div>
     <div class="card-title"><a href="/products/223175973.html">Firemade navy knit (inspired by ElysianClo)</a></div>
     <div class="card-price">¥3,634<span class="card-price-cny">/ 155元</span></div>
@@ -167,6 +184,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">パーカー</span>
+      
     </div>
     <div class="card-title"><a href="/products/229677937.html">Firemade zip up hoodie (inspired by sweats)</a></div>
     <div class="card-price">¥3,959<span class="card-price-cny">/ 170元</span></div>
@@ -183,6 +201,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">パーカー</span>
+      
     </div>
     <div class="card-title"><a href="/products/229677814.html">Firemade hoodie (inspired by sweats)</a></div>
     <div class="card-price">¥3,494<span class="card-price-cny">/ 150元</span></div>
@@ -199,6 +218,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">アクセサリー</span>
+      
     </div>
     <div class="card-title"><a href="/products/235592238.html">Firemade green belt</a></div>
     <div class="card-price">¥4,192<span class="card-price-cny">/ 180元</span></div>
@@ -215,6 +235,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">ジャケット</span>
+      
     </div>
     <div class="card-title"><a href="/products/234772636.html">Firemade leather jacket (inspired by Mutimer)</a></div>
     <div class="card-price">¥22,824<span class="card-price-cny">/ 980元</span></div>
@@ -231,6 +252,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">アクセサリー</span>
+      
     </div>
     <div class="card-title"><a href="/products/233901267.html">Firemade snake skin belt (inspired by Mutimer )</a></div>
     <div class="card-price">¥4,210<span class="card-price-cny">/ 180元</span></div>
@@ -247,6 +269,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">トップス</span>
+      
     </div>
     <div class="card-title"><a href="/products/231823096.html">Firemade Striped Long Sleeve navy (inspired by colehenry)</a></div>
     <div class="card-price">¥4,192<span class="card-price-cny">/ 180元</span></div>
@@ -263,6 +286,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">トップス</span>
+      
     </div>
     <div class="card-title"><a href="/products/232317084.html">Firemade picnic thermals Green(inspired by East ridge)</a></div>
     <div class="card-price">¥4,658<span class="card-price-cny">/ 200元</span></div>
@@ -279,6 +303,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">トップス</span>
+      
     </div>
     <div class="card-title"><a href="/products/229541812.html">Firemade henley (inspired by Cole Henry)</a></div>
     <div class="card-price">¥4,658<span class="card-price-cny">/ 200元</span></div>
@@ -295,6 +320,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">トップス</span>
+      
     </div>
     <div class="card-title"><a href="/products/229541598.html">Firemade picnic thermals(inspired by East ridge)</a></div>
     <div class="card-price">¥4,658<span class="card-price-cny">/ 200元</span></div>
@@ -311,6 +337,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">アクセサリー</span>
+      
     </div>
     <div class="card-title"><a href="/products/227836922.html">Firemade red belt</a></div>
     <div class="card-price">¥4,192<span class="card-price-cny">/ 180元</span></div>
@@ -327,6 +354,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">パンツ</span>
+      
     </div>
     <div class="card-title"><a href="/products/227430726.html">Firemade Fatigue Canvas Pants( inspired by Thecolearchive)</a></div>
     <div class="card-price">¥6,242<span class="card-price-cny">/ 268元</span></div>
@@ -343,6 +371,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">ジーンズ</span>
+      
     </div>
     <div class="card-title"><a href="/products/227430163.html">Firemade navy japanese selvedge denim (inspired by BERLINC)</a></div>
     <div class="card-price">¥7,802<span class="card-price-cny">/ 335元</span></div>
@@ -359,6 +388,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">パーカー</span>
+      
     </div>
     <div class="card-title"><a href="/products/224869034.html">FIREMADE &quot;WATCH-PEEKER&quot; DISTRESSED HOODIE</a></div>
     <div class="card-price">¥5,830<span class="card-price-cny">/ 250元</span></div>
@@ -375,6 +405,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">ジーンズ</span>
+      
     </div>
     <div class="card-title"><a href="/products/223915379.html">FIREMADE Rinsed Denim jeans</a></div>
     <div class="card-price">¥6,204<span class="card-price-cny">/ 266元</span></div>
@@ -391,6 +422,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">ジーンズ</span>
+      
     </div>
     <div class="card-title"><a href="/products/222458774.html">Firemade black japanese selvedge denim (inspired by BERLINC)</a></div>
     <div class="card-price">¥7,802<span class="card-price-cny">/ 335元</span></div>
@@ -407,6 +439,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">ジーンズ</span>
+      
     </div>
     <div class="card-title"><a href="/products/220999853.html">Firemade Raw denim selvedge jeans</a></div>
     <div class="card-price">¥7,966<span class="card-price-cny">/ 341元</span></div>
@@ -423,6 +456,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">ジーンズ</span>
+      
     </div>
     <div class="card-title"><a href="/products/220862268.html">Firemade Cream selvedge denim jeans</a></div>
     <div class="card-price">¥7,929<span class="card-price-cny">/ 340元</span></div>
@@ -439,6 +473,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
     <div class="card-tags">
       <span class="tag tag-brand">Fyredwrld</span>
       <span class="tag tag-type">ジーンズ</span>
+      
     </div>
     <div class="card-title"><a href="/products/220862190.html">Firemade Jet black selvedge denim jeans</a></div>
     <div class="card-price">¥7,968<span class="card-price-cny">/ 341元</span></div>
@@ -452,5 +487,6 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
   <a class="more-link" href="/catalog.html">&larr; 全カタログへ</a>
 </div>
 <footer>PANDORA &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy で購入</a></footer>
+
 </body>
 </html>
