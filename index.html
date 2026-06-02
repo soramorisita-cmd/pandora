@@ -92,6 +92,10 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 .view-toggle-btn{background:transparent;border:none;padding:6px 12px;font-size:12px;font-weight:700;color:var(--muted2);cursor:pointer;transition:all .12s;white-space:nowrap;font-family:'DM Sans',sans-serif}
 .view-toggle-btn:hover{background:var(--s2);color:var(--text)}
 .view-toggle-btn.active{background:var(--accent);color:#111}
+.gender-toggle .gender-btn{padding:6px 9px;font-size:13px}
+.gender-toggle .gender-btn[data-g="WOMEN"].active{background:#fce7f3;color:#be185d}
+.gender-toggle .gender-btn[data-g="MEN"].active{background:#dbeafe;color:#1d4ed8}
+.gender-toggle .gender-btn[data-g="UNISEX"].active{background:var(--s3);color:var(--text)}
 /* CARDS */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
 .card{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .18s,transform .18s,box-shadow .18s;box-shadow:0 1px 4px rgba(0,0,0,.07),0 2px 10px rgba(0,0,0,.04)}
@@ -328,6 +332,12 @@ footer a{color:var(--accent-dark);text-decoration:none}
           <div class="view-toggle">
             <button class="view-toggle-btn" data-mode="flat" onclick="setViewMode('flat')">一覧</button>
             <button class="view-toggle-btn" data-mode="groups" onclick="setViewMode('groups')">モデル別</button>
+          </div>
+          <div class="view-toggle gender-toggle">
+            <button class="view-toggle-btn gender-btn active" data-g="all" onclick="setGender('all')">ALL</button>
+            <button class="view-toggle-btn gender-btn" data-g="WOMEN" onclick="setGender('WOMEN')">♀</button>
+            <button class="view-toggle-btn gender-btn" data-g="MEN" onclick="setGender('MEN')">♂</button>
+            <button class="view-toggle-btn gender-btn" data-g="UNISEX" onclick="setGender('UNISEX')">U</button>
           </div>
           <select id="sort-select" onchange="applyFilters()" style="background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--muted2);font-size:12px;font-weight:700;padding:6px 10px;outline:none;cursor:pointer">
           <option value="default">並び順: 標準</option>
@@ -613,6 +623,12 @@ const CAT_JA={"SNEAKERS":"スニーカー","HOODIES":"パーカー","T-SHIRTS":"
 let ALL=[],ALL_PRODUCTS=[],selCats=new Set(),selBrands=new Set(),allCats=[],_rebuilding=false;
 const PAGE_SIZE=48;let pageItems=[];let pageGroups=[];let renderedCount=0;
 let viewMode=localStorage.getItem('pdra_view')||'flat';
+let selGender=localStorage.getItem('pdra_gender')||'all';
+function setGender(g){
+  selGender=g;localStorage.setItem('pdra_gender',g);
+  document.querySelectorAll('.gender-btn').forEach(b=>b.classList.toggle('active',b.dataset.g===g));
+  applyFilters();
+}
 function buildPageGroups(items){
   const modelMap=new Map();
   items.forEach(p=>{if(p.model){if(!modelMap.has(p.model))modelMap.set(p.model,[]);modelMap.get(p.model).push(p);}});
@@ -673,6 +689,11 @@ function getFiltered(){
   let items=base.filter(p=>{
     if(selCats.size&&!selCats.has(p.type))return false;
     if(selBrands.size&&!selBrands.has(p.brand||''))return false;
+    if(selGender!=='all'){
+      const pg=p.gender||'';
+      if(selGender==='UNISEX'){if(pg!==''&&pg!=='UNISEX')return false;}
+      else if(pg!==selGender)return false;
+    }
     if(q&&!(p.title+' '+p.type+' '+(p.brand||'')).toLowerCase().includes(q))return false;
     return true;
   });
@@ -931,7 +952,8 @@ async function init(){
       nc.appendChild(a);
     });
     buildCatList();buildBrandList();buildBrandBar();
-    document.querySelectorAll('.view-toggle-btn').forEach(b=>b.classList.toggle('active',b.dataset.mode===viewMode));
+    document.querySelectorAll('.view-toggle-btn[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===viewMode));
+    document.querySelectorAll('.gender-btn').forEach(b=>b.classList.toggle('active',b.dataset.g===selGender));
     applyFilters();
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
