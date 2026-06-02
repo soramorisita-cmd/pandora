@@ -111,13 +111,13 @@
     "model": "M11393",
     "name": "新品同様 ルイヴィトン モノグラムアンプラント バビロン トート PM ハンドバッグ トートバッグ ショルダーバッグ ブラック M11393",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M11394": {
     "model": "M11394",
     "name": "【中古】 ルイヴィトン モノグラム アンプラント バビロン トートPM ショルダーバッグ M11394 ルイ・ヴィトン LOUIS VUITTON【質屋】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M11401": {
     "model": "M11401",
@@ -129,7 +129,7 @@
     "model": "M11463",
     "name": "【未使用品】ルイヴィトン　モノグラムアンプラント　バビロントート　ＰＭ　Ｍ１１４６３　バッグ",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M11462": {
     "model": "M11462",
@@ -158,13 +158,13 @@
   "M11496": {
     "model": "M11496",
     "name": "（未使用　展示品）LOUIS VUITTON ルイ ヴィトン M11496 スティーマー ウェアラブル ウォレット モノグラムエクリプスリバース グレー ショルダーバッグ",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M11497": {
     "model": "M11497",
     "name": "【週末タイムセール★30％OFF】ルイヴィトン キーケース /6連キーケース レディース /ミュルティクレ6 エピ ノワール（黒） 中古",
-    "category": "Other",
+    "category": "ACCESSORIES",
     "gender": "WOMEN"
   },
   "M11508": {
@@ -272,7 +272,7 @@
   "M11657": {
     "model": "M11657",
     "name": "【週末タイムセール★30％OFF】ルイヴィトン キーケース 6連キーケース レディース ミュルティクレ6 モノグラム ブラウン 中古",
-    "category": "Other",
+    "category": "ACCESSORIES",
     "gender": "WOMEN"
   },
   "M11648": {
@@ -302,8 +302,8 @@
   "M11703": {
     "model": "M11703",
     "name": "ルイヴィトン モノグラム エクリプス リバース アヴェニュー スリングバッグ M11703 バッグ",
-    "category": "BAGS",
-    "gender": "UNISEX"
+    "category": "JEWELRY",
+    "gender": "MEN"
   },
   "M11743": {
     "model": "M11743",
@@ -435,7 +435,7 @@
     "model": "M12144",
     "name": "ルイヴィトン ハンドバッグ モノグラム・アンプラント ナノ・マドレーヌ M12144 2way ショルダーバッグ 黒 ブラック",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M12109": {
     "model": "M12109",
@@ -548,13 +548,13 @@
   "M12517": {
     "model": "M12517",
     "name": "ルイヴィトン LOUIS VUITTON モノグラム エクリプス メッセンジャー・ヴォワヤージュ PM M12517 RFID ICチップ 未使用 [質イコー]",
-    "category": "Other",
+    "category": "BAGS",
     "gender": "UNISEX"
   },
   "M12599": {
     "model": "M12599",
     "name": "LOUIS VUITTON ルイヴィトン M12599 ボスフォールウォレット ショルダーバッグ モノグラムエクリプス メンズ 中古",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "MEN"
   },
   "M12561": {
@@ -620,8 +620,8 @@
   "M12636": {
     "model": "M12636",
     "name": "LOUIS VUITTON ルイヴィトン パルスウェアラブルウォレット モノグラムシャドウ ブラック M12636 RFID",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M12638": {
     "model": "M12638",
@@ -722,7 +722,7 @@
   "M12729": {
     "model": "M12729",
     "name": "ルイヴィトン LOUIS VUITTON ホライズンライン サンダル 靴 シューズ レザー ホワイト 白 ゴールド LV金具 ストラップ",
-    "category": "SNEAKERS",
+    "category": "ACCESSORIES",
     "gender": "UNISEX"
   },
   "M12713": {
@@ -776,7 +776,7 @@
   "M12806": {
     "model": "M12806",
     "name": "並行輸入 ルイヴィトン ショルダーバッグ Louis Vuitton モノグラム・エクリプス パルス・ウェアラブル ウォレット M12806メンズ ブラック 黒",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "MEN"
   },
   "M12808": {
@@ -806,8 +806,8 @@
   "M12811": {
     "model": "M12811",
     "name": "ルイ・ヴィトン スティーマー・ウェアラブル ウォレット(M12811)モノグラム・マカサー サフランイエロー ショルダーウォレット",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M12818": {
     "model": "M12818",
@@ -909,7 +909,7 @@
     "model": "M12930",
     "name": "未使用 ルイヴィトン モノグラム アンプラント ブーローニュ PM ワンショルダーバッグ ショルダーバッグ セミショルダーバッグ ホーボーバッグ M12930",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M12939": {
     "model": "M12939",
@@ -963,7 +963,7 @@
     "model": "M13044",
     "name": "LOUIS VUITTON ルイヴィトン モノグラムアンプラント オールインGM ハンドバッグ トートバッグ ブラック レザー M13044 ゴールド金具",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M13023": {
     "model": "M13023",
@@ -1137,7 +1137,7 @@
     "model": "M13224",
     "name": "ルイヴィトン バイカラー モノグラム アンプラント ブーローニュ PM M13224 バッグ",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M13226": {
     "model": "M13226",
@@ -1280,8 +1280,8 @@
   "M13409": {
     "model": "M13409",
     "name": "ルイ ヴィトン × 村上隆 モノグラム マルチカラー ジッピーコインパース コインケース M13409 ブラック PVC LOUIS VUITTON 【中古】",
-    "category": "ACCESSORIES",
-    "gender": "UNISEX"
+    "category": "WALLETS",
+    "gender": "WOMEN"
   },
   "M13440": {
     "model": "M13440",
@@ -1299,7 +1299,7 @@
     "model": "M13480",
     "name": "（未使用　展示品）LOUIS VUITTON ルイ ヴィトン M13480 オール イン BB モノグラムアンプラント ブラック ショルダー ハンドバッグ レザー ポーチ付き",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M13484": {
     "model": "M13484",
@@ -1334,8 +1334,8 @@
   "M13569": {
     "model": "M13569",
     "name": "★3日以内返品可★ 美品 LOUIS VUITTON ルイ・ヴィトン モノグラム アンプラント ウォレット オン チェーン",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M13571": {
     "model": "M13571",
@@ -1740,7 +1740,7 @@
   "M14020": {
     "model": "M14020",
     "name": "ルイヴィトン LOUIS VUITTON マヤライン サンダル 靴 シューズ パテント オフホワイト LVロゴ モノグラムフラワー ストラップ",
-    "category": "SNEAKERS",
+    "category": "ACCESSORIES",
     "gender": "UNISEX"
   },
   "M14038": {
@@ -1758,8 +1758,8 @@
   "M14058": {
     "model": "M14058",
     "name": "ルイヴィトン ショルダーバッグ モノグラム・アーカイヴ トロカデロ・ウェアラブル ウォレット M14058 LOUIS VUITTON ヴィトン 【安心保証】",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M14069": {
     "model": "M14069",
@@ -1771,7 +1771,7 @@
     "model": "M14072",
     "name": "ルイヴィトン バックパック サイズ:PM M14072 ディスカバリー・バックパック モノグラムレザーリュック 中古 SB01",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M14078": {
     "model": "M14078",
@@ -1782,7 +1782,7 @@
   "M14092": {
     "model": "M14092",
     "name": "ルイヴィトン ■未使用■IC■ ミュルティクレ 6 6連 キーケース 村上隆 コラボ モノグラム キャンバス マルチカラー  M14092 箱【673146】8",
-    "category": "Other",
+    "category": "ACCESSORIES",
     "gender": "UNISEX"
   },
   "M14111": {
@@ -1794,7 +1794,7 @@
   "M14114": {
     "model": "M14114",
     "name": "ルイヴィトン ガストンウェアラブルウォレット ショルダーバッグ  M14114 ライトブルー メンズ  中古SA品",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "MEN"
   },
   "M14124": {
@@ -1944,8 +1944,8 @@
   "M14253": {
     "model": "M14253",
     "name": "（未使用　展示品）LOUIS VUITTON ルイ ヴィトン M14253 トロカデロ ウェアラブル ウォレット モノグラムエクリプス ブラック ショルダーバッグ 斜め掛け",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M14303": {
     "model": "M14303",
@@ -1957,7 +1957,7 @@
     "model": "M14291",
     "name": "（未使用　展示品）LOUIS VUITTON ルイ ヴィトン M14291 スピーディ バンドリエール 20 モノグラムアンプラント バイカラーエデン ピンク ハンドバッグ レザー",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M14316": {
     "model": "M14316",
@@ -1987,7 +1987,7 @@
     "model": "M14403",
     "name": "ルイヴィトン モノグラムアンプラント エデン オンザゴーPM 2WAYバッグ ハンドバッグ ショルダーバッグ レザー M14403 ゴールド金具",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M14370": {
     "model": "M14370",
@@ -2046,14 +2046,14 @@
   "M14547": {
     "model": "M14547",
     "name": "ルイヴィトン ウォレット オン チェーン LVブルーム M14547 チェーンウォレット",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M14564": {
     "model": "M14564",
     "name": "（新品・未使用品）LOUIS VUITTON ルイ ヴィトン M14564 ウォレット オン チェーン LV ブルーム カーフレザー ブラック ショルダーバッグ ゴールド シルバー金具",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M14548": {
     "model": "M14548",
@@ -2119,7 +2119,7 @@
     "model": "M14634",
     "name": "ルイヴィトン LOUIS VUITTON ブーローニュ PM アンプラント M14634 ピンク",
     "category": "Other",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M14651": {
     "model": "M14651",
@@ -2131,7 +2131,7 @@
     "model": "M14673",
     "name": "ルイヴィトン モノグラム グロウ ディスカバリー バックパック M14673 リュックサック",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M14653": {
     "model": "M14653",
@@ -2160,8 +2160,8 @@
   "M14684": {
     "model": "M14684",
     "name": "ルイヴィトン ショルダーバッグ モノグラムヘリテージ トロカデロ ウェアラブル ウォレット レザー ブルー M14684 青 RFID",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M14691": {
     "model": "M14691",
@@ -2184,8 +2184,8 @@
   "M14738": {
     "model": "M14738",
     "name": "【半期決算セール開催中】 ルイヴィトン ショルダーバッグ モノグラム スティーマー・ウェアラブル ウォレット M14738 長財布",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M14729": {
     "model": "M14729",
@@ -2407,7 +2407,7 @@
     "model": "M14953",
     "name": "ルイヴィトン ボディバッグ ダモフラージュ・ブラック アヴェニュー・スリングバッグ PM M14953 ヴィトン バッグ 黒 ブラック",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M14978": {
     "model": "M14978",
@@ -2424,7 +2424,7 @@
   "M14981": {
     "model": "M14981",
     "name": "【週末タイムセール★30％OFF】ルイヴィトン キーケース /4連キーケース レディース /ミュルティクレ4 ヴェルニ シトリン（ライトイエロー） 中古",
-    "category": "Other",
+    "category": "ACCESSORIES",
     "gender": "WOMEN"
   },
   "M14994": {
@@ -2496,8 +2496,8 @@
   "M15173": {
     "model": "M15173",
     "name": "ルイヴィトン バッグ M15173 ボスフォール・ウェアラブル ウォレット モノグラム・ヘリテージキャンバスショルダーバッグ 中古 SB01",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M15154": {
     "model": "M15154",
@@ -2580,7 +2580,7 @@
   "M15251": {
     "model": "M15251",
     "name": "ルイヴィトン キーケース LOUIS VUITTON 破格本物 ヴェルニ ミュルティクレ4 ローズリッチ 中古 売れ筋 ポイント２倍 送料無料",
-    "category": "Other",
+    "category": "ACCESSORIES",
     "gender": "UNISEX"
   },
   "M15253": {
@@ -2593,7 +2593,7 @@
     "model": "M15255",
     "name": "ルイヴィトン ボディバッグ アエログラム アヴェニュー・スリングバッグ PM ブラック LOUIS VUITTON M15255",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M15258": {
     "model": "M15258",
@@ -2605,7 +2605,7 @@
     "model": "M15259",
     "name": "【未使用品】ルイヴィトン　ディスカバリー　ワーク　バッグパック　Ｍ１５２５９　リュックサック",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M15260": {
     "model": "M15260",
@@ -2658,7 +2658,7 @@
   "M15278": {
     "model": "M15278",
     "name": "ルイヴィトン バッグチャーム ムラカミタカシ M02463 Monogram Multicolor Dragonne XL モノグラム総柄バッグチャーム 中古 BS99",
-    "category": "BAGS",
+    "category": "ACCESSORIES",
     "gender": "UNISEX"
   },
   "M15336": {
@@ -2737,7 +2737,7 @@
     "model": "M20835",
     "name": "LOUIS VUITTON ルイヴィトン M20835 Sロック ブリーフケース ハンドバッグ トートバッグ モノグラムトリヨン ビジネスバッグ【中古】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M20770": {
     "model": "M20770",
@@ -2808,8 +2808,8 @@
   "M21262": {
     "model": "M21262",
     "name": "外超美品 ルイヴィトン タイガ ジッピーXL ハンドル付き ラウンドファスナー長財布 トラベルケース セカンドバッグ ハンドルポーチ ブラック M44275",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "ACCESSORIES",
+    "gender": "UNISEX"
   },
   "M21263": {
     "model": "M21263",
@@ -2935,7 +2935,7 @@
     "model": "M21796",
     "name": "超美品 ルイヴィトン LOUIS VUITTON タイガ アヴェニュー スリングバッグ ボディバッグ ショルダーバッグ バムバッグ ノワール ブラック M30863",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M21772": {
     "model": "M21772",
@@ -3007,7 +3007,7 @@
     "model": "M22519",
     "name": "ルイ ヴィトン ディスカバリー バックパック PM モノグラム アクアガーデン リュック デイパック M22519 【本物保証】",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M22482": {
     "model": "M22482",
@@ -3037,13 +3037,13 @@
     "model": "M22545",
     "name": "【値下げ】LOUIS VUITTON モノグラム エクリプス ディスカバリーバックパック M22545 ブラック (なんばウォーク店)",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M22558": {
     "model": "M22558",
     "name": "美品 ルイ ヴィトン LOUIS VUITTON モノグラム エクリプス ディスカバリー バックパック PM リュックサック ブラック M22558 90317430",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M22570": {
     "model": "M22570",
@@ -3145,7 +3145,7 @@
     "model": "M22914",
     "name": "（未使用　展示品）ルイ ヴィトン LOUIS VUITTON ロックイット MM 2way 斜め掛け ショルダー ハンドバッグ トリヨンレザー ノワール ブラック 黒 M22914",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M22925": {
     "model": "M22925",
@@ -3247,7 +3247,7 @@
     "model": "M23640",
     "name": "超美品 ルイヴィトン モノグラム アンプラント オンザゴー EW 2WAY ハンドバッグ チェーン ショルダーバッグ ブラック M23640",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M23641": {
     "model": "M23641",
@@ -3265,7 +3265,7 @@
     "model": "M23698",
     "name": "（未使用　展示品）ルイ ヴィトン LOUIS VUITTON オンザゴー EW チェーン 3WAY ショルダー ハンドバッグ モノグラムアンプラント レザー クレーム 白 M23698",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M23708": {
     "model": "M23708",
@@ -3342,7 +3342,7 @@
   "M23783": {
     "model": "M23783",
     "name": "★3日以内返品可★ 美品 LOUIS VUITTON ルイ・ヴィトン モノグラム トリオメッセンジャー M23783",
-    "category": "Other",
+    "category": "BAGS",
     "gender": "UNISEX"
   },
   "M23836": {
@@ -3397,7 +3397,7 @@
     "model": "M24006",
     "name": "ルイヴィトン LOUIS VUITTON ロック＆ウォーク ショルダーバッグ レザー M24006 ノワール ゴールド金具 RFID チェーンショルダー ブラック",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M24132": {
     "model": "M24132",
@@ -3577,7 +3577,7 @@
     "model": "M24638",
     "name": "（未使用　展示品）ルイ ヴィトン LOUIS VUITTON ロックミー ロック & ウォーク チェーン ショルダーバッグ グレインカーフレザー クオーツ ベージュ M24638",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M24645": {
     "model": "M24645",
@@ -3612,8 +3612,8 @@
   "M24754": {
     "model": "M24754",
     "name": "LOUIS VUITTON ルイヴィトン M30950 コインカード・ホルダー 財布 小銭入れ タイガラマ コインケース イエロー ユニセックス【中古】",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "ACCESSORIES",
+    "gender": "UNISEX"
   },
   "M24753": {
     "model": "M24753",
@@ -3630,14 +3630,14 @@
   "M24707": {
     "model": "M24707",
     "name": "【週末タイムセール★30％OFF】ルイ・ヴィトン LOUIS VUITTON キーケース タイガ ミュルティクレ4 ブラック レディース 中古",
-    "category": "Other",
+    "category": "ACCESSORIES",
     "gender": "WOMEN"
   },
   "M24760": {
     "model": "M24760",
     "name": "未使用 展示品 ルイ ヴィトン LOUIS VUITTON モノグラム シャドウ ディスカバリー バックパック PM レザー ネイビーブルー M24760 90300639",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M24776": {
     "model": "M24776",
@@ -3696,7 +3696,7 @@
   "M24953": {
     "model": "M24953",
     "name": "ルイ・ヴィトン LOUIS VUITTON キーケース モノグラム ミュルティクレ4 ブラウン ベージュ レディース 中古",
-    "category": "Other",
+    "category": "ACCESSORIES",
     "gender": "WOMEN"
   },
   "M24987": {
@@ -3708,14 +3708,14 @@
   "M24988": {
     "model": "M24988",
     "name": "【週末タイムセール★30％OFF】ルイ・ヴィトン LOUIS VUITTON 札入れ エピ ポルトシェキエカルトクレディ ブラック レディース 中古",
-    "category": "Other",
+    "category": "WALLETS",
     "gender": "WOMEN"
   },
   "M25022": {
     "model": "M25022",
     "name": "ルイヴィトン ショルダーバッグ M25022 ロウキー・ホーボー MM パドロックストラップグレインカーフレザーショルダーバッグ 中古 BS99",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M25048": {
     "model": "M25048",
@@ -3871,7 +3871,7 @@
     "model": "M25453",
     "name": "ほぼ新品 ルイヴィトン バイカラー モノグラム アンプラント LV バンドル 巾着型 ハンドバッグ ドローストリングバッグ ショルダーバッグ ベージュ M25453",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M25518": {
     "model": "M25518",
@@ -3913,7 +3913,7 @@
     "model": "M25577",
     "name": "（新品・未使用品）ルイ ヴィトン LOUIS VUITTON アヴェニュー PM 2way ショルダー ハンドバッグ モノグラムアンプラント レザー ノワール ブラック M25577 箱付",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "MEN"
   },
   "M25591": {
     "model": "M25591",
@@ -3937,7 +3937,7 @@
     "model": "M25673",
     "name": "ルイヴィトン LOUIS VUITTON モノグラム アンプラント オール インBB 2WAYバッグ ドリーム クリーム M25673 中古 新入荷 LV2010",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M25682": {
     "model": "M25682",
@@ -3961,7 +3961,7 @@
     "model": "M25770",
     "name": "[中古] ルイヴィトン モノグラム・アンプラント オンザゴー PM ドリームクリーム M25770 ハンドバッグ ショルダーバッグ グラデーション LV",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M25783": {
     "model": "M25783",
@@ -4015,7 +4015,7 @@
     "model": "M25887",
     "name": "LOUIS VUITTON ルイヴィトン モノグラム エクリプス ディスカバリー バックパック リュックサック ブラック/グリーン M25887",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M25888": {
     "model": "M25888",
@@ -4027,7 +4027,7 @@
     "model": "M25891",
     "name": "LOUIS VUITTON ルイ・ヴィトン アヴェニュー・スリングバッグPM M25891 ショルダーバッグ×モノグラムエクリプス【S142826435】中古",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M25902": {
     "model": "M25902",
@@ -4207,7 +4207,7 @@
     "model": "M26304",
     "name": "ルイヴィトン モノグラム アンプラント サイドトランク MM M26304 ショルダーバッグ",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M26257": {
     "model": "M26257",
@@ -4272,8 +4272,8 @@
   "M26419": {
     "model": "M26419",
     "name": "（未使用　展示品）LOUIS VUITTON ルイ ヴィトン M26419 アヴェニュー スリングバッグ PM モノグラムヘリテージ ブルー グリーン ボディ 斜め掛け 箱付",
-    "category": "BAGS",
-    "gender": "UNISEX"
+    "category": "JEWELRY",
+    "gender": "MEN"
   },
   "M26398": {
     "model": "M26398",
@@ -4380,7 +4380,7 @@
   "M26737": {
     "model": "M26737",
     "name": "ルイヴィトン LOUIS VUITTON ウェアラブルウォレット M26737 ショルダーバッグ モノグラムシャドウ ブラック 黒 メンズ【中古】【Aランク】",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "MEN"
   },
   "M26750": {
@@ -4644,7 +4644,7 @@
   "M27300": {
     "model": "M27300",
     "name": "【週末タイムセール★30％OFF】ルイ ヴィトン キーケース 6連キーケース ミュルティクレ6 M63815 エピ LOUIS VUITTON 中古",
-    "category": "Other",
+    "category": "ACCESSORIES",
     "gender": "UNISEX"
   },
   "M27301": {
@@ -4939,7 +4939,7 @@
     "model": "M28313",
     "name": "希少 極美品 LOUIS VUITTON ルイヴィトン オンザゴーPM 2way バッグ M28313 モノグラムアンプラント Aランク 中古 鑑定済",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M28289": {
     "model": "M28289",
@@ -5178,8 +5178,8 @@
   "M30271": {
     "model": "M30271",
     "name": "（新品・未使用品）LOUIS VUITTON ルイ ヴィトン M30271 コインカード ホルダー タイガラマ モノグラムエクリプス ブラック コインケース 小銭入れ レザー",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "ACCESSORIES",
+    "gender": "UNISEX"
   },
   "M30299": {
     "model": "M30299",
@@ -5209,7 +5209,7 @@
     "model": "M30443",
     "name": "美品 ルイヴィトン LOUIS VUITTON タイガ アヴェニュー スリングバッグ ボディバッグ ショルダーバッグ ノワール ブラック M30443",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M30539": {
     "model": "M30539",
@@ -5269,7 +5269,7 @@
     "model": "M30977",
     "name": "極美品□LOUIS VUITTON ルイヴィトン M30977 アヴェニューバックパック タイガ LVロゴ リュックサック ノワール フランス製 定価561000円",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M31016": {
     "model": "M31016",
@@ -5287,7 +5287,7 @@
     "model": "M31033",
     "name": "ルイ ヴィトン タイガラマ ディスカバリー・バックパックPM リュック バックパック M31033 ブラック PVC レザー LOUIS VUITTON 【中古】",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M31069": {
     "model": "M31069",
@@ -5461,7 +5461,7 @@
     "model": "M41056",
     "name": "（未使用　展示品）ルイ ヴィトン LOUIS VUITTON モンテーニュ MM 2Way ショルダー ハンドバッグ モノグラム ヌメ革 レザー ブラウン 茶 ゴールド金具 M41056",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "WOMEN"
   },
   "M40995": {
     "model": "M40995",
@@ -5556,8 +5556,8 @@
   "M41939": {
     "model": "M41939",
     "name": "【新品】ルイ・ヴィトン コインケース ポルトモネ・ロザリ M41939 モノグラム フューシャ 小銭入れ LOUIS VUITTON ヴィトン 新品(38402)(38402)",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "ACCESSORIES",
+    "gender": "UNISEX"
   },
   "M42265": {
     "model": "M42265",
@@ -5581,12 +5581,12 @@
     "model": "M43186",
     "name": "新品同様 ルイ ヴィトン LOUIS VUITTON モノグラム エクリプス ディスカバリー バックパック リュックサック ブラック M43186 90321921",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M43383": {
     "model": "M43383",
     "name": "ルイヴィトン バッグ メンズ トラベルポーチ トゥルース・トワレ 正規品 GM モノグラム・エクリプス M43383 LOUIS VUITTON 新品",
-    "category": "BAGS",
+    "category": "ACCESSORIES",
     "gender": "MEN"
   },
   "M43596": {
@@ -5749,7 +5749,7 @@
     "model": "M44151",
     "name": "爆買 ルイ・ヴィトン LOUIS VUITTON ヴァヴァンPM ショルダーバッグ バッグ モノグラム・アンプラント ブラック系 ノワール M44151 【中古",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M44155": {
     "model": "M44155",
@@ -5886,14 +5886,14 @@
   "M44936": {
     "model": "M44936",
     "name": "ルイヴィトン ポーチ モノグラム ニース ナノ モノグラムキャンバス モノグラム M44936 茶 バニティ メイクポーチ 化粧ポーチ RFID",
-    "category": "ACCESSORIES",
+    "category": "BAGS",
     "gender": "UNISEX"
   },
   "M44925": {
     "model": "M44925",
     "name": "（美品）ルイ ヴィトン LOUIS VUITTON オンザゴー GM 2way トート ハンドバッグ モノグラムアンプラント レザー ブラック ノワール 黒 ゴールド金具 M44925",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45039": {
     "model": "M45039",
@@ -5928,20 +5928,20 @@
   "M45205": {
     "model": "M45205",
     "name": "LOUIS VUITTON ルイ ヴィトン モノグラムアンプラント モンスリPM M45205 ブラック×ゴールド金具 【丸万質舗】",
-    "category": "Other",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M45256": {
     "model": "M45256",
     "name": "ルイヴィトン Louis Vuitton LV ネオノエ M45256 モノグラムアンプラント ショルダーバッグ ※ストラップ欠品",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45265": {
     "model": "M45265",
     "name": "ルイヴィトン 2WAYバッグ モノグラムエクリプス サックプラ ホリゾンタルジップ モノグラムエクリプス 黒 M45265 ビジネスバッグ RFID",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M45271": {
     "model": "M45271",
@@ -5959,7 +5959,7 @@
     "model": "M45307",
     "name": "□□ LOUIS VUITTON ルイヴィトン モノグラム アンプラント ネオノエ 2wayバッグ 本体のみ M45307 クレーム(アイボリー) 傷や汚れあり",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45321": {
     "model": "M45321",
@@ -5983,7 +5983,7 @@
     "model": "M45393",
     "name": "美品 LOUIS VUITTON ルイヴィトン プティットマルスープル 3way ハンドバッグ M45393 モノグラムアンプラント ABランク 中古 鑑定済",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45419": {
     "model": "M45419",
@@ -6006,26 +6006,26 @@
   "M45494": {
     "model": "M45494",
     "name": "ルイヴィトン オンザゴーMM バイカラー モノグラム アンプラント トゥルトレール クレーム M45494 LOUIS VUITTON 美品",
-    "category": "Other",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M45497": {
     "model": "M45497",
     "name": "ルイヴィトン ネオノエ MM バイカラー アンプラント ブラック ベージュ ※持ち手ハンドル欠品 M45497 LOUIS VUITTON 良品",
-    "category": "BAGS",
-    "gender": "WOMEN"
+    "category": "Other",
+    "gender": "UNISEX"
   },
   "M45495": {
     "model": "M45495",
     "name": "（未使用　展示品）LOUIS VUITTON ルイ ヴィトン M45495 オンザゴー MM モノグラムアンプラント ブラック ベージュ 2way ショルダー ハンドバッグ レザー",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45522": {
     "model": "M45522",
     "name": "ルイ・ヴィトン モノグラム・アンプラント マイダホーボー ショルダーバッグ 2WAY 斜め掛け ブラック黒 M45522 40802163018【アラモード】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45531": {
     "model": "M45531",
@@ -6067,7 +6067,7 @@
     "model": "M45595",
     "name": "新品同様 ルイ ヴィトン LOUIS VUITTON モノグラム アンプラント オンザゴー MM 2way トート ショルダー バッグ ノワール M45595 90316087",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45592": {
     "model": "M45592",
@@ -6085,7 +6085,7 @@
     "model": "M45598",
     "name": "LOUIS VUITTON ルイ・ヴィトン 2WAYバッグ ヴァニティPM M45598 ショルダーバッグ モノグラムアンプラント ノワール【中古】【473】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45604": {
     "model": "M45604",
@@ -6109,13 +6109,13 @@
     "model": "M45653",
     "name": "ルイヴィトン ハンドバッグ オンザゴーPM モノグラム アンプラント ノワール 2WAY M45653 LOUIS VUITTON 美品",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45659": {
     "model": "M45659",
     "name": "ルイヴィトン ハンドバッグ オンザゴーPM モノグラム アンプラント ブラックベージュ M45659 LOUIS VUITTON ほぼ未使用",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45685": {
     "model": "M45685",
@@ -6133,7 +6133,7 @@
     "model": "M45729",
     "name": "ルイヴィトン ボディバッグ モノグラムシャドウ ディスカバリー バムバッグ PM レザー ブルー×ネイビー M45729 ウエストバック 青 紺 RFID",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M45731": {
     "model": "M45731",
@@ -6163,7 +6163,7 @@
     "model": "M45760",
     "name": "ルイヴィトン ディスカバリーバックパックPM バックパック　リュックサック  M45760 ブルー ユニセックス  中古AB品",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M45777": {
     "model": "M45777",
@@ -6193,7 +6193,7 @@
     "model": "M45832",
     "name": "【半期決算セール開催中】 ルイヴィトン ショルダーバッグ モノグラム・アンプラント ブーローニュ PM M45832 2wayハンドバッグ 黒 ブラック 【安心保証】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M45831": {
     "model": "M45831",
@@ -6228,13 +6228,13 @@
   "M45913": {
     "model": "M45913",
     "name": "【天白】ルイヴィトン ソミュール バックパック リュック M45913 ブラック モノグラムエクリプス デイパック メンズ",
-    "category": "SNEAKERS",
+    "category": "BAGS",
     "gender": "MEN"
   },
   "M45912": {
     "model": "M45912",
     "name": "ルイヴィトン ソミュールスリングバック ボディバッグ  M45912 ブラック メンズ  中古SA品",
-    "category": "SNEAKERS",
+    "category": "BAGS",
     "gender": "MEN"
   },
   "M45935": {
@@ -6307,13 +6307,13 @@
     "model": "M46002",
     "name": "未使用 展示品 バガテル NM ルイ ヴィトン LOUIS VUITTON モノグラム アンプラント 2way ショルダー バッグ ブラック M46002 90326101",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46035": {
     "model": "M46035",
     "name": "（未使用保管品）ルイ ヴィトン LOUIS VUITTON ディスカバリー バムバッグ PM クロスボディ ショルダー ウエストバッグ モノグラムエクリプス レザー M46035",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M46041": {
     "model": "M46041",
@@ -6342,7 +6342,7 @@
   "M46107": {
     "model": "M46107",
     "name": "新品同様 ルイ ヴィトン LOUIS VUITTON モノグラム シャドウ レーサー スリング バッグ ボディ バッグ レザー ブラック M46107 90321942",
-    "category": "BAGS",
+    "category": "JEWELRY",
     "gender": "UNISEX"
   },
   "M46108": {
@@ -6379,7 +6379,7 @@
     "model": "M46200",
     "name": "爆買 ルイ・ヴィトン LOUIS VUITTON マルソー ショルダーバッグ バッグ モノグラム・アンプラント ブラック系 ノワール M46200 【中古】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46203": {
     "model": "M46203",
@@ -6439,7 +6439,7 @@
     "model": "M46286",
     "name": "爆買 ルイ・ヴィトン LOUIS VUITTON オンザゴーMM トートバッグ バッグ モノグラム・アンプラント ピンク系 ローズトリアノン M46286 【中",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46289": {
     "model": "M46289",
@@ -6451,7 +6451,7 @@
     "model": "M46291",
     "name": "ルイヴィトン ハンドバッグ バイカラーモノグラム・アンプラント ナノ・ノエ M46291 2wayショルダーバッグ 【安心保証】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46292": {
     "model": "M46292",
@@ -6469,7 +6469,7 @@
     "model": "M46327",
     "name": "（未使用　展示品）LOUIS VUITTON ルイ ヴィトン M46327 アヴェニュー スリングバッグ モノグラムマカサー ブラウン ブラック ボディバッグ ワンショルダー",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M46331": {
     "model": "M46331",
@@ -6481,7 +6481,7 @@
     "model": "M46344",
     "name": "超美品 ルイ ヴィトン フォール アヴェニュー スリングバッグ ボディバッグ M46344 モノグラム グリーン系 【本物保証】",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M46358": {
     "model": "M46358",
@@ -6505,19 +6505,19 @@
     "model": "M46386",
     "name": "LOUIS VUITTON ルイヴィトン ディアヌ 2WAYショルダーバッグ モノグラムアンプラント M46386 RFID",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46388": {
     "model": "M46388",
     "name": "LOUIS VUITTON ルイヴィトン ディアヌ 2WAYショルダーバッグ モノグラムアンプラント クレーム M46388 RFID",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46397": {
     "model": "M46397",
     "name": "レアほぼ新品 ルイヴィトン バイカラー モノグラム アンプラント スピーディ バンドリエール20 ハンドバッグ ショルダーバッグ クレーム M46397",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46406": {
     "model": "M46406",
@@ -6571,7 +6571,7 @@
     "model": "M46487",
     "name": "LOUIS VUITTON ルイヴィトン M46487 トリアノン MM トートバッグ 2WAYバッグ モノグラムアンプラント ショルダーバッグ ブラック【中古】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46492": {
     "model": "M46492",
@@ -6589,13 +6589,13 @@
     "model": "M46503",
     "name": "美品 LOUIS VUITTON ルイヴィトン M46503 トリアノン PM 2WAYバッグ トートバッグ モノグラムアンプラント ショルダーバッグ【中古】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46504": {
     "model": "M46504",
     "name": "（未使用　展示品）ルイ ヴィトン LOUIS VUITTON トリアノン MM 2way ショルダー ハンドバッグ モノグラムアンプラント トゥルトレール ゴールド金具 M46504",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46514": {
     "model": "M46514",
@@ -6619,7 +6619,7 @@
     "model": "M46517",
     "name": "ルイヴィトン 2WAYバッグ モノグラムアンプラント スピーディ バンドリエール 20 モノグラムアンプラント 青 M46517 青 グラデーション",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46531": {
     "model": "M46531",
@@ -6631,7 +6631,7 @@
     "model": "M46553",
     "name": "【5/26価格改定】美品 LOUIS VUITTON ルイヴィトン ディスカバリー バックパックPM モノグラムシャドウ M46553 ABランク 中古 鑑定済",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M46526": {
     "model": "M46526",
@@ -6691,7 +6691,7 @@
     "model": "M46595",
     "name": "（新品・未使用品）ルイ ヴィトン LOUIS VUITTON 4WAY チェーン ショルダーバッグ 斜め掛け モノグラムアンプラント レザー ノワール ゴールド金具 M46595 箱付",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46596": {
     "model": "M46596",
@@ -6714,7 +6714,7 @@
   "M46653": {
     "model": "M46653",
     "name": "LOUIS VUITTON ルイ ヴィトン モノグラムジャイアント オンザゴーEW M46653 キャンバス×レザー モノグラム×ゴールド金具",
-    "category": "Other",
+    "category": "BAGS",
     "gender": "UNISEX"
   },
   "M46603": {
@@ -6769,7 +6769,7 @@
     "model": "M46688",
     "name": "ルイヴィトン Sロックメッセンジャー ショルダーバッグ  M46688 ブラウン メンズ  中古A品",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "MEN"
   },
   "M46687": {
     "model": "M46687",
@@ -6780,7 +6780,7 @@
   "M46740": {
     "model": "M46740",
     "name": "ルイヴィトン ハンドバッグ レディース ソミュールBB モノグラム 2WAY ショルダー M46740 LOUIS VUITTON ほぼ未使用",
-    "category": "SNEAKERS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M46705": {
@@ -6931,7 +6931,7 @@
     "model": "M46917",
     "name": "ルイヴィトン ショルダーバッグ ミニ バムバッグ モノグラム アンプラント ノワール M46917 LOUIS VUITTON 極美品",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M46919": {
     "model": "M46919",
@@ -7003,7 +7003,7 @@
     "model": "M46993",
     "name": "[中古] ルイヴィトン モノグラム・アンプラント オンザゴー BB M46993 ハンドバッグ ショルダーバッグ 2WAY ミニトート LOUIS VUITTON",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M47031": {
     "model": "M47031",
@@ -7021,7 +7021,7 @@
     "model": "M47054",
     "name": "ルイヴィトン ハンドバッグ アンプラント オンザゴー BB ベージュ LOUIS VUITTON M47054 トゥルトレール クレーム",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M47058": {
     "model": "M47058",
@@ -7051,13 +7051,13 @@
     "model": "M47074",
     "name": "［銀座店］LOUIS VUITTON LV ルイ・ヴィトン バックアップ M47074（廃番） リュック・デイパック モノグラムアンプラント  DH90814",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M47106": {
     "model": "M47106",
     "name": "ルイ・ヴィトン LOUIS VUITTON バックパック/リュックサック バックアップ M47106 クレーム モノグラムアンプラント レザー ゴール",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M47117": {
     "model": "M47117",
@@ -7087,7 +7087,7 @@
     "model": "M47137",
     "name": "（未使用　展示品）LOUIS VUITTON ルイ ヴィトン M47137 アヴェニュー スリングバッグ PM モノグラムエクリプス ブラック ショルダー ボディバッグ シルバー金具",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "M47139": {
     "model": "M47139",
@@ -7123,7 +7123,7 @@
     "model": "M47186",
     "name": "LOUIS VUITTON ルイ ヴィトン モノグラムアンプラント スピーディソフト30 ハンドバッグ 2WAY ショルダーバッグ アンフィニ ブラック 黒",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M47209": {
     "model": "M47209",
@@ -7380,7 +7380,7 @@
   "M57959": {
     "model": "M57959",
     "name": "ルイ ヴィトン エシャルプ ロゴマニア マフラー M74742 グレー グリペルル ウール シルク レディース LOUIS VUITTON 【中古】",
-    "category": "SCARVES",
+    "category": "Other",
     "gender": "WOMEN"
   },
   "M58009": {
@@ -7399,13 +7399,13 @@
     "model": "M58487",
     "name": "LOUIS VUITTON ルイ ヴィトン Sロック スリングバッグ モノグラム ウエストバッグ M58487 トリ【本物保証】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M58489": {
     "model": "M58489",
     "name": "【返品OK】未使用に近い LOUIS VUITTON ルイヴィトン Sロック メッセンジャー モノグラム M58489 ICタグ トリヨン レザー 2wayバッグ 【D467901205002ミ2601】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M58414": {
     "model": "M58414",
@@ -7429,7 +7429,7 @@
     "model": "M58913",
     "name": "（美品）ルイヴィトン LOUIS VUITTON プティパレPM バイカラー モノグラムアンプラント ブラック ベージュ ゴールド金具 M58913 8455",
     "category": "Other",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M58914": {
     "model": "M58914",
@@ -7441,31 +7441,31 @@
     "model": "M58951",
     "name": "未使用 ルイヴィトン モノグラム アンプラント スピーディ バンドリエール25 2WAY ミニボストンバッグ ハンドバッグ ショルダーバッグ ノワール ブラック M58951",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M58947": {
     "model": "M58947",
     "name": "ルイヴィトン スピーディ バンドリエール25 バイカラー アンプラント ブラック ベージュ M58947 LOUIS VUITTON 美品",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M58953": {
     "model": "M58953",
     "name": "新品同様 ルイヴィトン モノグラム アンプラント スピーディ バンドリエール20 ミニボストンバッグ ハンドバッグ ショルダーバッグ ブラック M58953",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M58954": {
     "model": "M58954",
     "name": "【返品OK】 極美品 LOUIS VUITTON ルイヴィトン モノグラム アンプラント スピーディ バンドリエール20 M58954 ICタグ 2Wayバッグ 【D467901191803ミ2512】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M58956": {
     "model": "M58956",
     "name": "ルイ ヴィトン モノグラム アンプラント オンザゴーPM ハンドバッグ ショルダーバッグ 2WAY M58956 LOUIS VUITTON 【中古】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M59007": {
     "model": "M59007",
@@ -7488,7 +7488,7 @@
   "M59161": {
     "model": "M59161",
     "name": "ルイヴィトン バッグ メンズ レディース LV アエログラム アルファ ウェアラブル ウォレット ショルダーバッグ ノワール M59161 Louis Vuitton 中古",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M59163": {
@@ -7513,7 +7513,7 @@
     "model": "M59273",
     "name": "（美品）ルイヴィトン LOUIS VUITTON スピーディ バンドリエール 25 モノグラムアンプラント トゥルトレール G金具 M59273 斜め掛け 8318",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M59325": {
     "model": "M59325",
@@ -7662,7 +7662,7 @@
   "M61276": {
     "model": "M61276",
     "name": "新品同様 ルイ ヴィトン LOUIS VUITTON モノグラム ポシェット フェリシー チェーン ウォレット 長財布 ブラウン M61276 90314573",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M61696": {
@@ -7674,7 +7674,7 @@
   "M61723": {
     "model": "M61723",
     "name": "LOUIS VUITTON ルイ ヴィトン M61723/8906AN ポシェットポルトモネクレディ 長財布 モノグラム柄 ブラウン系  メンズ",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M61698": {
@@ -7740,8 +7740,8 @@
   "M62650": {
     "model": "M62650",
     "name": "ルイヴィトンLOUISVUITTONコインケース ルイ ヴィトンLOUIS VUITTON キーケース 小銭入れ モノグラム M62650",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "ACCESSORIES",
+    "gender": "UNISEX"
   },
   "M62901": {
     "model": "M62901",
@@ -7770,14 +7770,14 @@
   "M63700": {
     "model": "M63700",
     "name": "ルイ・ヴィトン Louis Vuitton ポシェット フェリシー 2WAY 長財布 ショルダーバッグ モノグラムアンプラント スカーレット(レッド) M63700 レディース 中古",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M63914": {
     "model": "M63914",
     "name": "ルイヴィトン パスポートケース パスポートカバー クーヴェルテュール パスポール NM モノグラムアンプラント ノワール M63914 黒 RFID",
     "category": "Other",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M63801": {
     "model": "M63801",
@@ -7794,7 +7794,7 @@
   "M64064": {
     "model": "M64064",
     "name": "新品同様 ルイ ヴィトン LOUIS VUITTON モノグラム アンプラント ポシェット フェリシー チェーン ウォレット ノワール  M64064 90316644",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M64099": {
@@ -7806,8 +7806,8 @@
   "M67405": {
     "model": "M67405",
     "name": "LOUIS VUITTON ルイ ヴィトン モノグラム ポルトフォイユ フロール チェーン ショルダーバッグ 2WAY クラッチバッグ ローズバレリーヌ",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M64502": {
     "model": "M64502",
@@ -7836,8 +7836,8 @@
   "M67839": {
     "model": "M67839",
     "name": "ルイヴィトン ポルトフォイユ ヴァヴァンチェーン モノグラムアンプラント ショルダーバッグ  M67839 ブラック  LOUIS VUITTON 中古",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M68697": {
     "model": "M68697",
@@ -7878,8 +7878,8 @@
   "M69421": {
     "model": "M69421",
     "name": "（未使用　展示品）LOUIS VUITTON ルイ ヴィトン M69421 ポルト カルト レクト ヴェルソ モノグラムアンプラント ノワール ブラック フック付 コインケース 財布",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "ACCESSORIES",
+    "gender": "UNISEX"
   },
   "M69433": {
     "model": "M69433",
@@ -7890,7 +7890,7 @@
   "M69203": {
     "model": "M69203",
     "name": "ルイヴィトン Louis Vuitton モノグラムジャイアント リバース ポシェット ドゥーブル ジップ M69203 バッグ ショルダーバッグ レディース 中古",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M69535": {
@@ -7938,7 +7938,7 @@
   "M69838": {
     "model": "M69838",
     "name": "【返品OK】【美品】ルイ ヴィトン ソフトトランク・ウォレット モノグラムエクリプス M69838 メンズ 【ショルダーバッグ】",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "MEN"
   },
   "M69979": {
@@ -7969,7 +7969,7 @@
     "model": "M80349",
     "name": "（美品）LOUIS VUITTON ルイ ヴィトン M80349 イージー ポーチ モノグラムアンプラント ノワール ブラック 3way チェーン ショルダーバッグ レザー ゴールド金具",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M80731": {
     "model": "M80731",
@@ -8004,13 +8004,13 @@
   "M80741": {
     "model": "M80741",
     "name": "ルイヴィトン モノグラム エクリプス・アルファウェアラブルウォレット  Aランク.",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M80880": {
     "model": "M80880",
     "name": "新品同様 ルイヴィトン LOUIS VUITTON モノグラム アンプラント ポルトフォイユ メティス 三つ折り財布 コンパクト財布 ノワール ブラック M80880",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M80905": {
@@ -8041,7 +8041,7 @@
     "model": "M81066",
     "name": "ルイヴィトン ショルダーバッグ イージーポーチ モノグラム アンプラント クレーム クラッチ M81066 LOUIS VUITTON 極美品",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M81085": {
     "model": "M81085",
@@ -8058,8 +8058,8 @@
   "M81115": {
     "model": "M81115",
     "name": "【新品】ルイ・ヴィトン LOUISVUITTON ガストン・ウェアラブル ウォレット ショルダーバッグ M81115 モノグラム・シャドウ(69961)",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M81124": {
     "model": "M81124",
@@ -8076,7 +8076,7 @@
   "M81260": {
     "model": "M81260",
     "name": "ルイヴィトン LOUIS VUITTON モノグラム エクリプス アルファ ウェアラブル ウォレット メンズ PVC ブラック グレー シルバー金具 M81260",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "MEN"
   },
   "M81266": {
@@ -8107,7 +8107,7 @@
     "model": "M81456",
     "name": "LOUIS VUITTON(ルイ・ヴィトン) モノグラム・アンプラント ナノ・スピーディ ハンドバッグ ブラック黒 M81456 40802188399【アラモード】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M81522": {
     "model": "M81522",
@@ -8118,8 +8118,8 @@
   "M81524": {
     "model": "M81524",
     "name": "ルイヴィトン ショルダーバッグ モノグラム・トリヨン Sロック ヴェルティカル・ウエアラブル ウォレット M81524 ヴィトン 黒 ブラック 【安心保証】",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M81569": {
     "model": "M81569",
@@ -8142,20 +8142,20 @@
   "M81746": {
     "model": "M81746",
     "name": "ルイヴィトン スティーマーウェアラブルウォレット M81746 モノグラム トリヨンレザー ノワール ショルダーバッグ ブラック 中古 送料無料",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M81753": {
     "model": "M81753",
     "name": "ルイヴィトン ショルダーバッグ モノグラム・エクリプス ルームウィズアビュー ガストン・ウエアラブル ウォレット M81753 黒 ブラック 【安心保証】",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M81783": {
     "model": "M81783",
     "name": "ルイヴィトン LOUIS VUITTON モノグラムエクリプス スティーマー ウェアラブル ウォレット ショルダーバッグ PVC レザー グレー ブラック 黒 M81783",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M81848": {
     "model": "M81848",
@@ -8166,14 +8166,14 @@
   "M81830": {
     "model": "M81830",
     "name": "ルイ・ヴィトン LOUIS VUITTON ショルダーバッグ ブックウォレットオンチェーン M81830 モノグラムリバース ブラック レザー",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M81852": {
     "model": "M81852",
     "name": "銀蔵 中古 ルイヴィトン ダモフラージュ スティーマー ウエアラブルウォレット M81852 カーキ モノグラムキャンバス ショルダーバッグ",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M81861": {
     "model": "M81861",
@@ -8184,8 +8184,8 @@
   "M81911": {
     "model": "M81911",
     "name": "ルイヴィトン ショルダーバッグ ウォレット オン チェーン アイビー モノグラム 2WAY M81911 LOUIS VUITTON ほぼ未使用",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M81913": {
     "model": "M81913",
@@ -8244,20 +8244,20 @@
   "M82085": {
     "model": "M82085",
     "name": "ルイヴィトン ショルダーバッグ レザー/LVアエログラム ファストライン・ウェアラブル ウォレット M82085 ヴィトン バッグ 黒 ブラック 【安心保証】",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M82210": {
     "model": "M82210",
     "name": "ルイ・ヴィトン Louis Vuitton ウォレット オン チェーン アイビー ショルダーバッグ クラッチ モノグラムアンプラント クレーム M82210 レディース 中古",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M82154": {
     "model": "M82154",
     "name": "ルイ・ヴィトン モノグラム・アンプラント ウォレット オン チェーン・アイビー ハンドバッグ ノワール M82154 40802187286【アラモード】",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M82211": {
     "model": "M82211",
@@ -8274,8 +8274,8 @@
   "M82252": {
     "model": "M82252",
     "name": "ルイヴィトン モノグラム エクリプス Sロック ヴェルティカル ウエアラブル ウォレット M82252 ショルダーバッグ",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M82308": {
     "model": "M82308",
@@ -8317,7 +8317,7 @@
     "model": "M82450",
     "name": "ルイヴィトン ハンドバッグ モノグラム・アンプラント ナノ・スピーディ M82450 ヴィトン バッグ 2way ショルダーバッグ 黒 ブラック",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M82456": {
     "model": "M82456",
@@ -8334,19 +8334,19 @@
   "M82509": {
     "model": "M82509",
     "name": "未使用 展示品 ルイ ヴィトン LOUIS VUITTON モノグラム ウォレット オン チェーン リリー 2way ハンド ショルダー バッグ M82509 90317443",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M82535": {
     "model": "M82535",
     "name": "ルイヴィトン ショルダーバッグ モノグラムマカサー Sロック ヴェルティカル ウェアラブル ウォレット レザー 茶 M82535 茶 斜め掛け RFID",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M82542": {
     "model": "M82542",
     "name": "ルイヴィトン LOUIS VUITTON モノグラムエクリプス アルファ ウェアラブルウォレット NV ショルダーバッグ ミニ ポシェット ブラック グレー M82542",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M82543": {
@@ -8358,8 +8358,8 @@
   "M82544": {
     "model": "M82544",
     "name": "新品同様 ルイヴィトン LOUIS VUITTON モノグラム シャドウ アルファ ウェアラブルウォレット 斜め掛け ショルダーバッグ ノワールブラック M82544",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M82558": {
     "model": "M82558",
@@ -8382,8 +8382,8 @@
   "M82571": {
     "model": "M82571",
     "name": "LOUIS VUITTON スティーマー ウェアラブルウォレット ショルダーバッグ モノグラム トリヨン M82571",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M82717": {
     "model": "M82717",
@@ -8394,7 +8394,7 @@
   "M82637": {
     "model": "M82637",
     "name": "ルイヴィトン ショルダーバッグ モノグラム アンプラント ウォレット オン チェーン・メティス ブラック LOUIS VUITTON M82637 ノワール",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M82766": {
@@ -8424,14 +8424,14 @@
   "M82801": {
     "model": "M82801",
     "name": "（未使用　展示品）ルイ ヴィトン LOUIS VUITTON ナノ アルファ ウエアラブル ウォレット ショルダーバッグ  モノグラム ブルー ブラック金具 M82801 箱付",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M82819": {
     "model": "M82819",
     "name": "並行輸入 ルイヴィトン ショルダーバッグ ダミエ・ラッシュ エピ スティーマー・ウェアラブル ウォレット M82819",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M82839": {
     "model": "M82839",
@@ -8442,7 +8442,7 @@
   "M82836": {
     "model": "M82836",
     "name": "ルイ・ヴィトン ウォレット オン チェーン メティス 2WAY モノグラムアンプラント クレーム(ホワイト) M82836 中古 在庫一掃",
-    "category": "WALLETS",
+    "category": "BAGS",
     "gender": "WOMEN"
   },
   "M82854": {
@@ -8497,7 +8497,7 @@
     "model": "M82890",
     "name": "ルイ・ヴィトン モノグラムアンプラント ナノ・スピーディ ハンドバッグ トゥルトレールグレー クリーム M82890 40802158352【アラモード】",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M82917": {
     "model": "M82917",
@@ -8515,7 +8515,7 @@
     "model": "M82933",
     "name": "新品同様 ルイ ヴィトン LOUIS VUITTON バイカラー モノグラム アンプラント ナノ ノエ 2way ハンド ショルダー バッグ M82933 90321928",
     "category": "BAGS",
-    "gender": "WOMEN"
+    "gender": "UNISEX"
   },
   "M82949": {
     "model": "M82949",
@@ -8568,8 +8568,8 @@
   "M83384": {
     "model": "M83384",
     "name": "◆ミウラ◆ ルイ・ヴィトン LOUIS VUITTON ガストン ウェアラブル ウォレット ショルダーバッグ シャドウ M83384",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M83301": {
     "model": "M83301",
@@ -8616,8 +8616,8 @@
   "M83563": {
     "model": "M83563",
     "name": "ルイヴィトン ショルダーバッグ LV アエログラム パイロット ウェアラブル ウォレット M83563 ヴィトン 財布 ブラック 黒 【安心保証】",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M83575": {
     "model": "M83575",
@@ -8628,8 +8628,8 @@
   "M83567": {
     "model": "M83567",
     "name": "LOUIS VUITTON ルイヴィトン モノグラム エクリプス モンスリ・ウェアラブル ウォレット ショルダーバッグ ボディバッグ M83567 超美品",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M83568": {
     "model": "M83568",
@@ -8652,8 +8652,8 @@
   "M83613": {
     "model": "M83613",
     "name": "【新品未使用】ルイヴィトン モノグラムマカサー スティーマー・ウェアラブル ウォレット M83613 ブラックチェーン 13538",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "M83700": {
     "model": "M83700",
@@ -8766,8 +8766,8 @@
   "N00210": {
     "model": "N00210",
     "name": "LOUIS VUITTON ボスフォール ウェアラブル ウォレット ショルダーバッグ ダミエ・デニム 3D コットンキャンバス デニムブルー N00210",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "N00227": {
     "model": "N00227",
@@ -8796,7 +8796,7 @@
   "N40127": {
     "model": "N40127",
     "name": "（美品）ルイ ヴィトン LOUIS VUITTON ドップ キット トラベルポーチ セカンドバッグ ダミエグラフィット ブラック シルバー金具 N40127",
-    "category": "BAGS",
+    "category": "ACCESSORIES",
     "gender": "UNISEX"
   },
   "N40360": {
@@ -8815,7 +8815,7 @@
     "model": "N40499",
     "name": "未使用 LOUIS VUITTON ルイヴィトン N40499 アヴェニュー・バックパック カバン ダミエグラフィット リュックサック ブラック 【中古】",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "N40365": {
     "model": "N40365",
@@ -8839,7 +8839,7 @@
     "model": "N40514",
     "name": "ルイヴィトン ダミエ グラフィット ディスカバリー バックパック N40514 リュックサック",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "N40547": {
     "model": "N40547",
@@ -9072,8 +9072,8 @@
   "N41719": {
     "model": "N41719",
     "name": "新品同様 ルイ ヴィトン LOUIS VUITTON ダミエ グラフィット アヴェニュー スリング バッグ ボディ バッグ ブラック N41719 90323994",
-    "category": "BAGS",
-    "gender": "UNISEX"
+    "category": "JEWELRY",
+    "gender": "MEN"
   },
   "N45294": {
     "model": "N45294",
@@ -9103,7 +9103,7 @@
     "model": "N45303",
     "name": "美品 ルイヴィトン ダミエ アンフィニ アヴェニュー スリングバッグ ボディバッグ バムバッグ ショルダーバッグ ブラック N45303",
     "category": "BAGS",
-    "gender": "UNISEX"
+    "gender": "MEN"
   },
   "N47516": {
     "model": "N47516",
@@ -9132,8 +9132,8 @@
   "N60418": {
     "model": "N60418",
     "name": "ルイヴィトン ショルダーバッグ ダミエグラフィット アルファ ウエアラブル ウォレット レザー ダミエグラフィット N60418 グレー SP4200",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "BAGS",
+    "gender": "UNISEX"
   },
   "N61264": {
     "model": "N61264",
@@ -9198,8 +9198,8 @@
   "N64038": {
     "model": "N64038",
     "name": "ルイ・ヴィトン コインカード ホルダー 小銭入れ カード入れ コインケース ダミエグラフィット ノワール(ブラック) N64038 中古 在庫一掃",
-    "category": "WALLETS",
-    "gender": "WOMEN"
+    "category": "ACCESSORIES",
+    "gender": "UNISEX"
   },
   "N64411": {
     "model": "N64411",

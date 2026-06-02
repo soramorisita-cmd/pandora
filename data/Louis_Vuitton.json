@@ -1,7 +1,7 @@
 {
   "brand": "Louis Vuitton",
   "seller": "godmall",
-  "updated": "2026-06-03T00:03:07",
+  "updated": "2026-06-03T02:24:19",
   "products": [
     {
       "title": "F43",
@@ -2906,7 +2906,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P780A(M46397-1)20.5 x 13.5 x 12.0CM",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "240117565",
@@ -3145,9 +3145,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a063bc0a03.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P460A( M82535-1)12 x 19 x 7 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "237016321",
@@ -3487,9 +3487,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/ea07bbc17a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P550A(M15173-1)12 x 7 x 19CM",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "238194715",
@@ -3514,7 +3514,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P720A(M46553-3)29 x 38 x 20",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "238186787",
@@ -3527,7 +3527,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P720A(M46553-2)29 x 38 x 20",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "232956248",
@@ -3623,8 +3623,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/bd60a49a46.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
-      "purchase_product_name": "P350(M27300-3)26.5 x 14 x 8"
+      "type": "ACCESSORIES",
+      "purchase_product_name": "P350(M27300-3)26.5 x 14 x 8",
+      "gender": "UNISEX"
     },
     {
       "album_id": "233441598",
@@ -3635,8 +3636,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/abf5c56f40.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
-      "purchase_product_name": "P350(M27300-2)26.5 x 14 x 8"
+      "type": "ACCESSORIES",
+      "purchase_product_name": "P350(M27300-2)26.5 x 14 x 8",
+      "gender": "UNISEX"
     },
     {
       "album_id": "233440478",
@@ -3647,8 +3649,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3ec5173010.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
-      "purchase_product_name": "P350(M27300-1)26.5 x 14 x 8"
+      "type": "ACCESSORIES",
+      "purchase_product_name": "P350(M27300-1)26.5 x 14 x 8",
+      "gender": "UNISEX"
     },
     {
       "album_id": "233439672",
@@ -4403,9 +4406,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/46e390a4e1.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P650A(M24754-1)25×18.5×7",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "232326399",
@@ -4466,9 +4469,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/cc16a98d86.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M82085-1)17.3 x 12 x 7",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "230695125",
@@ -5221,7 +5224,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M82450-2)10 x 7.5 x 16",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "226992678",
@@ -5284,7 +5287,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P220(M82450-1) 16 x 10 x 7.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "226492788",
@@ -5434,7 +5437,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P550A(M41056-2) 33.0 x 23.0 x 15.0",
-      "gender": "UNISEX"
+      "gender": "WOMEN"
     },
     {
       "album_id": "226056622",
@@ -5559,7 +5562,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P780A(M15259-1)32 x 42 x 19",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "225771511",
@@ -6225,7 +6228,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P350(M15259-2)32 x 42 x 19",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "224820254",
@@ -6238,7 +6241,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P350(M15259-1)32 x 42 x 19",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "224820140",
@@ -7179,7 +7182,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P240(M15255-3)16.0 x 33.0 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "224251947",
@@ -7192,7 +7195,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P240(M15255-2)16.0 x 33.0 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "224251880",
@@ -7388,7 +7391,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M28313-1)25 × 19 × 11.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "223972316",
@@ -7708,7 +7711,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M45760-1)37 x 40 x 20Cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "223878183",
@@ -8427,7 +8430,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P210(M81066-1)19.0 x 11.5 x 3.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "223278673",
@@ -8440,7 +8443,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P200(M82933-4)13.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "223278356",
@@ -8453,7 +8456,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P200(M82933-3)13.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "223277944",
@@ -8466,7 +8469,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P200(M82933-2)13.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "223277175",
@@ -8479,7 +8482,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P200(M82933-1)13.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "223276724",
@@ -8566,7 +8569,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M45495-4)35 x 27 x 14",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "223274352",
@@ -8579,7 +8582,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M45495-3)35 x 27 x 14",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "223273739",
@@ -8592,7 +8595,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M45495-2)35 x 27 x 14",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "223273535",
@@ -8605,7 +8608,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M45495-1)35 x 27 x 14",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "223273302",
@@ -9564,7 +9567,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P730A(M11394-1)37x26x14",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "221682701",
@@ -10038,7 +10041,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P250(M45598-5)19×13×11cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "220193256",
@@ -10051,7 +10054,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P250(M45598-4)19×13×11cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "220192824",
@@ -10064,7 +10067,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P250(M45598-3)19×13×11cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "220192383",
@@ -10077,7 +10080,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P250(M45598-2)19×13×11cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "220192117",
@@ -10090,7 +10093,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P250(M45598-1)19×13×11cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "220191601",
@@ -10101,9 +10104,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/01c59b855a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M13569-4)19.5 x 13.5 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "220191267",
@@ -10114,9 +10117,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/57c9276461.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M13569-3)19.5 x 13.5 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "220189008",
@@ -10127,9 +10130,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/c898e8e5ab.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M13569-2)19.5 x 13.5 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "220188847",
@@ -10140,9 +10143,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/77c90e3fbb.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M13569-1)19.5 x 13.5 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "220188646",
@@ -10181,7 +10184,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M45832-7)29.0 x 16.0 x 9.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "220188150",
@@ -10280,9 +10283,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/d2013954a9.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "JEWELRY",
       "purchase_product_name": "P260(M11703-6)16 x 33 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "219959116",
@@ -10293,9 +10296,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/e10c7f2ee3.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "JEWELRY",
       "purchase_product_name": "P260(M11703-5)16 x 33 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "219934736",
@@ -10766,9 +10769,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3d54603301.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P700A(M21262-1)26 x 20 x 12",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "219237716",
@@ -11198,9 +11201,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/35e80407f2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P500A(M14058-2)20.0 x 13.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "218664431",
@@ -11211,9 +11214,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/fdde2c4e83.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M14684-1)20.0 x 13.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "218663980",
@@ -11236,7 +11239,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/c9e72355b7.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M26737-1)13 x 6.5 x 20",
       "gender": "MEN"
     },
@@ -11743,7 +11746,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P630A(M15255-1)16 x 33 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "218562092",
@@ -11871,7 +11874,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M58956-1)20.5 x 13.5 x 12.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "218549027",
@@ -11884,7 +11887,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M58954-1)20.5 x 13.5 x 12.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "218550738",
@@ -11944,7 +11947,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/20b8784fe2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61723-6)19x10x4cm.",
       "gender": "WOMEN"
     },
@@ -11957,7 +11960,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a3a8c74c74.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61723-5)19x10x4cm.",
       "gender": "WOMEN"
     },
@@ -11970,7 +11973,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/8c9ae68f4d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61723-4)19x10x4cm.",
       "gender": "WOMEN"
     },
@@ -11983,7 +11986,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a04d970859.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61723-3)19x10x4cm.",
       "gender": "WOMEN"
     },
@@ -11996,7 +11999,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/10e9fe3dee.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61723-2)19x10x4cm.",
       "gender": "WOMEN"
     },
@@ -12009,7 +12012,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/cc78d631e3.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61723-1)19x10x4cm.",
       "gender": "WOMEN"
     },
@@ -14092,7 +14095,8 @@
       "price_cny": null,
       "price_jpy": null,
       "type": "BAGS",
-      "purchase_product_name": "P520A(M46653-2)25.0 x 13.0 x 10.0"
+      "purchase_product_name": "P520A(M46653-2)25.0 x 13.0 x 10.0",
+      "gender": "UNISEX"
     },
     {
       "album_id": "212851392",
@@ -14103,9 +14107,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/81a73ebd5f.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P550A(M81753-1)22 x 14.5 x 4.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "212768592",
@@ -14362,7 +14366,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P520A(M30443-1)20 x 31 x 10",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "212539978",
@@ -14640,9 +14644,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/e31438726a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "JEWELRY",
       "purchase_product_name": "P580A(M26419-1) 16 x 33 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "211356408",
@@ -15335,7 +15339,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M45659-10) 25.0 x 19.0 x 11.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "211072387",
@@ -15358,9 +15362,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/94b2a2bef3.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A( M83384-1)22 x 14.5 x 4.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "211071728",
@@ -15643,7 +15647,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P320(M25887-2)29.0 x 38.0 x 20.0",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "211037652",
@@ -15832,7 +15836,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M47137-1)16 x 33 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "210305250",
@@ -15893,7 +15897,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M25891-2)16 x 33 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "210303925",
@@ -15930,7 +15934,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M25891-1)12 x 7 x 19",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "210302970",
@@ -16090,7 +16094,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P580A(M25673-2)16.0 x 18.0 x 12.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "210301524",
@@ -16103,7 +16107,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M46595-2)13.5 x 6 x 21.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "210301415",
@@ -16127,7 +16131,8 @@
       "price_cny": null,
       "price_jpy": null,
       "type": "BAGS",
-      "purchase_product_name": "P680A(M45205-1)27.5 x 33.0 x 14.0"
+      "purchase_product_name": "P680A(M45205-1)27.5 x 33.0 x 14.0",
+      "gender": "UNISEX"
     },
     {
       "album_id": "210301204",
@@ -16279,7 +16284,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P730A(M26304-1)23.5 x 16.0 x 8.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "210292835",
@@ -16425,8 +16430,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/e9e8b86694.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
-      "purchase_product_name": "P620A(M15251-1)45 x 27 x20"
+      "type": "ACCESSORIES",
+      "purchase_product_name": "P620A(M15251-1)45 x 27 x20",
+      "gender": "UNISEX"
     },
     {
       "album_id": "210289428",
@@ -16878,7 +16884,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M11393-1)32x10x22",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "209656552",
@@ -16891,7 +16897,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M11394-1)32x10x22",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "209656213",
@@ -16904,7 +16910,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M11463-1)32x10x22",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "209526633",
@@ -17013,9 +17019,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/f0e46191d8.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P500A(N00210-1)12 x 7 x 19",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "209319456",
@@ -17079,7 +17085,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M25577-1)30 x 19.5 x 12",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "209317424",
@@ -17380,7 +17386,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P550A(M82890-1)16 x 10 x 7.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "209174177",
@@ -17777,7 +17783,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P800A(M14673-1)29 x 38 x 20",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "208965062",
@@ -17891,7 +17897,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P550A(M46993-1)18.0 x 15.0 x 8.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "208815025",
@@ -17904,7 +17910,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P550A(M47054-1)18.0 x 15.0 x 8.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "208811749",
@@ -18061,7 +18067,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P500A(M46035-2)44 x 15 x 9",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "208772374",
@@ -18271,7 +18277,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P680A(M24006-1)20.0 x 20.5 x 12.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "208404664",
@@ -18296,7 +18302,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P680A(M24638-1)20.0 x 20.5 x 12.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "208386803",
@@ -18348,7 +18354,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P680A(M45393-1)20x14x7.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "208383863",
@@ -18968,7 +18974,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/4d759fc44a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "JEWELRY",
       "purchase_product_name": "P290(M46107-1)24 x 42 x 12",
       "gender": "UNISEX"
     },
@@ -19375,7 +19381,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/f6015e498d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M14114-2)22×14.5×4.5cm",
       "gender": "MEN"
     },
@@ -19388,7 +19394,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/572d99e0b4.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M14114-1)22×14.5×4.5cm",
       "gender": "MEN"
     },
@@ -19438,7 +19444,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/33f09982ae.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P1520A(M15278-1)40.0 x 26.0 x 23.0(定制不退换)",
       "gender": "UNISEX"
     },
@@ -19504,7 +19510,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M45256-6)26.0 x 26.0 x 17.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "206864244",
@@ -19517,7 +19523,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M45256-5)26.0 x 26.0 x 17.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "206863897",
@@ -19530,7 +19536,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M45256-4)26.0 x 26.0 x 17.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "206863654",
@@ -19543,7 +19549,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M45256-2)26.0 x 26.0 x 17.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "206863486",
@@ -19556,7 +19562,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P620A(M45256-1)26.0 x 26.0 x 17.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "206863338",
@@ -19593,7 +19599,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P620A(M45307-1)26.0 x 26.0 x 17.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "206631842",
@@ -19643,7 +19649,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/7c18510138.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "SNEAKERS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M45912-1)13.0 x 18.0 x 3.5",
       "gender": "MEN"
     },
@@ -19858,7 +19864,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3899f125f1.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P550A(M69838-1)22.5×14×5cm",
       "gender": "MEN"
     },
@@ -20049,7 +20055,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/2cc2b6271a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P600A(M82836-1)22.0 x 15.0 x 5.5",
       "gender": "WOMEN"
     },
@@ -20062,7 +20068,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/c1216e2236.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P600A(M82637-1)22.0 x 15.0 x 5.5",
       "gender": "WOMEN"
     },
@@ -20358,7 +20364,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M14953-2)16x32x3cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "204765957",
@@ -20436,7 +20442,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M14291-1)20.5 x 13.5 x 12.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "204723246",
@@ -20755,9 +20761,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/8cb15a9653.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P580A(M14738-1)18x11x6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "204414058",
@@ -20856,7 +20862,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M25770-2)19 x 11.5 x 25",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "204412629",
@@ -21066,7 +21072,8 @@
       "price_cny": null,
       "price_jpy": null,
       "type": "BAGS",
-      "purchase_product_name": "P620A(M12517-2)33 x 22.5 x 11"
+      "purchase_product_name": "P620A(M12517-2)33 x 22.5 x 11",
+      "gender": "UNISEX"
     },
     {
       "album_id": "204257325",
@@ -21078,7 +21085,8 @@
       "price_cny": null,
       "price_jpy": null,
       "type": "BAGS",
-      "purchase_product_name": "P300(M12517-1)33 x 22.5 x 11"
+      "purchase_product_name": "P300(M12517-1)33 x 22.5 x 11",
+      "gender": "UNISEX"
     },
     {
       "album_id": "204248987",
@@ -21285,7 +21293,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P680A(M25887-1)29.0 x 38.0 x 20.0",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "203353872",
@@ -21334,7 +21342,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M80349-9)19.0 x 11.5 x 3.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "203172329",
@@ -21347,7 +21355,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M80349-8)19.0 x 11.5 x 3.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "203172175",
@@ -21360,7 +21368,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M80349-7)19.0 x 11.5 x 3.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "203172008",
@@ -21373,7 +21381,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M80349-6)19.0 x 11.5 x 3.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "203171823",
@@ -21386,7 +21394,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M80349-5)19.0 x 11.5 x 3.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "203171575",
@@ -21725,7 +21733,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M46002-4) 24 x 18 x 7",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "203161610",
@@ -21738,7 +21746,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M46002-3) 24 x 18 x 7",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "203161400",
@@ -21751,7 +21759,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M46002-2) 24 x 18 x 7",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "203161126",
@@ -21764,7 +21772,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M46002-1) 24 x 18 x 7",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "203160800",
@@ -21918,7 +21926,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M25770-)25x19x11.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "202902998",
@@ -21931,7 +21939,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M25673-1)16*12*18cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "202784663",
@@ -21969,7 +21977,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P580A(M14953-1)16 x 33 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "202783013",
@@ -22085,7 +22093,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P750A(M25453-1)28.0 x 20.0 x 11.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "202568360",
@@ -22209,8 +22217,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/dfbe7834b3.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
-      "purchase_product_name": "P520A(M11497-1)28 x 15 x 16.5"
+      "type": "ACCESSORIES",
+      "purchase_product_name": "P520A(M11497-1)28 x 15 x 16.5",
+      "gender": "WOMEN"
     },
     {
       "album_id": "202557100",
@@ -22295,7 +22304,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/6d5b7931e8.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P580A(M12599-1)12 x 7 x 19",
       "gender": "MEN"
     },
@@ -22463,7 +22472,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M58951-2)25.0 x 19.0 x 15.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "202320437",
@@ -22476,7 +22485,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M59273-1)25.0 x 19.0 x 15.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "202319832",
@@ -22489,7 +22498,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M58951-1)25.0 x 19.0 x 15.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "202319332",
@@ -22502,7 +22511,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M58947-1)25.0 x 19.0 x 15.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "202318994",
@@ -22526,9 +22535,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/bb4311e122.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P550A(M14547-1)20.0 x 11.5 x 4.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "202318146",
@@ -22563,9 +22572,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/4b65c9225d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P550A(M14564-1)20.0 x 11.5 x 4.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "202316642",
@@ -22578,7 +22587,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M14403-1)25 × 19 × 11.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "202316301",
@@ -22637,7 +22646,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/008c18cd9d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P460A(M69203-1)20x12.5x3CM",
       "gender": "WOMEN"
     },
@@ -22801,7 +22810,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P350(M47186-3)30x21x17",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "201881787",
@@ -22814,7 +22823,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P350(M47186-2)30x21x17",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "201881304",
@@ -23154,9 +23163,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/e455478dd6.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P560A(M80741-6)18.5 x 11 x 6.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "201489359",
@@ -23352,7 +23361,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M44151-1)25.0 x 17.0 x 9.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "201245753",
@@ -23376,9 +23385,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/b225981b86.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M67839-1)19.0 x 12.5 x 4.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "201245435",
@@ -23502,9 +23511,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/0bafa9630c.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M62650-8)12x7cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "201243005",
@@ -23515,9 +23524,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/56ac9041a7.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M62650-7)12x7cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "201242850",
@@ -23528,9 +23537,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/98a77b43e1.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M62650-6)12x7cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "201242584",
@@ -23541,9 +23550,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/26abb25971.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M62650-5)12x7cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "201065273",
@@ -23654,8 +23663,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/97e6d53a7d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
-      "purchase_product_name": "P650A(M14981-1)15 x 11 x 25"
+      "type": "ACCESSORIES",
+      "purchase_product_name": "P650A(M14981-1)15 x 11 x 25",
+      "gender": "WOMEN"
     },
     {
       "album_id": "200948585",
@@ -23781,7 +23791,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P300(M46688-1) 22.18.8",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "200779470",
@@ -23830,7 +23840,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P300(M58489-2) 22 x 18 x 8",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "200768913",
@@ -24074,7 +24084,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P520A(M46917-1)17.0 x 12.0 x 9.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "200369848",
@@ -24482,7 +24492,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/2e1182de43.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M80880-4) 11.5 x 8.5 x 4.0",
       "gender": "WOMEN"
     },
@@ -24495,7 +24505,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/4f61d0cdc7.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M80880-3) 11.5 x 8.5 x 4.0",
       "gender": "WOMEN"
     },
@@ -24508,7 +24518,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/6b0dc0f117.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M80880-2) 11.5 x 8.5 x 4.0",
       "gender": "WOMEN"
     },
@@ -24521,7 +24531,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/5286e1e13b.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M80880-1) 11.5 x 8.5 x 4.0",
       "gender": "WOMEN"
     },
@@ -24859,7 +24869,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M46291-5) 13.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "199503981",
@@ -24872,7 +24882,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P520A(M46291-4) 13.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "199503703",
@@ -24885,7 +24895,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M46291-3) 13.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "199503480",
@@ -24898,7 +24908,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M46291-2) 13.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "199503266",
@@ -24911,7 +24921,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M46291-1) 13.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "199496554",
@@ -24958,7 +24968,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/25afa538c2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P580A(M82210-1)23.5 x 12.0 x 4.3",
       "gender": "WOMEN"
     },
@@ -24983,9 +24993,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/7848d776ce.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P580A(M82154-1)23.5 x 12.0 x 4.3",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "199189058",
@@ -25225,7 +25235,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M80349-4)19×11.5×3cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "198631279",
@@ -25238,7 +25248,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P520A(M80349-3)19×11.5×3cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "198631150",
@@ -25251,7 +25261,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P520A(M80349-2)19×11.5×3cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "198630865",
@@ -25264,7 +25274,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P520A(M80349-1)19×11.5×3cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "198545296",
@@ -25642,7 +25652,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/1e88f4e4ce.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M81260-2) 18.5×11×6.5cm",
       "gender": "MEN"
     },
@@ -25655,7 +25665,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/28f07b7c7b.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M81260-1) 18.5×11×6.5cm",
       "gender": "MEN"
     },
@@ -25772,9 +25782,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/7827cc0455.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P220A(M30271-1)8.0x 14.5x 1.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "197559098",
@@ -25871,9 +25881,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/19b237ef24.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P220A(M30271-3)8.0x 14.5x 1.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "197553077",
@@ -25884,9 +25894,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/07f7b29270.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P220A(M30271-2)8.0x 14.5x 1.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "197551639",
@@ -25948,7 +25958,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a68ff7bbae.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P380A(M61276-20)21*11*2",
       "gender": "WOMEN"
     },
@@ -26036,7 +26046,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/f3487a3717.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P500A(M63700-1)21.0 x 12.0 x 3.0 cm",
       "gender": "WOMEN"
     },
@@ -26062,7 +26072,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/6825dfd35d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M64064-3)21.0 x 12.0 x 3.0 cm",
       "gender": "WOMEN"
     },
@@ -26075,7 +26085,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/37bba603d8.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P500A(M64064-2)21.0 x 12.0 x 3.0 cm",
       "gender": "WOMEN"
     },
@@ -26576,7 +26586,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P680A(N40514-1)29 x 38 x 20",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "196036543",
@@ -26685,7 +26695,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/1e8bd818e0.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "SNEAKERS",
+      "type": "BAGS",
       "purchase_product_name": "P550A(M46740-1)20 16",
       "gender": "WOMEN"
     },
@@ -26698,9 +26708,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a6707a6d34.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P550A(M81524-1)12 x 19 x 7",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "195905566",
@@ -26726,7 +26736,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M22558-1)29.0 x 38.0 x 20.0",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "195788512",
@@ -27124,7 +27134,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P750A(M22914-1)36x29x15",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "195174948",
@@ -27173,7 +27183,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M46286-1)34x26x13cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "195170252",
@@ -27209,7 +27219,8 @@
       "price_cny": null,
       "price_jpy": null,
       "type": "BAGS",
-      "purchase_product_name": "P700A(M45494-1)34x26x13cm"
+      "purchase_product_name": "P700A(M45494-1)34x26x13cm",
+      "gender": "UNISEX"
     },
     {
       "album_id": "194991643",
@@ -27321,7 +27332,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M14072-1)38x20x29cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "194982237",
@@ -27359,7 +27370,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P550A( M12144-1)12.5 x 6 x 21",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194981766",
@@ -27385,7 +27396,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M43186-7)30×40×20cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "194981223",
@@ -27476,7 +27487,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P620A(M46200-4)24.5 x 15.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194980026",
@@ -27512,7 +27523,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/10b6d9aea6.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "SNEAKERS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P650A(m14020-1)38 x 13 x 28",
       "gender": "UNISEX"
     },
@@ -27550,9 +27561,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/1c1b0c0c4a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M83567-2)22 x 12 x6",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194975829",
@@ -27563,9 +27574,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/bc0b7b22ec.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M83567-1)22 x 12 x6",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194975645",
@@ -28401,7 +28412,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M45832-6)27.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194338456",
@@ -28414,7 +28425,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M45832-5)27.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194338324",
@@ -28427,7 +28438,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M45832-4)27.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194338186",
@@ -28438,9 +28449,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/2c10d5c1f5.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M81911-6)23.5 x 12 x 4.3",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194338044",
@@ -28451,9 +28462,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/f815f7a15a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M81911-5)23.5 x 12 x 4.3",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194337913",
@@ -28464,9 +28475,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/5f186bdb88.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M81911-4)23.5 x 12 x 4.3",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194337797",
@@ -28477,9 +28488,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/018e9cc385.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M81911-3)23.5 x 12 x 4.3",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194337630",
@@ -28490,9 +28501,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/d650a23778.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M81911-2)23.5 x 12 x 4.3",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "194337461",
@@ -28848,9 +28859,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/36c5282ad9.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P450A(M81911-1)23.5 x 12 x 4.3",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193933148",
@@ -28911,7 +28922,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/44668f3ccc.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "SNEAKERS",
+      "type": "BAGS",
       "purchase_product_name": "P650A(M45913-1)27.0 x 42.0 x 13.0",
       "gender": "MEN"
     },
@@ -29592,7 +29603,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M46200-3)24.5x15x6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193644334",
@@ -29605,7 +29616,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M46200-2)24.5x15x6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193644043",
@@ -29618,7 +29629,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M46200-1)24.5x15x6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193643777",
@@ -29718,7 +29729,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M20835-4)39 x 30 x 8cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193524127",
@@ -29731,7 +29742,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M20835-3)39 x 30 x 8cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193524035",
@@ -29744,7 +29755,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M20835-2)39 x 30 x 8cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193523936",
@@ -29757,7 +29768,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M20835-1)39 x 30 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193521317",
@@ -30326,9 +30337,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a77f8c9ef3.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M81852-1)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193008371",
@@ -30339,9 +30350,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3d825bb8f1.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M83613-1)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193008169",
@@ -30352,9 +30363,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/ff80fd11d4.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M81783-2)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193007917",
@@ -30365,9 +30376,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/433dfd520d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M81783-1)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193007694",
@@ -30378,9 +30389,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/2e4dd91e0b.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P550A(M81746-7)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193007484",
@@ -30464,9 +30475,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/592a251c58.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P600A(M82819-1)18 x 11 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193006107",
@@ -30513,9 +30524,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/b3e4b114e4.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M12811-1)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193004737",
@@ -30550,9 +30561,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/34e7f7e6b7.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M82571-1)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193004064",
@@ -30575,9 +30586,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a203a16ca6.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M11496-1)18x11x6.5CM",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "193001713",
@@ -30865,7 +30876,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M58489-1)22.18.8",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "192565717",
@@ -31945,7 +31956,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P570A(M46035-1)44 x 15 x 9",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "191843819",
@@ -31971,7 +31982,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P570A(M45729-1)44 x 15 x 9",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "191843406",
@@ -32160,7 +32171,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M12930-4)16 x 9.5 x 29",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191558717",
@@ -32173,7 +32184,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M12930-3)16 x 9.5 x 29",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191558539",
@@ -32186,7 +32197,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P260(M12930-2)16 x 9.5 x 29",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191558356",
@@ -32199,7 +32210,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P620A(M12930-1)29.0 x 16.0 x 9.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191558199",
@@ -32212,7 +32223,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P620A(M13224-1)29.0 x 16.0 x 9.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191412770",
@@ -32235,9 +32246,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/5f5da0ddae.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P420A(M67405-2)17.5x11.5x3.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191411202",
@@ -32248,9 +32259,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/97cc9a837c.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P420A(M67405-1)17.5x11.5x3.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191411145",
@@ -32363,9 +32374,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a7d57008d6.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "ACCESSORIES",
+      "type": "WALLETS",
       "purchase_product_name": "P270A(M13409-2)11x8.5x2",
-      "gender": "UNISEX"
+      "gender": "WOMEN"
     },
     {
       "album_id": "191409220",
@@ -32376,9 +32387,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/77d41bab18.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "ACCESSORIES",
+      "type": "WALLETS",
       "purchase_product_name": "P270A(M13409-1)11x8.5x2",
-      "gender": "UNISEX"
+      "gender": "WOMEN"
     },
     {
       "album_id": "191409167",
@@ -32441,8 +32452,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/f7923b5383.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
-      "purchase_product_name": "P260A(M14092-2)12×7×2cm"
+      "type": "ACCESSORIES",
+      "purchase_product_name": "P260A(M14092-2)12×7×2cm",
+      "gender": "UNISEX"
     },
     {
       "album_id": "191407350",
@@ -32454,7 +32466,8 @@
       "price_cny": null,
       "price_jpy": null,
       "type": "ACCESSORIES",
-      "purchase_product_name": "P260A(M14092-1)12×7×2cm"
+      "purchase_product_name": "P260A(M14092-1)12×7×2cm",
+      "gender": "UNISEX"
     },
     {
       "album_id": "191407293",
@@ -32655,7 +32668,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P730A(m47186-1)21 x 17 x 30",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191068799",
@@ -32680,7 +32693,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P550A(M81456-1)16 x 10 x 7.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191068242",
@@ -32745,7 +32758,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P730A(M46487-1)36.0 x 22.0 x 9.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191067145",
@@ -32758,7 +32771,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P730A(M46504-1)36 x 22 x 9",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191066919",
@@ -32771,7 +32784,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(N40499-2)40.0 x 31.0 x 15.0",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "191066680",
@@ -32822,7 +32835,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P580A(M46344-2)20 x 31 x 10cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "191065262",
@@ -32859,9 +32872,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/dbd5367f3a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P700A(M45265-1)31.0 x 39.0 x 8.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191064517",
@@ -32898,7 +32911,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P720A(M46553-1)29 x 38 x 20",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "191063986",
@@ -32961,7 +32974,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M46503-1)28.0 x 18.0 x 8.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191062782",
@@ -33099,7 +33112,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M58953-1)20.5 x 13.5 x 12.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191058744",
@@ -33150,7 +33163,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P630A(M46388-1)23 × 16 × 8.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191057424",
@@ -33199,7 +33212,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P630A(M46386-1) 23 × 16 × 8.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "191056577",
@@ -33308,9 +33321,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/75c747ca68.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P500A(M81115-6)22.0 x 14.5 x 4.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190963127",
@@ -34281,7 +34294,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M23640-4)25 x 13 x 10",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190705137",
@@ -34294,7 +34307,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M23640-3)25 x 13 x 10",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190704613",
@@ -34318,9 +34331,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/2e23b39a57.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M81746-6)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190703915",
@@ -34331,9 +34344,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/e201077225.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M81746-5)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190703715",
@@ -34344,9 +34357,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/4e39cdfeae.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M81746-4)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190703507",
@@ -34357,9 +34370,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/61c8bc45d7.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M81746-3)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190703297",
@@ -34370,9 +34383,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3b339caf88.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M81746-2)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190703109",
@@ -34383,9 +34396,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/7d8d691b48.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M81746-1)18.0 x 11.0 x 6.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190702873",
@@ -34396,9 +34409,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/9537bd78c4.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P560A(M81830-3)20 x 14 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190702642",
@@ -34409,9 +34422,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/bb425d5c0b.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M81830-2)20 x 14 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190702341",
@@ -34422,9 +34435,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/ba323f6762.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M81830-1)20 x 14 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190702111",
@@ -34661,9 +34674,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a297391f5e.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P460A(M82509-1)20.7 x 10.2 x 3.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190684181",
@@ -34701,7 +34714,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P660A(M46517-1)13.5 x 12.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190683869",
@@ -35019,9 +35032,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/ff4678f986.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P530A(m82801-1)24 x 16 x 8",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190267239",
@@ -35138,7 +35151,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M13480-1)16x18x12",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190265220",
@@ -35200,7 +35213,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3cb6f4dfa1.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "ACCESSORIES",
+      "type": "BAGS",
       "purchase_product_name": "P300(M44936-2)24 x 17 x 14",
       "gender": "UNISEX"
     },
@@ -35213,7 +35226,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/d4308ebe42.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "ACCESSORIES",
+      "type": "BAGS",
       "purchase_product_name": "P300(M44936-1)24 x 17 x 14",
       "gender": "UNISEX"
     },
@@ -35252,9 +35265,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/5a8345c741.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P100(M41939-15)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190160773",
@@ -35265,9 +35278,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/e70cf3df3a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P100(M41939-14)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190160611",
@@ -35278,9 +35291,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/fa4aad0a9d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P100(M41939-13)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190160448",
@@ -35291,9 +35304,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/03e57fdc96.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P100(M41939-12)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190160211",
@@ -35304,9 +35317,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/7aac983dee.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P100(M41939-11)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190160002",
@@ -35317,9 +35330,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/b36e0b5f54.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P100(M41939-10)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190159774",
@@ -35330,9 +35343,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/b8ff966240.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P100(M41939-9)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190159512",
@@ -35343,9 +35356,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/d1635aade8.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P120(N64038-6)8.0 x 14.5 x 1.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190159357",
@@ -35356,9 +35369,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/d9d2105ad2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P120(N64038-5)8.0 x 14.5 x 1.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190159169",
@@ -35369,9 +35382,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/73205f7eaf.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P120(N64038-4)8.0 x 14.5 x 1.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190158931",
@@ -35382,9 +35395,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/70e80c2c9c.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P120(N64038-3)8.0 x 14.5 x 1.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190158702",
@@ -35395,9 +35408,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/4408b9fa8d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P120(N64038-2)8.0 x 14.5 x 1.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190158526",
@@ -35408,9 +35421,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/7c49f272dd.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P120(N64038-1)8.0 x 14.5 x 1.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "190158296",
@@ -35865,7 +35878,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M43186-6)30x40x20cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "190134023",
@@ -35878,7 +35891,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P270(M43186-5)35x40x20cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "190133608",
@@ -35891,7 +35904,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P270(M43186-4)35x40x20cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "190133436",
@@ -35904,7 +35917,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P270(M43186-3)40×30×20cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "190129476",
@@ -36321,7 +36334,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P300(M22519-1) 35x40x20cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "190099466",
@@ -36736,8 +36749,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/5991297bff.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
-      "purchase_product_name": "P780A(M24988-1)31.0 x 35.0 x 18.0"
+      "type": "WALLETS",
+      "purchase_product_name": "P780A(M24988-1)31.0 x 35.0 x 18.0",
+      "gender": "WOMEN"
     },
     {
       "album_id": "189845385",
@@ -36763,7 +36777,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P780A(m25022-1)31.0 x 35.0 x 18.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "189845178",
@@ -37196,7 +37210,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P380(N40499-1)40x31x15cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "189587733",
@@ -37221,7 +37235,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P380(M30977-1)40x31x15cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "189587422",
@@ -37384,7 +37398,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P560A(M45832-3)27.0 x 16.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "189201460",
@@ -37689,7 +37703,8 @@
       "price_cny": null,
       "price_jpy": null,
       "type": "BAGS",
-      "purchase_product_name": "P630A(M23783-1)25.0 x 18.5 x 7.0 cm"
+      "purchase_product_name": "P630A(M23783-1)25.0 x 18.5 x 7.0 cm",
+      "gender": "UNISEX"
     },
     {
       "album_id": "189168271",
@@ -37728,7 +37743,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P680A(M23640-2)25.0 x 13.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "189054285",
@@ -37741,7 +37756,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P680A(M23698-10)25.0 x 13.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "189054142",
@@ -37754,7 +37769,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P680A(M23640-1)25.0 x 13.0 x 10.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "189053885",
@@ -37851,7 +37866,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/ca981a710d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "SNEAKERS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P700A(M12729-1)41.0X48.0X13.0 cm",
       "gender": "UNISEX"
     },
@@ -37901,9 +37916,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/2a25d3387c.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P600A(M83563-1)20x12x5.5CM",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "189052059",
@@ -37951,9 +37966,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/0cae60ec06.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P600A(M82544-1)11x18.5x6.5CM",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "189051001",
@@ -37964,7 +37979,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/6b6387825d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P560A(M82542-9)11x18.5x6.5CM",
       "gender": "WOMEN"
     },
@@ -37977,7 +37992,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/4731f45cd0.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P270(M82542-8)18.5 x 11 x 6.5",
       "gender": "WOMEN"
     },
@@ -37990,7 +38005,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/19127569c2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P270(M82542-7)18.5 x 11 x 6.5",
       "gender": "WOMEN"
     },
@@ -38003,7 +38018,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/da336528c1.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P270(M82542-6)18.5 x 11 x 6.5",
       "gender": "WOMEN"
     },
@@ -38016,7 +38031,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/522819d1a8.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M82542-5)18.5 x 11 x 6.5",
       "gender": "WOMEN"
     },
@@ -38029,7 +38044,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/2385835743.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M82542-4)18.5 x 11 x 6.5",
       "gender": "WOMEN"
     },
@@ -38042,7 +38057,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/944f5e9f75.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M82542-3)18.5 x 11 x 6.5",
       "gender": "WOMEN"
     },
@@ -38055,7 +38070,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/76698a9883.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M82542-2)18.5 x 11 x 6.5",
       "gender": "WOMEN"
     },
@@ -38068,7 +38083,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/44f664e2be.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P260(M82542-1)18.5 x 11 x 6.5",
       "gender": "WOMEN"
     },
@@ -38309,7 +38324,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M45659-9)25.0X19.0X11.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "188967349",
@@ -38322,7 +38337,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P280(M45659-8)25.0X19.0X11.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "188967201",
@@ -39027,7 +39042,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P760A(M24760-1)29 x 38 x 20",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "188838116",
@@ -39038,8 +39053,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3c5d9854c6.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
-      "purchase_product_name": "P620A(M11657-1)22.5 ×16.0×7.5"
+      "type": "ACCESSORIES",
+      "purchase_product_name": "P620A(M11657-1)22.5 ×16.0×7.5",
+      "gender": "WOMEN"
     },
     {
       "album_id": "188837684",
@@ -40734,7 +40750,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P650A(M22545-1)31x42x17cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "187847793",
@@ -41008,7 +41024,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p700A(M21796-1)30.0 x 20.0 x 11.0",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "187660688",
@@ -41107,7 +41123,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P580A(M46344-1)20 x 31 x 10cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "187632775",
@@ -41120,7 +41136,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P560A(M46327-1)20x31x7CM",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "187631940",
@@ -41324,7 +41340,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/1b8ac0fa83.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-23)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41337,7 +41353,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/f8f9eabcfd.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-22)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41350,7 +41366,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/e9cb9ea6c0.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-21)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41363,7 +41379,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/0d24ee413b.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-20)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41376,7 +41392,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/34d1a5fd91.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-19)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41389,7 +41405,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/9226c25e8f.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-18)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41402,7 +41418,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/c45c75e999.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-13)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41415,7 +41431,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/ecea175d53.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-12)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41428,7 +41444,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/d813141be3.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-11)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41441,7 +41457,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/061efa9983.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-10)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41454,7 +41470,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/10a9edc587.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-9)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41467,7 +41483,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/773f3ac7f2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-8)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41480,7 +41496,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a5b700be9e.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-6)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41493,7 +41509,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3a448e20a2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-5)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41506,7 +41522,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/4029821208.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-4)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41519,7 +41535,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/c8cd8b6150.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-3)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41532,7 +41548,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/bfc2530c51.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-2)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41545,7 +41561,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/1b3944807c.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P150(M61276-1)21 x 11 x 2CM",
       "gender": "WOMEN"
     },
@@ -41620,7 +41636,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p250(M58487-7)21 x 15 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "187471035",
@@ -41633,7 +41649,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p250(M58487-6)21 x 15 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "187470711",
@@ -41646,7 +41662,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p250(M58487-5)21 x 15 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "187470392",
@@ -41659,7 +41675,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p250(M58487-4)21 x 15 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "187470133",
@@ -41672,7 +41688,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p250(M58487-3)21 x 15 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "187469887",
@@ -41685,7 +41701,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p250(M58487-2)21 x 15 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "187469517",
@@ -41698,7 +41714,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p600A(M58487-1)21 x 15 x 4",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "187415134",
@@ -41711,7 +41727,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P300(M31033-4) 29.0 x 38.0 x 20.0cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "187414930",
@@ -41724,7 +41740,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P300(M31033-3) 29.0 x 38.0 x 20.0cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "187414583",
@@ -41737,7 +41753,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P300(M31033-2) 29.0 x 38.0 x 20.0cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "187413623",
@@ -41885,7 +41901,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/7fb6b3d057.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "ACCESSORIES",
+      "type": "BAGS",
       "purchase_product_name": "p420A(M44936-2)14.0 x 10.2 x 8.5",
       "gender": "UNISEX"
     },
@@ -41925,7 +41941,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700A(M45595-1)35.0 x 27.0 x 14.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "187382418",
@@ -42024,7 +42040,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/f39360ed5a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P420A(M43383-1)26x17x7cm",
       "gender": "MEN"
     },
@@ -42703,7 +42719,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p630A(N45303-1)20x31x7CM",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "187007326",
@@ -42791,9 +42807,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/67024e8d3c.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P500A(M12636-1)16 x 5 x 22.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186984845",
@@ -42804,7 +42820,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/e79cfa02f2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P470A(M12806-1)16 x 5 x 22.5",
       "gender": "MEN"
     },
@@ -42832,7 +42848,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P620A(M45653-1)25.0 x 11.0 x 19.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186945153",
@@ -42857,7 +42873,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M45659-7)25.0 x 11.0 x 19.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186944870",
@@ -42870,7 +42886,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M45659-6)25.0 x 11.0 x 19.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186944752",
@@ -42883,7 +42899,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M45659-5)25.0 x 11.0 x 19.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186944642",
@@ -42896,7 +42912,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M45659-4)25.0 x 11.0 x 19.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186944478",
@@ -42909,7 +42925,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M45659-2)25.0 x 11.0 x 19.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186944333",
@@ -42922,7 +42938,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M45659-3)25.0 x 11.0 x 19.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186944069",
@@ -42935,7 +42951,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P600A(M45659-1)25.0 x 11.0 x 19.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186925244",
@@ -43026,7 +43042,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p660A(M47074-1)20.0 x 22.0 x 14.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186699530",
@@ -43039,7 +43055,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P660A(M47106-1)20.0 x 22.0 x 14.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186699405",
@@ -43050,9 +43066,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/dd4f608fd5.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P420A(M82252-1)12 x 19 x 7",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186699346",
@@ -43454,7 +43470,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/811ce5f4d2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P460A(M59161-1)18.5 x 11 x 6.5 cm",
       "gender": "WOMEN"
     },
@@ -43481,7 +43497,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "p660A(M44925-1)41.0 x 34.0 x 19.0 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186693618",
@@ -43544,8 +43560,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/2cf08f78fe.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
-      "purchase_product_name": "P590A(M24707-1) 29 x 24 x 12"
+      "type": "ACCESSORIES",
+      "purchase_product_name": "P590A(M24707-1) 29 x 24 x 12",
+      "gender": "WOMEN"
     },
     {
       "album_id": "186693186",
@@ -43749,7 +43766,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/287dd6fa73.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P460A(N40127-1)28.0 x 15.0 x 16.5",
       "gender": "UNISEX"
     },
@@ -43775,9 +43792,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/1d7bd4cd54.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P560A(M80741-5)18.5 x 11 x 6.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186585282",
@@ -43803,7 +43820,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P560A(M47137-4) 16 x 33 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "186572003",
@@ -43816,7 +43833,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P560A(M47137-3) 16 x 33 x 5.7",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "186571932",
@@ -43887,9 +43904,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/8f7ef39241.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M41939-8)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186544869",
@@ -43900,9 +43917,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/1b070fa389.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M41939-7)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186544232",
@@ -43913,9 +43930,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/74c22130e4.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M41939-6)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186543945",
@@ -43926,9 +43943,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/5b969bb813.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M41939-5)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186543711",
@@ -43939,9 +43956,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/21d9dbc5c2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M41939-4)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186543268",
@@ -43952,9 +43969,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/4911d80a9f.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M41939-3)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186543096",
@@ -43965,9 +43982,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/32da81f3b2.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M41939-2)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186542854",
@@ -43978,9 +43995,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/e8a6759675.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P200A(M41939-1)11×8×2.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186542368",
@@ -44082,9 +44099,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/04cb23e98e.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "69421#280A",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186540107",
@@ -44588,7 +44605,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P700(M46595-1)21.5 x 13.5 x 6.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186535914",
@@ -44867,7 +44884,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/40dfca2a3d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P520A(M64064-1)21×12×3cm",
       "gender": "WOMEN"
     },
@@ -45324,9 +45341,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/b2fe4ea3d4.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "JEWELRY",
       "purchase_product_name": "P220(N41719-6) 20 x 31 x 10 cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "186443229",
@@ -45337,9 +45354,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/b0229da7d1.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "JEWELRY",
       "purchase_product_name": "P220(N41719-5) 20 x 31 x 10 cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "186443132",
@@ -45350,9 +45367,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/61bfce1b72.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "JEWELRY",
       "purchase_product_name": "P220(N41719-4) 20 x 31 x 10 cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "186442784",
@@ -45363,9 +45380,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3c9e005969.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "JEWELRY",
       "purchase_product_name": "P440A(N41719-2)20x31x10cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "186442939",
@@ -45376,9 +45393,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/6be8c4b3bc.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "JEWELRY",
       "purchase_product_name": "P440A(N41719-3)20x31x10cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "186442063",
@@ -45401,9 +45418,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a9930c9567.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
+      "type": "JEWELRY",
       "purchase_product_name": "P440A(N41719-1)20x31x10cm",
-      "gender": "UNISEX"
+      "gender": "MEN"
     },
     {
       "album_id": "186441028",
@@ -45429,7 +45446,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P230(M45832-2)29 x 16 x 9.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186440710",
@@ -45442,7 +45459,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P230(M45832-1)29 x 16 x 9.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186440559",
@@ -45455,7 +45472,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P250(M41056-1)33 x 23 x 15",
-      "gender": "UNISEX"
+      "gender": "WOMEN"
     },
     {
       "album_id": "186440427",
@@ -45480,7 +45497,8 @@
       "price_cny": null,
       "price_jpy": null,
       "type": "BAGS",
-      "purchase_product_name": "P240(M46653-1)25 x 13 x 10"
+      "purchase_product_name": "P240(M46653-1)25 x 13 x 10",
+      "gender": "UNISEX"
     },
     {
       "album_id": "186440180",
@@ -45633,7 +45651,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P240(M45522-1)33x16x30cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186438416",
@@ -45646,7 +45664,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P240(M45522-2)33x16x30cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186437676",
@@ -45659,7 +45677,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P240(M45522-3)33x16x30cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186437529",
@@ -45672,7 +45690,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P240(M45522-4)33x16x30cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186437399",
@@ -45685,7 +45703,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P240(M45522-5)33x16x30cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186437255",
@@ -45698,7 +45716,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P240(M45522-6)33x16x30cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186437099",
@@ -45711,7 +45729,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P240(M45522-7)33x16x30cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186436941",
@@ -45724,7 +45742,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P240(M45522-8)33x16x30cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186437532",
@@ -46045,8 +46063,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/8be709e391.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "BAGS",
-      "purchase_product_name": "P850A(M24953-1) 50×29×23cm"
+      "type": "ACCESSORIES",
+      "purchase_product_name": "P850A(M24953-1) 50×29×23cm",
+      "gender": "WOMEN"
     },
     {
       "album_id": "186393969",
@@ -46175,7 +46194,7 @@
       "price_jpy": null,
       "type": "BAGS",
       "purchase_product_name": "P720A(M13044-1) 30.0 x 25.0 x 17.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186392885",
@@ -46287,9 +46306,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/cc5c2a307a.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M14058-1)13.5 x 20.0 x 8.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186352149",
@@ -46300,9 +46319,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/d74da27088.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P250(M14253-1) 25.0 x 17.5 x 11.0",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186351984",
@@ -46653,9 +46672,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/b7b7e8f0a1.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P530A(N60418) 18.5×11×6.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186256562",
@@ -46666,9 +46685,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/40d8e93898.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M80741-4)18.5 x 11.0 x 6.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186256437",
@@ -46679,9 +46698,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/1b3a75769d.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M80741-3)18.5 x 11.0 x 6.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186256196",
@@ -46692,9 +46711,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/233fe370c9.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M80741-2)18.5 x 11.0 x 6.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186256044",
@@ -46705,9 +46724,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/802fd9dea5.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P240(M80741-1)18.5 x 11.0 x 6.5 cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186250973",
@@ -46731,9 +46750,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/9de6c36177.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P580A(M81115-1)22 x 14.5 x 4.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186250353",
@@ -46744,9 +46763,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/1db2d62f47.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P580A(M81115-2) 22 x 14.5 x 4.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186250125",
@@ -46757,9 +46776,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/72b55febf5.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P200(M81115-3)18.5 x 11 x 6.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186249855",
@@ -46770,9 +46789,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a201955315.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P200(M81115-4)18.5 x 11 x 6.5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186249473",
@@ -46783,9 +46802,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/8296636968.jpg",
       "price_cny": null,
       "price_jpy": null,
-      "type": "WALLETS",
+      "type": "BAGS",
       "purchase_product_name": "P200(M81115-5)22 x 14.5 x 5cm",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "186249247",
