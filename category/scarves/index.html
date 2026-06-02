@@ -115,8 +115,13 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       btns.forEach(function(b){b.classList.remove('active')});
       this.classList.add('active');
       var g = this.dataset.g;
-      document.querySelectorAll('.card[data-gender]').forEach(function(card){
-        card.classList.toggle('g-hidden', g !== 'all' && card.dataset.gender !== g);
+      document.querySelectorAll('.card').forEach(function(card){
+        var cg = card.dataset.gender || '';
+        var hide = false;
+        if(g === 'all') hide = false;
+        else if(g === 'UNISEX') hide = (cg !== '' && cg !== 'UNISEX');
+        else hide = (cg !== g);
+        card.classList.toggle('g-hidden', hide);
       });
     });
   });

@@ -75,7 +75,12 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
 <div class="wrap">
   <h1>Dior</h1>
   <p class="sub">Dior のレプリカアイテム一覧。PANDORAが厳選したセラーから1833点を掲載。</p>
-  
+  <div class="gender-bar">
+  <button class="gf-btn active" data-g="all">ALL</button>
+  <button class="gf-btn" data-g="WOMEN">♀ WOMEN</button>
+  <button class="gf-btn" data-g="MEN">♂ MEN</button>
+  <button class="gf-btn" data-g="UNISEX">UNISEX</button>
+</div>
   <div class="grid"><div class="card">
   <a href="/products/182121202.html"><img class="card-img" src="https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/8a132cdf99.jpg" alt="1-￥220" loading="lazy"></a>
   <div class="card-body">
@@ -487,6 +492,25 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
   <a class="more-link" href="/catalog.html">&larr; 全カタログへ</a>
 </div>
 <footer>PANDORA &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy で購入</a></footer>
-
+<script>
+(function(){
+  var btns = document.querySelectorAll('.gf-btn');
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      btns.forEach(function(b){b.classList.remove('active')});
+      this.classList.add('active');
+      var g = this.dataset.g;
+      document.querySelectorAll('.card').forEach(function(card){
+        var cg = card.dataset.gender || '';
+        var hide = false;
+        if(g === 'all') hide = false;
+        else if(g === 'UNISEX') hide = (cg !== '' && cg !== 'UNISEX');
+        else hide = (cg !== g);
+        card.classList.toggle('g-hidden', hide);
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>

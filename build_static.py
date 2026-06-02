@@ -142,8 +142,48 @@ def fmt_cny(p):
             pass
     return ""
 
+GENDER_FILTER_CSS = """
+.gender-bar{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.gf-btn{font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  padding:5px 14px;border-radius:999px;border:1px solid var(--border);
+  background:var(--s1);color:var(--muted2);cursor:pointer;transition:.15s}
+.gf-btn:hover{background:var(--s2)}
+.gf-btn.active{background:var(--accent);color:#111;border-color:var(--accent2)}
+.card.g-hidden{display:none}
+.tag-women{background:rgba(236,72,153,.09);color:#be185d;border-color:rgba(236,72,153,.25)}
+.tag-men{background:rgba(59,130,246,.09);color:#1d4ed8;border-color:rgba(59,130,246,.25)}
+"""
+
+GENDER_FILTER_JS = """<script>
+(function(){
+  var btns = document.querySelectorAll('.gf-btn');
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      btns.forEach(function(b){b.classList.remove('active')});
+      this.classList.add('active');
+      var g = this.dataset.g;
+      document.querySelectorAll('.card').forEach(function(card){
+        var cg = card.dataset.gender || '';
+        var hide = false;
+        if(g === 'all') hide = false;
+        else if(g === 'UNISEX') hide = (cg !== '' && cg !== 'UNISEX');
+        else hide = (cg !== g);
+        card.classList.toggle('g-hidden', hide);
+      });
+    });
+  });
+})();
+</script>"""
+
+GENDER_FILTER_HTML = """<div class="gender-bar">
+  <button class="gf-btn active" data-g="all">ALL</button>
+  <button class="gf-btn" data-g="WOMEN">♀ WOMEN</button>
+  <button class="gf-btn" data-g="MEN">♂ MEN</button>
+  <button class="gf-btn" data-g="UNISEX">UNISEX</button>
+</div>"""
+
 def card_css():
-    return """
+    return GENDER_FILTER_CSS + """
 a{color:inherit;text-decoration:none}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-top:20px}
 .card{background:var(--s1);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .18s,transform .18s,box-shadow .18s;box-shadow:0 1px 4px rgba(0,0,0,.07),0 2px 10px rgba(0,0,0,.04)}
@@ -175,6 +215,7 @@ def make_card_html(p, link_to_product=True):
     qc     = esc(p.get("yupoo") or "#")
     brand  = esc(p.get("brand",""))
     ptype  = esc(p.get("type",""))
+    gender = p.get("gender","")
     img    = abs_img(p.get("image",""))
     weight_g  = p.get("weight_g")
     volume_cm = p.get("volume_cm","")
@@ -203,12 +244,20 @@ def make_card_html(p, link_to_product=True):
     else:
         weight_html = ''
 
-    return f"""<div class="card">
+    gender_attr = f' data-gender="{esc(gender)}"' if gender else ''
+    gender_tag = ''
+    if gender == 'WOMEN':
+        gender_tag = '<span class="tag tag-women">♀ Women</span>'
+    elif gender == 'MEN':
+        gender_tag = '<span class="tag tag-men">♂ Men</span>'
+
+    return f"""<div class="card"{gender_attr}>
   {img_html}
   <div class="card-body">
     <div class="card-tags">
       {f'<span class="tag tag-brand">{brand}</span>' if brand else ''}
       {f'<span class="tag tag-type">{esc(CAT_JA.get(p.get("type",""), ptype))}</span>' if ptype else ''}
+      {gender_tag}
     </div>
     <div class="card-title">{title_html}</div>
     {f'<div class="card-price">{price}{cny_html}</div>' if price else ''}
@@ -369,6 +418,7 @@ def build_category_pages(products, out_dir):
         items_sorted = sorted(items, key=lambda p: 0 if p.get("price_jpy") else 1)
         featured = [p for p in items_sorted if p.get("image") and p["image"]!="null"][:24] or items_sorted[:24]
         cards = "\n".join(make_card_html(p) for p in featured)
+        has_gender = any(p.get("gender") for p in items)
         jsonld = json.dumps({
             "@context":"https://schema.org","@type":"CollectionPage",
             "name":f"{cat} レプリカ | PANDORA",
@@ -401,10 +451,12 @@ h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin
   <h1>{esc(CAT_JA.get(cat,cat))}</h1>
   <p class="sub">{esc(desc)}</p>
   <p class="sub">{len(items)}点のアイテム</p>
+  {GENDER_FILTER_HTML if has_gender else ''}
   <div class="grid">{cards}</div>
   <a class="more-link" href="/catalog.html?cat={esc(cat)}">全{len(items)}点を見る &rarr;</a>
 </div>
 {FOOTER_HTML}
+{GENDER_FILTER_JS if has_gender else ''}
 </body>
 </html>"""
         (cat_dir / "index.html").write_text(html, encoding="utf-8")
@@ -429,6 +481,7 @@ def build_brand_pages(products, out_dir):
         items_sorted = sorted(items, key=lambda p: 0 if p.get("price_jpy") else 1)
         featured = [p for p in items_sorted if p.get("image") and p["image"]!="null"][:24] or items_sorted[:24]
         cards = "\n".join(make_card_html(p) for p in featured)
+        has_gender = any(p.get("gender") for p in items)
         html = f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -449,10 +502,12 @@ h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin
 <div class="wrap">
   <h1>{esc(brand)}</h1>
   <p class="sub">{esc(desc)}</p>
+  {GENDER_FILTER_HTML if has_gender else ''}
   <div class="grid">{cards}</div>
   <a class="more-link" href="/catalog.html">&larr; 全カタログへ</a>
 </div>
 {FOOTER_HTML}
+{GENDER_FILTER_JS if has_gender else ''}
 </body>
 </html>"""
         (b_dir / "index.html").write_text(html, encoding="utf-8")
