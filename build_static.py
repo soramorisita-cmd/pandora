@@ -881,6 +881,15 @@ def main():
     patch_index(products)
     generate_lookup_json(products)
 
+    # products.json をminify化（モバイルロード高速化）
+    pjson_path = ROOT / "products.json"
+    pjson_path.write_text(
+        json.dumps(data, ensure_ascii=False, separators=(',', ':')),
+        encoding="utf-8"
+    )
+    size_mb = pjson_path.stat().st_size / 1024 / 1024
+    print(f"  [minify] products.json: {size_mb:.1f} MB")
+
     print(f"\n[build] 完了！")
 
 if __name__ == "__main__":

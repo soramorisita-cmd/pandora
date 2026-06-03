@@ -646,6 +646,12 @@ let selGender=localStorage.getItem('pdra_gender')||'all';
 function setGender(g){
   selGender=g;localStorage.setItem('pdra_gender',g);
   document.querySelectorAll('.gender-btn').forEach(b=>b.classList.toggle('active',b.dataset.g===g));
+  // 商品データロード未完了なら、ロード後 init() で反映される
+  if(!ALL_PRODUCTS||ALL_PRODUCTS.length===0){
+    const grid=document.getElementById('grid');
+    if(grid)grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)"><div class="spinner"></div><p style="margin-top:10px;font-size:13px">商品データを読み込み中...</p></div>';
+    return;
+  }
   applyFilters();
 }
 function buildPageGroups(items){
