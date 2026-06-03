@@ -73,9 +73,16 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 .f-label{font-size:13px;font-weight:600;color:var(--text);flex:1;line-height:1.2}
 .f-count{font-size:11px;color:var(--muted);font-weight:600;white-space:nowrap}
 .f-item.active .f-label{color:var(--accent-dark)}
-#brand-list{max-height:280px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--s3) transparent}
+#brand-list{max-height:380px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--s3) transparent}
 #brand-list::-webkit-scrollbar{width:3px}
 #brand-list::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
+.sb-search{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:13px;font-weight:600;padding:8px 11px;outline:none;transition:border-color .2s}
+.sb-search:focus{border-color:var(--accent)}
+.sb-search::placeholder{color:var(--muted)}
+.brand-az{display:flex;flex-wrap:wrap;gap:2px;margin:6px 0 5px}
+.brand-az-btn{font-size:10px;font-weight:800;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:default;transition:all .1s;padding:0;line-height:1}
+.brand-az-btn.on{color:var(--accent-dark);background:rgba(180,240,50,.13);border-color:rgba(150,220,30,.4);cursor:pointer}
+.brand-az-btn.on:hover{background:var(--accent);color:#111;border-color:var(--accent)}
 .filter-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .filter-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;letter-spacing:.3px;color:#111;background:var(--accent);padding:4px 8px 4px 11px;border-radius:999px;cursor:pointer;transition:background .12s;white-space:nowrap}
 .filter-chip:hover{background:var(--accent2)}
@@ -317,6 +324,8 @@ footer a{color:var(--accent-dark);text-decoration:none}
     </div>
     <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px">
       <div class="sb-title">ブランド</div>
+      <input type="text" id="brand-search-mobile" class="sb-search" placeholder="🔍 ブランドを検索..." oninput="filterBrandList(this.value)" style="margin-bottom:4px">
+      <div class="brand-az" id="brand-az-mobile"></div>
       <div class="filter-list" id="brand-list-mobile"></div>
     </div>
     <button class="btn-reset" onclick="resetFilters()">リセット</button>
@@ -331,6 +340,8 @@ footer a{color:var(--accent-dark);text-decoration:none}
       </div>
       <div class="sidebar-block">
         <div class="sb-title">ブランド</div>
+        <input type="text" id="brand-search-input" class="sb-search" placeholder="🔍 ブランドを検索..." oninput="filterBrandList(this.value)" style="margin-bottom:4px">
+        <div class="brand-az" id="brand-az-desktop"></div>
         <div class="filter-list" id="brand-list"></div>
         <button class="btn-reset" onclick="resetFilters()">リセット</button>
       </div>
@@ -599,7 +610,7 @@ a{color:inherit;text-decoration:none}
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/240118113.html">P680A(M13901-1)</a></div>
-    
+    <div class="card-price">¥16,014<span class="card-price-cny">/ 680元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7778871092&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -813,7 +824,39 @@ function buildBrandList(){
     lbl.dataset.brand=brand;
     el.appendChild(lbl);
   });
+  buildAZBar('brand-az-desktop',brands);
+  // 検索ボックスの値が残っていたら再フィルタ
+  const si=document.getElementById('brand-search-input');
+  if(si&&si.value)filterBrandList(si.value);
   _rebuilding=false;
+}
+function buildAZBar(containerId,brands){
+  const el=document.getElementById(containerId);if(!el)return;
+  const letters=new Set(brands.map(b=>(b[0]||'').toUpperCase()).filter(c=>c&&/[A-Z]/.test(c)));
+  let html='';
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(c=>{
+    const on=letters.has(c);
+    html+=`<button class="brand-az-btn${on?' on':''}"${on?` onclick="jumpToBrand('${c}')"`:' disabled'}>${c}</button>`;
+  });
+  el.innerHTML=html;
+}
+function jumpToBrand(letter){
+  ['brand-list','brand-list-mobile'].forEach(id=>{
+    const container=document.getElementById(id);if(!container)return;
+    const items=[...container.querySelectorAll('.f-item')].filter(i=>i.style.display!=='none');
+    const target=items.find(i=>((i.dataset.brand||'')[0]||'').toUpperCase()===letter);
+    if(target)container.scrollTop=target.offsetTop-container.offsetTop;
+  });
+}
+function filterBrandList(q){
+  const query=(q||'').toLowerCase().trim();
+  ['brand-list','brand-list-mobile'].forEach(id=>{
+    const container=document.getElementById(id);if(!container)return;
+    container.querySelectorAll('.f-item').forEach(item=>{
+      const brand=(item.dataset.brand||'').toLowerCase();
+      item.style.display=(!query||brand.includes(query))?'':'none';
+    });
+  });
 }
 function toggleCat(cat,cb){cb.checked?selCats.add(cat):selCats.delete(cat);const _snap=[...selBrands];buildCatList();syncCatBarActive();buildBrandList();buildBrandBar();_snap.forEach(b=>selBrands.add(b));applyFilters()}
 function buildBrandBar(){
@@ -919,6 +962,9 @@ function buildMobileLists(){
     lbl.dataset.brand=brand;
     bel.appendChild(lbl);
   });
+  buildAZBar('brand-az-mobile',brands);
+  const sm=document.getElementById('brand-search-mobile');
+  if(sm&&sm.value)filterBrandList(sm.value);
   _rebuilding=false;
   const total=selCats.size+selBrands.size;
   document.getElementById('filter-badge').textContent=total?`${total}件選択中`:'';
