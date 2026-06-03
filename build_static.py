@@ -422,7 +422,10 @@ def build_category_pages(products, out_dir):
         cat_dir = out_dir / slug
         cat_dir.mkdir(parents=True, exist_ok=True)
         desc = CAT_DESC.get(cat, f"PANDORAのレプリカ {cat} コレクション。厳選セラーから仕入れた高品質アイテム。")
-        items_sorted = sorted(items, key=lambda p: 0 if p.get("price_jpy") else 1)
+        items_sorted = sorted(items, key=lambda p: (
+            0 if p.get("gender") else 1,
+            0 if p.get("price_jpy") else 1,
+        ))
         featured = [p for p in items_sorted if p.get("image") and p["image"]!="null"][:24] or items_sorted[:24]
         cards = "\n".join(make_card_html(p) for p in featured)
         has_gender = any(p.get("gender") for p in items)
@@ -485,7 +488,10 @@ def build_brand_pages(products, out_dir):
         b_dir = out_dir / slug
         b_dir.mkdir(parents=True, exist_ok=True)
         desc = f"{brand} のレプリカアイテム一覧。PANDORAが厳選したセラーから{len(items)}点を掲載。"
-        items_sorted = sorted(items, key=lambda p: 0 if p.get("price_jpy") else 1)
+        items_sorted = sorted(items, key=lambda p: (
+            0 if p.get("gender") else 1,
+            0 if p.get("price_jpy") else 1,
+        ))
         featured = [p for p in items_sorted if p.get("image") and p["image"]!="null"][:24] or items_sorted[:24]
         cards = "\n".join(make_card_html(p) for p in featured)
         has_gender = any(p.get("gender") for p in items)

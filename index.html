@@ -85,7 +85,8 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 /* LAYOUT */
 .page{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 24px 60px;display:flex;gap:20px;align-items:flex-start}
 .main{flex:1;min-width:0}
-.result-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.result-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.result-bar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .result-count{font-size:13px;font-weight:700;color:var(--muted2)}
 .result-count span{color:var(--accent-dark);font-size:16px}
 .view-toggle{display:flex;border:1px solid var(--border);border-radius:7px;overflow:hidden;flex-shrink:0}
@@ -302,6 +303,15 @@ footer a{color:var(--accent-dark);text-decoration:none}
       <button class="drawer-close" onclick="closeDrawer()">✕</button>
     </div>
     <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
+      <div class="sb-title">性別</div>
+      <div class="view-toggle gender-toggle" style="width:100%">
+        <button class="view-toggle-btn gender-btn active" data-g="all" onclick="setGender('all')" style="flex:1">ALL</button>
+        <button class="view-toggle-btn gender-btn" data-g="WOMEN" onclick="setGender('WOMEN')" style="flex:1">♀</button>
+        <button class="view-toggle-btn gender-btn" data-g="MEN" onclick="setGender('MEN')" style="flex:1">♂</button>
+        <button class="view-toggle-btn gender-btn" data-g="UNISEX" onclick="setGender('UNISEX')" style="flex:1">U</button>
+      </div>
+    </div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
       <div class="sb-title">カテゴリ</div>
       <div class="filter-list" id="cat-list-mobile"></div>
     </div>
@@ -328,7 +338,7 @@ footer a{color:var(--accent-dark);text-decoration:none}
     <div class="main">
       <div class="result-bar">
         <div class="result-count"><span id="count">0</span> 件の商品</div>
-        <div style="display:flex;align-items:center;gap:8px">
+        <div class="result-bar-actions">
           <div class="view-toggle">
             <button class="view-toggle-btn" data-mode="flat" onclick="setViewMode('flat')">一覧</button>
             <button class="view-toggle-btn" data-mode="groups" onclick="setViewMode('groups')">モデル別</button>

@@ -280,6 +280,15 @@ footer a{color:var(--accent);text-decoration:none}
       <button class="drawer-close" onclick="closeDrawer()">✕</button>
     </div>
     <div id="cat-list-mobile" style="display:none"></div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
+      <div class="sb-title">性別</div>
+      <div class="view-toggle gender-toggle" style="width:100%">
+        <button class="view-toggle-btn gender-btn active" data-g="all" onclick="setGender('all')" style="flex:1">ALL</button>
+        <button class="view-toggle-btn gender-btn" data-g="WOMEN" onclick="setGender('WOMEN')" style="flex:1">♀</button>
+        <button class="view-toggle-btn gender-btn" data-g="MEN" onclick="setGender('MEN')" style="flex:1">♂</button>
+        <button class="view-toggle-btn gender-btn" data-g="UNISEX" onclick="setGender('UNISEX')" style="flex:1">U</button>
+      </div>
+    </div>
     <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px">
       <div class="sb-title">ブランド</div>
       <input type="text" id="brand-search-mobile" class="sb-search" placeholder="🔍 ブランドを検索..." oninput="filterBrandList(this.value)" style="margin-bottom:4px">
