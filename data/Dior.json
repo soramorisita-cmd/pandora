@@ -1,7 +1,7 @@
 {
   "brand": "Dior",
   "seller": "wholesale9696",
-  "updated": "2026-06-03T14:43:10",
+  "updated": "2026-06-03T14:55:05",
   "products": [
     {
       "album_id": "209857452",
@@ -3138,9 +3138,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/ed487def5c.jpeg",
       "price_cny": 780.0,
       "price_jpy": 18369,
-      "type": "BAGS",
+      "type": "T-SHIRTS",
       "purchase_product_name": "P780A(1ESBA205LLG-3)43x43x18",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239202073",
@@ -3151,9 +3151,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/386500473a.jpeg",
       "price_cny": 780.0,
       "price_jpy": 18369,
-      "type": "BAGS",
+      "type": "T-SHIRTS",
       "purchase_product_name": "P780A(1ESBA205LLG-2)43x43x18",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239202023",
@@ -3164,9 +3164,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3e42c0b2aa.jpeg",
       "price_cny": 780.0,
       "price_jpy": 18369,
-      "type": "BAGS",
+      "type": "T-SHIRTS",
       "purchase_product_name": "P780A(1ESBA205LLG-1)43x43x18",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239201989",
@@ -3346,9 +3346,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/a8c860dcc3.jpeg",
       "price_cny": 420.0,
       "price_jpy": 9891,
-      "type": "BAGS",
+      "type": "PANTS",
       "purchase_product_name": "P420A(2ESCA490YSE-2)26.5x17.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "239201348",
@@ -3580,9 +3580,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/61996eb298.jpeg",
       "price_cny": 420.0,
       "price_jpy": 9891,
-      "type": "BAGS",
+      "type": "WALLETS",
       "purchase_product_name": "P420A(2ESCA494CDP-4)24.5 x 14.5 x 13",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239199689",
@@ -3593,9 +3593,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3bf2de7323.jpeg",
       "price_cny": 420.0,
       "price_jpy": 9891,
-      "type": "BAGS",
+      "type": "WALLETS",
       "purchase_product_name": "P420A(2ESCA494CDP-3)24.5 x 14.5 x 13",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239199597",
@@ -3606,9 +3606,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/427535b048.jpeg",
       "price_cny": 420.0,
       "price_jpy": 9891,
-      "type": "BAGS",
+      "type": "WALLETS",
       "purchase_product_name": "P420A(2ESCA494CDP-2)24.5 x 14.5 x 13",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239199173",
@@ -3619,9 +3619,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/c0908c6fe1.jpeg",
       "price_cny": 420.0,
       "price_jpy": 9891,
-      "type": "BAGS",
+      "type": "WALLETS",
       "purchase_product_name": "P420A(2ESCA494CDP-1)24.5 x 14.5 x 13",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239199049",
@@ -3632,9 +3632,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/645a9fe16e.jpeg",
       "price_cny": 350.0,
       "price_jpy": 8242,
-      "type": "BAGS",
+      "type": "SWEATERS",
       "purchase_product_name": "P350A(2esca490yxl-2)26.5x17.5",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239198977",
@@ -3645,9 +3645,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/be5c26d5d3.jpeg",
       "price_cny": 350.0,
       "price_jpy": 8242,
-      "type": "BAGS",
+      "type": "SWEATERS",
       "purchase_product_name": "P350A(2esca490yxl-1)26.5x17.5",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239198940",
@@ -3658,9 +3658,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/62f1f0d1ac.jpeg",
       "price_cny": 420.0,
       "price_jpy": 9891,
-      "type": "BAGS",
+      "type": "PANTS",
       "purchase_product_name": "P420A(2ESCA490YSE-1)26.5x17.5",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "239198859",
@@ -3684,9 +3684,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/59e827b8d4.jpeg",
       "price_cny": 420.0,
       "price_jpy": 9891,
-      "type": "BAGS",
+      "type": "WALLETS",
       "purchase_product_name": "P420A(2ESCA490VPD-1)26.5x17.5",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239198749",
@@ -5218,7 +5218,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/8d7417d751.jpeg",
       "price_cny": 650.0,
       "price_jpy": 15308,
-      "type": "BAGS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P650A(1MOBA062YPN-3)31 x 38 x 11",
       "gender": "WOMEN"
     },
@@ -5231,7 +5231,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/c95f6ee397.jpeg",
       "price_cny": 650.0,
       "price_jpy": 15308,
-      "type": "BAGS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P650A(1MOBA062YPN-2)31 x 38 x 11",
       "gender": "WOMEN"
     },
@@ -5244,7 +5244,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/ddc334c854.jpeg",
       "price_cny": 650.0,
       "price_jpy": 15308,
-      "type": "BAGS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P650A(1MOBA062YPN-1)31 x 38 x 11",
       "gender": "WOMEN"
     },
@@ -8754,9 +8754,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/4783cd778c.jpeg",
       "price_cny": 420.0,
       "price_jpy": 9891,
-      "type": "BAGS",
+      "type": "SWEATERS",
       "purchase_product_name": "P420A(2ESCA340YSE-4)",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239075494",
@@ -8767,9 +8767,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/1ad29ee2b1.jpeg",
       "price_cny": 420.0,
       "price_jpy": 9891,
-      "type": "BAGS",
+      "type": "SWEATERS",
       "purchase_product_name": "P420A(2ESCA340YSE-3)",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239075456",
@@ -8780,9 +8780,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/221949a41a.jpeg",
       "price_cny": 400.0,
       "price_jpy": 9420,
-      "type": "BAGS",
+      "type": "SWEATERS",
       "purchase_product_name": "P400A(2ESCA340YSE-2)",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239075425",
@@ -8793,9 +8793,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/eb10e7c6c8.jpeg",
       "price_cny": 400.0,
       "price_jpy": 9420,
-      "type": "BAGS",
+      "type": "SWEATERS",
       "purchase_product_name": "P400A(2ESCA340YSE-1)",
-      "gender": "WOMEN"
+      "gender": "MEN"
     },
     {
       "album_id": "239075403",
@@ -8871,9 +8871,9 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/123e11fe68.jpeg",
       "price_cny": 450.0,
       "price_jpy": 10598,
-      "type": "BAGS",
+      "type": "PANTS",
       "purchase_product_name": "P450A(2ESCA340VPD-1)",
-      "gender": "WOMEN"
+      "gender": "UNISEX"
     },
     {
       "album_id": "239075264",
@@ -8962,7 +8962,7 @@
       "image": "https://pub-9fd7380e75884fad932a9785f182c39e.r2.dev/3900571d77.jpeg",
       "price_cny": 920.0,
       "price_jpy": 21666,
-      "type": "BAGS",
+      "type": "ACCESSORIES",
       "purchase_product_name": "P920A(1MOBA062YPN-1)",
       "gender": "WOMEN"
     },
