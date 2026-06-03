@@ -345,7 +345,7 @@ footer a{color:var(--accent);text-decoration:none}
 
 <script>
 const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
-const CAT_JA={"SNEAKERS":"スニーカー","HOODIES":"パーカー","T-SHIRTS":"Tシャツ","JACKETS":"ジャケット","JEANS":"ジーンズ","PANTS":"パンツ","SHORTS":"ショーツ","SWEATERS":"スウェット","TOPS":"トップス","SHIRTS":"シャツ","BAGS":"バッグ","ACCESSORIES":"アクセサリー","HATS":"ハット","SOCKS":"ソックス","OTHER":"その他"};
+const CAT_JA={"SNEAKERS":"スニーカー","HOODIES":"パーカー","T-SHIRTS":"Tシャツ","JACKETS":"ジャケット","JEANS":"ジーンズ","PANTS":"パンツ","SHORTS":"ショーツ","SWEATERS":"スウェット","TOPS":"トップス","SHIRTS":"シャツ","BAGS":"バッグ","ACCESSORIES":"アクセサリー","HATS":"ハット","SOCKS":"ソックス","OTHER":"その他","WALLETS":"財布","CARDHOLDERS":"カードホルダー","BELTS":"ベルト","JEWELRY":"ジュエリー","SCARVES":"スカーフ","SUNGLASSES":"サングラス"};
 const urlCat=new URLSearchParams(location.search).get('cat')||'all';
 let ALL=[],selCats=new Set(urlCat!=='all'?[urlCat]:[]),selBrands=new Set(),allCats=[],_rebuilding=false;
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
