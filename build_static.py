@@ -36,15 +36,21 @@ SHARED_CSS = """
 body{font-family:'DM Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 a{color:inherit;text-decoration:none}
 nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;gap:24px}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--accent-dark)}
-.nav-link{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);padding:6px 12px;border-radius:6px;border:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;gap:16px;overflow-x:auto;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--accent-dark);flex-shrink:0}
+.nav-link{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);padding:6px 12px;border-radius:6px;border:1px solid var(--border);flex-shrink:0;white-space:nowrap}
 .nav-link:hover{color:var(--accent-dark);border-color:rgba(74,122,0,.25)}
 .nav-luxury{color:#d4af37!important;border-color:rgba(212,175,55,.35)!important}
 .nav-luxury:hover{color:#f0cc5a!important;border-color:rgba(212,175,55,.6)!important}
 .wrap{max-width:1200px;margin:0 auto;padding:32px 24px 60px}
 footer{text-align:center;padding:24px;font-size:11px;color:var(--muted);letter-spacing:1px}
 footer a{color:var(--muted2)}
+@media(max-width:600px){
+  .nav-inner{gap:6px;padding:0 12px;height:54px}
+  .nav-logo{font-size:20px;letter-spacing:3px}
+  .nav-link{font-size:10px;padding:5px 9px;letter-spacing:1px}
+}
 """
 
 NAV_HTML = """\

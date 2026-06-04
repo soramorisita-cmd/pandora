@@ -15,15 +15,21 @@
 body{font-family:'DM Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 a{color:inherit;text-decoration:none}
 nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;gap:24px}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--accent-dark)}
-.nav-link{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);padding:6px 12px;border-radius:6px;border:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;gap:16px;overflow-x:auto;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--accent-dark);flex-shrink:0}
+.nav-link{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);padding:6px 12px;border-radius:6px;border:1px solid var(--border);flex-shrink:0;white-space:nowrap}
 .nav-link:hover{color:var(--accent-dark);border-color:rgba(74,122,0,.25)}
 .nav-luxury{color:#d4af37!important;border-color:rgba(212,175,55,.35)!important}
 .nav-luxury:hover{color:#f0cc5a!important;border-color:rgba(212,175,55,.6)!important}
 .wrap{max-width:1200px;margin:0 auto;padding:32px 24px 60px}
 footer{text-align:center;padding:24px;font-size:11px;color:var(--muted);letter-spacing:1px}
 footer a{color:var(--muted2)}
+@media(max-width:600px){
+  .nav-inner{gap:6px;padding:0 12px;height:54px}
+  .nav-logo{font-size:20px;letter-spacing:3px}
+  .nav-link{font-size:10px;padding:5px 9px;letter-spacing:1px}
+}
 
 .gender-bar{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
 .gf-btn{font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
@@ -91,7 +97,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/232385114.html">P280(16822-5)</a></div>
-    
+    <div class="card-price">¥6,605<span class="card-price-cny">/ 280元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7731372563&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -108,7 +114,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/232383602.html">P280(16822-4)</a></div>
-    
+    <div class="card-price">¥6,605<span class="card-price-cny">/ 280元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7731295563&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -125,7 +131,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/232383076.html">P280(16822-3)</a></div>
-    
+    <div class="card-price">¥6,605<span class="card-price-cny">/ 280元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7734403646&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -142,7 +148,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/232382589.html">P280(16822-2)</a></div>
-    
+    <div class="card-price">¥6,605<span class="card-price-cny">/ 280元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7734276904&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -159,7 +165,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/232379904.html">P280(16822-1)</a></div>
-    
+    <div class="card-price">¥6,605<span class="card-price-cny">/ 280元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7731320921&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -176,7 +182,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/228483560.html">P380/P400/P420(45-758)</a></div>
-    
+    <div class="card-price">¥8,964<span class="card-price-cny">/ 380元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7712624934&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -193,7 +199,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/228483216.html">P380/P400/P420(45-757)</a></div>
-    
+    <div class="card-price">¥8,964<span class="card-price-cny">/ 380元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7712683868&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -210,7 +216,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/228482672.html">P380/P400/P420(45-756)</a></div>
-    
+    <div class="card-price">¥8,964<span class="card-price-cny">/ 380元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7712650598&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -227,7 +233,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/228482172.html">P380/P400/P420(45-755)</a></div>
-    
+    <div class="card-price">¥8,964<span class="card-price-cny">/ 380元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7712566714&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -244,7 +250,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/228481610.html">P380/P400/P420(45-754)</a></div>
-    
+    <div class="card-price">¥8,964<span class="card-price-cny">/ 380元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7712611938&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -261,7 +267,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/228023019.html">P420(kkg-94)</a></div>
-    
+    <div class="card-price">¥9,908<span class="card-price-cny">/ 420元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7706332695&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -278,7 +284,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225169245.html">P350(kkg-73)</a></div>
-    
+    <div class="card-price">¥8,256<span class="card-price-cny">/ 350元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7686748105&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -295,7 +301,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225026441.html">P420(Kl280-8)</a></div>
-    
+    <div class="card-price">¥9,908<span class="card-price-cny">/ 420元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7685598129&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -312,7 +318,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225026302.html">P420(Kl280-7)</a></div>
-    
+    <div class="card-price">¥9,908<span class="card-price-cny">/ 420元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7688570278&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -329,7 +335,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225026209.html">P420(Kl280-6)</a></div>
-    
+    <div class="card-price">¥9,908<span class="card-price-cny">/ 420元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7685566487&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -346,7 +352,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225026118.html">P420(Kl280-5)</a></div>
-    
+    <div class="card-price">¥9,908<span class="card-price-cny">/ 420元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7685609943&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -363,7 +369,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225025997.html">P420(Kl280-4)</a></div>
-    
+    <div class="card-price">¥9,908<span class="card-price-cny">/ 420元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7688483466&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -380,7 +386,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225025891.html">P420(Kl280-3)</a></div>
-    
+    <div class="card-price">¥9,908<span class="card-price-cny">/ 420元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7685542837&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -397,7 +403,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225025776.html">P420(Kl280-2)</a></div>
-    
+    <div class="card-price">¥9,908<span class="card-price-cny">/ 420元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7685479357&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -414,7 +420,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225025651.html">P420(Kl280-1)</a></div>
-    
+    <div class="card-price">¥9,908<span class="card-price-cny">/ 420元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7688291568&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -431,7 +437,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225025549.html">P360(kL320-24)</a></div>
-    
+    <div class="card-price">¥8,492<span class="card-price-cny">/ 360元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7685491405&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -448,7 +454,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225025414.html">P360(kL320-23)</a></div>
-    
+    <div class="card-price">¥8,492<span class="card-price-cny">/ 360元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7688483402&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -465,7 +471,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225025320.html">P360(kL320-22)</a></div>
-    
+    <div class="card-price">¥8,492<span class="card-price-cny">/ 360元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7688293474&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
@@ -482,7 +488,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       <span class="tag tag-women">♀ Women</span>
     </div>
     <div class="card-title"><a href="/products/225025180.html">P360(kL320-21)</a></div>
-    
+    <div class="card-price">¥8,492<span class="card-price-cny">/ 360元</span></div>
     
     <div class="card-actions">
       <a class="btn-buy" href="https://www.kakobuy.com/item/details?url=https%3A%2F%2Fshop1862490291.v.weidian.com%2Fitem.html%3FitemID%3D7685489125&amp;affcode=a235412" target="_blank" rel="noopener">Kakobuyで見る →</a>
