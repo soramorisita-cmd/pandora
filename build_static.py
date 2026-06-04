@@ -52,13 +52,14 @@ NAV_HTML = """\
   <div class="nav-inner">
     <a class="nav-logo" href="/">PANDORA</a>
     <a class="nav-link" href="/catalog.html">全商品</a>
+    <a class="nav-link" href="/popular/">人気</a>
     <a class="nav-link nav-luxury" href="/luxury/">LUXURY</a>
     <a class="nav-link" href="/search.html">商品検索</a>
     <a class="nav-link" href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy</a>
   </div>
 </nav>"""
 
-FOOTER_HTML = '<footer>PANDORA &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy で購入</a></footer>'
+FOOTER_HTML = '<footer>PANDORA &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy で購入</a></footer>\n<script src="/click-tracker.js" defer></script>'
 
 CAT_JA = {
     "SNEAKERS": "スニーカー", "HOODIES": "パーカー", "T-SHIRTS": "Tシャツ",
@@ -473,6 +474,115 @@ h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin
         count += 1
     print(f"  [category] {count} ページ生成")
 
+# ── 2.5 人気商品ページ /popular/ ──────────────────────────────────────
+def build_popular_page(products, out_dir):
+    """
+    /popular/ - 人気商品ページ
+    - /api/popular?limit=100 から動的にデータ取得 (D1 経由)
+    - フォールバック: lookup を使って候補商品を出す
+    """
+    out_dir.mkdir(parents=True, exist_ok=True)
+    desc = "PANDORAでクリック数の多い人気商品ランキング。リアルタイム集計（過去のクリック数ベース）。"
+    html = f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>人気商品ランキング | PANDORA</title>
+<meta name="description" content="{esc(desc[:150])}">
+<meta property="og:title" content="人気商品ランキング | PANDORA">
+<meta property="og:description" content="{esc(desc[:150])}">
+<link rel="canonical" href="{DOMAIN}/popular/">
+{FONTS}
+<style>{SHARED_CSS}{card_css()}
+h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-bottom:6px}}
+.sub{{font-size:13px;color:var(--muted2);margin-bottom:4px}}
+.rank{{position:absolute;top:8px;left:8px;background:var(--accent);color:#111;font-family:'Bebas Neue',sans-serif;font-size:16px;font-weight:800;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.18)}}
+.rank.top1{{background:#FFD700}}
+.rank.top2{{background:#C0C0C0}}
+.rank.top3{{background:#CD7F32;color:#fff}}
+.click-badge{{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;z-index:2}}
+.card{{position:relative}}
+.empty{{text-align:center;padding:80px 24px;color:var(--muted)}}
+.empty h2{{font-size:20px;margin-bottom:12px;color:var(--muted2)}}
+</style>
+</head>
+<body>
+{NAV_HTML}
+<div class="wrap">
+  <h1>人気商品ランキング</h1>
+  <p class="sub">クリック数の多い順にTOP100まで表示</p>
+  <p class="sub" id="status">読み込み中...</p>
+  <div class="grid" id="popular-grid"></div>
+</div>
+{FOOTER_HTML}
+<script>
+(async function(){{
+  const grid = document.getElementById('popular-grid');
+  const status = document.getElementById('status');
+  try {{
+    const [popRes, lookupRes] = await Promise.all([
+      fetch('/api/popular?limit=100'),
+      fetch('/data/popular-lookup.json'),
+    ]);
+    if(!popRes.ok) throw new Error('popular api failed');
+    const pop = await popRes.json();
+    const byId = await lookupRes.json();
+
+    if(!pop.items || pop.items.length === 0){{
+      grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><h2>まだクリックデータがありません</h2><p>カタログから商品を見て、Kakobuy・QCリンクをクリックするとランキングに反映されます。</p></div>';
+      status.textContent = '';
+      return;
+    }}
+
+    status.textContent = '集計件数: ' + pop.items.length + '件';
+
+    let html = '';
+    pop.items.forEach((row, idx) => {{
+      const id = row.yupoo_id;
+      const item = byId[id];
+      if(!item) return;
+      const rank = idx + 1;
+      const rankClass = rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : '';
+      const img = item.i || '';
+      const img_abs = img.startsWith('http') || img.startsWith('/') ? img : ('/' + img);
+      const title = item.t || '';
+      const price = item.p ? '¥' + Number(item.p).toLocaleString() : '';
+      const buy = item.k || '#';
+      const qc = item.y || '#';
+      const brand = item.b || '';
+      const total = (row.clicks || 0) * 3 + (row.qc_clicks || 0);
+      html += '<div class="card" data-yupoo="' + id + '">'
+        + '<span class="rank ' + rankClass + '">' + rank + '</span>'
+        + '<span class="click-badge">' + total + ' pt</span>'
+        + (img ? '<img class="card-img" src="' + img_abs + '" alt="" loading="lazy">' : '<div class="card-noimag">NO IMAGE</div>')
+        + '<div class="card-body">'
+        +   '<div class="card-tags">'
+        +     (brand ? '<span class="tag tag-brand">' + brand + '</span>' : '')
+        +   '</div>'
+        +   '<div class="card-title">' + title + '</div>'
+        +   (price ? '<div class="card-price">' + price + '</div>' : '')
+        +   '<div class="card-actions">'
+        +     '<a class="btn-buy" href="' + buy + '" target="_blank" rel="noopener">Kakobuyで見る →</a>'
+        +     '<a class="btn-qc" href="' + qc + '" target="_blank" rel="noopener">QC</a>'
+        +   '</div>'
+        + '</div>'
+        + '</div>';
+    }});
+    grid.innerHTML = html || '<div class="empty" style="grid-column:1/-1"><h2>表示できる商品がありません</h2></div>';
+  }} catch(e) {{
+    console.error(e);
+    grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><h2>データを取得できませんでした</h2><p>D1データベースが未設定の可能性があります。</p></div>';
+    status.textContent = '';
+  }}
+}})();
+</script>
+</body>
+</html>"""
+    (out_dir / "index.html").write_text(html, encoding="utf-8")
+    print(f"  [popular] /popular/ ページ生成")
+
+
 # ── 3. ブランドページ ────────────────────────────────────────────────
 def build_brand_pages(products, out_dir):
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -845,6 +955,27 @@ def generate_lookup_json(products: list):
     lookup = {"a": by_album, "i": by_item}
     out_path = ROOT / "product-lookup.json"
     out_path.write_text(json.dumps(lookup, ensure_ascii=False, separators=(",", ":")), "utf-8")
+
+    # /popular/ ページ用の軽量lookup（album_id → 商品データ）
+    pop_lookup = {}
+    for p in products:
+        yupoo = p.get("yupoo", "")
+        m = re.search(r'/albums?/(\d+)', yupoo)
+        if not m:
+            continue
+        pop_lookup[m.group(1)] = {
+            "t": (p.get("title","") or "")[:80],
+            "b": p.get("brand","") or "",
+            "i": p.get("image","") or "",
+            "p": p.get("price_jpy"),
+            "k": p.get("kakobuy","") or "",
+            "y": yupoo,
+        }
+    (ROOT / "data" / "popular-lookup.json").write_text(
+        json.dumps(pop_lookup, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8"
+    )
+    print(f"  [popular-lookup] {len(pop_lookup)} items → data/popular-lookup.json")
     print(f"  [lookup] {len(by_album)} albums / {len(by_item)} items → product-lookup.json")
 
 
@@ -874,6 +1005,7 @@ def main():
     build_category_pages(products, ROOT / "category")
     build_brand_pages(products, ROOT / "brand")
     build_luxury_page(products, ROOT / "luxury")
+    build_popular_page(products, ROOT / "popular")
     build_sitemap(products, ROOT / "sitemap.xml")
     build_robots(ROOT / "robots.txt")
     split_products_json(products, data.get("updated", ""))
