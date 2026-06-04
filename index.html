@@ -165,6 +165,7 @@ footer a{color:var(--accent-dark);text-decoration:none}
 .drawer-close{background:none;border:none;color:var(--muted2);font-size:22px;cursor:pointer;padding:4px}
 @media(max-width:900px){
   .sidebar{display:none}.page{padding:10px;gap:0}.nav-right{display:none}
+  .nav-popular-mobile{display:inline-block!important;font-size:16px;padding:6px 10px;flex-shrink:0;background:linear-gradient(135deg,#ff7e5f,#feb47b);color:#fff!important;border-color:transparent}
   .mobile-filter-btn{display:flex!important}
   .hero{padding:28px 16px 20px}
   .grid{grid-template-columns:repeat(2,1fr);gap:10px}
@@ -236,6 +237,7 @@ footer a{color:var(--accent-dark);text-decoration:none}
   <div class="nav-inner">
     <a class="nav-logo" href="/">PANDORA</a>
     <div class="nav-cats" id="nav-cats"></div>
+    <a class="nav-link nav-popular-mobile" href="/popular/" style="display:none">🔥</a>
     <div class="nav-right">
       <a class="nav-link" href="/popular/">🔥 人気</a>
       <a class="nav-link" href="/converter.html">🔗 Converter</a>
@@ -252,6 +254,9 @@ footer a{color:var(--accent-dark);text-decoration:none}
     <span class="hero-stat">Kakobuyリンク付き</span>
     <span class="hero-stat-sep">·</span>
     <span class="hero-stat">QC写真あり</span>
+  </div>
+  <div style="text-align:center;margin-top:16px">
+    <a href="/popular/" style="display:inline-block;background:linear-gradient(135deg,#ff7e5f,#feb47b);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:800;letter-spacing:1px;padding:10px 22px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(255,126,95,.35);transition:transform .15s,box-shadow .15s">🔥 人気商品ランキング TOP100 を見る →</a>
   </div>
   <div class="hero-search-wrap">
     <div class="hero-search-bar">
