@@ -125,7 +125,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin-
       const buy = item.k || '#';
       const qc = item.y || '#';
       const brand = item.b || '';
-      const total = (row.clicks || 0) * 3 + (row.qc_clicks || 0);
+      const total = (row.clicks || 0) + (row.qc_clicks || 0);
       html += '<div class="card" data-yupoo="' + id + '">'
         + '<span class="rank ' + rankClass + '">' + rank + '</span>'
         + '<span class="click-badge">' + total + ' pt</span>'

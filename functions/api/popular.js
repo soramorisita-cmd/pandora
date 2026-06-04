@@ -22,7 +22,7 @@ export async function onRequestGet(context) {
     SELECT yupoo_id, clicks, qc_clicks, last_clicked
     FROM clicks
     WHERE clicks > 0 OR qc_clicks > 0
-    ORDER BY (clicks * 3 + qc_clicks) DESC, last_clicked DESC
+    ORDER BY (clicks + qc_clicks) DESC, last_clicked DESC
     LIMIT ?
   `).bind(limit).all();
 
