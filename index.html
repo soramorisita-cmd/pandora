@@ -57,10 +57,25 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 /* SIDEBAR */
 .sidebar{width:210px;flex-shrink:0;display:flex;flex-direction:column;gap:4px;align-self:flex-start}
 .sidebar-block{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-/* 1番目のブロック（カテゴリ）を sticky にしてブランドスクロール中も追従 */
-.sidebar > .sidebar-block:first-child{position:sticky;top:112px;z-index:10;max-height:calc(100vh - 130px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--s3) transparent}
-.sidebar > .sidebar-block:first-child::-webkit-scrollbar{width:3px}
-.sidebar > .sidebar-block:first-child::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
+/* 1番目のブロック（カテゴリ）— 通常時は普通に表示、スクロール時にミニプレイヤー化 */
+.sidebar > .sidebar-block:first-child{transition:position .25s ease,top .25s ease,bottom .25s ease,right .25s ease,width .25s ease,max-height .3s ease,padding .25s ease,box-shadow .3s ease}
+/* ミニプレイヤー化: スクロール量が一定を超えたら右下に小さく fixed 表示 */
+.sidebar > .sidebar-block:first-child.miniplayer{
+  position:fixed;top:auto;left:auto;bottom:24px;right:24px;
+  width:220px;max-height:380px;overflow-y:auto;
+  z-index:150;background:var(--s1);
+  box-shadow:0 8px 24px rgba(0,0,0,.18),0 2px 8px rgba(0,0,0,.1);
+  padding:12px 14px;
+  scrollbar-width:thin;scrollbar-color:var(--s3) transparent;
+}
+.sidebar > .sidebar-block:first-child.miniplayer::-webkit-scrollbar{width:3px}
+.sidebar > .sidebar-block:first-child.miniplayer::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
+.sidebar > .sidebar-block:first-child.miniplayer .sb-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:6px}
+.sidebar > .sidebar-block:first-child.miniplayer .sb-title::after{content:'×';font-size:18px;color:var(--muted);cursor:pointer;letter-spacing:0}
+.sidebar > .sidebar-block:first-child.miniplayer.collapsed{max-height:42px;overflow:hidden;padding:8px 14px;cursor:pointer}
+.sidebar > .sidebar-block:first-child.miniplayer.collapsed .filter-list{display:none}
+.sidebar > .sidebar-block:first-child.miniplayer.collapsed .sb-title{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.sidebar > .sidebar-block:first-child.miniplayer.collapsed .sb-title::after{content:'＋';color:var(--accent-dark)}
 .sb-title{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--border)}
 .sb-search{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:8px 11px;outline:none;transition:border-color .2s}
 .sb-search:focus{border-color:var(--accent)}
@@ -1058,6 +1073,57 @@ async function init(){
   }
 }
 init();
+
+// ── カテゴリブロックのミニプレイヤー化（YouTube風）──
+(function(){
+  const catBlock = document.querySelector('.sidebar > .sidebar-block:first-child');
+  if(!catBlock) return;
+  let triggerY = 0;
+  // しきい値: サイドバー（カテゴリブロック）の下端がビューポート上端より上に来た時
+  function computeTrigger(){
+    if(catBlock.classList.contains('miniplayer')) return;
+    const rect = catBlock.getBoundingClientRect();
+    triggerY = window.pageYOffset + rect.bottom - 60;  // 上端より60px上で発火
+  }
+  computeTrigger();
+  window.addEventListener('resize', computeTrigger);
+
+  let ticking = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      if(triggerY === 0) computeTrigger();
+      const y = window.pageYOffset;
+      if(y > triggerY && window.innerWidth > 900){
+        catBlock.classList.add('miniplayer');
+      } else {
+        catBlock.classList.remove('miniplayer','collapsed');
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // ミニプレイヤー時のクリック動作: タイトル領域で展開/折り畳み、×ボタンで完全閉じる
+  catBlock.addEventListener('click', (e) => {
+    if(!catBlock.classList.contains('miniplayer')) return;
+    const title = e.target.closest('.sb-title');
+    const rect = catBlock.getBoundingClientRect();
+    // ×ボタン領域（タイトル右側）をクリックしたら閉じる（一時的に hide）
+    if(title && (e.clientX - rect.left) > rect.width - 40){
+      catBlock.style.display = 'none';
+      setTimeout(()=>{catBlock.style.display = '';}, 100);
+      catBlock.classList.remove('miniplayer','collapsed');
+      window.scrollTo({top:0, behavior:'smooth'});
+      return;
+    }
+    // タイトル領域で展開/折り畳み
+    if(title){
+      catBlock.classList.toggle('collapsed');
+    }
+  });
+})();
 </script>
 <script src="/click-tracker.js" defer></script>
 </body>
