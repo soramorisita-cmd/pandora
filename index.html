@@ -852,25 +852,39 @@ function buildAZBar(containerId,brands){
   });
   el.innerHTML=html;
 }
-function jumpToBrand(letter){
-  // PC: #brand-list はoverflow:visibleなので、ページ全体スクロール (scrollIntoView)
-  // モバイル: drawer 内の #brand-list-mobile は overflow:auto なので container.scrollTop
-  const pcList=document.getElementById('brand-list');
-  if(pcList){
-    const items=[...pcList.querySelectorAll('.f-item')].filter(i=>i.style.display!=='none');
-    const target=items.find(i=>((i.dataset.brand||'')[0]||'').toUpperCase()===letter);
+window.jumpToBrand = function(letter){
+  const findTarget = (list) => {
+    if(!list) return null;
+    return [...list.querySelectorAll('.f-item')].find(i => {
+      if(i.style.display === 'none') return false;
+      const brand = i.dataset.brand || '';
+      return (brand[0] || '').toUpperCase() === letter;
+    });
+  };
+  const highlight = (el) => {
+    if(!el) return;
+    el.style.transition = 'background .35s ease';
+    el.style.background = 'rgba(200,240,60,.55)';
+    setTimeout(() => { el.style.background = ''; }, 1400);
+  };
+  // PC: ブランドリストが画面内に表示されているか確認、scrollIntoView
+  const pcList = document.getElementById('brand-list');
+  if(pcList && pcList.offsetParent !== null){
+    const target = findTarget(pcList);
     if(target){
-      // ナビ・catバーで隠れないようにオフセット
-      const rect=target.getBoundingClientRect();
-      const offset=window.pageYOffset+rect.top-120;
-      window.scrollTo({top:offset,behavior:'smooth'});
+      target.scrollIntoView({behavior:'smooth', block:'center'});
+      highlight(target);
+      return;
     }
   }
-  const mobileList=document.getElementById('brand-list-mobile');
+  // モバイル
+  const mobileList = document.getElementById('brand-list-mobile');
   if(mobileList){
-    const items=[...mobileList.querySelectorAll('.f-item')].filter(i=>i.style.display!=='none');
-    const target=items.find(i=>((i.dataset.brand||'')[0]||'').toUpperCase()===letter);
-    if(target)mobileList.scrollTop=target.offsetTop-mobileList.offsetTop;
+    const target = findTarget(mobileList);
+    if(target){
+      mobileList.scrollTop = target.offsetTop - mobileList.offsetTop;
+      highlight(target);
+    }
   }
 }
 function filterBrandList(q){
