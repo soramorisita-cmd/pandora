@@ -97,6 +97,14 @@ def album_id_from_yupoo(url):
     m = re.search(r"/albums/(\d+)", str(url or ""))
     return m.group(1) if m else None
 
+def product_uid(p):
+    """商品ページ/ルックアップ用の一意キー。yupoo album_id 優先、無ければ pid（非yupoo商品）。"""
+    return album_id_from_yupoo(p.get("yupoo","")) or (p.get("pid") or None)
+
+def qc_link(p):
+    """QCボタンのURL。yupooがあればyupoo、無ければUUFinds(qc)。どちらも無ければ空。"""
+    return (p.get("yupoo") or "").strip() or (p.get("qc") or "").strip()
+
 def clean_title(raw):
     s = str(raw or "").strip()
     # 行頭の価格表記 (+¥165, 209¥ 等) を除去
@@ -221,14 +229,15 @@ def make_card_html(p, link_to_product=True):
     price  = fmt_price(p)
     cny    = fmt_cny(p)
     buy    = esc(p.get("kakobuy") or p.get("purchase") or "#")
-    qc     = esc(p.get("yupoo") or "#")
+    qc_url = qc_link(p)
+    qc     = esc(qc_url)
     brand  = esc(p.get("brand",""))
     ptype  = esc(p.get("type",""))
     gender = p.get("gender","")
     img    = abs_img(p.get("image",""))
     weight_g  = p.get("weight_g")
     volume_cm = p.get("volume_cm","")
-    aid    = album_id_from_yupoo(p.get("yupoo",""))
+    aid    = product_uid(p)
     prod_url = f"/products/{aid}.html" if aid and link_to_product else None
 
     if img and len(img) > 4:
@@ -273,7 +282,7 @@ def make_card_html(p, link_to_product=True):
     {weight_html}
     <div class="card-actions">
       <a class="btn-buy" href="{buy}" target="_blank" rel="noopener">Kakobuyで見る →</a>
-      <a class="btn-qc" href="{qc}" target="_blank" rel="noopener">QC</a>
+      {f'<a class="btn-qc" href="{qc}" target="_blank" rel="noopener">QC</a>' if qc_url else ''}
     </div>
   </div>
 </div>"""
@@ -297,7 +306,7 @@ def build_product_pages(products, out_dir):
     out_dir.mkdir(parents=True, exist_ok=True)
     count = 0
     for p in products:
-        aid = album_id_from_yupoo(p.get("yupoo",""))
+        aid = product_uid(p)
         if not aid:
             continue
         title  = clean_title(p.get("title",""))
@@ -305,7 +314,8 @@ def build_product_pages(products, out_dir):
         ptype  = p.get("type","")
         price  = fmt_price(p)
         buy    = p.get("kakobuy") or p.get("purchase") or ""
-        qc     = p.get("yupoo","")
+        qc     = qc_link(p)
+        qc_label = "Yupoo" if (p.get("yupoo") or "").strip() else "UUFinds"
         img    = abs_img(p.get("image",""))
         desc   = f"{brand} {ptype} レプリカ — {title[:60]}"
 
@@ -381,7 +391,7 @@ def build_product_pages(products, out_dir):
     <h1 class="product-title">{esc(title)}</h1>
     {f'<div class="product-price">{price}</div>' if price else ''}
     {f'<a class="btn-primary" href="{esc(buy)}" target="_blank" rel="noopener">Kakobuyで見る →</a>' if buy else ''}
-    {f'<a class="btn-secondary" href="{esc(qc)}" target="_blank" rel="noopener">QC写真を見る (Yupoo)</a>' if qc else ''}
+    {f'<a class="btn-secondary" href="{esc(qc)}" target="_blank" rel="noopener">QC写真を見る ({qc_label})</a>' if qc else ''}
     <a class="back-link" href="/catalog.html?cat={esc(ptype)}">&larr; {esc(ptype)} を全部見る</a>
   </div>
 </div>
@@ -956,6 +966,11 @@ def generate_lookup_json(products: list):
                     item_id = qs.get("id", [None])[0]
                     if item_id:
                         by_item[item_id] = row
+                elif "jadeship.com" in netloc:
+                    # jadeship universal link: /item/{weidian|taobao|1688}/{id}
+                    m = re.search(r'/item/(?:weidian|taobao|1688)/(\w+)', parsed.path)
+                    if m:
+                        by_item[m.group(1)] = row
             except Exception:
                 pass
     lookup = {"a": by_album, "i": by_item}

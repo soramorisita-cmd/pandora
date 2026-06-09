@@ -578,13 +578,18 @@ def save_site_products(products: list[dict]):
     out = {"updated": time.strftime("%Y-%m-%dT%H:%M:%S"), "count": len(products), "products": products}
     PRODUCTS_JSON.write_text(json.dumps(out, ensure_ascii=False, indent=2), "utf-8")
 
+def dedup_key(p: dict) -> str:
+    """重複判定キー。yupoo優先、無ければpid（非yupoo商品）、最後にpurchase。"""
+    return (p.get("yupoo") or "").strip() or (p.get("pid") or "").strip() or (p.get("purchase") or "").strip()
+
 def merge_to_site(existing: list, new_items: list) -> tuple:
-    urls  = {p["yupoo"] for p in existing}
+    keys  = {dedup_key(p) for p in existing}
     added = 0
     for item in new_items:
-        if item["yupoo"] not in urls:
+        k = dedup_key(item)
+        if k and k not in keys:
             existing.append(item)
-            urls.add(item["yupoo"])
+            keys.add(k)
             added += 1
     return existing, added
 
@@ -809,6 +814,151 @@ def cmd_import(no_images: bool, no_push: bool):
         print("\n反映するには: git add products.json && git commit -m 'update' && git push")
 
 # ═══════════════════════════════════════════
+#  URL モード（非yupooセラー：taobao/weidian/1688 直リンクから追加）
+# ═══════════════════════════════════════════
+UUFINDS_API     = "https://api.uufinds.com/open/api/convertUrl"
+JADESHIP_ITEM   = "https://www.jadeship.com/item/{platform}/{item_id}"
+PLATFORM_PREFIX = {"weidian": "w", "taobao": "t", "1688": "o"}
+
+def detect_platform(url: str):
+    """貼り付けURLから (platform, item_id) を抽出。taobao/weidian/1688/jadeship対応。"""
+    u = url.strip()
+    if "weidian" in u:
+        m = re.search(r'itemI[dD][=/](\d+)', u) or re.search(r'/(\d{6,})', u)
+        if m: return "weidian", m.group(1)
+    if "taobao" in u or "tmall" in u:
+        m = re.search(r'[?&]id=(\d+)', u) or re.search(r'/(\d{6,})', u)
+        if m: return "taobao", m.group(1)
+    if "1688" in u:
+        m = re.search(r'offer/(\d+)', u) or re.search(r'[?&]id=(\d+)', u)
+        if m: return "1688", m.group(1)
+    m = re.search(r'jadeship\.com/item/(weidian|taobao|1688)/(\w+)', u)
+    if m: return m.group(1), m.group(2)
+    return None, None
+
+def canonical_purchase_url(platform: str, item_id: str) -> str:
+    return {
+        "weidian": f"https://weidian.com/item.html?itemID={item_id}",
+        "taobao":  f"https://item.taobao.com/item.htm?id={item_id}",
+        "1688":    f"https://detail.1688.com/offer/{item_id}.html",
+    }[platform]
+
+def fetch_jadeship_meta(jade_url: str):
+    """jadeship商品ページの og:title / og:image / og:description(価格) を取得。"""
+    title = image = None
+    price_cny = None
+    try:
+        r = requests.get(jade_url, timeout=20, headers={"User-Agent": "Mozilla/5.0"})
+        h = r.text
+        def meta(prop):
+            m = (re.search(r'<meta[^>]+(?:property|name)="' + re.escape(prop) + r'"[^>]*content="([^"]*)"', h)
+                 or re.search(r'<meta[^>]+content="([^"]*)"[^>]*(?:property|name)="' + re.escape(prop) + r'"', h))
+            return m.group(1) if m else None
+        t = meta("og:title")
+        if t:
+            title = re.sub(r'\s*\|\s*JadeShip\.com\s*$', '', t).strip()
+        image = meta("og:image")
+        desc  = meta("og:description") or ""
+        m = re.search(r'Price:\s*[¥￥]\s*([\d.]+)', desc)
+        if m:
+            price_cny = float(m.group(1))
+    except Exception as e:
+        print(f"   ⚠ jadeship取得失敗: {str(e)[:50]}")
+    return title, image, price_cny
+
+def fetch_uufinds_qc(original_url: str):
+    """UUFinds変換APIでQCページURLとQC枚数を取得。"""
+    try:
+        r = requests.get(UUFINDS_API, params={"from": "pandora", "url": original_url}, timeout=20)
+        j = r.json()
+        if j.get("success") and j.get("result"):
+            return j["result"].get("url", ""), j["result"].get("qcQuantity", 0)
+    except Exception as e:
+        print(f"   ⚠ uufinds取得失敗: {str(e)[:50]}")
+    return "", 0
+
+def cmd_url():
+    brand = input("ブランド名 > ").strip()
+    if not brand:
+        print("❌ ブランド名が空です")
+        return
+    seller = input("セラー名（任意・Enterでスキップ） > ").strip()
+    print("\n商品URLを貼り付けてください（taobao / weidian / 1688、複数行可、空行で終了）:")
+    urls = []
+    while True:
+        try:
+            line = input().strip()
+        except EOFError:
+            break
+        if not line:
+            break
+        urls.append(line)
+    if not urls:
+        print("❌ URLがありません")
+        return
+
+    fetch_rates()
+    print(f"\n🔗 {len(urls)}件を処理します（ブランド: {brand}）\n")
+
+    new_products = []
+    seen_pid = set()
+    for i, u in enumerate(urls, 1):
+        platform, item_id = detect_platform(u)
+        if not platform:
+            print(f"  [{i:03d}] ❌ 判定不可: {u[:60]}")
+            continue
+        pid = PLATFORM_PREFIX.get(platform, "x") + item_id
+        if pid in seen_pid:
+            print(f"  [{i:03d}] ⏭ 重複スキップ: {pid}")
+            continue
+        seen_pid.add(pid)
+
+        jade    = JADESHIP_ITEM.format(platform=platform, item_id=item_id)
+        kakobuy = to_kakobuy(jade)
+        orig    = canonical_purchase_url(platform, item_id)
+        title, image, price_cny = fetch_jadeship_meta(jade)
+        qc_url, qc_qty = fetch_uufinds_qc(orig)
+
+        title     = title or f"{brand} {item_id}"
+        ptype     = classify(title)
+        price_jpy = int(price_cny * CNY_TO_JPY) if price_cny else None
+
+        new_products.append({
+            "seller":    seller,
+            "brand":     brand,
+            "type":      ptype,
+            "title":     title,
+            "yupoo":     "",
+            "pid":       pid,
+            "purchase":  jade,
+            "kakobuy":   kakobuy,
+            "qc":        qc_url,
+            "qc_qty":    qc_qty,
+            "image":     image or "",
+            "price_cny": price_cny,
+            "price_jpy": price_jpy,
+            "model":     None,
+            "batch":     None,
+        })
+        print(f"  [{i:03d}] ✓ [{ptype:<11}] {title[:38]:<38} ¥{price_cny or '?'} / QC:{qc_qty}")
+        time.sleep(0.4)
+
+    if not new_products:
+        print("\n❌ 追加できる商品がありませんでした")
+        return
+
+    existing      = load_site_products()
+    merged, added = merge_to_site(existing, new_products)
+    save_site_products(merged)
+    print(f"\n✅ {added}件をproducts.jsonに追加（合計 {len(merged)}件）")
+    if added == 0:
+        print("（全て重複のためスキップ）")
+        return
+    print("\n📝 次のステップ:")
+    print("   1. python build_static.py で再ビルド")
+    print("   2. git add -A && git commit && git push")
+
+# ═══════════════════════════════════════════
 #  エントリーポイント
 # ═══════════════════════════════════════════
 def main():
@@ -822,12 +972,16 @@ def main():
     p_imp.add_argument("--no-images", action="store_true")
     p_imp.add_argument("--no-push",   action="store_true")
 
+    sub.add_parser("url", help="taobao/weidian/1688の直リンクから追加（yupoo不要）")
+
     args = parser.parse_args()
 
     if args.mode == "scan":
         cmd_scan(args.url)
     elif args.mode == "import":
         cmd_import(getattr(args,"no_images",False), getattr(args,"no_push",False))
+    elif args.mode == "url":
+        cmd_url()
     else:
         parser.print_help()
 
