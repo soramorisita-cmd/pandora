@@ -61,6 +61,7 @@ NAV_HTML = """\
     <a class="nav-link" href="/popular/">人気</a>
     <a class="nav-link nav-luxury" href="/luxury/">LUXURY</a>
     <a class="nav-link" href="/search.html">商品検索</a>
+    <a class="nav-link" href="/tools.html">ツール</a>
     <a class="nav-link" href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy</a>
   </div>
 </nav>"""

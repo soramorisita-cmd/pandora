@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>レップ ツールボックス — PANDORA</title>
+<meta name="description" content="荷物追跡・QC写真検索・リンク変換をまとめたオールインワンのレップ ツールキット。Taobao・Weidian・1688・各エージェント対応。">
+<meta property="og:title" content="レップ ツールボックス — PANDORA">
+<meta property="og:description" content="荷物追跡・QC写真検索・リンク変換。レップ購入に必要なツールを1ページに。">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080808;--s1:#101010;--s2:#181818;--s3:#202020;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.14);--text:#efefef;--muted:#555;--muted2:#888;--accent:#c8f03c;--accent2:#9fc02a;--qc:#38bdf8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Syne','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;z-index:0}
+a{text-decoration:none;color:inherit}
+nav{position:sticky;top:0;z-index:200;background:rgba(8,8,8,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;gap:18px}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--accent);flex-shrink:0}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap}
+.nav-link{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);padding:6px 12px;border-radius:6px;border:1px solid transparent;transition:all .15s}
+.nav-link:hover{color:var(--text);border-color:var(--border)}
+.nav-link.active{color:var(--accent);border-color:rgba(200,240,60,.25);background:rgba(200,240,60,.07)}
+
+/* HERO */
+.hero{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:80px 24px 40px;text-align:center}
+.eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(54px,11vw,104px);letter-spacing:4px;line-height:.9;margin-bottom:18px}
+.hero h1 span{color:var(--accent)}
+.hero .lead{font-size:15px;line-height:1.8;color:var(--muted2);max-width:560px;margin:0 auto 32px}
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;padding:13px 28px;border-radius:10px;transition:all .15s;border:1px solid transparent}
+.cta-primary{background:var(--accent);color:#080808}
+.cta-primary:hover{background:var(--accent2)}
+.cta-ghost{border-color:var(--border2);color:var(--text)}
+.cta-ghost:hover{background:var(--s1)}
+
+/* SECTION */
+.section{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:48px 24px}
+.section-head{text-align:center;margin-bottom:36px}
+.section-head h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,5vw,42px);letter-spacing:3px;margin-bottom:8px}
+.section-head p{font-size:13px;color:var(--muted2)}
+
+/* TOOL CARDS */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.tool{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:26px;display:flex;flex-direction:column;transition:border-color .15s,transform .15s}
+.tool:hover{border-color:var(--border2);transform:translateY(-2px)}
+.tool-icon{font-size:34px;margin-bottom:14px}
+.tool h3{font-size:19px;font-weight:800;margin-bottom:8px}
+.tool .desc{font-size:13px;line-height:1.7;color:var(--muted2);margin-bottom:18px;flex:1}
+.tool-input{display:flex;gap:8px;margin-bottom:8px}
+.tool-input input{flex:1;min-width:0;background:var(--s2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Syne','Noto Sans JP',sans-serif;font-size:13px;padding:11px 14px;outline:none;transition:border-color .2s}
+.tool-input input:focus{border-color:var(--accent)}
+.tool-input input::placeholder{color:var(--muted)}
+.btn{background:var(--accent);border:none;border-radius:10px;color:#080808;cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;padding:11px 18px;white-space:nowrap;transition:background .15s}
+.btn:hover{background:var(--accent2)}
+.btn-block{display:block;width:100%;text-align:center;padding:13px;font-size:17px;letter-spacing:2px}
+.tool-note{font-size:11px;color:var(--muted);min-height:16px;line-height:1.5}
+.tool-result{display:none;margin-top:12px;background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:14px}
+.tool-result.show{display:block;animation:fadeUp .2s ease both}
+.res-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qc-badge{font-size:11px;font-weight:800;letter-spacing:1px;padding:4px 10px;border-radius:999px;background:rgba(56,189,248,.14);color:var(--qc);white-space:nowrap}
+.qc-badge.zero{background:rgba(255,255,255,.06);color:var(--muted2)}
+.res-link{flex:1;min-width:120px}
+.btn-sm{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;padding:8px 14px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-sm:hover{background:var(--s3)}
+.btn-sm.qc{border-color:rgba(56,189,248,.4);color:var(--qc)}
+
+/* CATEGORIES */
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.cat{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:22px 18px;text-align:center;transition:all .15s}
+.cat:hover{border-color:var(--accent2);transform:translateY(-2px)}
+.cat .emoji{font-size:30px;display:block;margin-bottom:10px}
+.cat .name{font-size:15px;font-weight:700;margin-bottom:3px}
+.cat .sub{font-size:11px;color:var(--muted)}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:760px;margin:0 auto}
+.stat{text-align:center;background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:24px 12px}
+.stat .num{font-family:'Bebas Neue',sans-serif;font-size:38px;letter-spacing:1px;color:var(--accent);line-height:1}
+.stat .lbl{font-size:11px;color:var(--muted2);margin-top:8px;letter-spacing:.5px}
+
+footer{position:relative;z-index:1;text-align:center;padding:36px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);margin-top:24px}
+footer a{color:var(--accent)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.tool-input{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">PANDORA</a>
+    <div class="nav-links">
+      <a class="nav-link" href="/catalog.html">全商品</a>
+      <a class="nav-link" href="/popular/">人気</a>
+      <a class="nav-link active" href="/tools.html">ツール</a>
+      <a class="nav-link" href="/converter.html">リンク変換</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="eyebrow">オールインワン レップ ツールボックス</p>
+  <h1>REP<br><span>TOOLS</span></h1>
+  <p class="lead">荷物の追跡、QC写真の検索、エージェントリンクの変換まで。<br>レップ購入に必要なツールを、この1ページに集約しました。</p>
+  <div class="cta-row">
+    <a class="cta cta-primary" href="#tools">ツールを使う →</a>
+    <a class="cta cta-ghost" href="/catalog.html">商品を見る</a>
+  </div>
+</header>
+
+<!-- TOOLS -->
+<section class="section" id="tools">
+  <div class="section-head">
+    <h2>POWERFUL TOOLS</h2>
+    <p>面倒な手間なしで、レップの世界を自信を持って歩くために</p>
+  </div>
+  <div class="tools">
+
+    <!-- 荷物追跡 -->
+    <div class="tool">
+      <div class="tool-icon">📦</div>
+      <h3>荷物追跡</h3>
+      <p class="desc">世界中のあらゆる配送業者に対応。追跡番号を入力すると、現在地と配送状況をリアルタイムで確認できます。</p>
+      <div class="tool-input">
+        <input id="trk" type="text" placeholder="追跡番号を入力（例: LP00xxxxxxxx）">
+        <button class="btn" onclick="track()">追跡</button>
+      </div>
+      <div class="tool-note" id="trk-note">3,100+ の配送業者に対応（17TRACK経由）</div>
+    </div>
+
+    <!-- QC写真検索 -->
+    <div class="tool">
+      <div class="tool-icon">📸</div>
+      <h3>QC写真検索</h3>
+      <p class="desc">商品リンクを貼り付けるだけで、各エージェントにアップロードされた実物のQC（検品）写真を検索します。</p>
+      <div class="tool-input">
+        <input id="qc" type="text" placeholder="Taobao / Weidian / 1688 / エージェントのリンク">
+        <button class="btn" onclick="findQC()">検索</button>
+      </div>
+      <div class="tool-note" id="qc-note">リンクを貼って検索ボタンを押してください</div>
+      <div class="tool-result" id="qc-result">
+        <div class="res-row">
+          <span class="qc-badge" id="qc-badge">QC 0枚</span>
+          <span class="res-link res-url" id="qc-url"></span>
+          <button class="btn-sm qc" onclick="openQC()">QC写真を見る →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- リンク変換 -->
+    <div class="tool">
+      <div class="tool-icon">🔗</div>
+      <h3>リンク変換</h3>
+      <p class="desc">Taobao・Weidian・1688 の商品リンクを、Kakobuy など各エージェントの購入リンクに即座に変換します。</p>
+      <div class="tool-input">
+        <input id="cv" type="text" placeholder="変換したい商品リンク" onkeydown="if(event.key==='Enter')goConvert()">
+        <button class="btn" onclick="goConvert()">変換</button>
+      </div>
+      <div class="tool-note">Taobao・Weidian・1688・Tmall・各エージェント対応</div>
+      <a class="btn btn-block" href="/converter.html" style="margin-top:6px">変換ツールを開く →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="section-head">
+    <h2>カテゴリで探す</h2>
+    <p>PANDORAが厳選した人気アイテムをカテゴリ別にチェック</p>
+  </div>
+  <div class="cats">
+    <a class="cat" href="/catalog.html?cat=SNEAKERS"><span class="emoji">👟</span><div class="name">スニーカー</div><div class="sub">Sneakers &amp; Boots</div></a>
+    <a class="cat" href="/catalog.html?cat=JACKETS"><span class="emoji">🧥</span><div class="name">アウター</div><div class="sub">Jackets &amp; Coats</div></a>
+    <a class="cat" href="/catalog.html?cat=T-SHIRTS"><span class="emoji">👕</span><div class="name">トップス</div><div class="sub">Tees &amp; Shirts</div></a>
+    <a class="cat" href="/catalog.html?cat=PANTS"><span class="emoji">👖</span><div class="name">パンツ</div><div class="sub">Jeans &amp; Joggers</div></a>
+    <a class="cat" href="/catalog.html?cat=BAGS"><span class="emoji">👜</span><div class="name">バッグ</div><div class="sub">Bags &amp; Backpacks</div></a>
+    <a class="cat" href="/catalog.html?cat=ACCESSORIES"><span class="emoji">⌚</span><div class="name">アクセサリー</div><div class="sub">Caps &amp; More</div></a>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section">
+  <div class="stats">
+    <div class="stat"><div class="num">3100+</div><div class="lbl">対応配送業者</div></div>
+    <div class="stat"><div class="num">9+</div><div class="lbl">対応エージェント</div></div>
+    <div class="stat"><div class="num">3</div><div class="lbl">対応マーケット</div></div>
+    <div class="stat"><div class="num">∞</div><div class="lbl">無限の可能性</div></div>
+  </div>
+</section>
+
+<footer>PANDORA &nbsp;·&nbsp; レップコミュニティのためのツールボックス &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuyで購入</a></footer>
+
+<script>
+// ── 荷物追跡: 17TRACK で開く ──
+function track(){
+  const v=document.getElementById('trk').value.trim();
+  const note=document.getElementById('trk-note');
+  if(!v){note.textContent='追跡番号を入力してください';return}
+  note.textContent='17TRACKを開いています…';
+  window.open('https://t.17track.net/ja#nums='+encodeURIComponent(v),'_blank');
+}
+document.getElementById('trk').addEventListener('keydown',e=>{if(e.key==='Enter')track()});
+
+// ── QC写真検索: /api/qc 経由でUUFinds変換APIを叩く ──
+let qcUrl='';
+function extractUrl(raw){
+  const r=raw.trim();
+  let m=r.match(/[?&]url=([^&\s]+)/);if(m)return decodeURIComponent(m[1]);
+  m=r.match(/https?:\/\/[^\s"'<>]+/);if(m)return m[0];
+  return r;
+}
+async function findQC(){
+  const raw=document.getElementById('qc').value;
+  const note=document.getElementById('qc-note');
+  const result=document.getElementById('qc-result');
+  if(!raw.trim()){note.textContent='リンクを入力してください';return}
+  const target=extractUrl(raw);
+  note.textContent='QC写真を検索中…';
+  result.classList.remove('show');
+  try{
+    const r=await fetch('/api/qc?url='+encodeURIComponent(target));
+    const data=await r.json();
+    if(data&&data.success&&data.result&&data.result.url){
+      qcUrl=data.result.url;
+      const qty=data.result.qcQuantity||0;
+      const badge=document.getElementById('qc-badge');
+      badge.textContent='QC '+qty+'枚';
+      badge.className='qc-badge'+(qty===0?' zero':'');
+      document.getElementById('qc-url').textContent=qty>0?'実物のQC写真が見つかりました':'QC写真はまだありませんが商品ページを開けます';
+      note.textContent='';
+      result.classList.add('show');
+    }else{
+      note.textContent='QC情報が見つかりませんでした。リンクを確認してください。';
+    }
+  }catch(e){
+    note.textContent='検索に失敗しました。時間をおいて再度お試しください。';
+  }
+}
+function openQC(){if(qcUrl)window.open(qcUrl,'_blank')}
+document.getElementById('qc').addEventListener('keydown',e=>{if(e.key==='Enter')findQC()});
+
+// ── リンク変換: converter.html へ ──
+function goConvert(){
+  const v=document.getElementById('cv').value.trim();
+  location.href='/converter.html'+(v?('#'+encodeURIComponent(v)):'');
+}
+</script>
+</body>
+</html>

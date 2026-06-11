@@ -67,6 +67,7 @@ footer a{color:var(--accent);text-decoration:none}
     <a class="nav-logo" href="/">PANDORA</a>
     <div class="nav-links">
       <a class="nav-link" href="/">カタログ</a>
+      <a class="nav-link" href="/tools.html">ツール</a>
       <a class="nav-link active" href="/converter.html">リンク変換</a>
     </div>
   </div>
@@ -149,6 +150,8 @@ function convert(){
 }
 document.getElementById("inp").addEventListener("keydown",e=>{if(e.key==="Enter")convert()});
 document.getElementById("inp").addEventListener("paste",()=>{setTimeout(convert,50)});
+// tools.html から #<URL> で渡された場合は自動入力して変換
+if(location.hash.length>1){const h=decodeURIComponent(location.hash.slice(1));if(/^https?:/.test(h)){document.getElementById("inp").value=h;convert()}}
 </script>
 </body>
 </html>
