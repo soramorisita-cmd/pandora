@@ -1001,6 +1001,28 @@ def generate_lookup_json(products: list):
     print(f"  [lookup] {len(by_album)} albums / {len(by_item)} items → product-lookup.json")
 
 
+# ── 商品数の注入（index.html / tools.html を実数に同期） ──────────────
+def patch_counts(products):
+    """表示用の商品数を index.html / tools.html に注入して全ページで一致させる。"""
+    count = len(products)
+    cstr = f"{count:,}"
+    # index.html: "X,XXX アイテム掲載中"
+    ip = ROOT / "index.html"
+    if ip.exists():
+        c = ip.read_text(encoding="utf-8")
+        c2 = re.sub(r"[\d,]+\s*アイテム掲載中", f"{cstr} アイテム掲載中", c)
+        if c2 != c:
+            ip.write_text(c2, encoding="utf-8")
+    # tools.html: <!--COUNT-->...<!--/COUNT-->
+    tp = ROOT / "tools.html"
+    if tp.exists():
+        c = tp.read_text(encoding="utf-8")
+        c2 = re.sub(r"<!--COUNT-->.*?<!--/COUNT-->", f"<!--COUNT-->{cstr}<!--/COUNT-->", c, flags=re.DOTALL)
+        if c2 != c:
+            tp.write_text(c2, encoding="utf-8")
+    print(f"  [counts] 商品数 {cstr} を index.html / tools.html に注入")
+
+
 # ── メイン ──────────────────────────────────────────────────────────
 def main():
     global DOMAIN
@@ -1033,6 +1055,7 @@ def main():
     split_products_json(products, data.get("updated", ""))
     build_headers()
     patch_index(products)
+    patch_counts(products)
     generate_lookup_json(products)
 
     # products.json をminify化（モバイルロード高速化）
