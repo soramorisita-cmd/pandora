@@ -286,46 +286,26 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
   <div class="tools">
 
-    <div class="tool t-track" id="track">
+    <a class="tool t-track" id="track" href="/tools/track.html">
       <div class="tool-icon">📦</div>
       <h3>荷物追跡</h3>
-      <p class="desc">世界中のあらゆる配送業者に対応。追跡番号を入力すると、現在地と配送状況をリアルタイムで確認できます。</p>
-      <div class="tool-input">
-        <input id="trk" type="text" placeholder="追跡番号を入力（例: LP00xxxxxxxx）">
-        <button class="btn" onclick="track()">追跡</button>
-      </div>
-      <div class="tool-note" id="trk-note">3,100+ の配送業者に対応（17TRACK経由）</div>
-    </div>
+      <p class="desc">追跡番号から、17TRACK・ParcelsApp・AfterShip など主要サービスでまとめて配送状況を確認。3,100+の配送業者に対応。</p>
+      <span class="btn btn-block">追跡ツールを開く →</span>
+    </a>
 
-    <div class="tool t-qc" id="qc">
+    <a class="tool t-qc" id="qc" href="/tools/qc.html">
       <div class="tool-icon">📸</div>
       <h3>QC写真検索</h3>
-      <p class="desc">商品リンクを貼り付けるだけで、各エージェントにアップロードされた実物のQC（検品）写真を検索します。</p>
-      <div class="tool-input">
-        <input id="qc-in" type="text" placeholder="Taobao / Weidian / 1688 / エージェントのリンク">
-        <button class="btn" onclick="findQC()">検索</button>
-      </div>
-      <div class="tool-note" id="qc-note">リンクを貼って検索ボタンを押してください</div>
-      <div class="tool-result" id="qc-result">
-        <div class="res-row">
-          <span class="qc-badge" id="qc-badge">QC 0枚</span>
-          <span class="res-url" id="qc-url"></span>
-          <button class="btn-sm" onclick="openQC()">QC写真を見る →</button>
-        </div>
-      </div>
-    </div>
+      <p class="desc">商品リンクを貼るだけで、各エージェントにアップロードされた実物のQC（検品）写真を検索。Kakobuy/CNFans/Weidian/Taobao/1688対応。</p>
+      <span class="btn btn-block">QC検索を開く →</span>
+    </a>
 
-    <div class="tool t-conv" id="find">
+    <a class="tool t-conv" id="find" href="/converter.html">
       <div class="tool-icon">🔗</div>
       <h3>リンク変換</h3>
       <p class="desc">Taobao・Weidian・1688 の商品リンクを、Kakobuy など各エージェントの購入リンクに即座に変換します。</p>
-      <div class="tool-input">
-        <input id="cv" type="text" placeholder="変換したい商品リンク" onkeydown="if(event.key==='Enter')goConvert()">
-        <button class="btn" onclick="goConvert()">変換</button>
-      </div>
-      <div class="tool-note">Taobao・Weidian・1688・Tmall・各エージェント対応</div>
-      <a class="btn btn-block" href="/converter.html">変換ツールを開く →</a>
-    </div>
+      <span class="btn btn-block">変換ツールを開く →</span>
+    </a>
 
   </div>
 </section>
@@ -484,38 +464,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   },{threshold:.3});
   io.observe(sec);
 })();
-
-// ── 機能: 荷物追跡 ──
-function track(){
-  const v=document.getElementById('trk').value.trim(),note=document.getElementById('trk-note');
-  if(!v){note.textContent='追跡番号を入力してください';return}
-  note.textContent='17TRACKを開いています…';
-  window.open('https://t.17track.net/ja#nums='+encodeURIComponent(v),'_blank');
-}
-document.getElementById('trk').addEventListener('keydown',e=>{if(e.key==='Enter')track()});
-// ── 機能: QC写真検索 ──
-let qcUrl='';
-function extractUrl(raw){const r=raw.trim();let m=r.match(/[?&]url=([^&\s]+)/);if(m)return decodeURIComponent(m[1]);m=r.match(/https?:\/\/[^\s"'<>]+/);if(m)return m[0];return r}
-async function findQC(){
-  const raw=document.getElementById('qc-in').value,note=document.getElementById('qc-note'),result=document.getElementById('qc-result');
-  if(!raw.trim()){note.textContent='リンクを入力してください';return}
-  note.textContent='QC写真を検索中…';result.classList.remove('show');
-  try{
-    const r=await fetch('/api/qc?url='+encodeURIComponent(extractUrl(raw)));
-    const data=await r.json();
-    if(data&&data.success&&data.result&&data.result.url){
-      qcUrl=data.result.url;const qty=data.result.qcQuantity||0;
-      const badge=document.getElementById('qc-badge');
-      badge.textContent='QC '+qty+'枚';badge.className='qc-badge'+(qty===0?' zero':'');
-      document.getElementById('qc-url').textContent=qty>0?'実物のQC写真が見つかりました':'QC写真はまだありませんが商品ページを開けます';
-      note.textContent='';result.classList.add('show');
-    }else note.textContent='QC情報が見つかりませんでした。リンクを確認してください。';
-  }catch(e){note.textContent='検索に失敗しました。時間をおいて再度お試しください。'}
-}
-function openQC(){if(qcUrl)window.open(qcUrl,'_blank')}
-document.getElementById('qc-in').addEventListener('keydown',e=>{if(e.key==='Enter')findQC()});
-// ── 機能: リンク変換 ──
-function goConvert(){const v=document.getElementById('cv').value.trim();location.href='/converter.html'+(v?('#'+encodeURIComponent(v)):'')}
 </script>
 </body>
 </html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QC写真検索 — レップ ツールボックス | PANDORA</title>
+<meta name="description" content="商品リンクを貼るだけで、各エージェントにアップロードされた実物のQC（検品）写真を検索。Kakobuy・CNFans・Weidian・Taobao・1688対応。">
+<meta property="og:title" content="QC写真検索 — PANDORA ツール">
+<meta property="og:description" content="商品リンクから実物のQC写真をまとめて検索。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0b;--bg2:#111113;--card:#18181b;--text:#fafafa;--muted:#a1a1aa;--muted2:#71717a;--border:#27272a;--border2:#3f3f46;--cyan:#22d3ee;--cyan2:#06b6d4;--purple:#a855f7;--orange:#f97316;--green:#22c55e;--glow-cyan:rgba(34,211,238,.15);--mono:'Space Mono',monospace;--disp:'Syne','Noto Sans JP',sans-serif;--ac:var(--cyan)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--disp);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;position:relative}
+a{text-decoration:none;color:inherit}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.4;pointer-events:none;z-index:-1}
+.orb-1{width:520px;height:520px;background:radial-gradient(circle,var(--cyan) 0%,transparent 70%);top:-200px;right:-160px}
+.orb-2{width:440px;height:440px;background:radial-gradient(circle,var(--purple) 0%,transparent 70%);bottom:-160px;left:-150px}
+.bottom-glow{position:fixed;left:0;right:0;bottom:0;height:32vh;pointer-events:none;z-index:0;background:linear-gradient(to top,rgba(34,211,238,.05),transparent)}
+.layer{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;bottom:-12px;border-radius:50%;opacity:0;animation:sparkRise var(--d) ease-out forwards}
+@keyframes sparkRise{0%{opacity:0;transform:translate(0,0) scale(.3)}8%{opacity:1}70%{opacity:.85}100%{opacity:0;transform:translate(var(--dx),calc(-1 * var(--h))) scale(1.1)}}
+nav{position:sticky;top:0;z-index:200;background:rgba(10,10,11,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;gap:16px}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:25px;letter-spacing:4px;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap}
+.nav-link{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:7px 12px;border-radius:8px;border:1px solid transparent;transition:all .15s}
+.nav-link:hover{color:var(--text);border-color:var(--border2)}
+.nav-link.active{color:var(--cyan);border-color:rgba(34,211,238,.35);background:var(--glow-cyan)}
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:40px 24px 80px}
+.back{font-family:var(--mono);font-size:12px;color:var(--muted);display:inline-block;margin-bottom:28px;transition:color .15s}
+.back:hover{color:var(--cyan)}
+.tabbar{display:flex;gap:8px;justify-content:center;margin-bottom:32px;flex-wrap:wrap}
+.tab{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.5px;padding:9px 16px;border-radius:10px;border:1px solid var(--border);color:var(--muted);transition:all .15s}
+.tab:hover{color:var(--text);border-color:var(--border2)}
+.tab.active{color:var(--bg);background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 60%,#000));border-color:transparent}
+.hero{text-align:center;margin-bottom:32px}
+.ticon{width:72px;height:72px;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-size:34px;border-radius:18px;background:color-mix(in srgb,var(--ac) 14%,transparent);border:1px solid color-mix(in srgb,var(--ac) 30%,transparent);box-shadow:0 0 30px color-mix(in srgb,var(--ac) 22%,transparent)}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,8vw,64px);letter-spacing:2px;margin-bottom:10px}
+.hero p{font-size:14px;color:var(--muted);line-height:1.7;max-width:480px;margin:0 auto}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px}
+.tool-input{display:flex;gap:10px;margin-bottom:10px}
+.tool-input input{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--border);border-radius:11px;color:var(--text);font-family:var(--disp);font-size:14px;padding:14px 16px;outline:none;transition:border-color .2s,box-shadow .2s}
+.tool-input input:focus{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 18%,transparent)}
+.tool-input input::placeholder{color:var(--muted2)}
+.btn{position:relative;overflow:hidden;border:none;border-radius:11px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:14px;letter-spacing:1px;padding:14px 24px;white-space:nowrap;color:var(--bg);background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 60%,#000));transition:filter .15s,transform .15s}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.note{font-family:var(--mono);font-size:11px;color:var(--muted2);min-height:16px;margin-bottom:6px}
+.result{display:none;margin-top:14px;background:var(--bg2);border:1px solid var(--border);border-radius:13px;padding:16px}
+.result.show{display:block}
+.res-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.qc-badge{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:1px;padding:6px 12px;border-radius:999px;background:var(--glow-cyan);color:var(--cyan);border:1px solid rgba(34,211,238,.3)}
+.qc-badge.zero{background:rgba(255,255,255,.05);color:var(--muted);border-color:var(--border)}
+.res-txt{flex:1;min-width:120px;font-size:13px;color:var(--muted)}
+.btn-sm{font-family:var(--mono);font-size:13px;font-weight:700;padding:10px 16px;border-radius:10px;border:1px solid var(--cyan);background:var(--glow-cyan);color:var(--cyan);cursor:pointer;transition:all .15s}
+.btn-sm:hover{background:rgba(34,211,238,.22)}
+.agents-title{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);margin:22px 0 12px;padding-top:18px;border-top:1px solid var(--border)}
+.agents{display:flex;gap:8px;flex-wrap:wrap}
+.agent{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;padding:7px 13px;border-radius:999px;border:1px solid var(--border);color:var(--muted);background:var(--bg2)}
+.agent.k{color:#fb923c;border-color:rgba(251,146,60,.3)}
+.agent.c{color:#60a5fa;border-color:rgba(96,165,250,.3)}
+.agent.w{color:#22d3ee;border-color:rgba(34,211,238,.3)}
+.agent.t{color:#fb7185;border-color:rgba(251,113,133,.3)}
+.agent.a{color:#a855f7;border-color:rgba(168,85,247,.3)}
+.agent.s{color:#22c55e;border-color:rgba(34,197,94,.3)}
+footer{position:relative;z-index:1;text-align:center;padding:40px 24px;border-top:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--muted2)}
+footer a{color:var(--cyan)}
+@media(max-width:540px){.tool-input{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="bottom-glow"></div>
+<div class="layer" id="particles"></div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">PANDORA</a>
+    <div class="nav-links">
+      <a class="nav-link" href="/catalog.html">全商品</a>
+      <a class="nav-link active" href="/tools.html">ツール</a>
+      <a class="nav-link" href="/converter.html">リンク変換</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <a class="back" href="/tools.html">← ツール一覧にもどる</a>
+
+  <div class="tabbar">
+    <a class="tab" href="/tools/track.html">📦 荷物追跡</a>
+    <a class="tab active" href="/tools/qc.html">📸 QC写真検索</a>
+    <a class="tab" href="/converter.html">🔗 リンク変換</a>
+  </div>
+
+  <div class="hero">
+    <div class="ticon">📸</div>
+    <h1>QC写真検索</h1>
+    <p>商品リンクを貼り付けるだけで、各エージェントにアップロードされた実物のQC（検品）写真をまとめて検索します。</p>
+  </div>
+
+  <div class="panel">
+    <div class="tool-input">
+      <input id="qc-in" type="text" placeholder="Taobao / Weidian / 1688 / エージェントの商品リンク">
+      <button class="btn" onclick="findQC()">検索する</button>
+    </div>
+    <div class="note" id="note">リンクを貼って検索ボタンを押してください</div>
+
+    <div class="result" id="result">
+      <div class="res-row">
+        <span class="qc-badge" id="qc-badge">QC 0枚</span>
+        <span class="res-txt" id="qc-txt"></span>
+        <button class="btn-sm" onclick="openQC()">QC写真を見る →</button>
+      </div>
+    </div>
+
+    <div class="agents-title">対応プラットフォーム</div>
+    <div class="agents">
+      <span class="agent k">Kakobuy</span>
+      <span class="agent c">CNFans</span>
+      <span class="agent w">Weidian</span>
+      <span class="agent t">Taobao</span>
+      <span class="agent w">1688</span>
+      <span class="agent s">Sugargoo</span>
+    </div>
+  </div>
+</div>
+
+<footer>PANDORA &nbsp;·&nbsp; <a href="/tools.html">レップ ツールボックス</a> &nbsp;·&nbsp; <a href="https://www.kakobuy.com/?affcode=a235412" target="_blank" rel="noopener">Kakobuy</a></footer>
+
+<script>
+// スパーク
+(function(){const box=document.getElementById('particles');const cs=['#22d3ee','#a855f7','#06b6d4','#f97316'];function s(){const p=document.createElement('div');p.className='particle';const sz=Math.random()*3+1.4,d=Math.random()*8+9,l=Math.random()*100,dx=(Math.random()-.5)*140,h=Math.random()*55+45,c=cs[Math.random()*cs.length|0];p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+l+'%;background:'+c+';--dx:'+dx+'px;--h:'+h+'vh;--d:'+d+'s;box-shadow:0 0 '+(sz*2.5)+'px '+c;box.appendChild(p);setTimeout(()=>p.remove(),d*1000)}for(let i=0;i<14;i++)setTimeout(s,Math.random()*5000);setInterval(s,460)})();
+
+let qcUrl='';
+function extractUrl(raw){const r=raw.trim();let m=r.match(/[?&]url=([^&\s]+)/);if(m)return decodeURIComponent(m[1]);m=r.match(/https?:\/\/[^\s"'<>]+/);if(m)return m[0];return r}
+async function findQC(){
+  const raw=document.getElementById('qc-in').value,note=document.getElementById('note'),result=document.getElementById('result');
+  if(!raw.trim()){note.textContent='リンクを入力してください';return}
+  note.textContent='QC写真を検索中…';result.classList.remove('show');
+  try{
+    const r=await fetch('/api/qc?url='+encodeURIComponent(extractUrl(raw)));
+    const data=await r.json();
+    if(data&&data.success&&data.result&&data.result.url){
+      qcUrl=data.result.url;const qty=data.result.qcQuantity||0;
+      const badge=document.getElementById('qc-badge');
+      badge.textContent='QC '+qty+'枚';badge.className='qc-badge'+(qty===0?' zero':'');
+      document.getElementById('qc-txt').textContent=qty>0?'実物のQC写真が見つかりました':'QC写真はまだありませんが商品ページを開けます';
+      note.textContent='';result.classList.add('show');
+    }else note.textContent='QC情報が見つかりませんでした。リンクを確認してください。';
+  }catch(e){note.textContent='検索に失敗しました。時間をおいて再度お試しください。'}
+}
+function openQC(){if(qcUrl)window.open(qcUrl,'_blank')}
+document.getElementById('qc-in').addEventListener('keydown',e=>{if(e.key==='Enter')findQC()});
+</script>
+</body>
+</html>
