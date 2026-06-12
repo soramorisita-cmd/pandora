@@ -93,6 +93,10 @@ nav.scrolled{background:rgba(10,10,11,.95);border-bottom-color:rgba(34,211,238,.
 .cta-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 15px 50px rgba(34,211,238,.3)}
 .cta-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text)}
 .cta-ghost:hover{transform:translateY(-3px) scale(1.02);border-color:var(--purple);background:rgba(168,85,247,.08);box-shadow:0 15px 50px var(--glow-purple)}
+.cta-discord{background:linear-gradient(135deg,#5865F2,#4752c4);color:#fff}
+.cta-discord svg{width:18px;height:18px;fill:currentColor}
+.cta-discord::before{content:'';position:absolute;top:0;left:-100%;width:200%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);animation:btnShimmer 4s ease-in-out infinite}
+.cta-discord:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 15px 50px rgba(88,101,242,.4)}
 .hero-scroll{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:var(--muted2);font-family:var(--mono);font-size:.78rem;animation:bounce 2s infinite}
 @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
 
@@ -214,6 +218,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <p class="lead">荷物の追跡、QC写真の検索、エージェントリンクの変換まで。<br>レップ購入に必要なツールを、この1ページに集約しました。</p>
   <div class="cta-row">
     <a class="cta cta-primary" href="#tools"><span>ツールを使う</span><span>→</span></a>
+    <a class="cta cta-discord" href="https://discord.gg/xQbBbukjsA" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3.2a.074.074 0 0 0-.079.037c-.34.6-.717 1.385-.98 2.001a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.997-2.001.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.369a.07.07 0 0 0-.032.027C1.533 7.59.93 10.713 1.226 13.795a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.5-3.587-.838-6.685-3.549-9.4a.061.061 0 0 0-.031-.027ZM8.02 12.331c-1.182 0-2.157-1.085-2.157-2.419 0-1.333.956-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.334-.956 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/></svg><span>Discordに参加</span></a>
     <a class="cta cta-ghost" href="/catalog.html"><span>商品を見る</span></a>
   </div>
   <div class="hero-scroll"><span>Scroll to explore</span><span>↓</span></div>
