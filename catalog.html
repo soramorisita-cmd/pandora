@@ -280,7 +280,10 @@ footer a{color:var(--accent);text-decoration:none}
       <span class="drawer-title">絞り込み</span>
       <button class="drawer-close" onclick="closeDrawer()">✕</button>
     </div>
-    <div id="cat-list-mobile" style="display:none"></div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
+      <div class="sb-title">カテゴリ</div>
+      <div class="filter-list" id="cat-list-mobile"></div>
+    </div>
     <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
       <div class="sb-title">性別</div>
       <div class="view-toggle gender-toggle" style="width:100%">
@@ -301,9 +304,12 @@ footer a{color:var(--accent);text-decoration:none}
   </div>
 
   <div class="page">
-    <div id="cat-list" style="display:none"></div>
     <input type="hidden" id="search">
     <aside class="sidebar">
+      <div class="sidebar-block">
+        <div class="sb-title">カテゴリ</div>
+        <div class="filter-list" id="cat-list"></div>
+      </div>
       <div class="sidebar-block">
         <div class="sb-title">ブランド</div>
         <input type="text" id="brand-search-input" class="sb-search" placeholder="🔍 ブランドを検索..." oninput="filterBrandList(this.value)" style="margin-bottom:4px">
@@ -457,6 +463,24 @@ function buildCatBar(){
     });
     el.appendChild(pill);
   });
+  buildCatFilter();
+}
+
+// 絞り込みサイドバー/ドロワー内のカテゴリ一覧（#cat-list / #cat-list-mobile）
+function buildCatFilter(){
+  if(!allCats||!allCats.length)return;
+  const html=allCats.map(cat=>{
+    const cnt=ALL.filter(p=>p.type===cat).length;
+    return `<label class="f-item${selCats.has(cat)?' active':''}" data-cat="${esc(cat)}" onclick="selectCatFromFilter('${cat.replace(/'/g,"\\'")}')"><span class="f-label">${esc(CAT_JA[cat]||cat)}</span><span class="f-count">${cnt}</span></label>`;
+  }).join('');
+  ['cat-list','cat-list-mobile'].forEach(id=>{const el=document.getElementById(id);if(el){el.innerHTML=html;el.style.display='block';}});
+}
+function selectCatFromFilter(cat){
+  if(selCats.has(cat)){selCats.delete(cat);}else{selCats.clear();selCats.add(cat);}
+  const c=[...selCats];
+  history.replaceState(null,'',c.length===1?`/catalog.html?cat=${encodeURIComponent(c[0])}`:'/catalog.html');
+  const rerender=()=>{buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();};
+  if(!loadedFull){ensureFullData().then(rerender);}else{rerender();}
 }
 
 function buildBrandList(){
@@ -765,7 +789,8 @@ function syncSearch(el){
 }
 function buildMobileLists(){
   _rebuilding=true;
-  // ブランドのみ（カテゴリはタブバーで選択）
+  buildCatFilter();
+  // ブランド一覧
   const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
   const brands=[...new Set(src.map(p=>p.brand).filter(Boolean))].sort();
   const bel=document.getElementById('brand-list-mobile');bel.innerHTML='';
