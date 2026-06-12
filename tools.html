@@ -46,8 +46,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;
 
 /* ── パーティクル / シェイプ / フローライン ── */
 .layer{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.particle{position:absolute;border-radius:50%;opacity:0;animation:particleDrift linear infinite}
-@keyframes particleDrift{0%{opacity:0;transform:translateY(100vh) translateX(0) scale(0)}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translateY(-10vh) translateX(var(--dx)) scale(1)}}
+/* 下から立ち上がる火花（スパーク/残り火） */
+.particle{position:absolute;bottom:-12px;border-radius:50%;opacity:0;will-change:transform,opacity;animation:sparkRise var(--d) ease-out forwards,sparkFlicker var(--fk,1.2s) ease-in-out infinite}
+@keyframes sparkRise{0%{opacity:0;transform:translate(0,0) scale(.3)}8%{opacity:1}70%{opacity:.85}100%{opacity:0;transform:translate(var(--dx),calc(-1 * var(--h))) scale(1.1)}}
+@keyframes sparkFlicker{0%,100%{filter:brightness(1)}50%{filter:brightness(1.8)}}
+/* 底部アンビエントグロー（背景色になじむ） */
+.bottom-glow{position:fixed;left:0;right:0;bottom:0;height:32vh;pointer-events:none;z-index:0;background:linear-gradient(to top,rgba(34,211,238,.06),rgba(168,85,247,.03) 40%,transparent)}
 .flow-line{position:absolute;width:200%;height:1px;background:linear-gradient(90deg,transparent,var(--lc),transparent);opacity:.12;animation:flowAcross var(--fd) linear infinite}
 @keyframes flowAcross{0%{transform:translateX(-60%) rotate(var(--la))}100%{transform:translateX(20%) rotate(var(--la))}}
 .shape{position:absolute;opacity:.08;animation:shapeDrift linear infinite}
@@ -208,6 +212,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="aurora-band aurora-band-2"></div>
   <div class="aurora-band aurora-band-3"></div>
 </div>
+<div class="bottom-glow"></div>
 <div class="layer" id="particles"></div>
 <div class="layer" id="flow-lines"></div>
 <div class="layer" id="shapes"></div>
@@ -352,19 +357,24 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 </footer>
 
 <script>
-// ── 背景パーティクル ──
+// ── 下から立ち上がる火花（スパーク） ──
 (function(){
   const box=document.getElementById('particles');
-  const colors=['#22d3ee','#a855f7','#f97316','#22c55e','#06b6d4'];
+  const colors=['#22d3ee','#a855f7','#f97316','#22c55e','#06b6d4','#67e8f9'];
   function spawn(){
     const p=document.createElement('div');p.className='particle';
-    const sz=Math.random()*4+2,dur=Math.random()*15+12,left=Math.random()*100,dx=(Math.random()-.5)*200;
+    const sz=Math.random()*3+1.4;            // 1.4〜4.4px の小さな火花
+    const dur=Math.random()*5+4;             // 4〜9秒で上昇
+    const left=Math.random()*100;
+    const dx=(Math.random()-.5)*140;         // 左右に揺れながら
+    const h=Math.random()*55+45;             // 上昇距離 45〜100vh
+    const fk=(Math.random()*0.8+0.7).toFixed(2); // 点滅周期
     const c=colors[Math.random()*colors.length|0];
-    p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+left+'%;background:'+c+';--dx:'+dx+'px;animation-duration:'+dur+'s;box-shadow:0 0 '+(sz*2)+'px '+c;
+    p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+left+'%;background:'+c+';--dx:'+dx+'px;--h:'+h+'vh;--d:'+dur+'s;--fk:'+fk+'s;box-shadow:0 0 '+(sz*2.5)+'px '+c+',0 0 '+(sz*6)+'px '+c;
     box.appendChild(p);setTimeout(()=>p.remove(),dur*1000);
   }
-  for(let i=0;i<15;i++)setTimeout(spawn,Math.random()*5000);
-  setInterval(spawn,1200);
+  for(let i=0;i<22;i++)setTimeout(spawn,Math.random()*4000);
+  setInterval(spawn,260);                    // 高頻度で湧き上がる
 })();
 // ── フローライン ──
 (function(){
