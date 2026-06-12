@@ -365,7 +365,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   function spawn(){
     const p=document.createElement('div');p.className='particle';
     const sz=Math.random()*3+1.4;            // 1.4〜4.4px の小さな火花
-    const dur=Math.random()*5+4;             // 4〜9秒で上昇
+    const dur=Math.random()*8+9;             // 9〜17秒でゆっくり上昇
     const left=Math.random()*100;
     const dx=(Math.random()-.5)*140;         // 左右に揺れながら
     const h=Math.random()*55+45;             // 上昇距離 45〜100vh
@@ -374,8 +374,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+left+'%;background:'+c+';--dx:'+dx+'px;--h:'+h+'vh;--d:'+dur+'s;--fk:'+fk+'s;box-shadow:0 0 '+(sz*2.5)+'px '+c+',0 0 '+(sz*6)+'px '+c;
     box.appendChild(p);setTimeout(()=>p.remove(),dur*1000);
   }
-  for(let i=0;i<22;i++)setTimeout(spawn,Math.random()*4000);
-  setInterval(spawn,260);                    // 高頻度で湧き上がる
+  for(let i=0;i<22;i++)setTimeout(spawn,Math.random()*5000);
+  setInterval(spawn,420);                    // ゆっくり湧き上がる
 })();
 // ── フローライン ──
 (function(){
