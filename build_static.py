@@ -1013,13 +1013,28 @@ def patch_counts(products):
         c2 = re.sub(r"[\d,]+\s*アイテム掲載中", f"{cstr} アイテム掲載中", c)
         if c2 != c:
             ip.write_text(c2, encoding="utf-8")
-    # tools.html: <!--COUNT-->...<!--/COUNT-->
+    # tools.html: 商品数 + カタログ誘導サムネイル
     tp = ROOT / "tools.html"
     if tp.exists():
         c = tp.read_text(encoding="utf-8")
-        c2 = re.sub(r"<!--COUNT-->.*?<!--/COUNT-->", f"<!--COUNT-->{cstr}<!--/COUNT-->", c, flags=re.DOTALL)
-        if c2 != c:
-            tp.write_text(c2, encoding="utf-8")
+        c = re.sub(r"<!--COUNT-->.*?<!--/COUNT-->", f"<!--COUNT-->{cstr}<!--/COUNT-->", c, flags=re.DOTALL)
+        # カテゴリごとに1枚ずつ画像付き商品を選んでサムネイル化
+        from collections import defaultdict
+        CAT_ORDER = ["SNEAKERS","JACKETS","T-SHIRTS","HOODIES","PANTS","BAGS","SWEATERS","ACCESSORIES"]
+        by_cat = defaultdict(list)
+        for p in products:
+            img = p.get("image","")
+            if img and img != "null" and img.startswith("http") and p.get("type"):
+                by_cat[p["type"]].append(p)
+        thumbs = []
+        for cat in CAT_ORDER:
+            pool = [p for p in by_cat.get(cat, []) if p.get("price_jpy")] or by_cat.get(cat, [])
+            if pool:
+                thumbs.append(esc(pool[0]["image"]))
+        if thumbs:
+            imgs = "".join(f'<img src="{u}" alt="" loading="lazy">' for u in thumbs)
+            c = re.sub(r"<!--THUMBS-->.*?<!--/THUMBS-->", f"<!--THUMBS-->{imgs}<!--/THUMBS-->", c, flags=re.DOTALL)
+        tp.write_text(c, encoding="utf-8")
     print(f"  [counts] 商品数 {cstr} を index.html / tools.html に注入")
 
 
