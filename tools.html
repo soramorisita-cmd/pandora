@@ -200,7 +200,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 @media(max-width:1024px){.stats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.tool-input{flex-direction:column}.hero{min-height:auto}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1!important;transform:none!important}}
+/* 「視差効果を減らす」設定でも演出は維持しつつ、コンテンツは確実に表示する保険 */
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
