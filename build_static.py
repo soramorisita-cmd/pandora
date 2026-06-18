@@ -683,13 +683,24 @@ def build_luxury_page(products, out_dir):
   </div>
 </a>"""
 
-    # 注目商品（画像あり・各ブランド1件ずつ最大12件）
-    featured = []
-    for brand, items in sorted(by_brand.items(), key=lambda x: -len(x[1])):
+    # 注目商品（画像あり・各ブランドから均等に・ブランド横断インターリーブ・最大96件）
+    FEATURED_MAX = 96
+    pools = {}
+    for brand, items in by_brand.items():
         pool = [p for p in items if p.get("image") and p["image"] != "null" and p.get("kakobuy")]
         if pool:
-            featured.append(pool[0])
-        if len(featured) >= 12:
+            pools[brand] = pool
+    order = sorted(pools, key=lambda b: -len(pools[b]))  # 件数の多いブランド順
+    featured = []
+    while len(featured) < FEATURED_MAX:
+        progressed = False
+        for brand in order:
+            if pools[brand]:
+                featured.append(pools[brand].pop(0))
+                progressed = True
+                if len(featured) >= FEATURED_MAX:
+                    break
+        if not progressed:
             break
     cards_html = "\n".join(make_card_html(p) for p in featured)
 
