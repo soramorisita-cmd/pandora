@@ -1,6 +1,15 @@
 products/
 images/
 __pycache__/
+kakobuy_auth.json
+probe_*.py
+shopify_*.csv
+shopify_by_brand/
+shopify_body_preview.html
+notebooklm_reports/
+sample_one.csv
+*.log
+products.json.bak*
 *.pyc
 *.xlsx
 batch_progress.json
