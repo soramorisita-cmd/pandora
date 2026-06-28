@@ -350,6 +350,14 @@ async def run(products: list[dict], limit: int | None, dry_run: bool):
 
 def _save(products: list[dict]):
     data = json.load(open(PRODUCTS_JSON, encoding="utf-8"))
+    # 安全装置: 既存の在庫データ(sku_fetched)が激減する保存は中止（事故での在庫消失防止）
+    old_sku = sum(1 for p in data.get("products", []) if p.get("sku_fetched"))
+    new_sku = sum(1 for p in products if p.get("sku_fetched"))
+    if old_sku > 0 and new_sku < old_sku * 0.9:
+        raise SystemExit(
+            f"[ABORT] sku_fetched が {old_sku}→{new_sku} に激減。"
+            "在庫データ消失を防ぐため products.json の保存を中止しました。"
+        )
     data["products"] = products
     PRODUCTS_JSON.write_text(
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
