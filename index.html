@@ -311,6 +311,14 @@ footer a{color:var(--accent-dark);text-decoration:none}
 </section>
 <div id="loading"><div class="spinner"></div><p>読み込み中...</p></div>
 <div id="app" style="display:none">
+  <!-- 新着商品セクション -->
+  <section id="new-arrivals" style="max-width:1400px;margin:0 auto;padding:20px 14px 4px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px">
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:var(--muted2);margin:0;display:flex;align-items:center;gap:8px">🆕 新着商品 <span style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;color:#111;background:var(--accent);padding:3px 10px;border-radius:999px;line-height:1">NEW</span></h2>
+      <a href="/catalog.html" style="font-size:12px;font-weight:700;color:var(--accent-dark);white-space:nowrap">全て見る →</a>
+    </div>
+    <div class="grid" id="new-arrivals-grid"></div>
+  </section>
   <!-- カテゴリタブバー (uufinds style) -->
   <div class="cat-bar">
     <div class="cat-bar-inner" id="cat-pills"></div>
@@ -765,6 +773,15 @@ function makeCard(p,i){
   if(p.yupoo){const bb=card.querySelector('.btn-buy');if(bb){bb.addEventListener('click',()=>{const v=JSON.parse(localStorage.getItem('pdra_views')||'{}');v[p.yupoo]=(v[p.yupoo]||0)+1;localStorage.setItem('pdra_views',JSON.stringify(v));});}}
   return card;
 }
+function renderNewArrivals(all){
+  const grid=document.getElementById('new-arrivals-grid');const sec=document.getElementById('new-arrivals');
+  if(!grid)return;
+  // products.json 末尾＝最新追加。画像ありのものを新しい順に最大12件
+  const newest=all.slice().reverse().filter(p=>p.image&&p.image!=='null'&&p.image.length>4).slice(0,12);
+  if(!newest.length){if(sec)sec.style.display='none';return;}
+  grid.innerHTML='';
+  newest.forEach((p,i)=>grid.appendChild(makeCard(p,i)));
+}
 function makeModelGroupCard(modelName,items){
   const rep=items[0],brand=rep.brand||'';
   const batches=new Map();
@@ -1043,6 +1060,7 @@ async function init(){
     }catch{}
     const res=await fetch('./products.json');if(!res.ok)throw new Error();
     const data=await res.json();ALL_PRODUCTS=data.products||[];ALL=buildPageOrder(ALL_PRODUCTS);
+    renderNewArrivals(ALL_PRODUCTS);
     const sc=document.getElementById('stat-count');if(sc)sc.textContent=ALL_PRODUCTS.length.toLocaleString();
     const allTypes=new Set(ALL.map(p=>p.type).filter(Boolean));
     const cats=[...CAT_ORDER.filter(c=>allTypes.has(c)),...[...allTypes].filter(c=>!CAT_ORDER.includes(c)).sort()];
