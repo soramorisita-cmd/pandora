@@ -62,7 +62,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-
 /* ミニプレイヤー化: スクロール量が一定を超えたら右下に小さく fixed 表示 */
 .sidebar > .sidebar-block:first-child.miniplayer{
   position:fixed;top:auto;left:auto;bottom:24px;right:24px;
-  width:220px;max-height:380px;overflow-y:auto;
+  width:220px;max-height:none;overflow:visible;
   z-index:150;background:var(--s1);
   box-shadow:0 8px 24px rgba(0,0,0,.18),0 2px 8px rgba(0,0,0,.1);
   padding:12px 14px;
@@ -1138,10 +1138,7 @@ init();
       window.scrollTo({top:0, behavior:'smooth'});
       return;
     }
-    // タイトル領域で展開/折り畳み
-    if(title){
-      catBlock.classList.toggle('collapsed');
-    }
+    // 常時すべて展開（折り畳みは無効）
   });
 })();
 </script>
