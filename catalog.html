@@ -424,9 +424,10 @@ function getFiltered(){
     items=[...items].sort((a,b)=>{const pa=Number(a.price_jpy)||0,pb=Number(b.price_jpy)||0;return pb-pa;});
   }else if(sort==='has-price'){
     items=[...items].sort((a,b)=>(b.price_jpy?1:0)-(a.price_jpy?1:0));
-  }else{
+  }else if(!NEW_MODE){
     items=[...items].sort((a,b)=>(b.price_jpy?1:0)-(a.price_jpy?1:0));
   }
+  // NEW_MODE かつ default ソート時は追加順(新しい順)を維持
   return items;
 }
 
@@ -561,6 +562,7 @@ function buildBrandBar(){
 
 function updateTitle(){
   const el=document.getElementById('cat-title');
+  if(NEW_MODE&&!selCats.size){el.textContent='🆕 新着商品';el.style.display='block';return;}
   if(selCats.size===1){const c=[...selCats][0];el.textContent=CAT_JA[c]||c;el.style.display='block'}
   else el.style.display='none';
 }
@@ -718,6 +720,8 @@ const CAT_SLUG = {};
 CAT_ORDER.forEach(t => { CAT_SLUG[t] = t.toLowerCase().replace(/-/g,'_').replace(/ /g,'_'); });
 
 let loadedFull = false;  // products.json 全件フェッチ済み
+const NEW_LIMIT = 120;   // 新着表示件数
+let NEW_MODE = false;    // ?new=1 新着モード
 
 async function fetchCat(type) {
   const slug = CAT_SLUG[type] || type.toLowerCase().replace(/-/g,'_').replace(/ /g,'_');
@@ -742,7 +746,16 @@ async function init(){
     const params = new URLSearchParams(location.search);
     const catParam = params.get('cat');
 
-    if (catParam) {
+    if (params.get('new')) {
+      // 新着モード: products.json の末尾（＝最近追加）を新しい順に表示
+      NEW_MODE = true;
+      viewMode = 'flat';               // 追加順を保つためフラット表示
+      const res = await fetch('./products.json');
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      ALL = (data.products || []).slice(-NEW_LIMIT).reverse();
+      loadedFull = true;
+    } else if (catParam) {
       // ?cat=TYPE のとき: そのカテゴリのJSONのみロード（高速）
       try {
         ALL = await fetchCat(catParam);
