@@ -293,16 +293,16 @@ footer a{color:var(--accent);text-decoration:none}
         <button class="view-toggle-btn gender-btn" data-g="UNISEX" onclick="setGender('UNISEX')" style="flex:1">U</button>
       </div>
     </div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
+      <div class="sb-title">セラー</div>
+      <input type="text" id="seller-search-mobile" class="sb-search" placeholder="🔍 セラーを検索..." oninput="filterSellerList(this.value)" style="margin-bottom:4px">
+      <div class="filter-list" id="seller-list-mobile" style="max-height:240px;overflow-y:auto"></div>
+    </div>
     <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px">
       <div class="sb-title">ブランド</div>
       <input type="text" id="brand-search-mobile" class="sb-search" placeholder="🔍 ブランドを検索..." oninput="filterBrandList(this.value)" style="margin-bottom:4px">
       <div class="brand-az" id="brand-az-mobile"></div>
       <div class="filter-list" id="brand-list-mobile"></div>
-    </div>
-    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:6px">
-      <div class="sb-title">セラー</div>
-      <input type="text" id="seller-search-mobile" class="sb-search" placeholder="🔍 セラーを検索..." oninput="filterSellerList(this.value)" style="margin-bottom:4px">
-      <div class="filter-list" id="seller-list-mobile"></div>
     </div>
     <button class="btn-reset" onclick="resetFilters()">リセット</button>
     <button style="width:100%;background:var(--accent);border:none;border-radius:8px;color:#0a0a0a;font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:13px;font-weight:800;padding:11px;cursor:pointer;margin-top:6px" onclick="closeDrawer()">結果を見る（<span id="drawer-count">0</span>件）</button>
@@ -316,15 +316,15 @@ footer a{color:var(--accent);text-decoration:none}
         <div class="filter-list" id="cat-list"></div>
       </div>
       <div class="sidebar-block">
+        <div class="sb-title">セラー</div>
+        <input type="text" id="seller-search-input" class="sb-search" placeholder="🔍 セラーを検索..." oninput="filterSellerList(this.value)" style="margin-bottom:4px">
+        <div class="filter-list" id="seller-list" style="max-height:240px;overflow-y:auto"></div>
+      </div>
+      <div class="sidebar-block">
         <div class="sb-title">ブランド</div>
         <input type="text" id="brand-search-input" class="sb-search" placeholder="🔍 ブランドを検索..." oninput="filterBrandList(this.value)" style="margin-bottom:4px">
         <div class="brand-az" id="brand-az-desktop"></div>
         <div class="filter-list" id="brand-list"></div>
-      </div>
-      <div class="sidebar-block">
-        <div class="sb-title">セラー</div>
-        <input type="text" id="seller-search-input" class="sb-search" placeholder="🔍 セラーを検索..." oninput="filterSellerList(this.value)" style="margin-bottom:4px">
-        <div class="filter-list" id="seller-list"></div>
         <button class="btn-reset" onclick="resetFilters()">リセット</button>
       </div>
     </aside>
