@@ -76,6 +76,7 @@ CAT_JA = {
     "HATS": "ハット", "SOCKS": "ソックス", "OTHER": "その他",
     "WALLETS": "財布", "CARDHOLDERS": "カードホルダー",
     "JEWELRY": "ジュエリー", "SCARVES": "スカーフ", "SUNGLASSES": "サングラス",
+    "BLANK": "ブランク",
 }
 
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">'
@@ -432,6 +433,7 @@ def build_category_pages(products, out_dir):
         "JEWELRY":"レプリカジュエリー・ネックレス・ブレスレット・リング。",
         "SCARVES":"レプリカスカーフ・ストール・シルクスカーフ。",
         "SUNGLASSES":"レプリカサングラス・アイウェア。",
+        "BLANK":"無地・ブランクアイテム。プリントやロゴのないベース向けアイテムを取り揃え。",
     }
 
     count = 0
@@ -522,32 +524,50 @@ h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin
 .card{{position:relative}}
 .empty{{text-align:center;padding:80px 24px;color:var(--muted)}}
 .empty h2{{font-size:20px;margin-bottom:12px;color:var(--muted2)}}
+.period-tabs{{display:flex;gap:8px;margin:10px 0 14px;flex-wrap:wrap}}
+.ptab{{font-size:12px;font-weight:800;letter-spacing:1px;padding:7px 16px;border-radius:999px;border:1px solid var(--border);background:var(--s1);color:var(--muted2);cursor:pointer;transition:.15s}}
+.ptab:hover{{background:var(--s2)}}
+.ptab.active{{background:var(--accent);color:#111;border-color:var(--accent2)}}
 </style>
 </head>
 <body>
 {NAV_HTML}
 <div class="wrap">
   <h1>人気商品ランキング</h1>
-  <p class="sub">クリック数の多い順にTOP100まで表示</p>
+  <div class="period-tabs" id="period-tabs">
+    <button class="ptab active" data-period="all">全期間</button>
+    <button class="ptab" data-period="today">今日</button>
+    <button class="ptab" data-period="week">今週</button>
+    <button class="ptab" data-period="month">今月</button>
+  </div>
   <p class="sub" id="status">読み込み中...</p>
   <div class="grid" id="popular-grid"></div>
 </div>
 {FOOTER_HTML}
 <script>
-(async function(){{
+const POP_LOOKUP = {{ data: null }};
+async function getLookup(){{
+  if(POP_LOOKUP.data) return POP_LOOKUP.data;
+  const r = await fetch('/data/popular-lookup.json');
+  POP_LOOKUP.data = await r.json();
+  return POP_LOOKUP.data;
+}}
+async function renderPopular(period){{
   const grid = document.getElementById('popular-grid');
   const status = document.getElementById('status');
+  status.textContent = '読み込み中...';
+  grid.innerHTML = '';
   try {{
-    const [popRes, lookupRes] = await Promise.all([
-      fetch('/api/popular?limit=100'),
-      fetch('/data/popular-lookup.json'),
+    const [popRes, byId] = await Promise.all([
+      fetch('/api/popular?limit=100&period=' + encodeURIComponent(period)),
+      getLookup(),
     ]);
     if(!popRes.ok) throw new Error('popular api failed');
     const pop = await popRes.json();
-    const byId = await lookupRes.json();
 
     if(!pop.items || pop.items.length === 0){{
-      grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><h2>まだクリックデータがありません</h2><p>カタログから商品を見て、Kakobuy・QCリンクをクリックするとランキングに反映されます。</p></div>';
+      const noData = period === 'all' ? 'まだクリックデータがありません' : 'この期間のクリックデータがまだありません';
+      grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><h2>' + noData + '</h2><p>カタログから商品を見て、Kakobuy・QCリンクをクリックするとランキングに反映されます。</p></div>';
       status.textContent = '';
       return;
     }}
@@ -592,6 +612,16 @@ h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin
     grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><h2>データを取得できませんでした</h2><p>D1データベースが未設定の可能性があります。</p></div>';
     status.textContent = '';
   }}
+}}
+(function(){{
+  const tabs = document.getElementById('period-tabs');
+  tabs.addEventListener('click', (e) => {{
+    const btn = e.target.closest('.ptab');
+    if(!btn) return;
+    tabs.querySelectorAll('.ptab').forEach(b => b.classList.toggle('active', b === btn));
+    renderPopular(btn.dataset.period);
+  }});
+  renderPopular('all');
 }})();
 </script>
 </body>
