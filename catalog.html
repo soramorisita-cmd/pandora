@@ -299,6 +299,11 @@ footer a{color:var(--accent);text-decoration:none}
       <div class="brand-az" id="brand-az-mobile"></div>
       <div class="filter-list" id="brand-list-mobile"></div>
     </div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:6px">
+      <div class="sb-title">セラー</div>
+      <input type="text" id="seller-search-mobile" class="sb-search" placeholder="🔍 セラーを検索..." oninput="filterSellerList(this.value)" style="margin-bottom:4px">
+      <div class="filter-list" id="seller-list-mobile"></div>
+    </div>
     <button class="btn-reset" onclick="resetFilters()">リセット</button>
     <button style="width:100%;background:var(--accent);border:none;border-radius:8px;color:#0a0a0a;font-family:'DM Sans','Noto Sans JP',sans-serif;font-size:13px;font-weight:800;padding:11px;cursor:pointer;margin-top:6px" onclick="closeDrawer()">結果を見る（<span id="drawer-count">0</span>件）</button>
   </div>
@@ -315,6 +320,11 @@ footer a{color:var(--accent);text-decoration:none}
         <input type="text" id="brand-search-input" class="sb-search" placeholder="🔍 ブランドを検索..." oninput="filterBrandList(this.value)" style="margin-bottom:4px">
         <div class="brand-az" id="brand-az-desktop"></div>
         <div class="filter-list" id="brand-list"></div>
+      </div>
+      <div class="sidebar-block">
+        <div class="sb-title">セラー</div>
+        <input type="text" id="seller-search-input" class="sb-search" placeholder="🔍 セラーを検索..." oninput="filterSellerList(this.value)" style="margin-bottom:4px">
+        <div class="filter-list" id="seller-list"></div>
         <button class="btn-reset" onclick="resetFilters()">リセット</button>
       </div>
     </aside>
@@ -354,7 +364,7 @@ footer a{color:var(--accent);text-decoration:none}
 const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
 const CAT_JA={"SNEAKERS":"スニーカー","HOODIES":"パーカー","T-SHIRTS":"Tシャツ","JACKETS":"ジャケット","JEANS":"ジーンズ","PANTS":"パンツ","SHORTS":"ショーツ","SWEATERS":"スウェット","TOPS":"トップス","SHIRTS":"シャツ","BAGS":"バッグ","ACCESSORIES":"アクセサリー","HATS":"ハット","SOCKS":"ソックス","OTHER":"その他","WALLETS":"財布","CARDHOLDERS":"カードホルダー","BELTS":"ベルト","JEWELRY":"ジュエリー","SCARVES":"スカーフ","SUNGLASSES":"サングラス"};
 const urlCat=new URLSearchParams(location.search).get('cat')||'all';
-let ALL=[],selCats=new Set(urlCat!=='all'?[urlCat]:[]),selBrands=new Set(),allCats=[],_rebuilding=false;
+let ALL=[],selCats=new Set(urlCat!=='all'?[urlCat]:[]),selBrands=new Set(),selSellers=new Set(),allCats=[],_rebuilding=false;
 function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function brandInterleave(items){const byBrand={};items.forEach(p=>{const b=p.brand||'__';if(!byBrand[b])byBrand[b]=[];byBrand[b].push(p);});const brands=shuffle(Object.keys(byBrand));const result=[];let more=true;while(more){more=false;for(const b of brands){if(byBrand[b].length){result.push(byBrand[b].shift());more=true;}}}return result;}
 const PAGE_SIZE=48;let pageItems=[];let pageGroups=[];let renderedCount=0;
@@ -409,6 +419,7 @@ function getFiltered(){
   let items=ALL.filter(p=>{
     if(selCats.size&&!selCats.has(p.type))return false;
     if(selBrands.size&&!selBrands.has(p.brand||''))return false;
+    if(selSellers.size&&!selSellers.has(p.seller||''))return false;
     if(selGender!=='all'){
       const pg=p.gender||'';
       if(selGender==='UNISEX'){if(pg!==''&&pg!=='UNISEX')return false;}
@@ -499,7 +510,36 @@ function buildBrandList(){
   });
   buildAZBar('brand-az-desktop',brands);
   const inp=document.getElementById('brand-search-input');if(inp)inp.value='';
+  buildSellerList();
   _rebuilding=false;
+}
+function buildSellerList(){
+  // 現在のカテゴリ・ブランド選択に含まれるセラーを件数の多い順に表示
+  const src=ALL.filter(p=>(!selCats.size||selCats.has(p.type))&&(!selBrands.size||selBrands.has(p.brand||'')));
+  const counts={};src.forEach(p=>{const s=p.seller||'';if(s)counts[s]=(counts[s]||0)+1;});
+  const sellers=Object.keys(counts).sort((a,b)=>counts[b]-counts[a]||a.localeCompare(b));
+  ['seller-list','seller-list-mobile'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.innerHTML='';
+    sellers.forEach(s=>{
+      const lbl=document.createElement('label');
+      lbl.className='f-item'+(selSellers.has(s)?' active':'');
+      lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selSellers.has(s)?'checked':''} onchange="toggleSeller(this.parentElement.dataset.seller,this)"><span class="f-label">${esc(s)}</span><span class="f-count">${counts[s]}</span>`;
+      lbl.dataset.seller=s;
+      el.appendChild(lbl);
+    });
+  });
+}
+function toggleSeller(seller,cb){if(_rebuilding)return;cb.checked?selSellers.add(seller):selSellers.delete(seller);applyFilters();}
+function filterSellerList(q){
+  const query=q.toLowerCase().trim();
+  ['seller-list','seller-list-mobile'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.querySelectorAll('.f-item').forEach(item=>{
+      const s=(item.dataset.seller||'').toLowerCase();
+      item.style.display=(!query||s.includes(query))?'':'none';
+    });
+  });
 }
 function buildAZBar(containerId,brands){
   const el=document.getElementById(containerId);if(!el)return;
@@ -540,7 +580,7 @@ function toggleCat(cat,cb){
     buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters();
   }
 }
-function toggleBrand(brand,cb){if(_rebuilding)return;cb.checked?selBrands.add(brand):selBrands.delete(brand);buildBrandBar();applyFilters()}
+function toggleBrand(brand,cb){if(_rebuilding)return;cb.checked?selBrands.add(brand):selBrands.delete(brand);buildBrandBar();buildSellerList();applyFilters()}
 function buildBrandBar(){
   const el=document.getElementById('brand-pills');if(!el)return;
   const src=selCats.size?ALL.filter(p=>selCats.has(p.type)):ALL;
@@ -689,7 +729,7 @@ function syncLoadMoreBtn(){
   scrollObs.observe(sentinel);
 }
 
-function resetFilters(){if(!loadedFull){window.location.href='/catalog.html';return;}selCats.clear();selBrands.clear();document.getElementById('search').value='';const cs=document.getElementById('catalog-search');if(cs)cs.value='';const ch=document.getElementById('catalog-search-hint');if(ch)ch.style.display='none';history.replaceState(null,'','/catalog.html');buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters()}
+function resetFilters(){if(!loadedFull){window.location.href='/catalog.html';return;}selCats.clear();selBrands.clear();selSellers.clear();document.getElementById('search').value='';const cs=document.getElementById('catalog-search');if(cs)cs.value='';const ch=document.getElementById('catalog-search-hint');if(ch)ch.style.display='none';history.replaceState(null,'','/catalog.html');buildCatBar();buildBrandList();buildBrandBar();updateTitle();applyFilters()}
 
 function buildNav(cats){
   const nc=document.getElementById('nav-cats');
