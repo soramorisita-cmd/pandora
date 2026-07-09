@@ -353,6 +353,11 @@ footer a{color:var(--accent-dark);text-decoration:none}
       <div class="sb-title">カテゴリ</div>
       <div class="filter-list" id="cat-list-mobile"></div>
     </div>
+    <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:6px">
+      <div class="sb-title">セラー</div>
+      <input type="text" id="seller-search-mobile" class="sb-search" placeholder="🔍 セラーを検索..." oninput="filterSellerList(this.value)" style="margin-bottom:4px">
+      <div class="filter-list" id="seller-list-mobile" style="max-height:240px;overflow-y:auto"></div>
+    </div>
     <div class="sidebar-block" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:14px">
       <div class="sb-title">ブランド</div>
       <input type="text" id="brand-search-mobile" class="sb-search" placeholder="🔍 ブランドを検索..." oninput="filterBrandList(this.value)" style="margin-bottom:4px">
@@ -368,6 +373,11 @@ footer a{color:var(--accent-dark);text-decoration:none}
       <div class="sidebar-block">
         <div class="sb-title">カテゴリ</div>
         <div class="filter-list" id="cat-list"></div>
+      </div>
+      <div class="sidebar-block">
+        <div class="sb-title">セラー</div>
+        <input type="text" id="seller-search-input" class="sb-search" placeholder="🔍 セラーを検索..." oninput="filterSellerList(this.value)" style="margin-bottom:4px">
+        <div class="filter-list" id="seller-list" style="max-height:240px;overflow-y:auto"></div>
       </div>
       <div class="sidebar-block">
         <div class="sb-title">ブランド</div>
@@ -672,7 +682,7 @@ a{color:inherit;text-decoration:none}
 <script>
 const CAT_ORDER=["HOODIES","T-SHIRTS","SHORTS","PANTS","JACKETS","SWEATERS","TOPS","SHIRTS","SNEAKERS","BAGS","ACCESSORIES"];
 const CAT_JA={"SNEAKERS":"スニーカー","HOODIES":"パーカー","T-SHIRTS":"Tシャツ","JACKETS":"ジャケット","JEANS":"ジーンズ","PANTS":"パンツ","SHORTS":"ショーツ","SWEATERS":"スウェット","TOPS":"トップス","SHIRTS":"シャツ","BAGS":"バッグ","ACCESSORIES":"アクセサリー","HATS":"ハット","SOCKS":"ソックス","OTHER":"その他","WALLETS":"財布","CARDHOLDERS":"カードホルダー","BELTS":"ベルト","JEWELRY":"ジュエリー","SCARVES":"スカーフ","SUNGLASSES":"サングラス"};
-let ALL=[],ALL_PRODUCTS=[],selCats=new Set(),selBrands=new Set(),allCats=[],_rebuilding=false;
+let ALL=[],ALL_PRODUCTS=[],selCats=new Set(),selBrands=new Set(),selSellers=new Set(),allCats=[],_rebuilding=false;
 const PAGE_SIZE=48;let pageItems=[];let pageGroups=[];let renderedCount=0;
 let viewMode=localStorage.getItem('pdra_view')||'flat';
 let selGender=localStorage.getItem('pdra_gender')||'all';
@@ -740,13 +750,14 @@ function doHeroSearch(){
   const s=document.getElementById('search');if(s){s.value=val;applyFilters()}
   document.getElementById('app')?.scrollIntoView({behavior:'smooth'})
 }
-function isFiltering(){return selCats.size>0||selBrands.size>0||(document.getElementById('search')?.value||'').length>0}
+function isFiltering(){return selCats.size>0||selBrands.size>0||selSellers.size>0||(document.getElementById('search')?.value||'').length>0}
 function getFiltered(){
   const q=(document.getElementById('search')?.value||'').toLowerCase();
-  const base=(selCats.size||selBrands.size||q)?ALL_PRODUCTS:ALL;
+  const base=(selCats.size||selBrands.size||selSellers.size||q)?ALL_PRODUCTS:ALL;
   let items=base.filter(p=>{
     if(selCats.size&&!selCats.has(p.type))return false;
     if(selBrands.size&&!selBrands.has(p.brand||''))return false;
+    if(selSellers.size&&!selSellers.has(p.seller||''))return false;
     if(selGender!=='all'){
       const pg=p.gender||'';
       if(selGender==='UNISEX'){if(pg!==''&&pg!=='UNISEX')return false;}
@@ -874,7 +885,36 @@ function buildBrandList(){
   // 検索ボックスの値が残っていたら再フィルタ
   const si=document.getElementById('brand-search-input');
   if(si&&si.value)filterBrandList(si.value);
+  buildSellerList();
   _rebuilding=false;
+}
+function buildSellerList(){
+  // 現在のカテゴリ・ブランド選択に含まれるセラーを件数の多い順に表示
+  const src=ALL_PRODUCTS.filter(p=>(!selCats.size||selCats.has(p.type))&&(!selBrands.size||selBrands.has(p.brand||'')));
+  const counts={};src.forEach(p=>{const s=p.seller||'';if(s)counts[s]=(counts[s]||0)+1;});
+  const sellers=Object.keys(counts).sort((a,b)=>counts[b]-counts[a]||a.localeCompare(b));
+  ['seller-list','seller-list-mobile'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.innerHTML='';
+    sellers.forEach(s=>{
+      const lbl=document.createElement('label');
+      lbl.className='f-item'+(selSellers.has(s)?' active':'');
+      lbl.innerHTML=`<input type="checkbox" class="f-cb" ${selSellers.has(s)?'checked':''} onchange="toggleSeller(this.parentElement.dataset.seller,this)"><span class="f-label">${esc(s)}</span><span class="f-count">${counts[s]}</span>`;
+      lbl.dataset.seller=s;
+      el.appendChild(lbl);
+    });
+  });
+}
+function toggleSeller(seller,cb){if(_rebuilding)return;cb.checked?selSellers.add(seller):selSellers.delete(seller);applyFilters();}
+function filterSellerList(q){
+  const query=q.toLowerCase().trim();
+  ['seller-list','seller-list-mobile'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.querySelectorAll('.f-item').forEach(item=>{
+      const s=(item.dataset.seller||'').toLowerCase();
+      item.style.display=(!query||s.includes(query))?'':'none';
+    });
+  });
 }
 function buildAZBar(containerId,brands){
   const el=document.getElementById(containerId);if(!el)return;
@@ -949,7 +989,7 @@ function buildBrandBar(){
     el.appendChild(pill);
   });
 }
-function toggleBrand(brand,cb){if(_rebuilding)return;cb.checked?selBrands.add(brand):selBrands.delete(brand);buildBrandBar();applyFilters()}
+function toggleBrand(brand,cb){if(_rebuilding)return;cb.checked?selBrands.add(brand):selBrands.delete(brand);buildBrandBar();buildSellerList();applyFilters()}
 function renderChips(){
   const el=document.getElementById('active-filters');
   if(!el)return;
@@ -1002,7 +1042,7 @@ function syncLoadMoreBtn(){
   scrollObs.observe(sentinel);
 }
 function resetFilters(){
-  selCats.clear();selBrands.clear();
+  selCats.clear();selBrands.clear();selSellers.clear();
   const s=document.getElementById('search');if(s)s.value='';
   const hs=document.getElementById('hero-search');if(hs)hs.value='';
   const hint=document.getElementById('hero-hint');if(hint){hint.className='hero-search-hint';hint.textContent='商品名で絞り込み、またはリンクをKakobuyリンクに変換してジャンプ';}
