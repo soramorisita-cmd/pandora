@@ -20,7 +20,7 @@ build_static.py — PR1 SSG ビルドスクリプト
 
 import json, re, sys, io, argparse, time
 from pathlib import Path
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, quote
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
@@ -674,7 +674,8 @@ h1{{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;margin
   <p class="sub">{esc(desc)}</p>
   {GENDER_FILTER_HTML if has_gender else ''}
   <div class="grid">{cards}</div>
-  <a class="more-link" href="/catalog.html">&larr; 全カタログへ</a>
+  <a class="more-link" href="/catalog.html?brand={quote(brand)}">{esc(brand)}をすべて見る（セラー別に絞込可） &rarr;</a>
+  <a class="more-link" href="/catalog.html" style="margin-left:8px">全カタログへ</a>
 </div>
 {FOOTER_HTML}
 {GENDER_FILTER_JS if has_gender else ''}

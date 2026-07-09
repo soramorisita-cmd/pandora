@@ -604,6 +604,7 @@ function updateTitle(){
   const el=document.getElementById('cat-title');
   if(NEW_MODE&&!selCats.size){el.textContent='🆕 新着商品';el.style.display='block';return;}
   if(selCats.size===1){const c=[...selCats][0];el.textContent=CAT_JA[c]||c;el.style.display='block'}
+  else if(selBrands.size===1){el.textContent=[...selBrands][0];el.style.display='block'}
   else el.style.display='none';
 }
 
@@ -785,6 +786,7 @@ async function init(){
   try{
     const params = new URLSearchParams(location.search);
     const catParam = params.get('cat');
+    const brandParam = params.get('brand');
 
     if (params.get('new')) {
       // 新着モード: products.json の末尾（＝最近追加）を新しい順に表示
@@ -795,6 +797,10 @@ async function init(){
       const data = await res.json();
       ALL = (data.products || []).slice(-NEW_LIMIT).reverse();
       loadedFull = true;
+    } else if (brandParam) {
+      // ?brand=NAME のとき: 全件ロードしてそのブランドを事前選択（→セラーがそのブランドに絞られる）
+      await ensureFullData();
+      selBrands.add(brandParam);
     } else if (catParam) {
       // ?cat=TYPE のとき: そのカテゴリのJSONのみロード（高速）
       try {
